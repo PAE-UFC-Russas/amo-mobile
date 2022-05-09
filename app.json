@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "monitoria-online-mobile",
+    "slug": "monitoria-online-mobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
