@@ -1,10 +1,35 @@
 import React, { useState } from 'react';
 import { Keyboard, Image } from 'react-native';
-import { Center, FormControl, Stack, Input, Button, VStack, Flex } from 'native-base';
+import { Center, FormControl, Input, Button, VStack, Flex } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons'; 
 import styles from './styles';
 
-export default function Login() {
+export default function Login({navigation}) {
   const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
+  const [hiddenPassword, setHiddenPassword] = useState(true);
+  const [account, setAccount] = useState({
+    email: '',
+    password: ''
+  });
+  const [inputErros, setInputErros] = useState({
+    errosEmail: null,
+    errosPassowrd: null,
+    activeEmail: false,
+    activePassword: false
+  });
+
+  const PasswordVisibility = () => {
+    return <MaterialIcons
+      onPress={()=>setHiddenPassword(!hiddenPassword)}
+      color="#fff"
+      size={24}
+      style={{marginRight: 10}}
+      name={hiddenPassword ? "visibility" : "visibility-off"}/>
+  }
+
+  const InputValidation = () => {
+
+  }
 
   Keyboard.addListener("keyboardDidShow", () => {
     setKeyboardIsOpen(true);
@@ -29,21 +54,39 @@ export default function Login() {
       />
       <Flex direction="column" width="5/6" height={360} justifyContent="space-between">
         <VStack space={3}>
-          <FormControl>
-            <Stack mx="4">
-              <FormControl.Label _text={{
-                color:"#fff"
-              }}>Email</FormControl.Label>
-              <Input placeholder="Email" variant="rounded" placeholderTextColor="#fff" selectionColor="#fff" color="#fff"/>
-            </Stack>
+          <FormControl isInvalid={inputErros.activeEmail}>
+            <FormControl.Label _text={{
+              color:"#fff"
+            }}>Email</FormControl.Label>
+            <Input
+              variant="rounded" 
+              placeholderTextColor="#fff" 
+              selectionColor="#fff" 
+              color="#fff"
+              value={account.email}
+              onChangeText={text=>setAccount({...account, email: text})}
+            />
+            <FormControl.ErrorMessage>
+              {inputErros.errosEmail}
+            </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
-            <Stack mx="4">
-              <FormControl.Label _text={{
-                color:"#fff"
-              }}>Senha</FormControl.Label>
-              <Input type="password" placeholder="Senha" variant="rounded" placeholderTextColor="#fff" selectionColor="#fff" color="#fff"/>
-            </Stack>
+          <FormControl isInvalid={inputErros.activePassword}>
+            <FormControl.Label _text={{
+              color:"#fff"
+            }}>Senha</FormControl.Label>
+            <Input
+              type={hiddenPassword?"password":"text"}
+              variant="rounded" 
+              placeholderTextColor="#fff" 
+              selectionColor="#fff" 
+              color="#fff"
+              InputRightElement={<PasswordVisibility/>}
+              value={account.password}
+              onChangeText={text=>setAccount({...account, password: text})}
+            />
+            <FormControl.ErrorMessage>
+              {inputErros.errosPassowrd}
+            </FormControl.ErrorMessage>
           </FormControl>
         </VStack>
         <VStack space={3}>
@@ -55,17 +98,20 @@ export default function Login() {
               }}>
                 Esqueci minha senha
               </Button>
-              <Button variant="ghost" key="register" _text={{
-                color: "#fff",
-                fontWeight: 800
-              }}>
+              <Button variant="ghost" key="register" 
+                onPress={()=>navigation.navigate('Register')}
+                _text={{
+                  color: "#fff",
+                  fontWeight: 800
+                }}
+              >
                 Cadastre-se
               </Button>
             </>
           }
           <Button marginBottom={keyboardIsOpen?70:0} bgColor="#fff" width={80} height={60} _text={{
             fontWeight: 800,
-            color: 'defaultBlue'
+            color: "defaultBlue"
           }}>
             Entrar
           </Button>
