@@ -8,14 +8,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: 50,
         paddingBottom: 50
-    },
-    textInfo: {
-        fontWeight: '200'
-    },
-    backButton:{
-        position: 'absolute',
-        top: 50,
-        left: 35
     }
 });
 

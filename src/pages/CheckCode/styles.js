@@ -9,13 +9,11 @@ const styles = StyleSheet.create({
         paddingTop: 50,
         paddingBottom: 50
     },
-    textInfo: {
-        fontWeight: '200'
-    },
-    backButton:{
-        position: 'absolute',
-        top: 50,
-        left: 35
+    codeInputs: {
+        justifyContent: 'space-around',
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginRight: 'auto',
     }
 });
 

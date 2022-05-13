@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Image, View } from 'react-native';
 import { Center, FormControl, Input, Button, VStack, Text } from 'native-base';
+import RegisterHeader from '../../components/RegisterHeader';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import styles from './styles';
 
-export default function Register() {
+export default function Register({navigation}) {
   const [hiddenPassword, setHiddenPassword] = useState({
     password: false,
     confirmPassword: false
@@ -41,14 +41,17 @@ export default function Register() {
       style={styles.container}
       bgColor="#fff"
     >
+      <MaterialIcons
+        onPress={()=>navigation.navigate('Login')}
+        color="#52D6FB"
+        size={24}
+        style={styles.backButton}
+        name="arrow-back-ios"
+      />
       <Center width="5/6">
-        <Center marginBottom="9">
-          <Image
-            source={require('../../public/logo_lightblue.png')}
-            style={{width: 60, height: 60}}
-          />
-          <Text fontWeight="bold" color="tertiaryBlue" fontSize="md">Cadastra-se</Text>
-        </Center>
+        <RegisterHeader>
+          Cadastra-se
+        </RegisterHeader>
         <VStack width="full" space={3}>
           <FormControl isInvalid={inputErros.activeEmail}>
             <Input
@@ -59,6 +62,7 @@ export default function Register() {
               color="tertiaryBlue"
               borderColor="tertiaryBlue"
               value={newAccount.email}
+              maxLength={255}
               onChangeText={text=>setNewAccount({...newAccount, email: text})}
             />
             <FormControl.ErrorMessage>
@@ -76,6 +80,7 @@ export default function Register() {
               borderColor="tertiaryBlue"
               InputRightElement={<PasswordVisibility type="password"/>}
               value={newAccount.password}
+              maxLength={32}
               onChangeText={text=>setNewAccount({...newAccount, password: text})}
             />
             <FormControl.ErrorMessage>
@@ -93,6 +98,7 @@ export default function Register() {
               borderColor="tertiaryBlue"
               InputRightElement={<PasswordVisibility type="confirmPassword"/>}
               value={newAccount.confirmPassword}
+              maxLength={32}
               onChangeText={text=>setNewAccount({...newAccount, confirmPassword
                 : text})}
             />
@@ -106,10 +112,17 @@ export default function Register() {
           </Text>
         </VStack>
       </Center>
-      <Button bgColor="defaultBlue" borderRadius="2xl" width={80} height={60} _text={{
-        fontWeight: 800,
-        color: "#fff",
-      }}>
+      <Button 
+        bgColor="defaultBlue" 
+        borderRadius="2xl" 
+        width={80} 
+        height={60} 
+        onPress={()=>navigation.navigate('CheckCode')} 
+        _text={{
+          fontWeight: 800,
+          color: "#fff",
+        }}
+      >
         Avançar
       </Button>
     </Center>

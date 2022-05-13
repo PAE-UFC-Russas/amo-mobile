@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { Keyboard, Image } from 'react-native';
 import { Center, FormControl, Input, Button, VStack, Flex } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import ModalKeepConnected from '../../components/ModalKeepConnected';
 import styles from './styles';
 
 export default function Login({navigation}) {
   const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
   const [hiddenPassword, setHiddenPassword] = useState(true);
+  const [openKeepConnected, setOpenKeepConnected] = useState(false);
   const [account, setAccount] = useState({
     email: '',
-    password: ''
+    password: '',
+    keepConnected: false
   });
   const [inputErros, setInputErros] = useState({
     errosEmail: null,
@@ -64,6 +67,7 @@ export default function Login({navigation}) {
               selectionColor="#fff" 
               color="#fff"
               value={account.email}
+              maxLength={255}
               onChangeText={text=>setAccount({...account, email: text})}
             />
             <FormControl.ErrorMessage>
@@ -82,6 +86,7 @@ export default function Login({navigation}) {
               color="#fff"
               InputRightElement={<PasswordVisibility/>}
               value={account.password}
+              maxLength={32}
               onChangeText={text=>setAccount({...account, password: text})}
             />
             <FormControl.ErrorMessage>
@@ -89,7 +94,7 @@ export default function Login({navigation}) {
             </FormControl.ErrorMessage>
           </FormControl>
         </VStack>
-        <VStack space={3}>
+        <VStack space={3} alignItems="center">
           {!keyboardIsOpen&&
             <>
               <Button variant="ghost" key="forget" _text={{
@@ -109,14 +114,24 @@ export default function Login({navigation}) {
               </Button>
             </>
           }
-          <Button marginBottom={keyboardIsOpen?70:0} bgColor="#fff" width={80} height={60} _text={{
-            fontWeight: 800,
-            color: "defaultBlue"
-          }}>
+          <Button 
+            marginBottom={keyboardIsOpen?70:0} 
+            bgColor="#fff" 
+            width={80} 
+            height={60} 
+            _text={{
+              fontWeight: 800,
+              color: "defaultBlue"
+            }}
+            onPress={()=>setOpenKeepConnected(true)}
+          >
             Entrar
           </Button>
         </VStack >
       </Flex>
+      {openKeepConnected&&
+        <ModalKeepConnected open={openKeepConnected} setOpen={setOpenKeepConnected} setAccount={setAccount} account={account}/>
+      }
     </Center>
   );
 }
