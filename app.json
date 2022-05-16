@@ -5,6 +5,18 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
+    ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir que o aplicativo AMO acesse sua galeria de fotos.",
+          "cameraPermission": "Permitir que o aplicativo AMO acesse sua camera.",
+
+          "//": "Disables the microphone permission",
+          "microphonePermission": false
+        }
+      ]
     ]
   }
 }

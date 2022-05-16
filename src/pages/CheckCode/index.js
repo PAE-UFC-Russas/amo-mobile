@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import RegisterHeader from '../../components/RegisterHeader';
-import { Center, FormControl, Input, Button, HStack } from 'native-base';
+import { Center, FormControl, Input, HStack } from 'native-base';
+import DefaultBlueButton from '../../components/DefaultBlueButton';
 import styles from './styles';
 
 export default function CheckCode({navigation}) {
     const [error, setError] = useState({
-        text: '',
-        active: false
+        text: ''
     });
     const [code, setCode] = useState(['','','','','','']);
 
@@ -24,7 +24,7 @@ export default function CheckCode({navigation}) {
             <RegisterHeader>
                 Inserir código
             </RegisterHeader>
-            <FormControl isInvalid={error.active}>
+            <FormControl isInvalid={!!error.text}>
                 <HStack style={styles.codeInputs} width="full" space={1}>
                     {code.map((element, index)=>{
                         return <Input
@@ -47,19 +47,9 @@ export default function CheckCode({navigation}) {
                     {error.text}
                 </FormControl.ErrorMessage>
             </FormControl>
-            <Button 
-                bgColor="defaultBlue" 
-                borderRadius="2xl" 
-                width={80} 
-                height={60} 
-                onPress={()=>navigation.navigate('SelectProfile')} 
-                _text={{
-                    fontWeight: 800,
-                    color: "#fff",
-                }}
-            >
+            <DefaultBlueButton onPress={()=>navigation.navigate("SelectProfile")}>
                 Verificar código
-            </Button>
+            </DefaultBlueButton>
         </Center>
     );
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Center, Select, Button } from 'native-base';
 import RegisterHeader from '../../components/RegisterHeader';
+import DefaultSelect from '../../components/DefaultSelect';
 import styles from './styles';
 
 export default function SelectProfile({navigation}) {
@@ -9,9 +10,9 @@ export default function SelectProfile({navigation}) {
 
     const handleNavigation = () => {
         if(profile){
-            if(profile === "aluno")
+            if(profile === "Aluno")
                 return "StudentProfile"
-            else if(profile === "professor")
+            else if(profile === "Professor")
                 return "ProfessorProfile"
             else
                 return "MonitorProfile"
@@ -28,27 +29,14 @@ export default function SelectProfile({navigation}) {
                 <RegisterHeader>
                     Selecionar perfil
                 </RegisterHeader>
-                <Select 
-                    selectedValue={profile} 
-                    minWidth="320" 
-                    accessibilityLabel="Escolha seu perfil" 
-                    placeholder="Escolha seu perfil"
-                    placeholderTextColor="tertiaryBlue"
-                    borderColor="tertiaryBlue"
-                    color="tertiaryBlue"
-                    borderRadius={15}
-                    _selectedItem={{
-                        bg: "tertiaryBlue"
-                    }}
-                    _text={{
-                        fontSize: "3xl"
-                    }}
-                    onValueChange={itemValue => setProfile(itemValue)}
-                >
-                    <Select.Item label="Aluno" value="aluno"/>
-                    <Select.Item label="Monitor" value="monitor"/>
-                    <Select.Item label="Professor" value="professor"/>
-                </Select>
+                <DefaultSelect
+                    placeholder="Escolha seu perfil" 
+                    items={['Aluno', 'Monitor', 'Professor']}
+                    value={profile} 
+                    setValue={itemValue => setProfile(itemValue)} 
+                    color="tertiaryBlue" 
+                    error={null}
+                />
             </View>
             <Button 
                 bgColor="defaultBlue" 

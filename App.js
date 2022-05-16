@@ -3,6 +3,7 @@ import { NativeBaseProvider } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
+import AuthContext from './src/contexts/auth';
 import { theme } from './src/styles/theme';
 import Routes from './src/routes/routes';
 
@@ -14,11 +15,13 @@ const config = {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <NativeBaseProvider theme={theme} config={config}>
-        <Routes/>
-        <StatusBar style="light"/>
-      </NativeBaseProvider>
-    </NavigationContainer>
+      <NavigationContainer>
+        <NativeBaseProvider theme={theme} config={config}>
+          <AuthContext>
+            <Routes/>
+            <StatusBar style="light"/>
+          </AuthContext>
+        </NativeBaseProvider>
+      </NavigationContainer>
   );
 }
