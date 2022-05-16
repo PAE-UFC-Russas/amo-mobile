@@ -18,7 +18,7 @@ export default function DefaultFormInput({children, placeholder, value, setValue
         setValue(text.replace(/[^a-z0-9]/gi,''));
     }
 
-    maxLength = !type?32:type
+    maxLength = !maxLength?32:maxLength
     type = !type?'text':type
 
     if(type === 'text')
