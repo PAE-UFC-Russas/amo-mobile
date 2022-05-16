@@ -30,10 +30,10 @@ export default function Register({navigation}) {
       erros.errosEmail = "E-mail inválido!";
     if(newUser.password.length < 8)
       erros.errosPassword = "A senha precisa conter 8 caracteres!";
-    else if(newUser.password.match(/[a-zA-Z]/g).length < 1)
-      erros.errosPassword = "A senha precisa conter pelo menos uma letra!";
-    else if(newUser.password.match(/\d/g).length < 1)
-      erros.errosPassword = "A senha precisa conter pelo menos um número!";
+    //else if(newUser.password.match(/[a-zA-Z]/g).length < 1)
+      //erros.errosPassword = "A senha precisa conter pelo menos uma letra!";
+    //else if(newUser.password.match(/\d/g).length < 1)
+      //erros.errosPassword = "A senha precisa conter pelo menos um número!";
     if(newUser.password !== newUser.confirmPassword)
       erros.errosConfirmPassword = "As senhas devem ser iguais!";
 
