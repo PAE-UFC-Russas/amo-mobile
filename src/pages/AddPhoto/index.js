@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Center, Image } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import * as ImagePicker from 'expo-image-picker';
-import RegisterHeader from '../../components/RegisterHeader';
+import AuthHeader from '../../components/AuthHeader';
 import DefaultBlueButton from '../../components/DefaultBlueButton';
 import styles from './styles';
 
@@ -28,16 +28,16 @@ export default function AddPhoto({navigation}) {
             bgColor="#fff"
         >
             <Center width="5/6">
-                <RegisterHeader>
+                <AuthHeader>
                     Selecione uma foto se quiser!
-                </RegisterHeader>
+                </AuthHeader>
                 <Button bgColor="#fff" onPress={pickImage}>
                     <MaterialIcons style={styles.camIcon} name="photo-camera" color="#fff" size={24}/>
                     <Image 
                         size={150} 
                         resizeMode={"contain"} 
                         borderRadius={100} 
-                        source={!image?require('../../public/avatar_example.jpg'):{uri: image}} 
+                        source={!image?require('../../assets/avatar_example.jpg'):{uri: image}} 
                         alt="Foto de perfil"
                     />
                 </Button>

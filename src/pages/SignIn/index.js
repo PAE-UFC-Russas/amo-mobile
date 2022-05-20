@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Keyboard, Image } from 'react-native';
-import { Center, FormControl, Button, VStack, Flex } from 'native-base';
+import { Center, Button, VStack, Flex } from 'native-base';
 import validator from 'validator';
 import ModalKeepConnected from '../../components/ModalKeepConnected';
 import DefaultFormInput from '../../components/DefaultFormInput';
@@ -52,50 +52,47 @@ export default function Login({navigation}) {
       }}
     > 
       <Image
-        source={require('../../public/logo_name.png')}
+        source={require('../../assets/logo_name.png')}
         width={500}
         height={500}
       />
       <Flex direction="column" width="5/6" height={360} justifyContent="space-between">
         <VStack space={3}>
           <DefaultFormInput
+            label="Email"
             placeholder="" 
             value={user.email} 
             setValue={text=>setUser({...user, email: text})} 
-            color="white" 
+            color="white"
             error={inputErros.errosEmail}
-          >
-            <FormControl.Label _text={{
-              color:"#fff"
-            }}>
-              Email
-            </FormControl.Label>
-          </DefaultFormInput>
+          />
           <DefaultFormInput 
             type="password"
-            placeholder="" 
+            label="Senha"
+            placeholder=""
             value={user.password} 
             setValue={text=>setUser({...user, password: text})} 
             color="white" 
             error={inputErros.errosPassword}
-            >
-              <FormControl.Label _text={{
-              color:"#fff"
-              }}>
-                Senha
-              </FormControl.Label>
-            </DefaultFormInput>
+            />
         </VStack>
         <VStack space={3} alignItems="center">
           {!keyboardIsOpen&&
             <>
-              <Button variant="ghost" key="forget" _text={{
-                color: "#fff",
-                fontWeight: 200
-              }}>
+              <Button 
+                variant="ghost" 
+                key="forget" 
+                onPress={()=>navigation.navigate('RecoverPassword')}
+                _text={{
+                  color: "#fff",
+                  fontWeight: 200
+                }}
+              >
                 Esqueci minha senha
               </Button>
-              <Button variant="ghost" key="SignUp" 
+              <Button 
+                variant="ghost" 
+                key="SignUp" 
                 onPress={()=>navigation.navigate('SignUp')}
                 _text={{
                   color: "#fff",

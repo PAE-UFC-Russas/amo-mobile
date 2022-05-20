@@ -3,6 +3,10 @@
     "name": "monitoria-online-mobile",
     "slug": "monitoria-online-mobile",
     "version": "1.0.0",
+    "splash": {
+      "image": "./src/assets/logo_white_bg_transparent.png",
+      "backgroundColor": "#52D6FB"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -12,8 +16,6 @@
         {
           "photosPermission": "Permitir que o aplicativo AMO acesse sua galeria de fotos.",
           "cameraPermission": "Permitir que o aplicativo AMO acesse sua camera.",
-
-          "//": "Disables the microphone permission",
           "microphonePermission": false
         }
       ]

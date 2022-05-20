@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, TouchableOpacity, Text } from 'react-native';
 import { Center, VStack } from 'native-base';
-import RegisterHeader from '../../components/RegisterHeader';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import AuthHeader from '../../components/AuthHeader';
 import DefaultBlueButton from '../../components/DefaultBlueButton';
 import DefaultFormInput from '../../components/DefaultFormInput';
 import DefaultSelect from '../../components/DefaultSelect';
@@ -9,13 +10,14 @@ import styles from './styles';
 
 export default function StudentProfile({navigation}) {
     const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
+    const [showData, setShowData] = useState(false);
     const [personalData, setPersonalData] = useState({
         user: '',
         name: '',
         nickname: '',
         entryYear: '',
         course: '',
-        birthDate: ''
+        birthDate: new Date()
     });
     const [inputErros, setInputErros] = useState({
         errosUser: null,
@@ -23,14 +25,23 @@ export default function StudentProfile({navigation}) {
         errosNickname: null,
         errosEntryear: null,
         errosCourse: null,
-        errosBirthdate: null
+        errosBirthDate: null
     });
 
-    const courses = ['Ciência da Computação', 'Engenharia Civil', 'Engenharia Mecânica', 'Engenharia de Produção', 'Engenharia de Software'];
+    const courses = ["Ciência da Computação", "Engenharia Civil", "Engenharia Mecânica", "Engenharia de Produção", "Engenharia de Software"];
     const currentYear = new Date().getFullYear();
     let years = [];
+
     for(let i = 2015; i <= currentYear; i++){
         years.push(i);
+    }
+
+    const RenderDate = () => {
+        const year = personalData.birthDate.getFullYear();
+        const month = (1 + personalData.birthDate.getMonth()).toString().padStart(2, '0');
+        const day = personalData.birthDate.getDate().toString().padStart(2, '0');
+    
+        return day + '/'+ month + '/' + year;
     }
 
     const InputValidation = () => {
@@ -40,7 +51,7 @@ export default function StudentProfile({navigation}) {
             errosNickname: null,
             errosEntryear: null,
             errosCourse: null,
-            errosBirthdate: null
+            errosBirthDate: null
         };
     
         if(personalData.user.length < 3)
@@ -53,10 +64,12 @@ export default function StudentProfile({navigation}) {
             erros.errosEntryear = "Ano de entrada não pode está vazio!";
         if(!personalData.course)
             erros.errosCourse = "Curso não pode está vazio!";
+        if(personalData.birthDate.getFullYear() === 2022)
+            erros.errosBirthDate = "A data de nascimento não pode está vazia!";
 
         setInputErros(erros);
-        if(!erros.errosUser && !erros.errosName && !erros.errosNickname && !erros.errosEntryear && !erros.errosCourse && !erros.errosBirthdate)
-            return navigation.navigate("CheckCode")
+        if(!erros.errosUser && !erros.errosName && !erros.errosNickname && !erros.errosEntryear && !erros.errosCourse && !erros.errosBirthDate)
+            return navigation.navigate("AddPhoto")
         return null
     }
 
@@ -74,9 +87,9 @@ export default function StudentProfile({navigation}) {
         >
             {
                 !keyboardIsOpen&&
-                <RegisterHeader>
+                <AuthHeader>
                     Estamos quase lá
-                </RegisterHeader>
+                </AuthHeader>
             }
             <VStack width="5/6" space={3}>
                 <DefaultFormInput 
@@ -117,13 +130,27 @@ export default function StudentProfile({navigation}) {
                     color="tertiaryBlue" 
                     error={inputErros.errosCourse}
                 />
-                <DefaultFormInput 
-                    placeholder="Data de nascimento" 
-                    value={personalData.birthDate} 
-                    setValue={text=>setPersonalData({...personalData, birthDate: text})} 
-                    color="tertiaryBlue" 
-                    error={inputErros.errosBirthdate}
-                />
+                <TouchableOpacity 
+                    style={styles.dateTimeButton}
+                    onPress={()=>setShowData(true)}
+                >
+                    <Text style={{color: !inputErros.errosBirthDate?"#52D6FB":"#f00", fontSize: 12}}>
+                        {personalData.birthDate.getFullYear()===2022?"Data de nascimento":RenderDate()}
+                    </Text>
+                </TouchableOpacity>
+                {
+                    showData&&
+                        <RNDateTimePicker 
+                            mode="date" 
+                            display="spinner" 
+                            value={personalData.birthDate}
+                            maximumDate={new Date(2006, 10, 20)}
+                            minimumDate={new Date(1950, 0, 1)}
+                            themeVariant="light"
+                            onTouchCancel={()=>setShowData(false)}
+                            onChange={(event, date) => {setShowData(false);setPersonalData({...personalData, birthDate: date})}}
+                        />
+                }
             </VStack>
             {
                 !keyboardIsOpen&&

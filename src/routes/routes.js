@@ -6,12 +6,14 @@ import SignUp from '../pages/SignUp';
 import SelectProfile from '../pages/SelectProfile';
 import StudentProfile from '../pages/StudentProfile';
 import AddPhoto from '../pages/AddPhoto';
+import RecoverPassword from '../pages/RecoverPassword';
+import ChangePassword from '../pages/ChangePassword';
 
-const Stack = createNativeStackNavigator ();
+const Stack = createNativeStackNavigator();
 
 export default function Routes(){
     return(
-        //Navegação da autenticação do usuario
+        //Rotas - autenticação do usuario
         <Stack.Navigator>
             <Stack.Screen name="SignIn" component={SignIn} options={{headerShown: false}}/>
             <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}}/>
@@ -19,6 +21,8 @@ export default function Routes(){
             <Stack.Screen name="SelectProfile" component={SelectProfile} options={{headerShown: false}}/>
             <Stack.Screen name="StudentProfile" component={StudentProfile} options={{headerShown: false}}/>
             <Stack.Screen name="AddPhoto" component={AddPhoto} options={{headerShown: false}}/>
+            <Stack.Screen name="RecoverPassword" component={RecoverPassword} options={{headerShown: false}}/>
+            <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown: false}}/>
         </Stack.Navigator>
     )
 }

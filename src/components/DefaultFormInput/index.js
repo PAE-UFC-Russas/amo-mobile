@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FormControl, Input } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-export default function DefaultFormInput({children, placeholder, value, setValue, color, error, type, maxLength}){
+export default function DefaultFormInput({label, placeholder, value, setValue, color, error, helperText, type, maxLength}){
     const [hiddenPassword, setHiddenPassword] = useState(true);
 
     const PasswordVisibility = () => {
@@ -24,7 +24,14 @@ export default function DefaultFormInput({children, placeholder, value, setValue
     if(type === 'text')
         return (
             <FormControl isInvalid={error?true:false}>
-                {children}
+                {
+                    label&&
+                    <FormControl.Label _text={{
+                        color: color
+                    }}>
+                        {label}
+                    </FormControl.Label>
+                }
                 <Input
                     variant="outline"
                     placeholder={placeholder}
@@ -36,15 +43,31 @@ export default function DefaultFormInput({children, placeholder, value, setValue
                     maxLength={maxLength}
                     onChangeText={setValue}
                 />
-                <FormControl.ErrorMessage>
-                    {error}
-                </FormControl.ErrorMessage>
+                {
+                    error&&
+                    <FormControl.ErrorMessage>
+                        {error}
+                    </FormControl.ErrorMessage>
+                }
+                {
+                    helperText&&
+                    <FormControl.HelperText>
+                        {helperText}
+                    </FormControl.HelperText>
+                }
             </FormControl>
         )
     else
         return (
             <FormControl isInvalid={error?true:false}>
-                {children}
+                {
+                    label&&
+                    <FormControl.Label _text={{
+                        color: color
+                    }}>
+                        {label}
+                    </FormControl.Label>
+                }
                 <Input
                     type={hiddenPassword?"password":"text"}
                     InputRightElement={<PasswordVisibility/>}
@@ -58,9 +81,18 @@ export default function DefaultFormInput({children, placeholder, value, setValue
                     maxLength={maxLength}
                     onChangeText={HandleChangePassword}
                 />
-                <FormControl.ErrorMessage>
-                    {error}
-                </FormControl.ErrorMessage>
+                {
+                    error&&
+                    <FormControl.ErrorMessage>
+                        {error}
+                    </FormControl.ErrorMessage>
+                }
+                {
+                    helperText&&
+                    <FormControl.HelperText>
+                        {helperText}
+                    </FormControl.HelperText>
+                }
             </FormControl>
         )
 }

@@ -9,12 +9,10 @@ const styles = StyleSheet.create({
         paddingTop: 50,
         paddingBottom: 50
     },
-    dateTimeButton: {
-        backgroundColor: '#fff',
-        borderWidth: 1,
-        borderColor: '#52D6FB',
-        borderRadius: 15,
-        padding: 13
+    backButton:{
+        position: 'absolute',
+        top: 50,
+        left: 35
     }
 });
 

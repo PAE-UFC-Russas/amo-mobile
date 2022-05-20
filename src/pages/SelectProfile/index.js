@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Center, Select, Button } from 'native-base';
-import RegisterHeader from '../../components/RegisterHeader';
+import { Center, Button } from 'native-base';
+import AuthHeader from '../../components/AuthHeader';
 import DefaultSelect from '../../components/DefaultSelect';
 import styles from './styles';
 
@@ -26,9 +26,9 @@ export default function SelectProfile({navigation}) {
 
         >
             <View>
-                <RegisterHeader>
+                <AuthHeader>
                     Selecionar perfil
-                </RegisterHeader>
+                </AuthHeader>
                 <DefaultSelect
                     placeholder="Escolha seu perfil" 
                     items={['Aluno', 'Monitor', 'Professor']}
