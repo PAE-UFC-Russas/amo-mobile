@@ -9,7 +9,7 @@ import styles from './styles';
 export default function AddPhoto({navigation}) {
     const [image, setImage] = useState(null);
 
-    const pickImage = async () => {
+    const PickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -31,7 +31,7 @@ export default function AddPhoto({navigation}) {
                 <AuthHeader>
                     Selecione uma foto se quiser!
                 </AuthHeader>
-                <Button bgColor="#fff" onPress={pickImage}>
+                <Button bgColor="#fff" onPress={PickImage}>
                     <MaterialIcons style={styles.camIcon} name="photo-camera" color="#fff" size={24}/>
                     <Image 
                         size={150} 

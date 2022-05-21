@@ -5,8 +5,8 @@ export default function DefaultFormInput({placeholder, value, setValue, color, e
         <FormControl isInvalid={error?true:false}>
             <Select 
                 selectedValue={value} 
-                minWidth="320" 
                 accessibilityLabel={placeholder}
+                minWidth="5/6"
                 placeholder={placeholder}
                 placeholderTextColor={color}
                 borderColor={color}

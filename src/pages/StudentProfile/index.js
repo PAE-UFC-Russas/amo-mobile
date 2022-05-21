@@ -142,11 +142,9 @@ export default function StudentProfile({navigation}) {
                     showData&&
                         <RNDateTimePicker 
                             mode="date" 
-                            display="spinner" 
                             value={personalData.birthDate}
                             maximumDate={new Date(2006, 10, 20)}
                             minimumDate={new Date(1950, 0, 1)}
-                            themeVariant="light"
                             onTouchCancel={()=>setShowData(false)}
                             onChange={(event, date) => {setShowData(false);setPersonalData({...personalData, birthDate: date})}}
                         />
