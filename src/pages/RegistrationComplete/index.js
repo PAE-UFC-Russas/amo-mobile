@@ -1,0 +1,16 @@
+import React from 'react';
+import { Center, Text } from 'native-base';
+import AuthHeader from '../../components/AuthHeader';
+import styles from './styles';
+import DefaultBlueButton from '../../components/DefaultBlueButton';
+
+
+export default function RegistrationComplete({navigation}){
+    return(
+        <Center style={styles.container}>
+            <AuthHeader/>
+            <Text color="defaultBlue" width="1/2" textAlign="center" fontSize={16}>Obrigado(a)! Cadastro concluido com sucesso!</Text>
+            <DefaultBlueButton>Login</DefaultBlueButton>
+        </Center>
+    )
+}

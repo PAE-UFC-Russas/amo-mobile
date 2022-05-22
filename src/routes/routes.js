@@ -8,6 +8,7 @@ import StudentProfile from '../pages/StudentProfile';
 import AddPhoto from '../pages/AddPhoto';
 import RecoverPassword from '../pages/RecoverPassword';
 import ChangePassword from '../pages/ChangePassword';
+import RegistrationComplete from '../pages/RegistrationComplete';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function Routes(){
             <Stack.Screen name="AddPhoto" component={AddPhoto} options={{headerShown: false}}/>
             <Stack.Screen name="RecoverPassword" component={RecoverPassword} options={{headerShown: false}}/>
             <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown: false}}/>
+            <Stack.Screen name="RegistrationComplete" component={RegistrationComplete} options={{headerShown: false}}/>
         </Stack.Navigator>
     )
 }
