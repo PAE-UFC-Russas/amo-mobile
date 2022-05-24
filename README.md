@@ -1,3 +1,7 @@
+## Projeto
+
+Aplicativo para auxiliar as monitorias, onde seria possível marcar monitoria, ver hórarios, visualizar conteúdo  postados e solucionar dúvidas dos alunos da UFC - Campus Russas.
+
 ## Como executar
 
 Clone o projeto e acesse a pasta do mesmo.
@@ -15,4 +19,4 @@ $ npm install
 # Iniciar o projeto
 $ expo start
 ```
-O app pode ser acessado pelo o aplicativo do expo ao ler o qrcode
+O app pode ser acessado pelo o aplicativo do expo ao ler o qrcode do terminal.
