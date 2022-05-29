@@ -6,7 +6,7 @@ import ModalKeepConnected from '../../components/ModalKeepConnected';
 import DefaultFormInput from '../../components/DefaultFormInput';
 import styles from './styles';
 
-export default function Login({navigation}) {
+export default function SignIn({navigation}) {
   const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
   const [openKeepConnected, setOpenKeepConnected] = useState(false);
   const [user, setUser] = useState({
@@ -31,7 +31,8 @@ export default function Login({navigation}) {
       erros.errosPassword = 'A senha precisa conter 8 caracteres!';
 
     if(!erros.errosEmail && !erros.errosPassword)
-      setOpenKeepConnected(true);
+      return navigation.navigate("SelectCourses")
+      //setOpenKeepConnected(true);
     setInputErros(erros);
   }
 

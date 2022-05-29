@@ -44,7 +44,7 @@ export default function AddPhoto({navigation}) {
             </Center>
             <Center>
                 <Button variant="ghost" key="register" 
-                    onPress={()=>navigation.navigate('Register')}
+                    onPress={()=>navigation.navigate("RegistrationComplete")}
                     _text={{
                         color: "defaultBlue",
                         fontWeight: 800
@@ -52,7 +52,7 @@ export default function AddPhoto({navigation}) {
                 >
                     Pular
                 </Button>
-                <DefaultBlueButton navigation={navigation} page="navigation">
+                <DefaultBlueButton onPress={()=>navigation.navigate("RegistrationComplete")}>
                     Concluir cadastro
                 </DefaultBlueButton>
             </Center>

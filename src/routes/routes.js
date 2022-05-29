@@ -9,6 +9,8 @@ import AddPhoto from '../pages/AddPhoto';
 import RecoverPassword from '../pages/RecoverPassword';
 import ChangePassword from '../pages/ChangePassword';
 import RegistrationComplete from '../pages/RegistrationComplete';
+import SelectCourses from '../pages/SelectCourses';
+import SelectMonitoria from '../pages/SelectMonitoria';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,8 @@ export default function Routes(){
             <Stack.Screen name="RecoverPassword" component={RecoverPassword} options={{headerShown: false}}/>
             <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown: false}}/>
             <Stack.Screen name="RegistrationComplete" component={RegistrationComplete} options={{headerShown: false}}/>
+            <Stack.Screen name="SelectCourses" component={SelectCourses} options={{headerShown: false}}/>
+            <Stack.Screen name="SelectMonitoria" component={SelectMonitoria} options={{headerShown: false}}/>
         </Stack.Navigator>
     )
 }
