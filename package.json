@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.2.2",
+    "@react-native-community/datetimepicker": "6.1.2",
+    "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "axios": "^0.27.2",
@@ -27,8 +29,7 @@
     "react-native-screens": "~3.11.1",
     "react-native-svg": "12.3.0",
     "react-native-web": "0.17.7",
-    "validator": "^13.7.0",
-    "@react-native-community/datetimepicker": "6.1.2"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

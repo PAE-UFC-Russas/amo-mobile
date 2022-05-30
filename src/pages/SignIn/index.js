@@ -31,7 +31,7 @@ export default function SignIn({navigation}) {
       erros.errosPassword = 'A senha precisa conter 8 caracteres!';
 
     if(!erros.errosEmail && !erros.errosPassword)
-      return navigation.navigate("SelectCourses")
+      return navigation.navigate("TabStack")
       //setOpenKeepConnected(true);
     setInputErros(erros);
   }
