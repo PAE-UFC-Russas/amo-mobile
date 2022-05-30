@@ -32,7 +32,7 @@ export default function ChangePassword({navigation}) {
 
     setInputErros(erros);
     if(!erros.errosPassword && !erros.errosConfirmPassword)
-        navigation.navigate("CheckCode")
+        navigation.navigate("SignIn")
     return null
   }
 
@@ -69,7 +69,7 @@ export default function ChangePassword({navigation}) {
         </VStack>
       </Center>
       <DefaultBlueButton onPress={InputValidation}>
-        Avançar
+        Salvar
       </DefaultBlueButton>
     </Center>
   );

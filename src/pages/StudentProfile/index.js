@@ -14,7 +14,7 @@ export default function StudentProfile({navigation}) {
     const [personalData, setPersonalData] = useState({
         user: '',
         name: '',
-        nickname: '',
+        registration: '',
         entryYear: '',
         course: '',
         birthDate: new Date()
@@ -22,7 +22,7 @@ export default function StudentProfile({navigation}) {
     const [inputErros, setInputErros] = useState({
         errosUser: null,
         errosName: null,
-        errosNickname: null,
+        errosRegistration: null,
         errosEntryear: null,
         errosCourse: null,
         errosBirthDate: null
@@ -58,8 +58,8 @@ export default function StudentProfile({navigation}) {
             erros.errosUser = "Usuário inválido!";
         if(personalData.user.length < 3)
             erros.errosName = "Nome inválido!";
-        if(personalData.nickname.length < 3)
-            erros.errosNickname = "Apelido inválido!";
+        if(!personalData.registration)
+            erros.errosNickname = "Matricula inválida!";
         if(!personalData.entryYear)
             erros.errosEntryear = "Ano de entrada não pode está vazio!";
         if(!personalData.course)
@@ -108,11 +108,12 @@ export default function StudentProfile({navigation}) {
                     error={inputErros.errosName}
                 />
                 <DefaultFormInput
-                    placeholder="Apelido" 
-                    value={personalData.nickname} 
-                    setValue={text=>setPersonalData({...personalData, nickname: text})} 
+                    placeholder="Matrícula" 
+                    value={personalData.registration} 
+                    setValue={text=>setPersonalData({...personalData, registration: text})} 
+                    maxLength={6}
                     color="tertiaryBlue" 
-                    error={inputErros.errosNickname}
+                    error={inputErros.errosRegistration}
                 />
                 <DefaultSelect
                     placeholder="Ano de entrada" 
