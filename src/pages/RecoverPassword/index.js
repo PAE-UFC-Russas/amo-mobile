@@ -33,7 +33,7 @@ export default function RecoverPassword({navigation}) {
       bgColor="#fff"
     >
       <MaterialIcons
-        onPress={()=>navigation.navigate("SignIn")}
+        onPress={()=>navigation.goBack()}
         color="#52D6FB"
         size={24}
         style={styles.backButton}
