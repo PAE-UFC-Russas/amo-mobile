@@ -17,9 +17,6 @@ import SelectCourses from '../pages/SelectCourses';
 import SelectMonitoria from '../pages/SelectMonitoria';
 import Forum from '../pages/Forum';
 
-//Componentes
-import ForumHeader from '../components/ForumHeader';
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -29,15 +26,16 @@ function TabNavigation(){
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName = '';
-                    if (route.name === 'Forum') {
-                        iconName = 'home';
-                    } else if (route.name === 'Date') {
-                        iconName = 'basket';
-                    } else if (route.name === 'Notification') {
-                        iconName = 'cart';
+
+                    if(route.name === 'Forum') {
+                        iconName = 'forum';
+                    }else if(route.name === 'Date') {
+                        iconName = 'calendar';
+                    }else if(route.name === 'Notification') {
+                        iconName = 'bell';
                     }
+
                     return <MaterialIcons
-                                onPress={() => alert('Barra de pesquisa!')}
                                 color={focused?"#52D6FB":"#000"}
                                 size={32}
                                 name={iconName}
@@ -47,7 +45,7 @@ function TabNavigation(){
                 tabBarInactiveTintColor: "gray",
             })}
         >
-            <Tab.Screen name="Forum" component={Forum} options={ForumHeader}/>
+            <Tab.Screen name="Forum" component={Forum}/>
 
         </Tab.Navigator>
     )

@@ -10,7 +10,7 @@ import styles from './styles';
 
 export default function StudentProfile({navigation}) {
     const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
-    const [showData, setShowData] = useState(false);
+    const [showDate, setShowDate] = useState(false);
     const [personalData, setPersonalData] = useState({
         user: '',
         name: '',
@@ -133,21 +133,20 @@ export default function StudentProfile({navigation}) {
                 />
                 <TouchableOpacity 
                     style={styles.dateTimeButton}
-                    onPress={()=>setShowData(true)}
+                    onPress={()=>setShowDate(true)}
                 >
                     <Text style={{color: !inputErros.errosBirthDate?"#52D6FB":"#f00", fontSize: 12}}>
                         {personalData.birthDate.getFullYear()===2022?"Data de nascimento":RenderDate()}
                     </Text>
                 </TouchableOpacity>
                 {
-                    showData&&
+                    showDate&&
                         <RNDateTimePicker 
                             mode="date" 
                             value={personalData.birthDate}
-                            maximumDate={new Date(2006, 10, 20)}
-                            minimumDate={new Date(1950, 0, 1)}
-                            onTouchCancel={()=>setShowData(false)}
-                            onChange={(event, date) => {setShowData(false);setPersonalData({...personalData, birthDate: date})}}
+                            minimumDate={new Date(1940, 0, 1)}
+                            onTouchCancel={()=>setShowDate(false)}
+                            onChange={(event, date) => {setShowDate(false);setPersonalData({...personalData, birthDate: date})}}
                         />
                 }
             </VStack>

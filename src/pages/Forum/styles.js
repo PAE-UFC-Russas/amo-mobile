@@ -6,8 +6,12 @@ const styles = StyleSheet.create({
         color: '#fff',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingTop: 50,
-        paddingBottom: 50
+        paddingTop: 5
+    },
+    addButton: {
+        position: 'absolute',
+        bottom: 25,
+        right: 25
     }
 });
 
