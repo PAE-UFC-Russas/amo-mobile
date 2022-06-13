@@ -45,7 +45,7 @@ export default function ForumSearch({setFilters, filters}){
                     style={styles.dateTimeFilterButton}
                 >
                     <Text color="tertiaryBlue">
-                        Ordenar por
+                       Ordenar por
                     </Text>
                     <MaterialIcons
                         color="#52D6FB"
@@ -55,7 +55,6 @@ export default function ForumSearch({setFilters, filters}){
                 </TouchableOpacity>
                 <Button 
                     borderRadius="full" 
-                    height="5/6" 
                     marginRight={3} 
                     borderColor="#52D6FB"
                     _text={{
@@ -67,7 +66,6 @@ export default function ForumSearch({setFilters, filters}){
                 </Button>
                 <Button 
                     borderRadius="full" 
-                    height="5/6" 
                     marginRight={3} 
                     borderColor="#52D6FB" 
                     _text={{
@@ -79,7 +77,6 @@ export default function ForumSearch({setFilters, filters}){
                 </Button>
                 <Button 
                     borderRadius="full" 
-                    height="5/6" 
                     marginRight={3} 
                     borderColor="#52D6FB" 
                     _text={{
@@ -91,7 +88,6 @@ export default function ForumSearch({setFilters, filters}){
                 </Button>
                 <Button 
                     borderRadius="full" 
-                    height="5/6"
                     marginRight={3} 
                     borderColor="#52D6FB"
                     _text={{

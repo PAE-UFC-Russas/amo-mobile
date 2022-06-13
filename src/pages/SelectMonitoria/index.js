@@ -6,22 +6,37 @@ import styles from './styles';
 
 export default function SelectMonitoria({route, navigation}) {
     const [monitorias, setMonitorias] = useState([]);
-
-    const [filterMonitoria,setFilterMonitoria] = useState("Heron gay");
+    const [filterMonitoria, setFilterMonitoria] = useState("");
     
     useEffect(()=>{
+        const DATA = ["Projeto e analise de algoritimos","Redes de computadores", "Lógica para computação"];
         if(route.params === "Ciência da Computação"){
-            setMonitorias(["Projeto e analise de algoritimos","Redes de computadores", "Lógica para computação"]);
+            setMonitorias(DATA.filter((item)=>{
+                const itemUpperCase = item.toUpperCase();
+                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
+            }));
         }else if(route.params === "Engenharia Civil"){
-            setMonitorias(["Projeto e analise de algoritimos","Redes de computadores", "Lógica para computação"]);
+            setMonitorias(DATA.filter((item)=>{
+                const itemUpperCase = item.toUpperCase();
+                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
+            }));
         }else if(route.params === "Engenharia Mecânica"){
-            setMonitorias(["Projeto e analise de algoritimos","Redes de computadores", "Lógica para computação"]);
+            setMonitorias(DATA.filter((item)=>{
+                const itemUpperCase = item.toUpperCase();
+                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
+            }));
         }else if(route.params === "Engenharia de Produção"){
-            setMonitorias(["Projeto e analise de algoritimos","Redes de computadores", "Lógica para computação"]);
+            setMonitorias(DATA.filter((item)=>{
+                const itemUpperCase = item.toUpperCase();
+                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
+            }));
         }else if(route.params === "Engenharia de Software"){
-            setMonitorias(["Projeto e analise de algoritimos","Redes de computadores", "Lógica para computação"]);
+            setMonitorias(DATA.filter((item)=>{
+                const itemUpperCase = item.toUpperCase();
+                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
+            }));
         }
-    },[]);
+    },[filterMonitoria]);
 
     return (
         <Center
@@ -33,7 +48,7 @@ export default function SelectMonitoria({route, navigation}) {
                 Selecione a monitoria
             </AuthHeader>
             <Input
-                placeholder="Pesquisar perguntas..."
+                placeholder="Pesquisar monitorias..."
                 value={filterMonitoria}
                 onChangeText={text => setFilterMonitoria(text)}
                 width="5/6"
@@ -58,7 +73,7 @@ export default function SelectMonitoria({route, navigation}) {
                             borderRadius="2xl" 
                             width={80} 
                             height={60}
-                            onPress={()=>navigation.navigate("TabStack", item)} 
+                            onPress={()=>navigation.navigate("ForumTab", item)} 
                             _text={{
                                 fontWeight: 800,
                                 color: "#fff",

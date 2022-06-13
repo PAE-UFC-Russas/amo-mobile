@@ -72,18 +72,21 @@ export default function Forum({navigation}) {
         data={DATA}
         renderItem={ForumQuest}
         keyExtractor={item => item.id}
+        style={styles.flatListContainer}
       />
       <IconButton 
         style={styles.addButton} 
         variant="solid" 
         bgColor="tertiaryBlue"
         borderRadius="full" 
-        icon={<MaterialIcons
+        icon={
+                <MaterialIcons
                   color="#fff"
                   size={32}
                   name="add"
                 />
               }
+        onPress={()=>navigation.navigate("RegisterDoubt")}
       />
     </Center>
   );

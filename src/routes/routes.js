@@ -15,6 +15,7 @@ import ChangePassword from '../pages/ChangePassword';
 import RegistrationComplete from '../pages/RegistrationComplete';
 import SelectCourses from '../pages/SelectCourses';
 import SelectMonitoria from '../pages/SelectMonitoria';
+import RegisterDoubt from '../pages/RegisterDoubt';
 import Forum from '../pages/Forum';
 
 const Stack = createNativeStackNavigator();
@@ -23,8 +24,8 @@ const Tab = createBottomTabNavigator();
 function TabNavigation(){
     return (
         <Tab.Navigator
-            screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
+            screenOptions={({route}) => ({
+                tabBarIcon: ({focused, color, size}) => {
                     let iconName = '';
 
                     if(route.name === 'Forum') {
@@ -53,7 +54,6 @@ function TabNavigation(){
 
 export default function Routes(){
     return(
-        //Rotas - Autenticação
         <Stack.Navigator>
             <Stack.Screen name="SignIn" component={SignIn} options={{headerShown: false}}/>
             <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}}/>
@@ -66,7 +66,8 @@ export default function Routes(){
             <Stack.Screen name="RegistrationComplete" component={RegistrationComplete} options={{headerShown: false}}/>
             <Stack.Screen name="SelectCourses" component={SelectCourses} options={{headerShown: false}}/>
             <Stack.Screen name="SelectMonitoria" component={SelectMonitoria} options={{headerShown: false}}/>
-            <Stack.Screen name="TabStack" component={TabNavigation} options={{headerShown: false}}/>
+            <Stack.Screen name="ForumTab" component={TabNavigation} options={{headerShown: false}}/>
+            <Stack.Screen name="RegisterDoubt" component={RegisterDoubt} options={{headerShown: false}}/>
         </Stack.Navigator>
     )
 }

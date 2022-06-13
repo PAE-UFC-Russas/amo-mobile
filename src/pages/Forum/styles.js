@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 25,
         right: 25
+    },
+    flatListContainer: {
+        width: "90%"
     }
 });
 
