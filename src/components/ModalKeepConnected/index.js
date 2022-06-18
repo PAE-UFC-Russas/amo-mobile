@@ -4,20 +4,25 @@ import styles from './styles';
 
 export default function ModalKeepConnected({open, setOpen, setUser, user}){
     const { Login } = useAuth();
-    
+
+    const handleOnClose = () => {
+        setOpen(false);
+        const response = Login(user);
+    }
+
     return (
-        <Modal isOpen={open} onClose={() => {setOpen(false); Login(user)}} size="full">
+        <Modal isOpen={open} onClose={handleOnClose} size="full">
             <Modal.Content padding="5" bgColor="#fff" style={styles.container}>
                 <Modal.Body>
                     <Checkbox 
                         size="lg"
                         borderColor="defaultBlue" 
-                        defaultIsChecked={user.keepConnected}
+                        defaultIsChecked={user.signed}
                         _text={{
                             color: "defaultBlue",
                             fontSize: "lg"
                         }}
-                        onChange={()=>setUser({...user, keepConnected: !user.keepConnected})}
+                        onChange={()=>setUser({...user, signed: !user.signed})}
                     >
                         Manter conectado
                     </Checkbox>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Keyboard, Image } from 'react-native';
 import { Center, Button, VStack, Flex } from 'native-base';
 import validator from 'validator';
+import { useAuth } from '../../contexts/auth';
 import ModalKeepConnected from '../../components/ModalKeepConnected';
 import DefaultFormInput from '../../components/DefaultFormInput';
 import styles from './styles';
@@ -9,10 +10,10 @@ import styles from './styles';
 export default function SignIn({navigation}) {
   const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
   const [openKeepConnected, setOpenKeepConnected] = useState(false);
-  const [user, setUser] = useState({
+  const [userLogin, setUserLogin] = useState({
     email: '',
     password: '',
-    keepConnected: false
+    signed: false,
   });
   const [inputErros, setInputErros] = useState({
     errosEmail: null,
@@ -25,14 +26,13 @@ export default function SignIn({navigation}) {
       errosPassword: null
     };
 
-    if(user.email.length < 10 && !validator.isEmail(user.email))
+    if(userLogin.email.length < 10 && !validator.isEmail(userLogin.email))
       erros.errosEmail = 'E-mail inválido!';
-    if(user.password.length < 8)
+    if(userLogin.password.length < 8)
       erros.errosPassword = 'A senha precisa conter 8 caracteres!';
 
     if(!erros.errosEmail && !erros.errosPassword)
-      return navigation.navigate("SelectCourses")
-      //setOpenKeepConnected(true);
+      setOpenKeepConnected(true);
     setInputErros(erros);
   }
 
@@ -62,8 +62,8 @@ export default function SignIn({navigation}) {
           <DefaultFormInput
             label="Email"
             placeholder="" 
-            value={user.email} 
-            setValue={text=>setUser({...user, email: text})} 
+            value={userLogin.email} 
+            setValue={text=>setUserLogin({...userLogin, email: text})} 
             color="white"
             error={inputErros.errosEmail}
           />
@@ -71,8 +71,8 @@ export default function SignIn({navigation}) {
             type="password"
             label="Senha"
             placeholder=""
-            value={user.password} 
-            setValue={text=>setUser({...user, password: text})} 
+            value={userLogin.password} 
+            setValue={text=>setUserLogin({...userLogin, password: text})} 
             color="white" 
             error={inputErros.errosPassword}
             />
@@ -120,7 +120,7 @@ export default function SignIn({navigation}) {
         </VStack >
       </Flex>
       {openKeepConnected&&
-        <ModalKeepConnected open={openKeepConnected} setOpen={setOpenKeepConnected} setUser={setUser} user={user}/>
+        <ModalKeepConnected open={openKeepConnected} setOpen={setOpenKeepConnected} setUser={setUserLogin} user={userLogin}/>
       }
     </Center>
   );
