@@ -1,11 +1,12 @@
 import { createContext, useContext, useState } from 'react';
+import { DeleteLoginToken, StoreLoginToken, GetLoginToken } from '../util/StorageLogin';
 import api from '../services/api';
 
 export const AuthContext = createContext({});
 
 export default function AuthContextProvider({ children }){
     const [user, setUser] = useState({
-        username: null,
+        email: null,
         password: null,
         token: null,
         signed: false
@@ -13,29 +14,42 @@ export default function AuthContextProvider({ children }){
 
     async function Login(user){
         try{
-            const userToken = await api.post('/usuario/login/', {
-                "username": user.username,
+            const response = await api.post('/usuario/login/', {
+                "username": user.email,
                 "password": user.password
             });
-            setUser({...user, token: userToken});
-            console.log(userToken);
-        }catch(error){
-            alert("error")
-            console.log(error.response.data.username)
-            if(error.response.data.username){
-                return error.response.data.username
-            }else{
-                return error.response.data.password
+            const token = response.data.token;
+            setUser({...user, token: token});
+
+            if(user.signed){
+                await StoreLoginToken(token);
             }
+
+            return undefined
+        }catch(error){
+            return error.response.data
         }
     }
 
-    /*function Logout(){
+    async function Logout(){
+        setUser({
+            email: null,
+            password: null,
+            token: null,
+            signed: false
+        });
+        await DeleteLoginToken();
+    }
 
-    }*/
+    async function IsConnected(){
+        const token = GetLoginToken();
+        if(!token)
+            return false
+        return true
+    }
 
     return (
-        <AuthContext.Provider value={{user, Login}}>
+        <AuthContext.Provider value={{user, Login, Logout, IsConnected}}>
             {children}
         </AuthContext.Provider>
     );

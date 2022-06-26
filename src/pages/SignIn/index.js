@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Keyboard, Image } from 'react-native';
 import { Center, Button, VStack, Flex } from 'native-base';
 import validator from 'validator';
@@ -19,6 +19,18 @@ export default function SignIn({navigation}) {
     errosEmail: null,
     errosPassword: null
   });
+  const { IsConnected } = useAuth();
+  
+
+  useEffect(()=>{
+    async function VerifyLogin(){
+      const connected = await IsConnected();
+      if(connected){
+        navigation.navigate("SelectCourses");
+      }
+    }
+    VerifyLogin();
+  },[])
 
   const InputValidation = () => {
     let erros = {
@@ -83,7 +95,7 @@ export default function SignIn({navigation}) {
               <Button 
                 variant="ghost" 
                 key="forget" 
-                onPress={()=>navigation.navigate('RecoverPassword')}
+                onPress={()=>navigation.navigate("RecoverPassword")}
                 _text={{
                   color: "#fff",
                   fontWeight: 200
@@ -94,7 +106,7 @@ export default function SignIn({navigation}) {
               <Button 
                 variant="ghost" 
                 key="SignUp" 
-                onPress={()=>navigation.navigate('SignUp')}
+                onPress={()=>navigation.navigate("SignUp")}
                 _text={{
                   color: "#fff",
                   fontWeight: 800
@@ -120,7 +132,7 @@ export default function SignIn({navigation}) {
         </VStack >
       </Flex>
       {openKeepConnected&&
-        <ModalKeepConnected open={openKeepConnected} setOpen={setOpenKeepConnected} setUser={setUserLogin} user={userLogin}/>
+        <ModalKeepConnected navigation={navigation} open={openKeepConnected} setOpen={setOpenKeepConnected} setUser={setUserLogin} userLogin={userLogin} setErros={setInputErros}/>
       }
     </Center>
   );
