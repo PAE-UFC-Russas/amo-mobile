@@ -15,7 +15,7 @@ export default function DefaultFormInput({label, placeholder, value, setValue, c
     }
 
     const HandleChangePassword = (text) => {
-        setValue(text.replace(/[^a-z0-9]/gi,''));
+        setValue(text.replace(/( )+/g, ''));
     }
 
     maxLength = !maxLength?32:maxLength
