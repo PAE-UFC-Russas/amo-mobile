@@ -2,6 +2,18 @@
 
 Aplicativo para auxiliar as monitorias, onde seria possível marcar monitoria, ver hórarios, visualizar conteúdo  postados e solucionar dúvidas dos alunos da UFC - Campus Russas.
 
+## Dependencias
+
+Para instalá-los, siga os passos abaixo:
+
+Expo
+```bash
+$ npm install --global expo-cli
+```
+
+NodeJs
+https://nodejs.org/en/download/
+
 ## Como executar
 
 Clone o projeto e acesse a pasta do mesmo.
