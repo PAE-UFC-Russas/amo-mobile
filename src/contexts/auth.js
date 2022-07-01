@@ -31,6 +31,37 @@ export default function AuthContextProvider({ children }){
         }
     }
 
+    async function Register(user){
+        try{
+            const response = await api.post('/usuario/registrar/', {
+                "username": user.email,
+                "password": user.password
+            });
+            const token = response.data.token;
+            setUser({...user, token: token});
+
+            if(user.signed){
+                await StoreLoginToken(token);
+            }
+
+            return undefined
+        }catch(error){
+            return error.response.data
+        }
+    }
+
+    async function Active(token){
+        try{
+            const response = await api.post('/usuario/ativar/', {
+                "token": token
+            });
+
+            return undefined
+        }catch(error){
+            return error.response.data
+        }
+    }
+
     async function Logout(){
         setUser({
             email: null,
@@ -49,7 +80,7 @@ export default function AuthContextProvider({ children }){
     }
 
     return (
-        <AuthContext.Provider value={{user, Login, Logout, IsConnected}}>
+        <AuthContext.Provider value={{user, Login, Register, Active, Logout, IsConnected}}>
             {children}
         </AuthContext.Provider>
     );

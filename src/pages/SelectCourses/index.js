@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { VStack, Center, Button } from 'native-base';
 import AuthHeader from '../../components/AuthHeader';
+import api from '../../services/api';
 import styles from './styles';
 
 export default function SelectCourses({navigation}) {
-    const courses = ["Ciência da Computação", "Engenharia Civil", "Engenharia Mecânica", "Engenharia de Produção", "Engenharia de Software"];
+    const [courses, setCourses] = useState([]);
+
+    useEffect(()=>{
+        async function GetCourses(){
+            console.log('aq')
+            try{
+                const response = await api.get('/cursos/');
+                console.log(response)
+            }catch(error){
+                console.log(error.response.data)
+            }
+        }
+        GetCourses();
+    })
 
     return (
         <Center

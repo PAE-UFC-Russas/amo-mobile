@@ -20,6 +20,7 @@ export async function DeleteLoginToken(){
 export async function GetLoginToken(){
     try {
         const token = await AsyncStorage.getItem('user_token');
+
         return token;
     } catch (e) {
         console.log('Error', e);
