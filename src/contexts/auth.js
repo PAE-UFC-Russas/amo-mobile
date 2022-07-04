@@ -18,6 +18,7 @@ export default function AuthContextProvider({ children }){
                 "username": user.email,
                 "password": user.password
             });
+
             const token = response.data.token;
             setUser({...user, token: token});
 

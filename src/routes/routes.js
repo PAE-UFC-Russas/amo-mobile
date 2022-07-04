@@ -7,7 +7,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import SignIn from '../pages/SignIn';
 import CheckCode from '../pages/CheckCode';
 import SignUp from '../pages/SignUp';
-import SelectProfile from '../pages/SelectProfile';
 import StudentProfile from '../pages/StudentProfile';
 import AddPhoto from '../pages/AddPhoto';
 import RecoverPassword from '../pages/RecoverPassword';
@@ -58,7 +57,6 @@ export default function Routes(){
             <Stack.Screen name="SignIn" component={SignIn} options={{headerShown: false}}/>
             <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}}/>
             <Stack.Screen name="CheckCode" component={CheckCode} options={{headerShown: false}}/>
-            <Stack.Screen name="SelectProfile" component={SelectProfile} options={{headerShown: false}}/>
             <Stack.Screen name="StudentProfile" component={StudentProfile} options={{headerShown: false}}/>
             <Stack.Screen name="AddPhoto" component={AddPhoto} options={{headerShown: false}}/>
             <Stack.Screen name="RecoverPassword" component={RecoverPassword} options={{headerShown: false}}/>

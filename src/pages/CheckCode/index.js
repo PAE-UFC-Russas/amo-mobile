@@ -18,7 +18,7 @@ export default function CheckCode({navigation, route}) {
 
     const CheckinputCode = () => {
         if(route.params !== undefined && route.params.register)
-            navigation.navigate("SelectProfile");
+            navigation.navigate("StudentProfile");
         else
             navigation.navigate("ChangePassword");
         
