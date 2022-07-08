@@ -2,26 +2,39 @@ import React, { useState } from 'react';
 import { Center, FormControl, Input, HStack, Text } from 'native-base';
 import AuthHeader from '../../components/AuthHeader';
 import DefaultBlueButton from '../../components/DefaultBlueButton';
+import { useAuth } from '../../contexts/auth';
 import styles from './styles';
 
 export default function CheckCode({navigation, route}) {
-    const [error, setError] = useState({
-        text: ''
-    });
+    const [error, setError] = useState();
     const [code, setCode] = useState(['','','','','','']);
+    const { Active } = useAuth();
 
     const HandleChangeCode = (text, pos) => {
-        tempCode = code;
+        let tempCode = code;
         tempCode[pos] = text;
         setCode(tempCode);
     }
 
-    const CheckinputCode = () => {
-        if(route.params !== undefined && route.params.register)
-            navigation.navigate("StudentProfile");
-        else
-            navigation.navigate("ChangePassword");
+    const CheckinputCode = async () => {
+        const inputIsFilled = code.reduce((previousValue, currentValue) => {
+            if(currentValue === '')
+                return -1
+            return 0
+        }); 
         
+        if(route.params !== undefined && route.params.register && inputIsFilled > -1){
+            const codeActivationMessage = await Active(code);
+            if(codeActivationMessage === true){
+                navigation.navigate("StudentProfile");
+            }
+            else{
+                setError(codeActivationMessage);
+            }
+        }
+        else{
+            navigation.navigate("ChangePassword");
+        }
     }
 
     return (
@@ -40,7 +53,7 @@ export default function CheckCode({navigation, route}) {
                 >
                     Acabamos de enviar um código para seu email.
                 </Text>
-                <FormControl isInvalid={!!error.text}>
+                <FormControl isInvalid={!!error}>
                     <HStack style={styles.codeInputs} width="full" space={1}>
                         {code.map((element, index)=>{
                             return <Input
@@ -59,8 +72,8 @@ export default function CheckCode({navigation, route}) {
                             />
                         })}
                     </HStack>
-                    <FormControl.ErrorMessage alignItems="center">
-                        {error.text}
+                    <FormControl.ErrorMessage marginX={20} alignItems="center">
+                        {error}
                     </FormControl.ErrorMessage>
                 </FormControl>
             </Center>
