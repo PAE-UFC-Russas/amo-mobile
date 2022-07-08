@@ -21,7 +21,7 @@ export default function ForumSearch({setFilters, filters}){
     }
 
     return(
-        <Center height="1/6">
+        <Center height="100">
             <Input
                 placeholder="Pesquisar perguntas..."
                 value={filters.name}

@@ -32,21 +32,18 @@ export default function AuthContextProvider({ children }){
         }
     }
 
-    async function Register(user){
+    async function Register(newUser){
         try{
             const response = await api.post('/usuario/registrar/', {
-                "username": user.email,
-                "password": user.password
+                "email": newUser.email,
+                "password": newUser.password
             });
-            const token = response.data.token;
-            setUser({...user, token: token});
+            console.log(response, '')
+            setUser({user: newUser.email, password: newUser.password, token: null, signed: false});
 
-            if(user.signed){
-                await StoreLoginToken(token);
-            }
-
-            return undefined
+            return response.data.email;
         }catch(error){
+            console.log(error.response, newUser)
             return error.response.data
         }
     }

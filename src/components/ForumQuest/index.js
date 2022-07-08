@@ -1,26 +1,29 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Avatar, Box, Button, Center, HStack, Text, IconButton } from 'native-base';
+import { Avatar, Box, Button, Center, HStack, Text, IconButton, Image } from 'native-base';
 import { AntDesign } from '@expo/vector-icons'; 
 import { EvilIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 
 export default function ForumQuest(quest){
+    const DateFormated = (date) => {
+        return `${date.getDay()} de dezembro de 2016` 
+    }
 
     return(
-        <Box marginTop="3" width="full">
+        <Box marginTop="3" width="5/6">
             <HStack space="2">
                 <Avatar 
                     bg="tertiaryBlue" 
                     size="md" 
                     source={{
-                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                        uri: quest.user.avatar
                     }}
                 />
                 <View>
-                    <HStack width="77%" justifyContent="space-between">
+                    <HStack justifyContent="space-between">
                         <Text fontWeight="extrabold">
-                            Name
+                            {quest.user.name}
                         </Text>
                         <Entypo
                             name="dots-three-horizontal" 
@@ -29,12 +32,19 @@ export default function ForumQuest(quest){
                         />
                     </HStack>
                     <Text fontWeight="semibold">
-                        Title
+                        {quest.title.substring(0, 64)}
                     </Text>
                     <Text fontWeight="light">
-                        Desc
+                        {quest.desc.substring(0, 128)}
                     </Text>
-                    <HStack marginTop="1" width="77%" justifyContent="space-between">
+                    {
+                        quest.content?
+                        <Image alt="Conteúdo da dúvida" source={{
+                                uri: quest.content
+                            }}
+                        />:<></>
+                    }
+                    <HStack marginTop="1" justifyContent="space-between">
                         <Box flexDirection="row">
                             <AntDesign
                                 color="#808080"
@@ -49,7 +59,7 @@ export default function ForumQuest(quest){
                             />
                         </Box>
                         <Text fontSize="xs" fontWeight="thin">
-                            31 de janeiro de 2022
+                            {DateFormated(quest.date)}
                         </Text>
                     </HStack>  
                 </View>

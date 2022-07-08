@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Center, VStack, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import validator from 'validator';
+import { useAuth } from '../../contexts/auth';
 import AuthHeader from '../../components/AuthHeader';
 import DefaultBlueButton from '../../components/DefaultBlueButton';
 import DefaultFormInput from '../../components/DefaultFormInput';
@@ -18,6 +19,7 @@ export default function Register({navigation}) {
     errosPassword: null,
     errosConfirmPassword: null
   });
+  const { Register } = useAuth();
 
   const InputValidation = () => {
     let erros = {
@@ -38,8 +40,10 @@ export default function Register({navigation}) {
       erros.errosConfirmPassword = "As senhas devem ser iguais!";
 
     setInputErros(erros);
-    if(!erros.errosEmail && !erros.errosPassword && !erros.errosConfirmPassword)
+    if(!erros.errosEmail && !erros.errosPassword && !erros.errosConfirmPassword){
+      Register(newUser);
       navigation.navigate("CheckCode", {register: true})
+    }
     return null
   }
 

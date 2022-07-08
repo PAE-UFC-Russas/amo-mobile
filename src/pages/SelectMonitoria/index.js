@@ -5,7 +5,7 @@ import AuthHeader from '../../components/AuthHeader';
 import styles from './styles';
 
 export default function SelectMonitoria({route, navigation}) {
-    const [monitorias, setMonitorias] = useState([]);
+    const [monitorias, setMonitorias] = useState(['a']);
     const [filterMonitoria, setFilterMonitoria] = useState("");
     
     useEffect(()=>{
