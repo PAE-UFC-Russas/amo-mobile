@@ -20,20 +20,26 @@ export default function CheckCode({navigation, route}) {
         const inputIsFilled = code.reduce((previousValue, currentValue) => {
             if(currentValue === '')
                 return -1
-            return 0
+            return 1
         }); 
-        
-        if(route.params !== undefined && route.params.register && inputIsFilled > -1){
-            const codeActivationMessage = await Active(code);
-            if(codeActivationMessage === true){
-                navigation.navigate("StudentProfile");
+
+        if(inputIsFilled > 0){
+            if(route.params !== undefined && route.params.register){
+                const activeToken = code.toString().replace(/,/g, "");
+                const codeActivationMessage = await Active(activeToken);
+
+                if(codeActivationMessage === true){
+                    navigation.navigate("StudentProfile");
+                }
+                else{
+                    setError(codeActivationMessage);
+                }
             }
             else{
-                setError(codeActivationMessage);
+                navigation.navigate("ChangePassword");
             }
-        }
-        else{
-            navigation.navigate("ChangePassword");
+        }else{
+            setError("O campo do código não pode estar vazio!");
         }
     }
 

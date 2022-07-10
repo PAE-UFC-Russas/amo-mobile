@@ -39,9 +39,9 @@ export default function AuthContextProvider({ children }){
                 "password": newUser.password
             });
 
-            setUser({user: newUser.email, password: newUser.password, token: null, signed: false});
             console.log(response)
-            return response.data.email;
+
+            setUser({...user, token: response.data.token});
         }catch(error){
             console.log(error.response)
             return error.response.data
@@ -52,11 +52,15 @@ export default function AuthContextProvider({ children }){
         try{
             await api.post('/usuario/ativar/', {
                 "token": token
+            },{
+                headers: {
+                    'Authorization': 'Token ' + user.token
+                },
             });
-
+            
             return true
         }catch(error){
-            console.log(error.response.data);
+            console.log(error.response);
             return "Falha ao ativar o token, verifique se o código está correto ou se o celular está conectado a internet!"
         }
     }
