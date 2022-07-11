@@ -22,7 +22,7 @@ export default function SelectCourses({navigation}) {
             }
         }
         GetCourses();
-    })
+    }, [])
 
     return (
         <Center

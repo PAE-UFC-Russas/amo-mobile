@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 
-export default function ForumQuest(quest){
+export default function ForumQuest(quest, handleLikeButton){
     const DateFormated = (date) => {
         return `${date.getDay()} de dezembro de 2016` 
     }
@@ -39,7 +39,7 @@ export default function ForumQuest(quest){
                     </Text>
                     {
                         quest.content?
-                        <Image alt="Conteúdo da dúvida" source={{
+                        <Image width={240} height={140} alt="Conteúdo da dúvida" source={{
                                 uri: quest.content
                             }}
                         />:<></>
@@ -47,9 +47,10 @@ export default function ForumQuest(quest){
                     <HStack marginTop="1" justifyContent="space-between">
                         <Box flexDirection="row">
                             <AntDesign
-                                color="#808080"
+                                onPress={() => handleLikeButton(quest.id)}
+                                color={quest.liked?"#f00":"#808080"}
                                 size={20}
-                                name="hearto"
+                                name={quest.liked?"heart":"hearto"}
                                 style={{marginRight: 5}}
                             />
                             <EvilIcons

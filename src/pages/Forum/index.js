@@ -16,35 +16,8 @@ export default function Forum({navigation}) {
     name: ''
   });
   const [showSearch, setShowSearch] = useState(true);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerBackVisible: false,
-      headerLeft: () => (
-          <MaterialIcons
-              onPress={() => alert('Menu hamburger!')}
-              color="#52D6FB"
-              size={32}
-              name="menu"
-              style={{marginLeft: 10}}
-          />
-      ),
-      headerTitle: () => <Text fontWeight="bold" fontSize="sm" color="tertiaryBlue">Fórum</Text>,
-      headerTitleAlign: "center",
-      headerRight: () => (
-          <MaterialIcons
-              onPress={() => setShowSearch(!showSearch)}
-              color="#52D6FB"
-              size={32}
-              name="search"
-              style={{marginRight: 10}}
-          />
-      )
-  });
-  }, [navigation, showSearch]);
-
-
-  const DATA = [
+  const [data, setData] = useState(
+  [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
@@ -81,7 +54,44 @@ export default function Forum({navigation}) {
       date: new Date(),
       liked: true
     },
-  ];
+  ])
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackVisible: false,
+      headerLeft: () => (
+          <MaterialIcons
+              onPress={() => alert('Menu hamburger!')}
+              color="#52D6FB"
+              size={32}
+              name="menu"
+              style={{marginLeft: 10}}
+          />
+      ),
+      headerTitle: () => <Text fontWeight="bold" fontSize="sm" color="tertiaryBlue">Fórum</Text>,
+      headerTitleAlign: "center",
+      headerRight: () => (
+          <MaterialIcons
+              onPress={() => setShowSearch(!showSearch)}
+              color="#52D6FB"
+              size={32}
+              name="search"
+              style={{marginRight: 10}}
+          />
+      )
+  });
+  }, [navigation, showSearch]);
+
+  const handleLikeButton = (id) => {
+    data.map((item, index)=>{
+      if(item.id === id){
+        let newData = data;
+        newData.splice(index, 1);
+        item.liked = !item.liked;
+        setData([...newData, item]);
+      }
+    });
+  }
 
   return (
     <Center
@@ -91,10 +101,9 @@ export default function Forum({navigation}) {
       {
         showSearch&&<ForumSearch filters={filters} setFilters={setFilters}/>
       }
-      
       <FlatList
-        data={DATA}
-        renderItem={quest => ForumQuest(quest.item)}
+        data={data.sort((a, b) => a.date - b.date)}
+        renderItem={quest => ForumQuest(quest.item, handleLikeButton)}
         keyExtractor={quest => quest.id}
         style={styles.flatListContainer}
       />

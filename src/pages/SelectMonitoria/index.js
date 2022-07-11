@@ -2,47 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { Button, Center, VStack, Input } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import AuthHeader from '../../components/AuthHeader';
+import { GetLoginToken } from '../../util/StorageLogin';
+import api from '../../services/api';
 import styles from './styles';
 
 export default function SelectMonitoria({route, navigation}) {
-    const [monitorias, setMonitorias] = useState(['a']);
+    const [monitorias, setMonitorias] = useState([]);
     const [filterMonitoria, setFilterMonitoria] = useState("");
-    
+
     useEffect(()=>{
-        const DATA = ["Projeto e analise de algoritimos","Redes de computadores", "Lógica para computação"];
-        if(route.params === "Ciência da Computação"){
-            setMonitorias(DATA.filter((item)=>{
-                const itemUpperCase = item.toUpperCase();
-                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
-            }));
-        }else if(route.params === "Engenharia Civil"){
-            setMonitorias(DATA.filter((item)=>{
-                const itemUpperCase = item.toUpperCase();
-                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
-            }));
-        }else if(route.params === "Engenharia Mecânica"){
-            setMonitorias(DATA.filter((item)=>{
-                const itemUpperCase = item.toUpperCase();
-                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
-            }));
-        }else if(route.params === "Engenharia de Produção"){
-            setMonitorias(DATA.filter((item)=>{
-                const itemUpperCase = item.toUpperCase();
-                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
-            }));
-        }else if(route.params === "Engenharia de Software"){
-            setMonitorias(DATA.filter((item)=>{
-                const itemUpperCase = item.toUpperCase();
-                return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
-            }));
+        async function GetSubjects(){
+            try{
+                const response = await api.get(`/disciplinas/${route.params}`, {
+                    headers: {
+                        'Authorization': 'Token ' + await GetLoginToken()
+                    }
+                });
+
+                setMonitorias([response.data].filter((item)=>{
+                    const itemUpperCase = item.nome.toUpperCase();
+                    return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
+                }));
+            }catch(error){
+                console.log(error.response.data)
+            }
         }
+
+        GetSubjects();
+
     },[filterMonitoria]);
 
     return (
         <Center
             style={styles.container}
             bgColor="#fff"
-
         >
             <AuthHeader>
                 Selecione a monitoria
@@ -56,12 +49,13 @@ export default function SelectMonitoria({route, navigation}) {
                 borderColor="#52D6FB"
                 color="#52D6FB"
                 marginBottom="2"
-                InputLeftElement={<MaterialIcons
-                                        color="#52D6FB"
-                                        size={32}
-                                        name="search"
-                                        style={{marginLeft: 10}}
-                                    />
+                InputLeftElement={
+                                <MaterialIcons
+                                    color="#52D6FB"
+                                    size={32}
+                                    name="search"
+                                    style={{marginLeft: 10}}
+                                />
                 }
             />
             <VStack space="3">
@@ -73,13 +67,13 @@ export default function SelectMonitoria({route, navigation}) {
                             borderRadius="2xl" 
                             width={80} 
                             height={60}
-                            onPress={()=>navigation.navigate("ForumTab", item)} 
+                            onPress={()=>navigation.navigate("ForumTab", item.id)} 
                             _text={{
                                 fontWeight: 800,
                                 color: "#fff",
                             }}
                         >
-                            {item}
+                            {item.nome}
                         </Button>
                     )
                 })}
