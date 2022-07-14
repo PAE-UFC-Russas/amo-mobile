@@ -48,7 +48,7 @@ export default function Forum({navigation}) {
       desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,',
       content: '',
       user: {
-        name: "Ronilda Loira de Pinto",
+        name: "Julia Alencar de Silva Sousa",
         avatar: "https://images.unsplash.com/photo-1504439904031-93ded9f93e4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80"
       },
       date: new Date(),
@@ -86,9 +86,8 @@ export default function Forum({navigation}) {
     data.map((item, index)=>{
       if(item.id === id){
         let newData = data;
-        newData.splice(index, 1);
-        item.liked = !item.liked;
-        setData([...newData, item]);
+        newData[index].liked = !item.liked;
+        setData([...newData]);
       }
     });
   }

@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
         right: 25
     },
     flatListContainer: {
-        width: "90%"
+        width: "90%",
+        marginTop: 5
     }
 });
 

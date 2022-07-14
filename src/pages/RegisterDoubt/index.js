@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Avatar, Box, Button, Text, Select, Input, HStack, TextArea, Icon } from 'native-base';
+import React, { useState } from 'react';
+import { Avatar, Box, Button, Text, Select, Input, HStack, TextArea, Image } from 'native-base';
 import { View } from 'react-native';
 import styles from './styles';
 import { MaterialIcons } from '@expo/vector-icons'; 
-
-
+import PickImage from '../../util/PickImage';
 
 export default function RegisterDoubt({navigation}) {
-
-    
     const [doubt, setDoubt] = useState({
         title: "",
         desc: ""
     });
-    
+    const [image, setImage] = useState(null);
 
+    const getImage = async () => {
+        setImage(await PickImage());
+    }
+    
     return (
         <Box marginTop="3" height="full" padding="7" width="full" justifyContent="space-between">
             <View>
@@ -46,6 +47,13 @@ export default function RegisterDoubt({navigation}) {
                     <TextArea size="md" borderColor="#52D6FB" color="#52D6FB" maxLength={500} borderRadius={20} marginLeft={5} width="90%" marginTop={2} height={50} placeholderTextColor="#52D6FB" placeholder="Insira um descrição"/>
                     <Text style={{ height:100, fontSize:11, width:230, fontFamily:'Roboto', marginLeft:35,}}>A descrição deve conter 500 caracteres</Text>
                 </View>
+                {
+                    image&&
+                    <Image borderRadius={5} width={400} height={200} alt="Conteúdo da dúvida" source={{
+                            uri: image
+                        }}
+                    />
+                }
             </View>
             <HStack width="full" justifyContent="space-between">
                 <HStack space={2}>
@@ -57,7 +65,8 @@ export default function RegisterDoubt({navigation}) {
                     <MaterialIcons
                         color="#52D6FB"
                         size={32}
-                        name="add-photo-alternate"            
+                        name="add-photo-alternate" 
+                        onPress={getImage}           
                     />
                 </HStack>
                 <Button style={{width:'30%', borderRadius:30}}>Publicar</Button>
