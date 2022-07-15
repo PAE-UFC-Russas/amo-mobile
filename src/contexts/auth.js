@@ -39,9 +39,28 @@ export default function AuthContextProvider({ children }){
                 "password": newUser.password
             });
 
-            console.log(response)
-
             setUser({...user, token: response.data.token});
+        }catch(error){
+            console.log(error.response)
+            return error.response.data
+        }
+    }
+
+    async function CompleteRegister(userData){
+        try{
+            const response = await api.post('/usuario/', {
+                "perfil": {
+                    "nome_completo": userData.name,
+                    "nome_exibicao": userData.nickName,
+                    "data_nascimento": userData.birthDate,
+                    "matricula": userData.registration,
+                    "curso": {
+                        "id": 0
+                    }
+                }
+            });
+
+            return true
         }catch(error){
             console.log(error.response)
             return error.response.data
