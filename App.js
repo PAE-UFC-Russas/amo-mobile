@@ -15,13 +15,13 @@ const config = {
 
 export default function App() {
   return (
-      <NavigationContainer>
-        <NativeBaseProvider theme={theme} config={config}>
+      <NativeBaseProvider theme={theme} config={config}>
+        <NavigationContainer>
           <AuthContext>
             <Routes/>
             <StatusBar style="light"/>
           </AuthContext>
-        </NativeBaseProvider>
-      </NavigationContainer>
+        </NavigationContainer>
+      </NativeBaseProvider>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Center, Image } from 'native-base';
+import { Button, Center, Image, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import * as ImagePicker from 'expo-image-picker';
 import AuthHeader from '../../components/AuthHeader';
@@ -8,6 +8,7 @@ import styles from './styles';
 
 export default function AddPhoto({navigation}) {
     const [image, setImage] = useState(null);
+    const [imageError, setImageError] = useState(null);
 
     const PickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -20,6 +21,15 @@ export default function AddPhoto({navigation}) {
         if(!result.cancelled) {
             setImage(result.uri);
         }
+    }
+
+    const validation = () => {
+        if(!image){
+            setImageError("Insira uma imagem de perfil para concluir o cadastro ou pule está etapa!");
+        }else{
+            navigation.navigate("RegistrationComplete");
+        }
+
     }
 
     return (
@@ -52,9 +62,15 @@ export default function AddPhoto({navigation}) {
                 >
                     Pular
                 </Button>
-                <DefaultBlueButton onPress={()=>navigation.navigate("RegistrationComplete")}>
+                <DefaultBlueButton onPress={validation}>
                     Concluir cadastro
                 </DefaultBlueButton>
+                {
+                    imageError&&
+                        <Text style={{color: "#f00", fontSize: 12}}>
+                            {imageError}
+                        </Text>
+                }
             </Center>
         </Center>
     );

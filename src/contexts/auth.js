@@ -48,19 +48,22 @@ export default function AuthContextProvider({ children }){
 
     async function CompleteRegister(userData){
         try{
-            const response = await api.post('/usuario/', {
+            const response = await api.patch(`/usuario/eu/`, {
                 "perfil": {
                     "nome_completo": userData.name,
                     "nome_exibicao": userData.nickName,
-                    "data_nascimento": userData.birthDate,
+                    "data_nascimento": userData.birthDate.toISOString().split('T')[0],
                     "matricula": userData.registration,
-                    "curso": {
-                        "id": 0
-                    }
+                    "entrada": userData.entryYear,
+                    "curso": userData.course.id
                 }
+            },{
+                headers: {
+                    "Authorization": "Token " + await GetLoginToken()
+                },
             });
 
-            return true
+            return response.data.nome_exibicao
         }catch(error){
             console.log(error.response)
             return error.response.data
@@ -102,7 +105,7 @@ export default function AuthContextProvider({ children }){
     }
 
     return (
-        <AuthContext.Provider value={{user, Login, Register, Active, Logout, IsConnected}}>
+        <AuthContext.Provider value={{user, Login, Register, CompleteRegister, Active, Logout, IsConnected}}>
             {children}
         </AuthContext.Provider>
     );

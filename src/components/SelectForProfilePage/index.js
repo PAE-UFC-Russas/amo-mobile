@@ -1,10 +1,9 @@
 import { FormControl, Select } from 'native-base';
 
-export default function DefaultFormInput({placeholder, value, setValue, color, error, items}){
+export default function SelectForProfilePage({placeholder, setValue, color, error, items}){
     return (
         <FormControl isInvalid={error?true:false}>
             <Select 
-                selectedValue={value} 
                 accessibilityLabel={placeholder}
                 minWidth="5/6"
                 placeholder={placeholder}
@@ -21,7 +20,7 @@ export default function DefaultFormInput({placeholder, value, setValue, color, e
                 onValueChange={setValue}
             >
                 {items.map((item, index)=>{
-                    return  <Select.Item key={index} label={`${item}`} value={`${item}`}/>
+                    return <Select.Item key={index} label={`${item.nome}`} value={`${item.id}`}/>
                 })}
             </Select>
             <FormControl.ErrorMessage>
