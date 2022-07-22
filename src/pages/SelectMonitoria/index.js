@@ -29,7 +29,6 @@ export default function SelectMonitoria({route, navigation}) {
         }
 
         GetSubjects();
-
     },[filterMonitoria]);
 
     return (

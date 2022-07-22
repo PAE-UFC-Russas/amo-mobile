@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 
-export default function ForumQuest(quest, handleLikeButton){
+export default function ForumQuest(quest, handleLikeButton, navigation){
     const DateFormated = (date) => {
         return `${date.getDay()} de dezembro de 2016` 
     }
@@ -57,6 +57,7 @@ export default function ForumQuest(quest, handleLikeButton){
                                 color="#808080"
                                 size={24}
                                 name="comment"
+                                onPress={() => navigation.navigate("AnswerQuestion")}
                             />
                         </Box>
                         <Text fontSize="xs" fontWeight="thin">

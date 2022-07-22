@@ -102,7 +102,7 @@ export default function Forum({navigation}) {
       }
       <FlatList
         data={data.sort((a, b) => a.date - b.date)}
-        renderItem={quest => ForumQuest(quest.item, handleLikeButton)}
+        renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation)}
         keyExtractor={quest => quest.id}
         style={styles.flatListContainer}
       />

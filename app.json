@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "monitoria-online-mobile",
-    "slug": "monitoria-online-mobile",
+    "name": "AMO",
+    "slug": "ambiente-de-monitoria-online",
     "version": "1.0.0",
     "splash": {
       "image": "./src/assets/logo_white_bg_transparent.png",

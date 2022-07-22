@@ -16,6 +16,7 @@ import SelectCourses from '../pages/SelectCourses';
 import SelectMonitoria from '../pages/SelectMonitoria';
 import RegisterDoubt from '../pages/RegisterDoubt';
 import Forum from '../pages/Forum';
+import AnswerQuestion from '../pages/AnswerQuestion';
 
 import Teste1 from '../pages/Teste1';
 import Teste2 from '../pages/Teste2';
@@ -74,6 +75,7 @@ export default function Routes(){
             <Stack.Screen name="SelectMonitoria" component={SelectMonitoria} options={{headerShown: false}}/>
             <Stack.Screen name="ForumTab" component={TabNavigation} options={{headerShown: false}}/>
             <Stack.Screen name="RegisterDoubt" component={RegisterDoubt} options={{headerShown: false}}/>
+            <Stack.Screen name="AnswerQuestion" component={AnswerQuestion} options={{headerShown: false}}/>
         </Stack.Navigator>
     )
 }
