@@ -40,6 +40,9 @@ export default function AuthContextProvider({ children }){
             });
 
             setUser({...user, token: response.data.token});
+
+            await StoreLoginToken(response.data.token);
+
         }catch(error){
             console.log(error.response)
             return error.response.data
@@ -98,10 +101,23 @@ export default function AuthContextProvider({ children }){
     }
 
     async function IsConnected(){
-        const token = GetLoginToken();
-        if(!token)
-            return false
-        return true
+        const token = await GetLoginToken();
+
+        if(!token){
+            try{
+                await api.get('/cursos/', {
+                    headers: {
+                        'Authorization': 'Token ' + token()
+                    }
+                });
+                return false
+            }catch(error){
+                console.log(error.response.data)
+                return true
+            }
+        }else{
+            return true
+        }
     }
 
     return (
