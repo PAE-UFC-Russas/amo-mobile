@@ -1,6 +1,6 @@
 import React from 'react';
 import { NativeBaseProvider } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import AuthContext from './src/contexts/auth';

@@ -107,7 +107,7 @@ export default function AuthContextProvider({ children }){
             try{
                 await api.get('/cursos/', {
                     headers: {
-                        'Authorization': 'Token ' + token()
+                        'Authorization': 'Token ' + token
                     }
                 });
                 return false

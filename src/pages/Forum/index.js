@@ -1,9 +1,10 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { FlatList } from 'react-native'
 import { Center, Text, IconButton } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
+import api from '../../services/api';
 import styles from './styles';
 
 export default function Forum({navigation}) {
@@ -56,30 +57,47 @@ export default function Forum({navigation}) {
     },
   ])
 
+  useEffect(()=>{
+    async function GetQuestions(){
+      try{
+        const response = await api.get("/duvidas/", {
+            headers: {
+              "Authorization": "Token " + await GetLoginToken()
+            }
+        });
+        setData(response.data);
+      }catch(error){
+        console.log(error.response.data)
+      }
+    }
+
+  //GetQuestions();
+  },[])
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackVisible: false,
       headerLeft: () => (
-          <MaterialIcons
-              onPress={() => alert('Menu hamburger!')}
-              color="#52D6FB"
-              size={32}
-              name="menu"
-              style={{marginLeft: 10}}
-          />
+        <MaterialIcons
+          onPress={() => navigation.openDrawer()}
+          color="#52D6FB"
+          size={32}
+          name="menu"
+          style={{marginLeft: 10}}
+        />
       ),
       headerTitle: () => <Text fontWeight="bold" fontSize="sm" color="tertiaryBlue">Fórum</Text>,
       headerTitleAlign: "center",
       headerRight: () => (
-          <MaterialIcons
-              onPress={() => setShowSearch(!showSearch)}
-              color="#52D6FB"
-              size={32}
-              name="search"
-              style={{marginRight: 10}}
-          />
+        <MaterialIcons
+          onPress={() => setShowSearch(!showSearch)}
+          color="#52D6FB"
+          size={32}
+          name="search"
+          style={{marginRight: 10}}
+        />
       )
-  });
+    });
   }, [navigation, showSearch]);
 
   const handleLikeButton = (id) => {
