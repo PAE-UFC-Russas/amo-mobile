@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold' ,
         color:"#52D6FB",
         fontSize:20,
+        marginTop:25
     },
     header:{
         flexDirection:'row',

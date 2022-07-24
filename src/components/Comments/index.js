@@ -18,9 +18,9 @@ export default function Comments(){
                         }}
                     />
                 <HStack>
-                    <VStack>
-                            <Text>Max</Text>
-                            <Text>é so usar formula de baskara</Text>
+                    <VStack margin={5}>
+                            <Text fontSize={15} >Max</Text>
+                            <Text fontSize={17}>é so usar formula de baskara</Text>
                             <AntDesign
                                 // onPress={() => handleLikeButton("")}
                                 // color={quest.liked?"#f00":"#808080"}
