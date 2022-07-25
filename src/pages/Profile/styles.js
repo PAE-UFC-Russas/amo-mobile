@@ -6,7 +6,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingTop: 5
+        paddingTop: 5,
+    },
+    TextInputs:{
+        marginLeft:20,
+        fontWeight:'bold',
+        fontSize:17,
+
     }
 });
 
