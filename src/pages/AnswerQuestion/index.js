@@ -3,7 +3,6 @@ import { Avatar, Text,  Input, HStack, View, VStack, } from 'native-base';
 import styles from './styles';
 import Comments from '../../components/Comments';
 import { MaterialIcons } from '@expo/vector-icons'; 
- 
 
 export default function AnswerQuestion({navigation}) {
     return (
