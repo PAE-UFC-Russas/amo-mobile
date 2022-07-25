@@ -1,8 +1,8 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import DrawerInfo from '../components/DrawerInfo';
-import StudentProfile from '../pages/StudentProfile';
-import TabNavigation from './TabNavigation';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import DrawerInfo from '../components/DrawerInfo';
+import Profile from '../pages/Profile';
+import TabNavigation from './TabNavigation';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,7 +22,7 @@ export default function DrawerNavigation(){
                 }
                 }}
             />
-            <Drawer.Screen name="StudentProfile" component={StudentProfile} options={{
+            <Drawer.Screen name="Profile" component={Profile} options={{
                 drawerLabel:"Perfil",
                 drawerIcon: ({color})=>{
                     return(

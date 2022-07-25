@@ -1,8 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigation from './DrawerNavigation';
-
-//Páginas
 import SignIn from '../pages/SignIn';
 import CheckCode from '../pages/CheckCode';
 import SignUp from '../pages/SignUp';
@@ -20,20 +18,20 @@ const Stack = createNativeStackNavigator();
 
 export default function Routes(){
     return(
-        <Stack.Navigator>
-            <Stack.Screen name="SignIn" component={SignIn} options={{headerShown: false}}/>
-            <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}}/>
-            <Stack.Screen name="CheckCode" component={CheckCode} options={{headerShown: false}}/>
-            <Stack.Screen name="StudentProfile" component={StudentProfile} options={{headerShown: false}}/>
-            <Stack.Screen name="AddPhoto" component={AddPhoto} options={{headerShown: false}}/>
-            <Stack.Screen name="RecoverPassword" component={RecoverPassword} options={{headerShown: false}}/>
-            <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown: false}}/>
-            <Stack.Screen name="RegistrationComplete" component={RegistrationComplete} options={{headerShown: false}}/>
-            <Stack.Screen name="SelectCourses" component={SelectCourses} options={{headerShown: false}}/>
-            <Stack.Screen name="SelectMonitoria" component={SelectMonitoria} options={{headerShown: false}}/>
-            <Stack.Screen name="RegisterDoubt" component={RegisterDoubt} options={{headerShown: false}}/>
-            <Stack.Screen name="AnswerQuestion" component={AnswerQuestion} options={{headerShown: false}}/>
-            <Stack.Screen name="ForumDrawer" component={DrawerNavigation} options={{headerShown: false}}/>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="SignIn" component={SignIn}/>
+            <Stack.Screen name="SignUp" component={SignUp}/>
+            <Stack.Screen name="CheckCode" component={CheckCode}/>
+            <Stack.Screen name="StudentProfile" component={StudentProfile}/>
+            <Stack.Screen name="AddPhoto" component={AddPhoto}/>
+            <Stack.Screen name="RecoverPassword" component={RecoverPassword}/>
+            <Stack.Screen name="ChangePassword" component={ChangePassword}/>
+            <Stack.Screen name="RegistrationComplete" component={RegistrationComplete}/>
+            <Stack.Screen name="SelectCourses" component={SelectCourses}/>
+            <Stack.Screen name="SelectMonitoria" component={SelectMonitoria}/>
+            <Stack.Screen name="RegisterDoubt" component={RegisterDoubt}/>
+            <Stack.Screen name="AnswerQuestion" component={AnswerQuestion}/>
+            <Stack.Screen name="ForumDrawer" component={DrawerNavigation}/>
         </Stack.Navigator>
     )
 }
