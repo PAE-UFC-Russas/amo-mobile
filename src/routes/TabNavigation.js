@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Forum from '../pages/Forum';
 import Teste1 from '../pages/Teste1';
 import Teste2 from '../pages/Teste2';
-import Teste3 from '../pages/Teste3';
+import Profile from '../pages/Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,12 +33,13 @@ export default function TabNavigation(){
                 },
                 tabBarActiveTintColor: "#52D6FB",
                 tabBarInactiveTintColor: "#808080",
+                headerShown: false
             })}
         >
-            <Tab.Screen name="Forum" component={Forum}/>
+            <Tab.Screen name="Forum" component={Forum} options={{headerShown: true}}/>
             <Tab.Screen name="Agendar" component={Teste1}/>
             <Tab.Screen name="Notificação" component={Teste2}/>
-            <Tab.Screen name="Perfil" component={Teste3}/>
+            <Tab.Screen name="Profile" component={Profile} options={{tabBarLabel: "Perfil"}}/>
         </Tab.Navigator>
     )
 }

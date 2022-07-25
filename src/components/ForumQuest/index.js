@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Avatar, Box, Button, Center, HStack, Text, IconButton, Image } from 'native-base';
+import { Avatar, Box, HStack, Text, Image } from 'native-base';
+import ForumQuestionMenu from '../ForumQuestionMenu';
 import { AntDesign } from '@expo/vector-icons'; 
 import { EvilIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 
-export default function ForumQuest(quest, handleLikeButton, navigation){
+export default function ForumQuest(quest, handleLikeButton, navigation, showMenu, setShowMenu){
     const DateFormated = (date) => {
         return `${date.getDay()} de dezembro de 2016` 
     }
@@ -26,10 +27,14 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                             {quest.user.name}
                         </Text>
                         <Entypo
+                            onPress={()=>setShowMenu(!showMenu)}
                             name="dots-three-horizontal" 
                             size={24} 
                             color="black"
                         />
+                        {
+                            showMenu&&<ForumQuestionMenu/>
+                        }
                     </HStack>
                     <Text fontWeight="semibold">
                         {quest.title.substring(0, 64)}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Center } from 'native-base';
+import { Center, Text } from 'native-base';
 import styles from './styles';
 
 export default function Profile({navigation}) {
@@ -8,7 +8,9 @@ export default function Profile({navigation}) {
             style={styles.container}
             bgColor="#fff"
         >
-            
+            <Text>
+                teste
+            </Text>
         </Center>
     );
 }

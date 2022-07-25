@@ -1,10 +1,13 @@
-import { Avatar, Center, Text } from "native-base";
+import { View } from "react-native";
+import { Avatar, Button, Center, HStack, Text } from "native-base";
+import { AntDesign } from "@expo/vector-icons"; 
 import { DrawerItemList, DrawerContentScrollView} from "@react-navigation/drawer";
+import { useAuth } from "../../contexts/auth";
 
 export default function DrawerInfo(props){
-
+    const { Logout } = useAuth();
     return (
-        <DrawerContentScrollView>
+        <DrawerContentScrollView contentContainerStyle={{ flex: 1 }}>
             <Center marginBottom={5}>
                 <Avatar 
                     bg="tertiaryBlue" 
@@ -18,6 +21,15 @@ export default function DrawerInfo(props){
                 <Text fontSize="sm" fontWeight="light">Estrutura de Dados</Text>
             </Center>
             <DrawerItemList {...props}/>
+            <View style={{ flex: 1 }} />
+            <Button alignSelf="flex-start" variant="link" onPress={()=>{props.navigation.navigate("SignIn");Logout()}}>
+                <HStack space={3} alignItems="center">
+                    <AntDesign name="arrowleft" size={28} color="#52D6FB"/> 
+                    <Text fontWeight="bold" fontSize="md" color="#52D6FB">
+                        SAIR
+                    </Text>
+                </HStack>
+            </Button>
         </DrawerContentScrollView>
     )
 }

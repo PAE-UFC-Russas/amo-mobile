@@ -8,8 +8,7 @@ export default function AuthContextProvider({ children }){
     const [user, setUser] = useState({
         email: null,
         password: null,
-        token: null,
-        signed: false
+        token: null
     });
 
     async function Login(user){
@@ -22,9 +21,7 @@ export default function AuthContextProvider({ children }){
             const token = response.data.token;
             setUser({...user, token: token});
 
-            if(user.signed){
-                await StoreLoginToken(token);
-            }
+            await StoreLoginToken(token);
 
             return undefined
         }catch(error){
@@ -104,19 +101,19 @@ export default function AuthContextProvider({ children }){
         const token = await GetLoginToken();
 
         if(!token){
+            return false
+        }else{
             try{
                 await api.get('/cursos/', {
                     headers: {
                         'Authorization': 'Token ' + token
                     }
                 });
-                return false
+                return true
             }catch(error){
                 console.log(error.response.data)
-                return true
+                return false
             }
-        }else{
-            return true
         }
     }
 

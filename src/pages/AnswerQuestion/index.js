@@ -32,7 +32,7 @@ export default function AnswerQuestion({navigation}) {
                 <VStack justifyContent="center" flexWrap={'wrap'}>
                     <Text style={{ fontSize:17}} marginBottom={2} marginTop={4}>Equação do segundo grau</Text>
                     <Text style={{ fontSize:15}} width={'50%'} >
-                        Como fasso pra resolver a seguinte equação: 5x + 3x + 2?
+                        Como faço pra resolver a seguinte equação: 5x + 3x + 2?
                     </Text>
                     <Text marginLeft={100}>27/07/2022</Text>
                 </VStack>

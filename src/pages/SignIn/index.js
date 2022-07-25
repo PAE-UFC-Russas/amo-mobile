@@ -3,13 +3,11 @@ import { Keyboard, Image } from 'react-native';
 import { Center, Button, VStack, Flex } from 'native-base';
 import validator from 'validator';
 import { useAuth } from '../../contexts/auth';
-import ModalKeepConnected from '../../components/ModalKeepConnected';
 import DefaultFormInput from '../../components/DefaultFormInput';
 import styles from './styles';
 
 export default function SignIn({navigation}) {
   const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
-  const [openKeepConnected, setOpenKeepConnected] = useState(false);
   const [userLogin, setUserLogin] = useState({
     email: '',
     password: '',
@@ -19,12 +17,17 @@ export default function SignIn({navigation}) {
     errosEmail: null,
     errosPassword: null
   });
-  const { IsConnected } = useAuth();
+  const { IsConnected, Login } = useAuth();
   
-
   useEffect(()=>{
+    setUserLogin({
+      email: '',
+      password: '',
+      signed: false,
+    });
     async function VerifyLogin(){
       const connected = await IsConnected();
+
       if(connected){
         navigation.navigate("SelectCourses");
       }
@@ -32,7 +35,7 @@ export default function SignIn({navigation}) {
     VerifyLogin();
   },[])
 
-  const InputValidation = () => {
+  const InputValidation = async () => {
     let erros = {
       errosEmail: null,
       errosPassword: null
@@ -43,8 +46,24 @@ export default function SignIn({navigation}) {
     if(userLogin.password.length < 8)
       erros.errosPassword = 'A senha precisa conter 8 caracteres!';
 
-    if(!erros.errosEmail && !erros.errosPassword)
-      setOpenKeepConnected(true);
+    if(!erros.errosEmail && !erros.errosPassword){
+      const response = await Login(userLogin);
+        if(response){
+          if(response.non_field_errors){
+            setInputErros({errosEmail: "Email ou senha incorretos"});
+            return;
+          }
+          if(response.username){
+            setInputErros({errosEmail: "Email inválido"});
+            return;
+          }
+          if(response.password){
+            setInputErros({errosPassword: "Senha inválida"});
+            return;
+          }
+        }
+        navigation.navigate("SelectCourses");
+    }
     setInputErros(erros);
   }
 
@@ -131,9 +150,6 @@ export default function SignIn({navigation}) {
           </Button>
         </VStack >
       </Flex>
-      {openKeepConnected&&
-        <ModalKeepConnected navigation={navigation} open={openKeepConnected} setOpen={setOpenKeepConnected} setUser={setUserLogin} userLogin={userLogin} setErros={setInputErros}/>
-      }
     </Center>
   );
 }

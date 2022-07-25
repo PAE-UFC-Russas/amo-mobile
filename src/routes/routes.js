@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigation from './DrawerNavigation';
 import SignIn from '../pages/SignIn';
@@ -13,25 +13,35 @@ import SelectCourses from '../pages/SelectCourses';
 import SelectMonitoria from '../pages/SelectMonitoria';
 import RegisterDoubt from '../pages/RegisterDoubt';
 import AnswerQuestion from '../pages/AnswerQuestion';
+import { useAuth } from '../contexts/auth';
 
 const Stack = createNativeStackNavigator();
 
-export default function Routes(){
+export default  function Routes(){
+    const { IsConnected } = useAuth();
+    const isSignedIn = IsConnected();
+
     return(
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="SignIn" component={SignIn}/>
-            <Stack.Screen name="SignUp" component={SignUp}/>
-            <Stack.Screen name="CheckCode" component={CheckCode}/>
-            <Stack.Screen name="StudentProfile" component={StudentProfile}/>
-            <Stack.Screen name="AddPhoto" component={AddPhoto}/>
-            <Stack.Screen name="RecoverPassword" component={RecoverPassword}/>
-            <Stack.Screen name="ChangePassword" component={ChangePassword}/>
-            <Stack.Screen name="RegistrationComplete" component={RegistrationComplete}/>
-            <Stack.Screen name="SelectCourses" component={SelectCourses}/>
-            <Stack.Screen name="SelectMonitoria" component={SelectMonitoria}/>
-            <Stack.Screen name="RegisterDoubt" component={RegisterDoubt}/>
-            <Stack.Screen name="AnswerQuestion" component={AnswerQuestion}/>
-            <Stack.Screen name="ForumDrawer" component={DrawerNavigation}/>
+                <Stack.Screen name="SignIn" component={SignIn}/>
+                <Stack.Screen name="SignUp" component={SignUp}/>
+                <Stack.Screen name="CheckCode" component={CheckCode}/>
+                <Stack.Screen name="StudentProfile" component={StudentProfile}/>
+                <Stack.Screen name="AddPhoto" component={AddPhoto}/>
+                <Stack.Screen name="RecoverPassword" component={RecoverPassword}/>
+                <Stack.Screen name="ChangePassword" component={ChangePassword}/>
+                <Stack.Screen name="RegistrationComplete" component={RegistrationComplete}/>
+            {
+                isSignedIn&& (
+                    <>
+                        <Stack.Screen name="SelectCourses" component={SelectCourses}/>
+                        <Stack.Screen name="SelectMonitoria" component={SelectMonitoria}/>
+                        <Stack.Screen name="RegisterDoubt" component={RegisterDoubt}/>
+                        <Stack.Screen name="AnswerQuestion" component={AnswerQuestion}/>
+                        <Stack.Screen name="ForumDrawer" component={DrawerNavigation}/>
+                    </>
+                )
+            }
         </Stack.Navigator>
     )
 }

@@ -17,6 +17,7 @@ export default function Forum({navigation}) {
     name: ''
   });
   const [showSearch, setShowSearch] = useState(true);
+  const [showQuestionMenu, setShowQuestionMenu] = useState(false);
   const [data, setData] = useState(
   [
     {
@@ -120,7 +121,7 @@ export default function Forum({navigation}) {
       }
       <FlatList
         data={data.sort((a, b) => a.date - b.date)}
-        renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation)}
+        renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation, showQuestionMenu, setShowQuestionMenu)}
         keyExtractor={quest => quest.id}
         style={styles.flatListContainer}
       />
