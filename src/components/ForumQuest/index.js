@@ -26,15 +26,7 @@ export default function ForumQuest(quest, handleLikeButton, navigation, showMenu
                         <Text fontWeight="extrabold">
                             {quest.user.name}
                         </Text>
-                        <Entypo
-                            onPress={()=>setShowMenu(!showMenu)}
-                            name="dots-three-horizontal" 
-                            size={24} 
-                            color="black"
-                        />
-                        {
-                            showMenu&&<ForumQuestionMenu/>
-                        }
+                        <ForumQuestionMenu/>
                     </HStack>
                     <Text fontWeight="semibold">
                         {quest.title.substring(0, 64)}
