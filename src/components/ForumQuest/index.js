@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Avatar, Box, HStack, Text, Image } from 'native-base';
+import { Avatar, Box, HStack, Text } from 'native-base';
 import ForumQuestionMenu from '../ForumQuestionMenu';
 import { AntDesign } from '@expo/vector-icons'; 
 import { EvilIcons } from '@expo/vector-icons'; 
-import { Entypo } from '@expo/vector-icons'; 
+import ImageModal from 'react-native-image-modal';
 
-export default function ForumQuest(quest, handleLikeButton, navigation, showMenu, setShowMenu){
+export default function ForumQuest(quest, handleLikeButton, navigation){
     const DateFormated = (date) => {
         return `${date.getDay()} de dezembro de 2016` 
     }
@@ -35,11 +34,19 @@ export default function ForumQuest(quest, handleLikeButton, navigation, showMenu
                         {quest.desc.substring(0, 128)}
                     </Text>
                     {
-                        quest.content?
-                        <Image width={240} height={140} alt="Conteúdo da dúvida" source={{
-                                uri: quest.content
-                            }}
-                        />:<></>
+                        !!quest.content&&
+                            <ImageModal
+                                resizeMode="contain"
+                                imageBackgroundColor="#fff"
+                                alt="Conteúdo da dúvida"
+                                style={{
+                                    width: 340,
+                                    height: 340
+                                }}
+                                source={{
+                                    uri: quest.content,
+                                }}
+                            />
                     }
                     <HStack marginTop="1" justifyContent="space-between">
                         <Box flexDirection="row">

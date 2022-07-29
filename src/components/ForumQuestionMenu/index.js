@@ -1,8 +1,7 @@
 import { IconButton, Menu, Text } from 'native-base';
 import { Entypo } from '@expo/vector-icons'; 
 
-
-export default function ForumQuestionMenu({placeholder, value, setValue, color, error}){
+export default function ForumQuestionMenu(){
     return (
         <Menu trigger={triggerProps => {
             return <IconButton icon={
@@ -22,7 +21,11 @@ export default function ForumQuestionMenu({placeholder, value, setValue, color, 
                     Denunciar pergunta
                 </Text>
             </Menu.Item>
-            <Menu.Item>Deletar pergunta</Menu.Item>
+            <Menu.Item>
+                <Text>
+                    Deletar pergunta
+                </Text>
+            </Menu.Item>
         </Menu>
     )
 }
