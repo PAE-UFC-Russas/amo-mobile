@@ -1,12 +1,9 @@
 import React from 'react';
 import { Center, Text, Button, Modal, HStack } from 'native-base';
-import styles from './styles';
-
-export default function OndeleteModal({setOpenModal, openModal, navigation}){
+export default function OnDeleteModal({setOpenModal, openModal, navigation}){
     const handleOnClose = () =>{
         setOpenModal(false)
     }
-
 
     return(
         <Modal isOpen={openModal} onClose={handleOnClose} size={'lg'} marginTop={10}>

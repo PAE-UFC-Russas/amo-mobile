@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import styles from './styles';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import PickImage from '../../util/PickImage';
-import OndeleteModal from '../../components/OndeleteModal';
+import OnDeleteModal from '../../components/OnDeleteModal';
 
 export default function RegisterDoubt({navigation}) {
 
@@ -21,7 +21,6 @@ export default function RegisterDoubt({navigation}) {
     }
 
     const OnDelete = () => {
-        console.log(doubt.title.length)
         if(doubt.title.length > 0 || doubt.desc.length > 0){
             setOpenModal(true)
         }else{
@@ -85,7 +84,7 @@ export default function RegisterDoubt({navigation}) {
                 <Button style={{width:'30%', borderRadius:30}}>Publicar</Button>
             </HStack>
             {
-                openModal && <OndeleteModal setOpenModal={setOpenModal} openModal={openModal} navigation={navigation} />
+                openModal && <OnDeleteModal setOpenModal={setOpenModal} openModal={openModal} navigation={navigation} />
             }
         </Box>
     );

@@ -4,7 +4,7 @@
     "slug": "ambiente-de-monitoria-online",
     "version": "1.0.0",
     "splash": {
-      "image": "./src/assets/logo_white_bg_transparent.png",
+      "image": "./src/assets/splash.png",
       "backgroundColor": "#52D6FB"
     },
     "assetBundlePatterns": [
