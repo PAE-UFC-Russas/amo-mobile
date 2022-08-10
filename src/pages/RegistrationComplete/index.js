@@ -9,8 +9,19 @@ export default function RegistrationComplete({navigation}){
     return(
         <Center style={styles.container}>
             <AuthHeader/>
-            <Text color="defaultBlue" width="1/2" textAlign="center" fontSize={16}>Obrigado(a)! Cadastro concluido com sucesso!</Text>
-            <DefaultBlueButton onPress={()=>navigation.navigate("SignIn")}>Login</DefaultBlueButton>
+            <Text 
+                color='defaultBlue' 
+                width='1/2' 
+                textAlign='center' 
+                fontSize={16}
+            >
+                Obrigado(a)! Cadastro concluido com sucesso!
+            </Text>
+            <DefaultBlueButton 
+                onPress={()=>navigation.navigate('SignIn')}
+            >
+                Login
+            </DefaultBlueButton>
         </Center>
     )
 }

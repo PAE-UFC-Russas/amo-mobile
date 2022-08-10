@@ -34,42 +34,42 @@ export default function SelectMonitoria({route, navigation}) {
     return (
         <Center
             style={styles.container}
-            bgColor="#fff"
+            bgColor='#fff'
         >
             <AuthHeader>
                 Selecione a monitoria
             </AuthHeader>
             <Input
-                placeholder="Pesquisar monitorias..."
+                placeholder='Pesquisar monitorias...'
                 value={filterMonitoria}
                 onChangeText={text => setFilterMonitoria(text)}
-                width="5/6"
-                borderRadius="full"
-                borderColor="#52D6FB"
-                color="#52D6FB"
-                marginBottom="2"
+                width='5/6'
+                borderRadius='full'
+                borderColor='#52D6FB'
+                color='#52D6FB'
+                marginBottom='2'
                 InputLeftElement={
                                 <MaterialIcons
-                                    color="#52D6FB"
+                                    color='#52D6FB'
                                     size={32}
-                                    name="search"
+                                    name='search'
                                     style={{marginLeft: 10}}
                                 />
                 }
             />
-            <VStack space="3">
+            <VStack space='3'>
                 {monitorias.map((item, index)=>{
                     return (
                         <Button 
                             key={index}
-                            bgColor="tertiaryBlue" 
-                            borderRadius="2xl" 
+                            bgColor='tertiaryBlue'
+                            borderRadius='2xl' 
                             width={80} 
                             height={60}
-                            onPress={()=>navigation.navigate("ForumDrawer", item.id)} 
+                            onPress={()=>navigation.navigate('ForumDrawer', item.id)} 
                             _text={{
                                 fontWeight: 800,
-                                color: "#fff",
+                                color: '#fff',
                             }}
                         >
                             {item.nome}

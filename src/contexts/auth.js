@@ -14,8 +14,8 @@ export default function AuthContextProvider({ children }){
     async function Login(user){
         try{
             const response = await api.post('/usuario/login/', {
-                "username": user.email,
-                "password": user.password
+                'username': user.email,
+                'password': user.password
             });
 
             const token = response.data.token;
@@ -32,8 +32,8 @@ export default function AuthContextProvider({ children }){
     async function Register(newUser){
         try{
             const response = await api.post('/usuario/registrar/', {
-                "email": newUser.email,
-                "password": newUser.password
+                'email': newUser.email,
+                'password': newUser.password
             });
 
             setUser({...user, token: response.data.token});
@@ -49,17 +49,17 @@ export default function AuthContextProvider({ children }){
     async function CompleteRegister(userData){
         try{
             const response = await api.patch(`/usuario/eu/`, {
-                "perfil": {
-                    "nome_completo": userData.name,
-                    "nome_exibicao": userData.nickName,
-                    "data_nascimento": userData.birthDate.toISOString().split('T')[0],
-                    "matricula": userData.registration,
-                    "entrada": userData.entryYear,
-                    "curso": userData.course.id
+                'perfil': {
+                    'nome_completo': userData.name,
+                    'nome_exibicao': userData.nickName,
+                    'data_nascimento': userData.birthDate.toISOString().split('T')[0],
+                    'matricula': userData.registration,
+                    'entrada': userData.entryYear,
+                    'curso': userData.course.id
                 }
             },{
                 headers: {
-                    "Authorization": "Token " + await GetLoginToken()
+                    'Authorization': 'Token ' + await GetLoginToken()
                 },
             });
 
@@ -73,7 +73,7 @@ export default function AuthContextProvider({ children }){
     async function Active(token){
         try{
             await api.post('/usuario/ativar/', {
-                "token": token
+                'token': token
             },{
                 headers: {
                     'Authorization': 'Token ' + user.token
@@ -83,7 +83,7 @@ export default function AuthContextProvider({ children }){
             return true
         }catch(error){
             console.log(error.response);
-            return "Falha ao ativar o token, verifique se o código está correto ou se o celular está conectado a internet!"
+            return 'Falha ao ativar o token, verifique se o código está correto ou se o celular está conectado a internet!'
         }
     }
 

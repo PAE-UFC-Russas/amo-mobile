@@ -29,7 +29,7 @@ export default function SignIn({navigation}) {
       const connected = await IsConnected();
 
       if(connected){
-        navigation.navigate("SelectCourses");
+        navigation.navigate('SelectCourses');
       }
     }
     VerifyLogin();
@@ -50,27 +50,27 @@ export default function SignIn({navigation}) {
       const response = await Login(userLogin);
         if(response){
           if(response.non_field_errors){
-            setInputErros({errosEmail: "Email ou senha incorretos"});
+            setInputErros({errosEmail: 'Email ou senha incorretos'});
             return;
           }
           if(response.username){
-            setInputErros({errosEmail: "Email inválido"});
+            setInputErros({errosEmail: 'Email inválido'});
             return;
           }
           if(response.password){
-            setInputErros({errosPassword: "Senha inválida"});
+            setInputErros({errosPassword: 'Senha inválida'});
             return;
           }
         }
-        navigation.navigate("SelectCourses");
+        navigation.navigate('SelectCourses');
     }
     setInputErros(erros);
   }
 
-  Keyboard.addListener("keyboardDidShow", () => {
+  Keyboard.addListener('keyboardDidShow', () => {
     setKeyboardIsOpen(true);
   });
-  Keyboard.addListener("keyboardDidHide", () => {
+  Keyboard.addListener('keyboardDidHide', () => {
     setKeyboardIsOpen(false);
   });
 
@@ -79,7 +79,7 @@ export default function SignIn({navigation}) {
       style={styles.container}
       bg={{
         linearGradient: {
-          colors: ["tertiaryBlue", "defaultBlue"]
+          colors: ['tertiaryBlue', 'defaultBlue']
         }
       }}
     > 
@@ -88,46 +88,46 @@ export default function SignIn({navigation}) {
         width={500}
         height={500}
       />
-      <Flex direction="column" width="5/6" height={360} justifyContent="space-between">
+      <Flex direction='column' width='5/6' height={360} justifyContent='space-between'>
         <VStack space={3}>
           <DefaultFormInput
-            label="Email"
-            placeholder="" 
+            label='Email'
+            placeholder='' 
             value={userLogin.email} 
             setValue={text=>setUserLogin({...userLogin, email: text})} 
-            color="white"
+            color='white'
             error={inputErros.errosEmail}
           />
           <DefaultFormInput 
-            type="password"
-            label="Senha"
-            placeholder=""
+            type='password'
+            label='Senha'
+            placeholder=''
             value={userLogin.password} 
             setValue={text=>setUserLogin({...userLogin, password: text})} 
-            color="white" 
+            color='white' 
             error={inputErros.errosPassword}
             />
         </VStack>
-        <VStack space={3} alignItems="center">
+        <VStack space={3} alignItems='center'>
           {!keyboardIsOpen&&
             <>
               <Button 
-                variant="ghost" 
-                key="forget" 
-                onPress={()=>navigation.navigate("RecoverPassword")}
+                variant='ghost' 
+                key='forget'
+                onPress={()=>navigation.navigate('RecoverPassword')}
                 _text={{
-                  color: "#fff",
+                  color: '#fff',
                   fontWeight: 200
                 }}
               >
                 Esqueci minha senha
               </Button>
               <Button 
-                variant="ghost" 
-                key="SignUp" 
-                onPress={()=>navigation.navigate("SignUp")}
+                variant='ghost' 
+                key='SignUp' 
+                onPress={()=>navigation.navigate('SignUp')}
                 _text={{
-                  color: "#fff",
+                  color: '#fff',
                   fontWeight: 800
                 }}
               >
@@ -137,12 +137,12 @@ export default function SignIn({navigation}) {
           }
           <Button 
             marginBottom={keyboardIsOpen?70:0} 
-            bgColor="#fff" 
+            bgColor='#fff'
             width={80} 
             height={60} 
             _text={{
               fontWeight: 800,
-              color: "defaultBlue"
+              color: 'defaultBlue'
             }}
             onPress={()=>{InputValidation()}}
           >

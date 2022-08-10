@@ -38,7 +38,7 @@ export default function Forum({navigation}) {
       content: 'https://www.researchgate.net/profile/Ana-Melo-23/publication/301540260/figure/fig1/AS:352949281804288@1461161074767/Figura-1-Equacoes-para-o-calculo-do-Indicador-de-Consumo-da-envoltoria-para-as-Zonas.png',
       user: {
         name: 'Ana Pereira de Jesus',
-        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80"
+        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80'
       },
       date: new Date(),
       liked: true
@@ -49,8 +49,8 @@ export default function Forum({navigation}) {
       desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,',
       content: '',
       user: {
-        name: "Julia Alencar de Silva Sousa",
-        avatar: "https://images.unsplash.com/photo-1504439904031-93ded9f93e4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80"
+        name: 'Julia Alencar de Silva Sousa',
+        avatar: 'https://images.unsplash.com/photo-1504439904031-93ded9f93e4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80'
       },
       date: new Date(),
       liked: true
@@ -60,9 +60,9 @@ export default function Forum({navigation}) {
   useEffect(()=>{
     async function GetQuestions(){
       try{
-        const response = await api.get("/duvidas/", {
+        const response = await api.get('/duvidas/', {
             headers: {
-              "Authorization": "Token " + await GetLoginToken()
+              'Authorization': 'Token' + await GetLoginToken()
             }
         });
         setData(response.data);
@@ -80,20 +80,20 @@ export default function Forum({navigation}) {
       headerLeft: () => (
         <MaterialIcons
           onPress={() => navigation.openDrawer()}
-          color="#52D6FB"
+          color='#52D6FB'
           size={32}
-          name="menu"
+          name='menu'
           style={{marginLeft: 10}}
         />
       ),
-      headerTitle: () => <Text fontWeight="bold" fontSize="sm" color="tertiaryBlue">Fórum</Text>,
-      headerTitleAlign: "center",
+      headerTitle: () => <Text fontWeight='bold' fontSize='sm' color='tertiaryBlue'>Fórum</Text>,
+      headerTitleAlign: 'center',
       headerRight: () => (
         <MaterialIcons
           onPress={() => setShowSearch(!showSearch)}
-          color="#52D6FB"
+          color='#52D6FB'
           size={32}
-          name="search"
+          name='search'
           style={{marginRight: 10}}
         />
       )
@@ -113,7 +113,7 @@ export default function Forum({navigation}) {
   return (
     <Center
       style={styles.container}
-      bgColor="#fff"
+      bgColor='#fff'
     >
       {
         showSearch&&<ForumSearch filters={filters} setFilters={setFilters}/>
@@ -126,17 +126,17 @@ export default function Forum({navigation}) {
       />
       <IconButton 
         style={styles.addButton} 
-        variant="solid" 
-        bgColor="tertiaryBlue"
-        borderRadius="full" 
+        variant='solid' 
+        bgColor='tertiaryBlue'
+        borderRadius='full' 
         icon={
                 <MaterialIcons
-                  color="#fff"
+                  color='#fff'
                   size={32}
-                  name="add"
+                  name='add'
                 />
               }
-        onPress={()=>navigation.navigate("RegisterDoubt")}
+        onPress={()=>navigation.navigate('RegisterDoubt')}
       />
     </Center>
   );

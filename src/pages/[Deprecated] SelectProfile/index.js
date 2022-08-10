@@ -6,23 +6,23 @@ import DefaultSelect from '../../components/DefaultSelect';
 import styles from './styles';
 
 export default function SelectProfile({navigation}) {
-    const [profile, setProfile] = useState("");
+    const [profile, setProfile] = useState('');
 
     const handleNavigation = () => {
         if(profile){
-            if(profile === "Aluno")
-                return "StudentProfile"
-            else if(profile === "Professor")
-                return "ProfessorProfile"
+            if(profile === 'Aluno')
+                return 'StudentProfile'
+            else if(profile === 'Professor')
+                return 'ProfessorProfile'
             else
-                return "MonitorProfile"
+                return 'MonitorProfile'
         }
     }
 
     return (
         <Center
             style={styles.container}
-            bgColor="#fff"
+            bgColor='#fff'
 
         >
             <View>
@@ -30,24 +30,24 @@ export default function SelectProfile({navigation}) {
                     Selecionar perfil
                 </AuthHeader>
                 <DefaultSelect
-                    placeholder="Escolha seu perfil" 
+                    placeholder='Escolha seu perfil' 
                     items={['Aluno', 'Monitor', 'Professor']}
                     value={profile} 
                     setValue={itemValue => setProfile(itemValue)} 
-                    color="tertiaryBlue" 
+                    color='tertiaryBlue' 
                     error={null}
                 />
             </View>
             <Button 
-                bgColor="defaultBlue" 
-                borderRadius="2xl" 
+                bgColor='defaultBlue' 
+                borderRadius='2xl' 
                 width={80} 
                 height={60}
                 disabled={!profile?true:false}
                 onPress={()=>navigation.navigate(handleNavigation())} 
                 _text={{
                     fontWeight: 800,
-                    color: "#fff",
+                    color: '#fff',
                 }}
             >
                 Próximo

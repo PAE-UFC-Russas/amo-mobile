@@ -5,7 +5,7 @@ export default function SelectForProfilePage({placeholder, setValue, color, erro
         <FormControl isInvalid={error?true:false}>
             <Select 
                 accessibilityLabel={placeholder}
-                minWidth="5/6"
+                minWidth='5/6'
                 placeholder={placeholder}
                 placeholderTextColor={color}
                 borderColor={color}
@@ -15,7 +15,7 @@ export default function SelectForProfilePage({placeholder, setValue, color, erro
                     bg: color
                 }}
                 _text={{
-                    fontSize: "3xl"
+                    fontSize: '3xl'
                 }}
                 onValueChange={setValue}
             >

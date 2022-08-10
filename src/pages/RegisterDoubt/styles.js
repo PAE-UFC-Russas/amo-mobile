@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
         marginTop:236,
         marginLeft:23,
         borderRadius:15,
-        color:"#52D6FB",
-        backgroundColor:"#52D6FB",
-        borderColor:"#52D6FB",
+        color:'#52D6FB',
+        backgroundColor:'#52D6FB',
+        borderColor:'#52D6FB',
         
     }
 });

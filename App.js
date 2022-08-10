@@ -9,7 +9,7 @@ import Routes from './src/routes/routes';
 
 const config = {
   dependencies: {
-    "linear-gradient": LinearGradient
+    'linear-gradient': LinearGradient
   }
 };
 
@@ -19,7 +19,7 @@ export default function App() {
         <NavigationContainer>
           <AuthContext>
             <Routes/>
-            <StatusBar style="light"/>
+            <StatusBar style='light'/>
           </AuthContext>
         </NavigationContainer>
       </NativeBaseProvider>

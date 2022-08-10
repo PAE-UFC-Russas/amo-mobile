@@ -11,27 +11,27 @@ export default function ModalKeepConnected({navigation, open, setOpen, setUser, 
 
         if(response){
             if(response.non_field_errors)
-                setErros({errosEmail: "Email ou senha incorretos"});
+                setErros({errosEmail: 'Email ou senha incorretos'});
             if(response.username)
-                setErros({errosEmail: "Email inválido"});
+                setErros({errosEmail: 'Email inválido'});
             if(response.password)
-                setErros({errosPassword: "Senha inválida"});
+                setErros({errosPassword: 'Senha inválida'});
             return;
         }
-        navigation.navigate("SelectCourses");
+        navigation.navigate('SelectCourses');
     }
     
     return (
-        <Modal isOpen={open} onClose={handleOnClose} size="full">
-            <Modal.Content padding="5" bgColor="#fff" style={styles.container}>
+        <Modal isOpen={open} onClose={handleOnClose} size='full'>
+            <Modal.Content padding='5' bgColor='#fff' style={styles.container}>
                 <Modal.Body>
                     <Checkbox 
-                        size="lg"
-                        borderColor="defaultBlue" 
+                        size='lg'
+                        borderColor='defaultBlue' 
                         defaultIsChecked={userLogin.signed}
                         _text={{
-                            color: "defaultBlue",
-                            fontSize: "lg"
+                            color: 'defaultBlue',
+                            fontSize: 'lg'
                         }}
                         onChange={()=>setUser({...userLogin, signed: !userLogin.signed})}
                     >

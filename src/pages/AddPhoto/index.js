@@ -25,9 +25,9 @@ export default function AddPhoto({navigation}) {
 
     const validation = () => {
         if(!image){
-            setImageError("Insira uma imagem de perfil para concluir o cadastro ou pule está etapa!");
+            setImageError('Insira uma imagem de perfil para concluir o cadastro ou pule está etapa!');
         }else{
-            navigation.navigate("RegistrationComplete");
+            navigation.navigate('RegistrationComplete');
         }
 
     }
@@ -35,28 +35,30 @@ export default function AddPhoto({navigation}) {
     return (
         <Center
             style={styles.container}
-            bgColor="#fff"
+            bgColor='#fff'
         >
-            <Center width="5/6">
+            <Center width='5/6'>
                 <AuthHeader>
                     Selecione uma foto se quiser!
                 </AuthHeader>
-                <Button bgColor="#fff" onPress={PickImage}>
-                    <MaterialIcons style={styles.camIcon} name="photo-camera" color="#fff" size={24}/>
+                <Button bgColor='#fff' onPress={PickImage}>
+                    <MaterialIcons style={styles.camIcon} name='photo-camera' color='#fff' size={24}/>
                     <Image 
                         size={150} 
-                        resizeMode={"contain"} 
+                        resizeMode={'contain'} 
                         borderRadius={100} 
                         source={!image?require('../../assets/avatar_example.jpg'):{uri: image}} 
-                        alt="Foto de perfil"
+                        alt='Foto de perfil'
                     />
                 </Button>
             </Center>
             <Center>
-                <Button variant="ghost" key="register" 
-                    onPress={()=>navigation.navigate("RegistrationComplete")}
+                <Button 
+                    variant='ghost' 
+                    key='register' 
+                    onPress={()=>navigation.navigate('RegistrationComplete')}
                     _text={{
-                        color: "defaultBlue",
+                        color: 'defaultBlue',
                         fontWeight: 800
                     }}
                 >
@@ -67,7 +69,7 @@ export default function AddPhoto({navigation}) {
                 </DefaultBlueButton>
                 {
                     imageError&&
-                        <Text style={{color: "#f00", fontSize: 12}}>
+                        <Text style={{color: '#f00', fontSize: 12}}>
                             {imageError}
                         </Text>
                 }

@@ -6,7 +6,7 @@ export default function DefaultFormInput({placeholder, value, setValue, color, e
             <Select 
                 selectedValue={value} 
                 accessibilityLabel={placeholder}
-                minWidth="5/6"
+                minWidth='5/6'
                 placeholder={placeholder}
                 placeholderTextColor={color}
                 borderColor={color}
@@ -16,7 +16,7 @@ export default function DefaultFormInput({placeholder, value, setValue, color, e
                     bg: color
                 }}
                 _text={{
-                    fontSize: "3xl"
+                    fontSize: '3xl'
                 }}
                 onValueChange={setValue}
             >

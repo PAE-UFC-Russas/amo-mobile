@@ -28,25 +28,25 @@ export default function SelectCourses({navigation}) {
     return (
         <Center
             style={styles.container}
-            bgColor="#fff"
+            bgColor='#fff'
 
         >
             <AuthHeader>
                 Selecione o curso
             </AuthHeader>
-            <VStack space="3">
+            <VStack space='3'>
                 {courses.map((item, index)=>{
                     return (
                         <Button 
                             key={index}
-                            bgColor="tertiaryBlue" 
-                            borderRadius="2xl" 
+                            bgColor='tertiaryBlue' 
+                            borderRadius='2xl' 
                             width={80} 
                             height={60}
-                            onPress={()=>navigation.navigate("SelectMonitoria", item.id)} 
+                            onPress={()=>navigation.navigate('SelectMonitoria', item.id)} 
                             _text={{
                                 fontWeight: 800,
-                                color: "#fff",
+                                color: '#fff',
                             }}
                         >
                             {item.nome}

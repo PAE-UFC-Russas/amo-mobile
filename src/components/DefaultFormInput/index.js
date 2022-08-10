@@ -8,10 +8,10 @@ export default function DefaultFormInput({label, placeholder, value, setValue, c
     const PasswordVisibility = () => {
         return <MaterialIcons
             onPress={()=>setHiddenPassword(!hiddenPassword)}
-            color={color === "tertiaryBlue"?"#52D6FB":"#fff"}
+            color={color === 'tertiaryBlue'?'#52D6FB':'#fff'}
             size={24}
             style={{marginRight: 10}}
-            name={hiddenPassword ? "visibility" : "visibility-off"}/>
+            name={hiddenPassword ? 'visibility' : 'visibility-off'}/>
     }
 
     const HandleChangePassword = (text) => {
@@ -33,7 +33,7 @@ export default function DefaultFormInput({label, placeholder, value, setValue, c
                     </FormControl.Label>
                 }
                 <Input
-                    variant="outline"
+                    variant='outline'
                     placeholder={placeholder}
                     placeholderTextColor={color}
                     color={color}
@@ -69,9 +69,9 @@ export default function DefaultFormInput({label, placeholder, value, setValue, c
                     </FormControl.Label>
                 }
                 <Input
-                    type={hiddenPassword?"password":"text"}
+                    type={hiddenPassword?'password':'text'}
                     InputRightElement={<PasswordVisibility/>}
-                    variant="outline"
+                    variant='outline'
                     placeholder={placeholder}
                     placeholderTextColor={color}
                     color={color}

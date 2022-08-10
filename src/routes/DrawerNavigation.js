@@ -9,27 +9,27 @@ const Drawer = createDrawerNavigator();
 export default function DrawerNavigation(){
     return(
         <Drawer.Navigator drawerContent={props => <DrawerInfo {...props}/>} screenOptions={{headerShown: false}}>
-            <Drawer.Screen name="Tabforum" component={TabNavigation} options={{
-                drawerLabel:"Forum",
+            <Drawer.Screen name='Tabforum' component={TabNavigation} options={{
+                drawerLabel:'Forum',
                 drawerIcon: ({color})=>{
                     return(
                         <MaterialIcons
                             color={color}
                             size={24}
-                            name="forum"
+                            name='forum'
                         /> 
                     )
                 }
                 }}
             />
-            <Drawer.Screen name="Profile" component={Profile} options={{
-                drawerLabel:"Perfil",
+            <Drawer.Screen name='Profile' component={Profile} options={{
+                drawerLabel:'Perfil',
                 drawerIcon: ({color})=>{
                     return(
                         <MaterialIcons
                             color={color}
                             size={24}
-                            name="person"
+                            name='person'
                         /> 
                     )
                 }}} 

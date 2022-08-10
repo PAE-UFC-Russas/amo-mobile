@@ -25,60 +25,60 @@ export default function CheckCode({navigation, route}) {
 
         if(inputIsFilled > 0){
             if(route.params !== undefined && route.params.register){
-                const activeToken = code.toString().replace(/,/g, "");
+                const activeToken = code.toString().replace(/,/g, '');
                 const codeActivationMessage = await Active(activeToken);
 
                 if(codeActivationMessage === true){
-                    navigation.navigate("StudentProfile");
+                    navigation.navigate('StudentProfile');
                 }
                 else{
                     setError(codeActivationMessage);
                 }
             }
             else{
-                navigation.navigate("ChangePassword");
+                navigation.navigate('ChangePassword');
             }
         }else{
-            setError("O campo do código não pode estar vazio!");
+            setError('O campo do código não pode estar vazio!');
         }
     }
 
     return (
         <Center
             style={styles.container}
-            bgColor="#fff"
+            bgColor='#fff'
         >
             <AuthHeader>
                 Inserir código
             </AuthHeader>
             <Center>
                 <Text
-                    fontSize="md"
-                    textAlign="center"
-                    margin="10"
+                    fontSize='md'
+                    textAlign='center'
+                    margin='10'
                 >
                     Acabamos de enviar um código para seu email.
                 </Text>
                 <FormControl isInvalid={!!error}>
-                    <HStack style={styles.codeInputs} width="full" space={1}>
+                    <HStack style={styles.codeInputs} width='full' space={1}>
                         {code.map((element, index)=>{
                             return <Input
                                 key={index}
-                                width="12"
-                                borderRadius="2xl"
-                                textAlign="center"
-                                fontSize="sm"
-                                placeholderTextColor="tertiaryBlue" 
-                                selectionColor="tertiaryBlue" 
-                                color="tertiaryBlue"
-                                borderColor="tertiaryBlue"
-                                keyboardType="numeric"
+                                width='12'
+                                borderRadius='2xl'
+                                textAlign='center'
+                                fontSize='sm'
+                                placeholderTextColor='tertiaryBlue' 
+                                selectionColor='tertiaryBlue' 
+                                color='tertiaryBlue'
+                                borderColor='tertiaryBlue'
+                                keyboardType='numeric'
                                 maxLength={1}
                                 onChangeText={text => HandleChangeCode(text, index)}
                             />
                         })}
                     </HStack>
-                    <FormControl.ErrorMessage marginX={20} alignItems="center">
+                    <FormControl.ErrorMessage marginX={20} alignItems='center'>
                         {error}
                     </FormControl.ErrorMessage>
                 </FormControl>

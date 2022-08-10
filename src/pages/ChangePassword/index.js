@@ -7,8 +7,8 @@ import styles from './styles';
 
 export default function ChangePassword({navigation}) {
   const [passwords, setNewPasswords] = useState({
-    password: "",
-    confirmPassword: ""
+    password: '',
+    confirmPassword: ''
   });
   const [inputErros, setInputErros] = useState({
     errosPassword: null,
@@ -22,42 +22,42 @@ export default function ChangePassword({navigation}) {
     };
 
     if(passwords.password.length < 8)
-      erros.errosPassword = "A senha precisa conter 8 caracteres!";
+      erros.errosPassword = 'A senha precisa conter 8 caracteres!';
     else if(!passwords.password.match(/[a-zA-Z]/g))
-      erros.errosPassword = "A senha precisa conter pelo menos uma letra!";
+      erros.errosPassword = 'A senha precisa conter pelo menos uma letra!';
     else if(!passwords.password.match(/\d/g))
-      erros.errosPassword = "A senha precisa conter pelo menos um número!";
+      erros.errosPassword = 'A senha precisa conter pelo menos um número!';
     if(passwords.password !== passwords.confirmPassword)
-      erros.errosConfirmPassword = "As senhas devem ser iguais!";
+      erros.errosConfirmPassword = 'As senhas devem ser iguais!';
 
     setInputErros(erros);
     if(!erros.errosPassword && !erros.errosConfirmPassword)
-        navigation.navigate("SignIn")
+        navigation.navigate('SignIn')
     return null
   }
 
   return (
     <Center
       style={styles.container}
-      bgColor="#fff"
+      bgColor='#fff'
     >
-      <Center width="5/6">
+      <Center width='5/6'>
         <AuthHeader>
           Crie uma nova senha
         </AuthHeader>
-        <VStack width="full" space={3}>
+        <VStack width='full' space={3}>
           <DefaultFormInput 
-            type="password"
-            placeholder="Senha" 
+            type='password'
+            placeholder='Senha' 
             value={passwords.password} 
             setValue={text=>setNewPasswords({...passwords, password: text})} 
-            color="tertiaryBlue" 
+            color='tertiaryBlue' 
             error={inputErros.errosPassword}
           />
           <DefaultFormInput
-            type="password"
-            placeholder="Cofirmar senha" 
-            color="tertiaryBlue" 
+            type='password'
+            placeholder='Cofirmar senha' 
+            color='tertiaryBlue' 
             value={passwords.confirmPassword} 
             setValue={text=>setNewPasswords({...passwords, confirmPassword: text})} 
             error={inputErros.errosConfirmPassword}

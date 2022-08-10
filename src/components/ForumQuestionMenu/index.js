@@ -7,12 +7,12 @@ export default function ForumQuestionMenu(){
             return <IconButton icon={
                         <Entypo
                             size={24} 
-                            name="dots-three-horizontal" 
-                            color="black"
+                            name='dots-three-horizontal' 
+                            color='black'
                         />
                     }
                     size={8} 
-                    accessibilityLabel="opções do comentario" 
+                    accessibilityLabel='opções do comentario' 
                     {...triggerProps}
                 />
           }}>

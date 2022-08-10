@@ -26,20 +26,20 @@ export default function TabNavigation(){
                     }
 
                     return <MaterialIcons
-                                color={focused?"#52D6FB":"#808080"}
+                                color={focused?'#52D6FB':'#808080'}
                                 size={32}
                                 name={iconName}
                             />
                 },
-                tabBarActiveTintColor: "#52D6FB",
-                tabBarInactiveTintColor: "#808080",
+                tabBarActiveTintColor: '#52D6FB',
+                tabBarInactiveTintColor: '#808080',
                 headerShown: false
             })}
         >
-            <Tab.Screen name="Forum" component={Forum} options={{headerShown: true}}/>
-            <Tab.Screen name="Agendar" component={Teste1}/>
-            <Tab.Screen name="Notificação" component={Teste2}/>
-            <Tab.Screen name="Profile" component={Profile} options={{tabBarLabel: "Perfil"}}/>
+            <Tab.Screen name='Forum' component={Forum} options={{headerShown: true}}/>
+            <Tab.Screen name='Agendar' component={Teste1}/>
+            <Tab.Screen name='Notificação' component={Teste2}/>
+            <Tab.Screen name='Profile' component={Profile} options={{tabBarLabel: 'Perfil'}}/>
         </Tab.Navigator>
     )
 }
