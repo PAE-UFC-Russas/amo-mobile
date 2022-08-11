@@ -13,6 +13,7 @@ import SelectCourses from '../pages/SelectCourses';
 import SelectMonitoria from '../pages/SelectMonitoria';
 import RegisterDoubt from '../pages/RegisterDoubt';
 import AnswerQuestion from '../pages/AnswerQuestion';
+import About from '../pages/About';
 import { useAuth } from '../contexts/auth';
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +32,7 @@ export default  function Routes(){
                 <Stack.Screen name='RecoverPassword' component={RecoverPassword}/>
                 <Stack.Screen name='ChangePassword' component={ChangePassword}/>
                 <Stack.Screen name='RegistrationComplete' component={RegistrationComplete}/>
+                <Stack.Screen name='About' component={About}/>
             {
                 isSignedIn&& (
                     <>
