@@ -148,6 +148,17 @@ export default function SignIn({navigation}) {
           >
             Entrar
           </Button>
+          <Button 
+            marginBottom={keyboardIsOpen?70:0} 
+            variant='ghost'
+            _text={{
+              color: '#fff',
+              fontWeight: 800
+            }}
+            onPress={()=>{navigation.navigate('About')}}
+          >
+            Sobre o aplicativo
+          </Button>
         </VStack >
       </Flex>
     </Center>
