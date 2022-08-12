@@ -8,11 +8,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: 5,
     },
-    TextInputs:{
-        marginLeft:20,
-        fontWeight:'bold',
-        fontSize:17,
-
+    avatarBadge: {
+        position: 'absolute',
+        backgroundColor: '#52D6FB',
+        borderRadius: 50,
+        padding: 7,
+        right: 20,
+        bottom: 12
+    },
+    buttons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 50
+        
     }
 });
 

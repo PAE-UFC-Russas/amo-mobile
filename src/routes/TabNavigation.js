@@ -27,7 +27,7 @@ export default function TabNavigation(){
 
                     return <MaterialIcons
                                 color={focused?'#52D6FB':'#808080'}
-                                size={32}
+                                size={28}
                                 name={iconName}
                             />
                 },

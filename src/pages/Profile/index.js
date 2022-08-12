@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Center, Text, View, Avatar, Input, Button } from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons'; 
 import styles from './styles';
 
 export default function Profile({navigation}) {
@@ -16,24 +16,34 @@ export default function Profile({navigation}) {
     return ( 
         <View>
             <MaterialIcons
-                        onPress={()=>navigation.goBack()}
-                        color='#52D6FB'
-                        size={24}
-                        name='arrow-back-ios'
-                        style={{marginLeft:'5%', marginTop:50}}
-                    />
-        <Text marginTop={20} marginLeft={5} fontSize={20}>Editar Perfil</Text>
-        <Center>
-            <Avatar 
-                marginLeft={30}
-                marginTop={50} 
-                margin={5}
-                bg='tertiaryBlue' 
-                size='xl'
-                source={{
-                    uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-                }}
+                onPress={()=>navigation.goBack()}
+                color='#52D6FB'
+                size={24}
+                name='arrow-back-ios'
+                style={{marginLeft:'5%', marginTop:50}}
             />
+        <Text marginTop={20} marginLeft={5} fontSize={25}>Editar Perfil</Text>
+        <Center>
+            <View>
+                <Avatar 
+                    marginLeft={30}
+                    marginTop={50} 
+                    margin={5}
+                    bg='tertiaryBlue' 
+                    size='xl'
+                    source={{
+                        uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+                    }}
+                />
+                <View style={styles.avatarBadge}>
+                    <FontAwesome5
+                        onPress={()=>navigation.goBack()}
+                        color='#fff'
+                        size={16}
+                        name='pen'
+                    />
+                </View>
+            </View>
         </Center>
         <View margin={3}>
             <Text 
@@ -75,29 +85,19 @@ export default function Profile({navigation}) {
             </Text>
             <Input 
                 type='text' 
-                placeholder='digite sua data de aniversário' 
+                placeholder='digite sua data de nascimento' 
                 fontSize={15} 
                 onChangeText={setDataA} 
                 value={dataA}
             />
         </View>
-        <View 
-            display={'flex'} 
-            justifyContent={'space-between'} 
-            flexDirection={'row'} 
-            marginTop={'35%'}
-        >
-            <Button 
-                width={100}
-                marginLeft={5}
-            >
+        <View style={styles.buttons}>
+            <Button borderWidth={2} borderColor='#52D6FB' variant='outline' borderRadius={20} width={100} _text={{
+                color: '#4B4A4A',
+            }}>
                 Cancelar
             </Button>
-            <Button 
-                width={100} 
-                marginRight={5} 
-                onPress={salvar}
-            >
+            <Button bgColor='#52D6FB' borderRadius={20} width={100} onPress={salvar}>
                 Salvar
             </Button>
         </View>
