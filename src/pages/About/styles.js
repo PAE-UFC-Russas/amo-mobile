@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
         color:'#fff',
         alignItems: 'center',
         justifyContent: 'space-between',
-        
         paddingBottom: 40
     }
 });

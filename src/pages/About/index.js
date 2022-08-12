@@ -35,8 +35,7 @@ export default function About({navigation}) {
                 />
                 <View width={'90%'}>
                     <Text fontSize={20} fontWeight={'bold'} marginLeft={10}>
-                    "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-                    "Não há ninguém que ame a dor por si só, que a busque e queira tê-la, simplesmente por ser dor..."
+                        Aplicativo para auxiliar as monitorias, onde seria possível marcar monitoria, ver hórarios, visualizar conteúdo postados e solucionar dúvidas dos alunos da UFC - Campus Russas.
                     </Text>
                 </View>
             </VStack>
