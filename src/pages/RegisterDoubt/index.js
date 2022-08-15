@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Button, Text, Select, Input, HStack, TextArea, Image } from 'native-base';
 import { View } from 'react-native';
-import styles from './styles';
+import { Avatar, Box, Button, Text, Select, Input, HStack, TextArea, Image } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import styles from './styles';
 import PickImage from '../../util/PickImage';
 import OnDeleteModal from '../../components/OnDeleteModal';
 
