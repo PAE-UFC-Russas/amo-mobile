@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/auth';
 
 export default function DrawerInfo(props){
     const { Logout } = useAuth();
+    console.log(props.user)
     return (
         <DrawerContentScrollView contentContainerStyle={{ flex: 1 }}>
             <Center marginBottom={5}>
@@ -21,7 +22,7 @@ export default function DrawerInfo(props){
                     fontSize='md' 
                     fontWeight='bold'
                 >
-                    Heron
+                    Felipe Gomes
                 </Text>
                 <Text 
                     fontSize='sm' 

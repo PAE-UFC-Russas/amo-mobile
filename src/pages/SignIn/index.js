@@ -88,7 +88,7 @@ export default function SignIn({navigation}) {
         width={500}
         height={500}
       />
-      <Flex direction='column' width='5/6' height={360} justifyContent='space-between'>
+      <Flex direction='column' width='5/6' height={380} justifyContent='space-between'>
         <VStack space={3}>
           <DefaultFormInput
             label='Email'
@@ -148,17 +148,20 @@ export default function SignIn({navigation}) {
           >
             Entrar
           </Button>
-          <Button 
-            marginBottom={keyboardIsOpen?70:0} 
-            variant='ghost'
-            _text={{
-              color: '#fff',
-              fontWeight: 800
-            }}
-            onPress={()=>{navigation.navigate('About')}}
-          >
-            Sobre o aplicativo
-          </Button>
+          {
+            !keyboardIsOpen &&
+            <Button 
+              marginBottom={keyboardIsOpen?70:0} 
+              variant='ghost'
+              _text={{
+                color: '#fff',
+                fontWeight: 800
+              }}
+              onPress={()=>{navigation.navigate('About')}}
+            >
+              Sobre o aplicativo
+            </Button>
+          }
         </VStack >
       </Flex>
     </Center>

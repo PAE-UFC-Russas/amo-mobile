@@ -92,7 +92,7 @@ export default function Profile({navigation}) {
             <View style={styles.buttons}>
                 <Button borderWidth={2} borderColor='#52D6FB' variant='outline' borderRadius={20} width={100} _text={{
                     color: '#4B4A4A',
-                }}>
+                }} onPress={() => navigation.goBack()}>
                     Cancelar
                 </Button>
                 <Button bgColor='#52D6FB' borderRadius={20} width={100} onPress={salvar}>
