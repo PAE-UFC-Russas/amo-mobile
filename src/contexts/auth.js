@@ -114,14 +114,15 @@ export default function AuthContextProvider({ children }){
 
     async function IsConnected(){
         const token = await GetLoginToken();
-        const userData = await GetUser(token);
+        // const userData = await GetUser(token);
 
-        if(!userData){
-            return false
-        }else{
-            setUser({...userData});
-            return true
-        }
+        // if(!userData){
+        //     return false
+        // }else{
+        //     setUser({...userData});
+        //     return true
+        // }
+        return true
     }
 
     return (

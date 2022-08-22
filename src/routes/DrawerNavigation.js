@@ -7,9 +7,9 @@ import { useAuth } from '../contexts/auth';
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigation(){
+export default function DrawerNavigation(props){
     const { Logout, user } = useAuth();
-
+    console.log(props)
     return(
         <Drawer.Navigator drawerContent={props => <DrawerInfo {...props} Logout={Logout} user={user}/>} screenOptions={{headerShown: false}}>
             <Drawer.Screen name='Tabforum' component={TabNavigation} options={{
