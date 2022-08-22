@@ -2,11 +2,10 @@ import { View } from 'react-native';
 import { Avatar, Button, Center, HStack, Text } from 'native-base';
 import { AntDesign } from '@expo/vector-icons'; 
 import { DrawerItemList, DrawerContentScrollView} from '@react-navigation/drawer';
-import { useAuth } from '../../contexts/auth';
 
 export default function DrawerInfo(props){
-    const { Logout } = useAuth();
-    console.log(props.user)
+    
+    console.log('eae')
     return (
         <DrawerContentScrollView contentContainerStyle={{ flex: 1 }}>
             <Center marginBottom={5}>

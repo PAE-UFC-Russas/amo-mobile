@@ -6,10 +6,23 @@ export const AuthContext = createContext({});
 
 export default function AuthContextProvider({ children }){
     const [user, setUser] = useState({
-        email: null,
-        password: null,
-        token: null
+        email: null
     });
+
+    async function GetUser(token){
+        try{
+            const response = await api.get('/usuario/eu/', {
+                headers: {
+                    'Authorization': 'Token ' + token
+                }
+            });
+            
+            return response.data
+        }catch(error){
+            console.log(error.response.data)
+            return null
+        }
+    }
 
     async function Login(user){
         try{
@@ -17,9 +30,10 @@ export default function AuthContextProvider({ children }){
                 'username': user.email,
                 'password': user.password
             });
-
             const token = response.data.token;
-            setUser({...user, token: token});
+            const userData = await GetUser(token);
+
+            setUser({...userData});
 
             await StoreLoginToken(token);
 
@@ -35,13 +49,14 @@ export default function AuthContextProvider({ children }){
                 'email': newUser.email,
                 'password': newUser.password
             });
+            const token = response.data.token;
+            const userData = await GetUser(token);
 
-            setUser({...user, token: response.data.token});
+            setUser({...userData});
 
-            await StoreLoginToken(response.data.token);
-
+            await StoreLoginToken(token);
         }catch(error){
-            console.log(error.response)
+            console.log(error.response);
             return error.response.data
         }
     }
@@ -99,21 +114,13 @@ export default function AuthContextProvider({ children }){
 
     async function IsConnected(){
         const token = await GetLoginToken();
+        const userData = await GetUser(token);
 
-        if(!token){
+        if(!userData){
             return false
         }else{
-            try{
-                await api.get('/cursos/', {
-                    headers: {
-                        'Authorization': 'Token ' + token
-                    }
-                });
-                return true
-            }catch(error){
-                console.log(error.response.data)
-                return false
-            }
+            setUser({...userData});
+            return true
         }
     }
 

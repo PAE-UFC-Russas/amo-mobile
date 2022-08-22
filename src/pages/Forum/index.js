@@ -61,9 +61,9 @@ export default function Forum({navigation}) {
     async function GetQuestions(){
       try{
         const response = await api.get('/duvidas/', {
-            headers: {
-              'Authorization': 'Token' + await GetLoginToken()
-            }
+          headers: {
+            'Authorization': 'Token' + await GetLoginToken()
+          }
         });
         setData(response.data);
       }catch(error){
@@ -71,7 +71,7 @@ export default function Forum({navigation}) {
       }
     }
 
-  //GetQuestions();
+    //GetQuestions();
   },[])
 
   useLayoutEffect(() => {
@@ -130,12 +130,12 @@ export default function Forum({navigation}) {
         bgColor='tertiaryBlue'
         borderRadius='full' 
         icon={
-                <MaterialIcons
-                  color='#fff'
-                  size={32}
-                  name='add'
-                />
-              }
+          <MaterialIcons
+            color='#fff'
+            size={32}
+            name='add'
+          />
+        }
         onPress={()=>navigation.navigate('RegisterDoubt')}
       />
     </Center>

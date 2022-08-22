@@ -3,23 +3,38 @@ import { TouchableOpacity } from 'react-native';
 import { Center, Text, View, Avatar, Input, Button } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import PickImage from '../../util/PickImage';
+import api from '../../services/api';
+import { useAuth } from '../../contexts/auth';
 import styles from './styles';
 
 export default function Profile({navigation}) {
+    const { user } = useAuth();
     const [profile, setProfile] = useState({
-        name: '',
-        nickname: '',
-        birthDate: '',
-        avatar: ''
+        // nome_completo: user.perfil.nome_completo,
+        // nome_exibicao: user.perfil.nome_exibicao,
+        // data_nascimento: user.perfil.data_nascimento
+        nome_completo: 'Heron Rodrigues de Oliveira',
+        nome_exibicao: 'Heron',
+        data_nascimento: new Date()
     });
+    const [showDate, setShowDate] = useState(false);
 
     const GetImage = async () => {
         const avatar = await PickImage();
         setProfile({...profile, avatar: avatar});
     }
 
-    const salvar = ()=>{
-        alert('campos alterados!')
+    const Salvar = async () => {
+        const response = await api.patch('/usuario/eu/', 
+            {
+                "perfil": profile
+            }, 
+            {
+                headers: {
+                    'Authorization': 'Token ' + token
+                }
+            }
+        );
     }
     
     return ( 
@@ -80,11 +95,19 @@ export default function Profile({navigation}) {
                 >
                     Data de aniversário
                 </Text>
+                {
+                    showDate&&
+                    <RNDateTimePicker 
+                        mode='date' 
+                        value={profile.data_nascimento}
+                        minimumDate={new Date(1940, 0, 1)}
+                        onTouchCancel={()=>setShowDate(false)}
+                        onChange={(event, date) => {setShowDate(false);setPersonalData({...profile, data_nascimento: date})}}
+                    />
+                }
                 <Input 
                     type='text' 
-                    placeholder='Digite sua data de nascimento' 
                     fontSize={15} 
-                    onChangeText={text => setProfile({...profile, birthDate: text})} 
                     value={profile.birthDate}
                     variant='underlined'
                 />
@@ -95,7 +118,7 @@ export default function Profile({navigation}) {
                 }} onPress={() => navigation.goBack()}>
                     Cancelar
                 </Button>
-                <Button bgColor='#52D6FB' borderRadius={20} width={100} onPress={salvar}>
+                <Button bgColor='#52D6FB' borderRadius={20} width={100} onPress={Salvar}>
                     Salvar
                 </Button>
             </View>
