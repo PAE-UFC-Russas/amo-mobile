@@ -7,15 +7,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 export default function AnswerQuestion({navigation}) {
     return ( 
         <View style={styles.container}>
-            <HStack style={{marginTop: '2%'}}>
+           <HStack marginLeft={'7%'}>
                 <MaterialIcons
                     onPress={()=> navigation.goBack()}
                     color='#52D6FB'
                     size={24}
                     name='arrow-back-ios'
-                    style={{marginTop: '4%', marginLeft: '10%'}}
                 />
-                <Text style={styles.title}>Responder Duvida</Text>
+                <Text style={styles.title}>Responder dúvida</Text>
             </HStack>
 
             <View style={{paddingTop: '10%'}}>
@@ -40,27 +39,27 @@ export default function AnswerQuestion({navigation}) {
                         </Text>
                 </HStack>
                 <View style={styles.BorderDoubt}>
-                    <Text fontSize={22} fontWeight={'bold'} >Equação do segundo grau:</Text>
+                    <Text fontSize={15} fontWeight={'bold'} >Equação do segundo grau:</Text>
                     <Text style={styles.doubt}>Como faço para resolver a seguinte equação: 5x + 3x + 2?</Text>
                 </View>
                 <View 
-                    justifyContent={'center'} 
-                    alignItems={'center'} 
+                    justifyContent='center' 
+                    alignItems='center' 
                     paddingBottom={5}
                 >
                     <Text 
-                        marginLeft={'70%'} 
-                        fontWeight={'bold'}
+                        marginLeft='70%' 
+                        fontWeight='bold'
                     >
                         27/07/2022
                     </Text>
                 </View>
                 <Input 
                     marginLeft={8}
-                    width='90%'  
+                    width='88%'  
                     placeholder='Comentar'    
                     fontWeight='bold'
-                    fontSize='17'
+                    fontSize='15'
                 />
                 <View marginTop={10} marginLeft={5}>
                     <Comments/>

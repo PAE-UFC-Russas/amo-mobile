@@ -2,16 +2,16 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1,  
+        flex: 1, 
+        marginTop:'7%',
     },
     title:{
-        fontSize:22,
+        fontSize:20,
         color:'#52D6FB',
         fontFamily:'Roboto',
         textAlign:'center',
-        marginLeft:'20%',
-        fontWeight:'bold',
-        marginTop: '4%'
+        marginLeft:'23%',
+        fontWeight:'bold'
     },
     BorderDoubt:{
         width:'90%',
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         marginBottom:'5%',
     },
     doubt:{
-        fontSize: 20,
+        fontSize: 15,
         marginTop: 10
     }
     

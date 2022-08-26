@@ -26,10 +26,10 @@ export default function Comments(){
                 <Text fontSize={18} fontWeight={'bold'} marginTop={'3%'}>Max</Text>
             </View>
             <View paddingLeft={'5%'} flexDirection={'column'}>
-                <Text fontSize={20}>É so usar formul de baskara</Text>
-                <View flexDirection={'row'} paddingRight={'5%'} justifyContent={'space-between'} marginTop={'6%'}>
+                <Text fontSize={15}>É so usar formul de baskara</Text>
+                <View flexDirection={'row'} paddingRight={'5%'} justifyContent={'space-between'} marginTop={'4%'}>
                     <AntDesign
-                        size={24}
+                        size={20}
                         name='hearto'
                     />
                     <Text fontWeight={'bold'}>27/07/2022</Text>
