@@ -19,8 +19,7 @@ import { useAuth } from '../contexts/auth';
 const Stack = createNativeStackNavigator();
 
 export default  function Routes(){
-    const { IsConnected } = useAuth();
-    const isSignedIn = IsConnected();
+    const { user } = useAuth();
 
     return(
         <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -34,7 +33,7 @@ export default  function Routes(){
                 <Stack.Screen name='RegistrationComplete' component={RegistrationComplete}/>
                 <Stack.Screen name='About' component={About}/>
             {
-                isSignedIn&& (
+                !!user&& (
                     <>
                         <Stack.Screen name='SelectCourses' component={SelectCourses}/>
                         <Stack.Screen name='SelectMonitoria' component={SelectMonitoria}/>

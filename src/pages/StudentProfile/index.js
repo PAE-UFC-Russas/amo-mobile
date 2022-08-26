@@ -72,7 +72,7 @@ export default function StudentProfile({navigation}) {
         return tempYears;
     }
 
-    const RenderDate = () => {
+    const DateToString = () => {
         const year = personalData.birthDate.getFullYear();
         const month = (1 + personalData.birthDate.getMonth()).toString().padStart(2, '0');
         const day = personalData.birthDate.getDate().toString().padStart(2, '0');
@@ -177,7 +177,7 @@ export default function StudentProfile({navigation}) {
                     onPress={()=>setShowDate(true)}
                 >
                     <Text style={{color: !inputErros.errosBirthDate?'#52D6FB':'#f00', fontSize: 12}}>
-                        {personalData.birthDate.getFullYear()===2022?'Data de nascimento':RenderDate()}
+                        {personalData.birthDate.getFullYear()===2022?'Data de nascimento':DateToString()}
                     </Text>
                 </TouchableOpacity>
                 {

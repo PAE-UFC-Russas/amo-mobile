@@ -66,7 +66,7 @@ export default function SelectMonitoria({route, navigation}) {
                             borderRadius='2xl' 
                             width={80} 
                             height={60}
-                            onPress={()=>navigation.navigate('ForumDrawer', item.id)} 
+                            onPress={()=>navigation.navigate('ForumDrawer', item)} 
                             _text={{
                                 fontWeight: 800,
                                 color: '#fff',

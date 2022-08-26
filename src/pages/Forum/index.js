@@ -4,6 +4,7 @@ import { Center, Text, IconButton } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
+import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
 
@@ -65,13 +66,14 @@ export default function Forum({navigation}) {
             'Authorization': 'Token' + await GetLoginToken()
           }
         });
-        setData(response.data);
+
+        //setData(response.data);
       }catch(error){
-        console.log(error.response.data)
+        console.log(error)
       }
     }
 
-    //GetQuestions();
+    GetQuestions();
   },[])
 
   useLayoutEffect(() => {

@@ -2,10 +2,16 @@ import { View } from 'react-native';
 import { Avatar, Button, Center, HStack, Text } from 'native-base';
 import { AntDesign } from '@expo/vector-icons'; 
 import { DrawerItemList, DrawerContentScrollView} from '@react-navigation/drawer';
+import { useAuth } from '../../contexts/auth';
 
 export default function DrawerInfo(props){
-    
-    console.log('eae')
+    const { Logout, user } = useAuth();
+
+    const HandleLogout = () => {
+        Logout();
+        props.navigation.navigate('SignIn');
+    }
+
     return (
         <DrawerContentScrollView contentContainerStyle={{ flex: 1 }}>
             <Center marginBottom={5}>
@@ -21,13 +27,13 @@ export default function DrawerInfo(props){
                     fontSize='md' 
                     fontWeight='bold'
                 >
-                    Felipe Gomes
+                    {user.perfil.nome_exibicao}
                 </Text>
                 <Text 
                     fontSize='sm' 
                     fontWeight='light'
                 >
-                    Estrutura de Dados
+                    {props.monitoria}
                 </Text>
             </Center>
             <DrawerItemList {...props}/>
@@ -35,7 +41,7 @@ export default function DrawerInfo(props){
             <Button 
                 alignSelf='flex-start' 
                 variant='link' 
-                onPress={()=>{props.navigation.navigate('SignIn');Logout()}}
+                onPress={HandleLogout}
             >
                 <HStack space={3} alignItems='center'>
                     <AntDesign 

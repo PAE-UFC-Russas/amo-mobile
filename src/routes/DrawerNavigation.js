@@ -3,15 +3,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import DrawerInfo from '../components/DrawerInfo';
 import Profile from '../pages/Profile';
 import TabNavigation from './TabNavigation';
-import { useAuth } from '../contexts/auth';
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigation(props){
-    const { Logout, user } = useAuth();
-    console.log(props)
+export default function DrawerNavigation({route}){
     return(
-        <Drawer.Navigator drawerContent={props => <DrawerInfo {...props} Logout={Logout} user={user}/>} screenOptions={{headerShown: false}}>
+        <Drawer.Navigator drawerContent={props => <DrawerInfo  monitoria={route.params.nome} {...props}/>} screenOptions={{headerShown: false}}>
             <Drawer.Screen name='Tabforum' component={TabNavigation} options={{
                 drawerLabel:'Forum',
                 drawerIcon: ({color})=>{

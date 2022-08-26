@@ -7,15 +7,13 @@ import PickImage from '../../util/PickImage';
 import OnDeleteModal from '../../components/OnDeleteModal';
 
 export default function RegisterDoubt({navigation}) {
-
     const [openModal, setOpenModal] = useState(false)
-
     const [doubt, setDoubt] = useState({
         title: '',
         desc: ''
     });
     const [image, setImage] = useState(null);
-    
+
     const GetImage = async () => {
         setImage(await PickImage());
     }
@@ -44,7 +42,7 @@ export default function RegisterDoubt({navigation}) {
                     <Avatar 
                         marginLeft={30}
                         marginTop={50} 
-                        margin={5}
+                        marginRight={3}
                         bg='tertiaryBlue' 
                         size='md' 
                         source={{
@@ -54,12 +52,16 @@ export default function RegisterDoubt({navigation}) {
                     <Select 
                         placeholder='Privacidade do Autor' 
                         marginTop={28}
-                        width={165} 
-                        height={38} 
+                        height={38}
+                        width={190}
                         borderRadius={20} 
                         borderColor='#52D6FB'
                         placeholderTextColor='#52D6FB'
-                     />
+                        color='#52D6FB'
+                    >
+                        <Select.Item label='Público' value='publico'/>
+                        <Select.Item label='Somente para monitores' value='monitores'/>
+                    </Select>
                 </HStack>
                 <View style={{width:'100%'}}>
                     <Input 
@@ -91,7 +93,7 @@ export default function RegisterDoubt({navigation}) {
                         onChangeText={(text)=> setDoubt({...doubt, desc:text})} 
                         placeholder='Insira um descrição'
                     />
-                    <Text style={{ height:100, fontSize:11, width:230, fontFamily:'Roboto', marginLeft:35,}}>
+                    <Text style={{ height:100, fontSize:11, width:230, fontFamily:'Roboto', marginLeft:35}}>
                         A descrição deve conter 500 caracteres
                     </Text>
                 </View>
@@ -100,7 +102,7 @@ export default function RegisterDoubt({navigation}) {
                     <Image 
                         borderRadius={5} 
                         width={400} 
-                        height={200} 
+                        height={300} 
                         alt='Conteúdo da dúvida' 
                         source={{
                                 uri: image

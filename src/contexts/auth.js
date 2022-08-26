@@ -5,9 +5,7 @@ import api from '../services/api';
 export const AuthContext = createContext({});
 
 export default function AuthContextProvider({ children }){
-    const [user, setUser] = useState({
-        email: null
-    });
+    const [user, setUser] = useState();
 
     async function GetUser(token){
         try{
@@ -103,30 +101,24 @@ export default function AuthContextProvider({ children }){
     }
 
     async function Logout(){
-        setUser({
-            email: null,
-            password: null,
-            token: null,
-            signed: false
-        });
+        setUser(null);
         await DeleteLoginToken();
     }
 
     async function IsConnected(){
         const token = await GetLoginToken();
-        // const userData = await GetUser(token);
+        const userData = await GetUser(token);
 
-        // if(!userData){
-        //     return false
-        // }else{
-        //     setUser({...userData});
-        //     return true
-        // }
-        return true
+        if(!userData){
+            return false
+        }else{
+            setUser({...userData});
+            return true
+        }
     }
 
     return (
-        <AuthContext.Provider value={{user, Login, Register, CompleteRegister, Active, Logout, IsConnected}}>
+        <AuthContext.Provider value={{user, Logout, Login, Register, CompleteRegister, Active, IsConnected}}>
             {children}
         </AuthContext.Provider>
     );
