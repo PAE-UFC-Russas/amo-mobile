@@ -2,21 +2,27 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container:{
-        marginTop: 30, 
+        flex: 1,  
     },
     title:{
-        fontWeight:'bold' ,
+        fontSize:22,
         color:'#52D6FB',
-        fontSize:20,
-        marginTop:25
+        fontFamily:'Roboto',
+        textAlign:'center',
+        marginLeft:'20%',
+        fontWeight:'bold',
+        marginTop: '4%'
     },
-    header:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center',
-        width:'70%',
-        marginBottom:60
-       
+    BorderDoubt:{
+        width:'90%',
+        height:'5%',
+        marginTop:'2%',
+        marginLeft: '8%',
+        marginBottom:'5%',
+    },
+    doubt:{
+        fontSize: 20,
+        marginTop: 10
     }
     
 });
