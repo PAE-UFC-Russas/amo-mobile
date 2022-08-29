@@ -55,6 +55,7 @@ export default function StudentProfile({navigation}) {
                     }
                 });
                 const listCourses = response.data;
+
                 setCourses(listCourses);
             }catch(error){
                 console.log(error.response.data);
