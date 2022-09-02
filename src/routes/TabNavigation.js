@@ -8,7 +8,7 @@ import Profile from '../pages/Profile';
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation(){
+export default function TabNavigation({route}){
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
@@ -36,7 +36,7 @@ export default function TabNavigation(){
                 headerShown: false
             })}
         >
-            <Tab.Screen name='Forum' component={Forum} options={{headerShown: true}}/>
+            <Tab.Screen name='Forum' initialParams={route.params} component={Forum} options={{headerShown: true}}/>
             <Tab.Screen name='Agendar' component={Agendamento}/>
             <Tab.Screen name='Notificação' component={Notificacao}/>
             <Tab.Screen name='Profile' component={Profile} options={{tabBarLabel: 'Perfil'}}/>

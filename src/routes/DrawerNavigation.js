@@ -9,7 +9,7 @@ const Drawer = createDrawerNavigator();
 export default function DrawerNavigation({route}){
     return(
         <Drawer.Navigator drawerContent={props => <DrawerInfo  monitoria={route.params.nome} {...props}/>} screenOptions={{headerShown: false}}>
-            <Drawer.Screen name='Tabforum' component={TabNavigation} options={{
+            <Drawer.Screen name='Tabforum' initialParams={route.params} component={TabNavigation} options={{
                 drawerLabel:'Forum',
                 drawerIcon: ({color})=>{
                     return(

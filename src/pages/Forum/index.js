@@ -8,7 +8,7 @@ import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
 
-export default function Forum({navigation}) {
+export default function Forum({navigation, route}) {
   const [filters, setFilters] = useState({
     date: null,
     recent: false,
@@ -138,7 +138,7 @@ export default function Forum({navigation}) {
             name='add'
           />
         }
-        onPress={()=>navigation.navigate('RegisterDoubt')}
+        onPress={()=>navigation.navigate('RegisterDoubt', route.params)}
       />
     </Center>
   );

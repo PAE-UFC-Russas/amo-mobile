@@ -1,28 +1,62 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Avatar, Box, Button, Text, Select, Input, HStack, TextArea, Image } from 'native-base';
+import { Avatar, Box, Button, Text, Select, Input, HStack, TextArea, Image, useToast } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
-import styles from './styles';
+import { GetLoginToken } from '../../util/StorageLogin';
+import api from '../../services/api';
 import PickImage from '../../util/PickImage';
 import OnDeleteModal from '../../components/OnDeleteModal';
+import styles from './styles';
 
-export default function RegisterDoubt({navigation}) {
+export default function RegisterDoubt({navigation, route}) {
     const [openModal, setOpenModal] = useState(false)
-    const [doubt, setDoubt] = useState({
-        title: '',
-        desc: ''
+    const [question, setQuestion] = useState({
+        titulo: '',
+        descricao: ''
     });
     const [image, setImage] = useState(null);
+    const toast = useToast();
 
     const GetImage = async () => {
         setImage(await PickImage());
     }
 
     const OnDelete = () => {
-        if(doubt.title.length > 0 || doubt.desc.length > 0){
+        if(question.titulo.length > 0 || question.descricao.length > 0){
             setOpenModal(true)
         }else{
             navigation.goBack()
+        }
+    }
+
+    const PostQuestion = async () => {
+        if(question.titulo.length > 0 || question.descricao.length > 0){
+            try{
+                await api.post('/duvidas/', {
+                    'titulo': question.titulo,
+                    'descricao': question.descricao,
+                    'disciplina': route.params.id
+                },
+                {
+                    headers: {
+                        'Authorization': 'Token ' + await GetLoginToken()
+                    },
+                });
+
+                toast.show({
+                    title: 'Dúvida publicada com sucesso!',
+                    placement: 'bottom'
+                });
+            }catch(error){
+                console.log(error.response.data);
+                toast.show({
+                    title: 'Erro ao publicar dúvida!',
+                    placement: 'bottom'
+                });
+                return error.response.data
+            }
+        }else{
+            console.log('erro')
         }
     }
     
@@ -73,7 +107,7 @@ export default function RegisterDoubt({navigation}) {
                         color='#52D6FB' 
                         marginLeft={5}  
                         placeholderTextColor='#52D6FB' 
-                        onChangeText={(text)=> setDoubt({...doubt, title:text})}
+                        onChangeText={(text)=> setQuestion({...question, titulo:text})}
                         placeholder='Insira um titulo'
                     />
                     <Text style={{fontSize:11, fontFamily:'Roboto', flexWrap:'wrap', width:'80%', marginLeft:35}}>
@@ -90,7 +124,7 @@ export default function RegisterDoubt({navigation}) {
                         marginTop={2} 
                         height={50} 
                         placeholderTextColor='#52D6FB' 
-                        onChangeText={(text)=> setDoubt({...doubt, desc:text})} 
+                        onChangeText={(text)=> setQuestion({...question, descricao:text})} 
                         placeholder='Insira um descrição'
                     />
                     <Text style={{ height:100, fontSize:11, width:230, fontFamily:'Roboto', marginLeft:35}}>
@@ -124,7 +158,7 @@ export default function RegisterDoubt({navigation}) {
                         onPress={GetImage}           
                     />
                 </HStack>
-                <Button style={{width:'30%', borderRadius:30}}>Publicar</Button>
+                <Button style={{width:'30%', borderRadius:30}} onPress={PostQuestion}>Publicar</Button>
             </HStack>
             {
                 openModal && <OnDeleteModal setOpenModal={setOpenModal} openModal={openModal} navigation={navigation} />

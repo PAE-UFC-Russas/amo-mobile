@@ -1,10 +1,27 @@
-import React from 'react';
-import { Avatar, Text,  Input, HStack, View, VStack, ScrollView } from 'native-base';
-import styles from './styles';
+import React, { useEffect, useState } from 'react';
+import { Avatar, Text,  Input, HStack, View} from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
 import Comments from '../../components/Comments';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { GetLoginToken } from '../../util/StorageLogin';
+import api from '../../services/api';
+import styles from './styles';
+
 
 export default function AnswerQuestion({navigation}) {
+    const [ responses, setResponses ] = useState(null);
+
+    useEffect(()=>{
+        const GetResponses = async () => {
+            const response = await api.get(`/respostas/${id}/`, {
+                headers: {
+                    'Authorization': 'Token ' + await GetLoginToken()
+                }
+            });
+            setResponses(response.data);
+        }
+        GetResponses();
+    },[])
+
     return ( 
         <View style={styles.container}>
            <HStack marginLeft={'7%'}>
@@ -58,7 +75,6 @@ export default function AnswerQuestion({navigation}) {
                     marginLeft={8}
                     width='88%'  
                     placeholder='Comentar'    
-                    fontWeight='bold'
                     fontSize='15'
                 />
                 <View marginTop={10} marginLeft={5}>

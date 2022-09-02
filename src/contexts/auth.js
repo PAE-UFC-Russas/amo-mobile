@@ -113,7 +113,7 @@ export default function AuthContextProvider({ children }){
         if(!userData){
             return false
         }else{
-            if(!userData.curso || !userData.entrada){
+            if(!userData.perfil.curso){
                 return null
             }else{
                 setUser({...userData});
