@@ -28,7 +28,11 @@ export default function SignIn({navigation}) {
     async function VerifyLogin(){
       const connected = await IsConnected();
 
-      if(connected){
+      if(!connected){
+        if(connected === null){
+          navigation.navigate('StudentProfile');
+        }
+      }else{
         navigation.navigate('SelectCourses');
       }
     }

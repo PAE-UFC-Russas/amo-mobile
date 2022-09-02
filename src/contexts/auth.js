@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }){
                     'Authorization': 'Token ' + token
                 }
             });
-            
+
             return response.data
         }catch(error){
             console.log(error.response.data)
@@ -43,7 +43,7 @@ export default function AuthContextProvider({ children }){
 
     async function Register(newUser){
         try{
-            const response = await api.post('/usuario/registrar/', {
+            const response = await api.post('/registrar/', {
                 'email': newUser.email,
                 'password': newUser.password
             });
@@ -85,18 +85,19 @@ export default function AuthContextProvider({ children }){
 
     async function Active(token){
         try{
-            await api.post('/usuario/ativar/', {
+            await api.post('/registrar/confirmar_email/', {
                 'token': token
-            },{
-                headers: {
-                    'Authorization': 'Token ' + user.token
-                },
             });
             
             return true
         }catch(error){
             console.log(error.response);
-            return 'Falha ao ativar o token, verifique se o código está correto ou se o celular está conectado a internet!'
+            if(error.response.status === 401 || error.response.status === 404 || error.response.status === 409){
+                return error.response.data.detail
+            }
+            else{
+                return 'Falha ao ativar o token, verifique se o código está correto ou se o celular está conectado a internet!'
+            }
         }
     }
 
@@ -112,8 +113,12 @@ export default function AuthContextProvider({ children }){
         if(!userData){
             return false
         }else{
-            setUser({...userData});
-            return true
+            if(!userData.curso || !userData.entrada){
+                return null
+            }else{
+                setUser({...userData});
+                return true
+            }
         }
     }
 
