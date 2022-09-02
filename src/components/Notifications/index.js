@@ -23,7 +23,7 @@ export default function Notifications({notification, lastWeek}){
 
     return(
         <View>
-            <View style={{flexDirection:'row', margin:20, borderColor:'blue', borderEndWidth:3}}>
+            <View style={{flexDirection:'row', margin:20, borderColor:'#52D6FB', borderEndWidth:3}}>
                 <View>
                     <Avatar 
                         bg='tertiaryBlue' 
@@ -44,7 +44,7 @@ export default function Notifications({notification, lastWeek}){
                 </ScrollView>
 
             </View>
-            {lastWeek[0] == notification.id && <Text style={{fontSize:25, color:'blue'}}>Semana Passada</Text>}
+            {lastWeek[0] == notification.id && <Text style={{fontSize:25, color:'#52D6FB'}}>Semana Passada</Text>}
         </View>
     )
 }
