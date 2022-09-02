@@ -78,18 +78,18 @@ export default function Notificacao({navigation}){
                     <View style={{flexDirection:"row", justifyContent:"center", alignItems:"center", justifyContent:"space-around"}}>
                 <MaterialIcons
                         onPress={()=>navigation.goBack()}
-                        color='blue'
+                        color='#52D6FB'
                         size={24}
                         name='arrow-back-ios'
                     />
                         <Text style={styles.textoNotificacao}>Notificação</Text>
                         <FontAwesome5
-                            color='blue'
+                            color='#52D6FB'
                             size={20}
                             name='check-double'
                             />
                     </View>
-                    <Text style={styles.textoNovasNotificacao}>Voçê tem {notifications.length} novas Notificacao</Text> 
+                    <Text style={styles.textoNovasNotificacao}>Você tem {notifications.length} novas Notificacao</Text> 
                 </View>
                 <View>
                     <Text style={styles.textohoje}>Hoje</Text>

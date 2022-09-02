@@ -9,13 +9,15 @@ const styles = StyleSheet.create({
     },
     textoNotificacao:{
         fontSize:30,
-        marginRight:10
+        marginRight:10,
+        color:'#52D6FB'
         
     },
     textoNovasNotificacao:{
         fontSize:19,
-        borderColor:'blue', 
+        borderColor:'#52D6FB', 
         borderEnd:3,
+        color:'#52D6FB'
         
         
 
@@ -23,11 +25,13 @@ const styles = StyleSheet.create({
     textohoje:{
         fontSize:25,
         marginTop:20,
-        color:'green'
+        color:'#52D6FB'
+        
     },
     textoNessaSemana:{
         fontSize:25,
         padding:20,
+        color:'#52D6FB'
     }
 });
 
