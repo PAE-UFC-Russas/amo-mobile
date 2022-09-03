@@ -4,7 +4,7 @@ import { Avatar, Box, Button, Text, Select, Input, HStack, TextArea, Image, useT
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
-import PickImage from '../../util/PickImage';
+import PickImage, { LaunchCamera } from '../../util/PickImage';
 import OnDeleteModal from '../../components/OnDeleteModal';
 import styles from './styles';
 
@@ -17,8 +17,8 @@ export default function RegisterDoubt({navigation, route}) {
     const [image, setImage] = useState(null);
     const toast = useToast();
 
-    const GetImage = async () => {
-        setImage(await PickImage());
+    const GetImage = async (type) => {
+        setImage(type === 'cam'?await LaunchCamera():await PickImage());
     }
 
     const OnDelete = () => {
@@ -47,6 +47,8 @@ export default function RegisterDoubt({navigation, route}) {
                     title: 'Dúvida publicada com sucesso!',
                     placement: 'bottom'
                 });
+
+                navigation.goBack();
             }catch(error){
                 console.log(error.response.data);
                 toast.show({
@@ -150,12 +152,13 @@ export default function RegisterDoubt({navigation, route}) {
                         color='#52D6FB'
                         size={32}
                         name='drive-folder-upload'   
+                        onPress={GetImage('lib')}
                     />
                     <MaterialIcons
                         color='#52D6FB'
                         size={32}
                         name='add-photo-alternate' 
-                        onPress={GetImage}           
+                        onPress={GetImage('cam')}           
                     />
                 </HStack>
                 <Button style={{width:'30%', borderRadius:30}} onPress={PostQuestion}>Publicar</Button>
