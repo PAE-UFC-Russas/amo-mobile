@@ -22,10 +22,7 @@ const styles = StyleSheet.create({
         height:45,
         marginTop:170,
         marginLeft:23,
-        borderRadius:15,
-        // color:"#52D6FB",
-        // backgroundColor:"#52D6FB",
-        // borderColor:"#52D6FB",
+        borderRadius:15
     },
     InputDesc:{
         width:200,

@@ -18,7 +18,10 @@ export default function RegisterDoubt({navigation, route}) {
     const toast = useToast();
 
     const GetImage = async (type) => {
-        setImage(type === 'cam'?await LaunchCamera():await PickImage());
+        const img = type === 'cam'?await LaunchCamera():await PickImage();
+        console.log(img)
+        setImage(img);
+        
     }
 
     const OnDelete = () => {
@@ -152,13 +155,13 @@ export default function RegisterDoubt({navigation, route}) {
                         color='#52D6FB'
                         size={32}
                         name='drive-folder-upload'   
-                        onPress={GetImage('lib')}
+                        onPress={()=>GetImage('lib')}
                     />
                     <MaterialIcons
                         color='#52D6FB'
                         size={32}
                         name='add-photo-alternate' 
-                        onPress={GetImage('cam')}           
+                        onPress={()=>GetImage('cam')}           
                     />
                 </HStack>
                 <Button style={{width:'30%', borderRadius:30}} onPress={PostQuestion}>Publicar</Button>

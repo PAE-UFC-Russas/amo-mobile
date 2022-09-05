@@ -16,5 +16,10 @@ export default async function PickImage() {
 
 export async function LaunchCamera(){
     const cam = await ImagePicker.launchCameraAsync();
-    return cam;
+    
+    if(cam.cancelled){
+        return null;
+    }else{
+        return cam;
+    }
 }

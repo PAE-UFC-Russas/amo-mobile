@@ -1,22 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import { FlatList, View } from 'native-base';
-import {ScrollView} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+import { View, HStack } from 'native-base';
 import { Text } from 'react-native';
-import Notifications from '../../components/Notifications';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import Notification from '../../components/Notification';
 import styles from './styles';
 
-export default function Notificacao({navigation}){
-    
+export default function Notifications({navigation}){
     const [temp, setTemp] = useState([])
-
     const [notifications, setNotifications] = useState([
         {
             id:0,
             remetente: 'Felipe Gomes',
             avatar_remetente: 'https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            mensagem: 'Notificação 1',
+            mensagem: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.',
             data: Date.now(),
             tipo: 'aluno',
         },
@@ -57,51 +54,44 @@ export default function Notificacao({navigation}){
         
     ])
     
-    useEffect(
-        ()=>{
-            const now = new Date();
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const lastSunday = new Date(today.setDate(today.getDate()-today.getDay()));
+    useEffect(()=>{
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const lastSunday = new Date(today.setDate(today.getDate()-today.getDay()));
+
         for(let i =0; i < notifications.length; i++){
             if(notifications[i].data < lastSunday && temp.length < 1){
-                setTemp([notifications[i].id])
-                break
+                setTemp([notifications[i].id]);
+                break;
             }
         }
-        },[]
-      )
+    },[])
 
     return(
         <>
             <View style={styles.container}>
                 <View>
-                    <View style={{flexDirection:"row", justifyContent:"center", alignItems:"center", justifyContent:"space-around"}}>
-                <MaterialIcons
-                        onPress={()=>navigation.goBack()}
-                        color='#52D6FB'
-                        size={24}
-                        name='arrow-back-ios'
-                    />
-                        <Text style={styles.textoNotificacao}>Notificação</Text>
-                        <FontAwesome5
+                    <HStack justifyContent='space-between' width='2/3'>
+                        <MaterialIcons
+                            onPress={()=>navigation.goBack()}
                             color='#52D6FB'
-                            size={20}
-                            name='check-double'
-                            />
-                    </View>
-                    <Text style={styles.textoNovasNotificacao}>Você tem {notifications.length} novas Notificacao</Text> 
+                            size={24}
+                            name='arrow-back-ios'
+                        />
+                        <Text style={styles.title}>Notificações</Text>
+                    </HStack>
                 </View>
                 <View>
-                    <Text style={styles.textohoje}>Hoje</Text>
+                    <Text style={styles.todayText}>Recente</Text>
+                    <Text style={styles.newNotifications}>
+                        Você tem <Text style={{color: '#52D6FB', fontWeight: 'bold'}}>{notifications.length}</Text> novas notificações!
+                    </Text> 
                 </View>
-                <ScrollView>
-                    <FlatList
-                        data={notifications}
-                        renderItem={(notification)=> <Notifications lastWeek={temp} notification={notification.item}/>}
-                        keyExtractor={notification => notification.id}
-                    />
-                </ScrollView>
-                
+                <FlatList
+                    data={notifications}
+                    renderItem={(notification)=> <Notification lastWeek={temp} notification={notification.item}/>}
+                    keyExtractor={notification => notification.id}
+                />
             </View>
             
         </>

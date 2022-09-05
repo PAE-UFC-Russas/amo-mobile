@@ -87,6 +87,10 @@ export default function AuthContextProvider({ children }){
         try{
             await api.post('/registrar/confirmar_email/', {
                 'token': token
+            },{
+                headers: {
+                    'Authorization': 'Token ' + await GetLoginToken()
+                }
             });
             
             return true

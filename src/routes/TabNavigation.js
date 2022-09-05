@@ -1,10 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons'; 
-
 import Forum from '../pages/Forum';
-import Notificacao from '../pages/Notificacao';
 import Agendamento from '../pages/Agendamento';
 import Profile from '../pages/Profile';
+import Notifications from '../pages/Notifications'
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +37,7 @@ export default function TabNavigation({route}){
         >
             <Tab.Screen name='Forum' initialParams={route.params} component={Forum} options={{headerShown: true}}/>
             <Tab.Screen name='Agendar' component={Agendamento}/>
-            <Tab.Screen name='Notificação' component={Notificacao}/>
+            <Tab.Screen name='Notificação' component={Notifications}/>
             <Tab.Screen name='Profile' component={Profile} options={{tabBarLabel: 'Perfil'}}/>
         </Tab.Navigator>
     )
