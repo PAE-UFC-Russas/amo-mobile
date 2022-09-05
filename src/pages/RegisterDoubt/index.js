@@ -66,9 +66,9 @@ export default function RegisterDoubt({navigation, route}) {
     }
     
     return (
-        <Box marginTop='3' height='full' padding='7' width='full' justifyContent='space-between'>
+        <Box height='full' padding='5' width='full' justifyContent='space-between'>
             <View>
-                <HStack>
+                <HStack justifyContent='space-between' width='64' marginTop='5'>
                     <MaterialIcons
                         onPress={OnDelete}
                         color='#52D6FB'

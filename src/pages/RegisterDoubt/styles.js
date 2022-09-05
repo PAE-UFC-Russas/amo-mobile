@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
         color:'#52D6FB',
         fontFamily:'Roboto',
         textAlign:'center',
-        marginLeft:'25%',
         fontWeight:'bold'
     },
     InputTitle:{
