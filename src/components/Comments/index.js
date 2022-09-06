@@ -44,7 +44,6 @@ export default function Comments(){
                             size={20} 
                             color={ClickCheckcircle?'green':'grey'}
                             onPress={()=> setClickCheckcircle(!ClickCheckcircle)}
-                            
                         />
                     </HStack>
                     <Text fontWeight={'bold'}>27/07/2022</Text>
