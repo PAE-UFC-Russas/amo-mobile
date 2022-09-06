@@ -1,8 +1,12 @@
-import React from 'react';
-import { Avatar, Text, View,  ScrollView } from 'native-base';
+import React, { useState } from 'react';
+import { Avatar, Text, View,  ScrollView , HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function Comments(){
+
+    const [clickHearto, setClickHearto] = useState(false)
+    const [ClickCheckcircle, setClickCheckcircle] = useState(false)
+
     return(
         <ScrollView 
             backgroundColor={'#DCDCDC'} 
@@ -27,11 +31,22 @@ export default function Comments(){
             </View>
             <View paddingLeft={'5%'} flexDirection={'column'}>
                 <Text fontSize={15}>É so usar formul de baskara</Text>
-                <View flexDirection={'row'} paddingRight={'5%'} justifyContent={'space-between'} marginTop={'4%'}>
-                    <AntDesign
-                        size={20}
-                        name='hearto'
-                    />
+                <View flexDirection={'row'} paddingRight={'5%'} marginTop={'4%'} justifyContent='space-between'>
+                    <HStack space={2}>
+                        <AntDesign
+                            size={20}
+                            name='heart'   
+                            color={clickHearto?'red':'grey'}
+                            onPress={()=> setClickHearto(!clickHearto)}
+                        />
+                        <AntDesign 
+                            name='checkcircle'
+                            size={20} 
+                            color={ClickCheckcircle?'green':'grey'}
+                            onPress={()=> setClickCheckcircle(!ClickCheckcircle)}
+                            
+                        />
+                    </HStack>
                     <Text fontWeight={'bold'}>27/07/2022</Text>
                 </View>
             </View>
