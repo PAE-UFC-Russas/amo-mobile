@@ -21,7 +21,6 @@ export default function SelectCourses({navigation}) {
                 console.log(error.response.data)
             }
         }
-
         GetCourses();
     }, [])
 

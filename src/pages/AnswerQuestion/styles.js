@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container:{
         flex: 1, 
-        marginTop:'7%',
+        marginTop:'15%',
     },
     title:{
         fontSize:20,
@@ -14,11 +14,8 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     BorderDoubt:{
-        width:'90%',
-        height:'5%',
-        marginTop:'2%',
-        marginLeft: '8%',
-        marginBottom:'5%',
+        width:'100%',
+        padding:25
     },
     doubt:{
         fontSize: 15,

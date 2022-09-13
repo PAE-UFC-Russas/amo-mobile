@@ -85,6 +85,7 @@ export default function AuthContextProvider({ children }){
 
     async function Active(token){
         try{
+            console.log(token)
             await api.post('/registrar/confirmar_email/', {
                 'token': token
             },{

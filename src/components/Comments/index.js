@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Text, View,  ScrollView , HStack } from 'native-base';
+import { Avatar, Text, View,  ScrollView , HStack, FlatList } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function Comments(){
@@ -8,14 +8,11 @@ export default function Comments(){
     const [ClickCheckcircle, setClickCheckcircle] = useState(false)
 
     return(
-        <ScrollView 
+        <View 
             backgroundColor={'#DCDCDC'} 
-            width={'95%'} 
-            height={'20%'} 
+            padding={3} 
+            margin={3}
             borderRadius={'15px'} 
-            marginTop={'2%'} 
-            marginLeft={'1%'}
-            overflow={'hidden'}
         >
             <View style={{flexDirection:'row'}}>
                 <Avatar 
@@ -30,7 +27,7 @@ export default function Comments(){
                 <Text fontSize={18} fontWeight={'bold'} marginTop={'3%'}>Max</Text>
             </View>
             <View paddingLeft={'5%'} flexDirection={'column'}>
-                <Text fontSize={15}>É so usar formul de baskara</Text>
+                <Text fontSize={15}>É so usar formula de baskara</Text>
                 <View flexDirection={'row'} paddingRight={'5%'} marginTop={'4%'} justifyContent='space-between'>
                     <HStack space={2}>
                         <AntDesign
@@ -49,6 +46,6 @@ export default function Comments(){
                     <Text fontWeight={'bold'}>27/07/2022</Text>
                 </View>
             </View>
-        </ScrollView>
+        </View>
     )
 }

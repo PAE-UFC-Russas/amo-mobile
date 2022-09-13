@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { FlatList } from 'react-native'
-import { Center, Text, IconButton } from 'native-base';
+import { Center, Text, IconButton, Button } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
@@ -100,7 +100,10 @@ export default function Forum({navigation, route}) {
           />
         }
         onPress={()=>navigation.navigate('RegisterDoubt', route.params)}
-      />
+        />
+        <Button style={{width:'20%', height:"20%"}} onPress={()=>navigation.navigate('AnswerQuestion')}>
+          
+        </Button>
     </Center>
   );
 }
