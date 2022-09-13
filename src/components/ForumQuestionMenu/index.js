@@ -11,7 +11,7 @@ export default function ForumQuestionMenu(){
                             color='black'
                         />
                     }
-                    size={8} 
+                    size={6} 
                     accessibilityLabel='opções do comentario' 
                     {...triggerProps}
                 />
