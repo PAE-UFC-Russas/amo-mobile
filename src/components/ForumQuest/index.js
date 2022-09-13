@@ -6,32 +6,37 @@ import { EvilIcons } from '@expo/vector-icons';
 import ImageModal from 'react-native-image-modal';
 
 export default function ForumQuest(quest, handleLikeButton, navigation){
-    const DateFormated = (date) => {
-        return `${date.getDay()} de dezembro de 2016` 
+    const DateISOToFormated = (date) => {
+        date = new Date(date);
+        const year = date.getFullYear();
+        const month = (1 + date.getMonth()).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+    
+        return day + '/'+ month + '/' + year;
     }
 
     return(
-        <Box marginTop='3' width='5/6'>
+        <Box marginTop='3' width='5/6' justifyContent='space-between'>
             <HStack space='2'>
                 <Avatar 
                     bg='tertiaryBlue' 
                     size='md' 
                     source={{
-                        uri: quest.user.avatar
+                        uri: !quest.autor.perfil.avatar?'':quest.autor.perfil.avatar
                     }}
                 />
-                <View>
+                <View style={{width: '100%'}}>
                     <HStack justifyContent='space-between'>
                         <Text fontWeight='extrabold'>
-                            {quest.user.name}
+                            {quest.autor.perfil.nome_exibicao}
                         </Text>
                         <ForumQuestionMenu/>
                     </HStack>
                     <Text fontWeight='semibold'>
-                        {quest.title.substring(0, 64)}
+                        {quest.titulo}
                     </Text>
                     <Text fontWeight='light'>
-                        {quest.desc.substring(0, 128)}
+                        {quest.descricao}
                     </Text>
                     {
                         !!quest.content&&
@@ -61,11 +66,11 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                                 color='#808080'
                                 size={24}
                                 name='comment'
-                                onPress={() => navigation.navigate('AnswerQuestion')}
+                                onPress={() => navigation.navigate('AnswerQuestion', quest)}
                             />
                         </Box>
                         <Text fontSize='xs' fontWeight='thin'>
-                            {DateFormated(quest.date)}
+                            {DateISOToFormated(quest.data)}
                         </Text>
                     </HStack>  
                 </View>

@@ -18,19 +18,20 @@ export default function Forum({navigation, route}) {
     name: ''
   });
   const [showSearch, setShowSearch] = useState(true);
-  const data = []
+  const [data, setData] = useState([]);
+
   useEffect(()=>{
     async function GetQuestions(){
       try{
-        const response = await api.get(`/duvidas/${route.params.id}/`, {
+        const response = await api.get(`/duvidas/`, {
           headers: {
             'Authorization': 'Token ' + await GetLoginToken()
           }
         });
-        console.log(response)
-        //setData(response.data);
+        setData(Array.isArray(response.data)?response.data:[response.data]);
+        console.log(response.data)
       }catch(error){
-        console.log(error.response)
+        console.log(error)
       }
     }
 
@@ -83,7 +84,7 @@ export default function Forum({navigation, route}) {
       }
       <FlatList
         data={data.sort((a, b) => a.date - b.date)}
-        renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation)}
+        renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation, route.params)}
         keyExtractor={quest => quest.id}
         style={styles.flatListContainer}
       />
