@@ -19,7 +19,7 @@ https://nodejs.org/en/download/
 Clone o projeto e acesse a pasta do mesmo.
 
 ```bash
-$ git clone https://github.com/PAE-UFC-Russas/monitoria-online-mobile.git
+$ git clone https://github.com/PAE-UFC-Russas/amo-mobile.git
 $ cd monitoria-online-mobile
 ```
 
