@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { FlatList } from 'react-native'
-import { Center, Text, IconButton } from 'native-base';
+import { Center, Text, IconButton, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
@@ -15,28 +15,41 @@ export default function Forum({navigation, route}) {
     late: false,
     mostAnswered: false,
     lessAnswered: false,
-    name: ''
+    text: '',
   });
+  const [displayValue, setDisplayValue] = useState('');
   const [showSearch, setShowSearch] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(()=>{
     async function GetQuestions(){
       try{
-        const response = await api.get(`/duvidas/`, {
+        let url = `/duvidas/?disciplina_id=${route.params.id}`
+
+        if(filters.name){
+          url += `&search=${filters.text}`
+        }
+        if(filters.late){
+          url += '&ordering=-data'
+        }
+        if(filters.date){
+          url += `&ordering=${filters.date.toISOString().split('T')[0]}`
+        }
+        console.log(url)
+        const response = await api.get(url, {
           headers: {
             'Authorization': 'Token ' + await GetLoginToken()
           }
         });
+
         setData(Array.isArray(response.data)?response.data:[response.data]);
-        console.log(response.data)
       }catch(error){
         console.log(error)
       }
     }
 
     GetQuestions();
-  },[])
+  },[filters])
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -77,17 +90,21 @@ export default function Forum({navigation, route}) {
   return (
     <Center
       style={styles.container}
-      bgColor='#fff'
     >
       {
-        showSearch&&<ForumSearch filters={filters} setFilters={setFilters}/>
+        showSearch&&<ForumSearch displayValue={displayValue} setDisplayValue={setDisplayValue} filters={filters} setFilters={setFilters}/>
       }
-      <FlatList
-        data={data.sort((a, b) => a.date - b.date)}
-        renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation, route.params)}
-        keyExtractor={quest => quest.id}
-        style={styles.flatListContainer}
-      />
+      {
+        displayValue === filters.text?
+          <FlatList
+            data={data}
+            renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation, route.params)}
+            keyExtractor={quest => quest.id}
+            style={styles.flatListContainer}
+          />
+        :
+          <Spinner marginTop='auto' marginBottom='auto' size='lg'/>
+      }
       <IconButton 
         style={styles.addButton} 
         variant='solid' 
@@ -105,4 +122,3 @@ export default function Forum({navigation, route}) {
     </Center>
   );
 }
-
