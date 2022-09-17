@@ -5,19 +5,42 @@ import Comments from '../../components/Comments';
 import { GetLoginToken } from '../../util/StorageLogin';
 import { AntDesign } from '@expo/vector-icons';
 import api from '../../services/api';
+import PickImage from '../../util/PickImage';
 import styles from './styles';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 
-export default function AnswerQuestion({navigation, autor, quest }) {
+export default function AnswerQuestion({navigation, route}) {
+    const [image, setImage] = useState(null);
+    const [imageError, setImageError] = useState(null);
+
+    const GetImage = async () => {
+        const img1 = await PickImage();
+        setImage(img1);
+    }
+
+    const [resposta, setResposta]= useState('')
+    const [total, setTotal]= useState([0]);
+
+    const duvidaResponida =()=>{
+        // setInterval('Resposta enviada!', 1000)
+        setResposta('Resposta enviada!')
+    }
+
     const [ responses, setResponses ] = useState(null);
     const [ myResponse, setMyResponse ] = useState('');
 
+    const somar1 =()=>{
+        setTotal(total+1)
+    }
+  
     const PostResponse = async ()=>{
+        console.log(route.params)
+        console.log(myResponse)
         try{
             await api.post('/respostas/', {
-                'duvida': resposta.titulo,
-                'resposta': myResponse,
-                'autor': route.params.id 
+                'duvida': route.params.id,
+                'resposta': myResponse
             },
             {
                 headers: {
@@ -27,10 +50,7 @@ export default function AnswerQuestion({navigation, autor, quest }) {
         }catch(error){
             console.log(error.response.data)
         }
-        console.log(myResponse)
-    }   
-
-    
+    } 
 
     const GetResponses = async () => {
         try{
@@ -108,7 +128,7 @@ export default function AnswerQuestion({navigation, autor, quest }) {
                         marginLeft='70%' 
                         fontWeight='bold'
                     >
-                        27/07/2022
+                     27/07/2022
                     </Text>
                 </View>
         
@@ -122,7 +142,7 @@ export default function AnswerQuestion({navigation, autor, quest }) {
                 />
                 <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                     <View style={{justifyContent:"center", alignItems:"center"}}>
-                        <FontAwesome name="photo" size={25} color="#52D6FB" style={{justifyContent:'center', marginTop:'10%'}} />    
+                        <FontAwesome onPress={GetImage} name="photo" size={25} color="#52D6FB" style={{justifyContent:'center', marginTop:'10%'}} />    
                     </View>
                     <View>
                         <Button 
@@ -131,7 +151,7 @@ export default function AnswerQuestion({navigation, autor, quest }) {
                             borderRadius='2xl' 
                             width={40} 
                             height={10} 
-                            onPress={PostResponse} 
+                            onPress={()=>{PostResponse(), duvidaResponida(), somar1()}}
                             _text={{
                                 fontWeight: 800,
                                 color: '#fff',
@@ -142,6 +162,9 @@ export default function AnswerQuestion({navigation, autor, quest }) {
                         </Button>
                     </View>
                 </View>
+                <View>
+                    <Text style={{color:"green",textAlign:"center", marginTop:'3%'}}>{resposta}</Text>
+                </View>
             
         <View>
             {/* <FlatList
@@ -149,10 +172,16 @@ export default function AnswerQuestion({navigation, autor, quest }) {
                 renderItem={(Comments)=> <Comments/>}
                 keyExtractor={Comments => Comments.id}
             />    */}
-            
+           <FlatList 
+                data={[1, 2, 3]}
+                renderItem={({item, index})=>(
+                    <View key={index} style={{marginLeft:15, marginTop:10}}>
+                        <Comments resposta={myResponse}/>
+                    </View>
+                )}        
+            />
         </View>
-            <Comments/>
-            <Comments/>
+        
             </View>
         </View>
     );
