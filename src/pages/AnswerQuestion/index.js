@@ -54,11 +54,13 @@ export default function AnswerQuestion({navigation, route}) {
 
     const GetResponses = async () => {
         try{
-            const response = await api.get(`/respostas/${id}/`, {
+            const idDuvida = route.params.id;
+            const response = await api.get(`/respostas/?duvida=${idDuvida}`, {
                 headers: {
                     'Authorization': 'Token ' + await GetLoginToken()
                 }
             });
+
             setResponses(response.data);
         }catch(error){
             console.log(error.response.data)
@@ -151,7 +153,7 @@ export default function AnswerQuestion({navigation, route}) {
                             borderRadius='2xl' 
                             width={40} 
                             height={10} 
-                            onPress={()=>{PostResponse(), duvidaResponida(), somar1()}}
+                            // onPress={()=>{PostResponse(), duvidaResponida(), somar1()}}
                             _text={{
                                 fontWeight: 800,
                                 color: '#fff',
@@ -167,18 +169,10 @@ export default function AnswerQuestion({navigation, route}) {
                 </View>
             
         <View>
-            {/* <FlatList
-                data={}
-                renderItem={(Comments)=> <Comments/>}
-                keyExtractor={Comments => Comments.id}
-            />    */}
-           <FlatList 
-                data={[1, 2, 3]}
-                renderItem={({item, index})=>(
-                    <View key={index} style={{marginLeft:15, marginTop:10}}>
-                        <Comments resposta={myResponse}/>
-                    </View>
-                )}        
+            <FlatList
+                data={responses}
+                renderItem={(comment)=> <Comments comment={comment.item}/>}
+                keyExtractor={comment => comment.id}
             />
         </View>
         

@@ -24,18 +24,18 @@ export default function Forum({navigation, route}) {
   useEffect(()=>{
     async function GetQuestions(){
       try{
-        let url = `/duvidas/?disciplina_id=${route.params.id}`
+        let url = `/duvidas/?disciplina_id=${route.params.id}`;
 
         if(filters.name){
-          url += `&search=${filters.text}`
+          url += `&search=${filters.text}`;
         }
         if(filters.late){
-          url += '&ordering=-data'
+          url += '&ordering=-data';
         }
         if(filters.date){
-          url += `&ordering=${filters.date.toISOString().split('T')[0]}`
+          url += `&ordering=${filters.date.toISOString().split('T')[0]}`;
         }
-        console.log(url)
+
         const response = await api.get(url, {
           headers: {
             'Authorization': 'Token ' + await GetLoginToken()
@@ -44,7 +44,7 @@ export default function Forum({navigation, route}) {
 
         setData(Array.isArray(response.data)?response.data:[response.data]);
       }catch(error){
-        console.log(error)
+        console.log(error);
       }
     }
 
