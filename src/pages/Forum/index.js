@@ -26,11 +26,14 @@ export default function Forum({navigation, route}) {
       try{
         let url = `/duvidas/?disciplina_id=${route.params.id}`;
 
-        if(filters.name){
-          url += `&search=${filters.text}`;
+        if((!filters.recent && !filters.late)){
+          url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
         }
-        if(filters.late){
-          url += '&ordering=-data';
+        if(filters.recent){
+          url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
+        }
+        if(filters.text){
+          url += `&search=${filters.text}`;
         }
         if(filters.date){
           url += `&ordering=${filters.date.toISOString().split('T')[0]}`;
