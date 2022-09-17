@@ -15,8 +15,9 @@ export default function Forum({navigation, route}) {
     late: false,
     mostAnswered: false,
     lessAnswered: false,
-    name: ''
+    name: '',
   });
+  const [displayValue, setDisplayValue] = useState('');
   const [showSearch, setShowSearch] = useState(true);
   const [data, setData] = useState([]);
 
@@ -24,10 +25,14 @@ export default function Forum({navigation, route}) {
     async function GetQuestions(){
       try{
         let url = `/duvidas/?disciplina_id=${route.params.id}`
-        //if(!filters.date && !filters.recent && !filters.late && !filters.mostAnswered && !filters.lessAnswered && !filters.name.length === 0)
-        if(filters.date){
-          url += ''
+        console.log(filters.name)
+        if(filters.name.length > 1){
+          url += `&search=${filters.name}`
         }
+        if(filters.date){
+          url += `&ordering=-${filters.date.toISOString().split('T')[0]}`
+        }
+
         const response = await api.get(url, {
           headers: {
             'Authorization': 'Token ' + await GetLoginToken()
@@ -85,7 +90,7 @@ export default function Forum({navigation, route}) {
       bgColor='#fff'
     >
       {
-        showSearch&&<ForumSearch filters={filters} setFilters={setFilters}/>
+        showSearch&&<ForumSearch displayValue={displayValue} setDisplayValue={setDisplayValue} filters={filters} setFilters={setFilters}/>
       }
       <FlatList
         data={data.sort((a, b) => a.date - b.date)}

@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Center, Input, Text } from 'native-base';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import styles from './styles';
 
-export default function ForumSearch({setFilters, filters}){
+export default function ForumSearch({displayValue, setDisplayValue, setFilters, filters}){
     const [showDate, setShowDate] = useState(false);
+
+    const debounce = (func) => {
+        let timer;
+        return function(...args){
+            const context = this;
+            if(timer) clearTimeout(timer);
+            timer = setTimeout(()=>{
+                timer = null;
+                func.apply(context, args)
+            }, 3000)
+        }
+    }
+
+    const handleChange = (text) => {
+        setFilters({...filters, name: text});
+    }
+
+    const handler = useCallback(debounce(handleChange, 3000), []);
 
     const handleChangeFilters = (type) => {
         if(type === 'mostAnswered'){
@@ -24,8 +42,8 @@ export default function ForumSearch({setFilters, filters}){
         <Center height='100'>
             <Input
                 placeholder='Pesquisar perguntas...'
-                value={filters.name}
-                onChangeText={text => setFilters({...filters, name: text})}
+                value={displayValue}
+                onChangeText={text => {setDisplayValue(text);handler(text)}}
                 width='5/6'
                 borderRadius='full'
                 borderColor='#52D6FB'
