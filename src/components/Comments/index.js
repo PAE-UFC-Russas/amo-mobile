@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Avatar, Text, View,  ScrollView , HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
+import { Marker } from 'react-native-svg';
 
-export default function Comments({comment}){
+export default function Comments({comment, MarkResponse}){
     const [clickHearto, setClickHearto] = useState(false)
     const [ClickCheckcircle, setClickCheckcircle] = useState(false)
 
@@ -45,8 +46,9 @@ export default function Comments({comment}){
                         name='checkcircle'
                         size={20} 
                         color={ClickCheckcircle?'green':'grey'}
-                        onPress={()=> setClickCheckcircle(!ClickCheckcircle)}
+                        onPress={()=> MarkResponse(comment.id)}
                     />
+
                 </HStack>
                 <Text fontWeight={'bold'}>{DateISOToFormated(comment.data)}</Text>
             </View>

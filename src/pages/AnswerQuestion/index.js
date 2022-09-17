@@ -1,42 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Text,  Input, HStack, View, Button, FlatList} from 'native-base';
+import { Avatar, Text,  Input, HStack, View, Button, FlatList, useToast} from 'native-base';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Comments from '../../components/Comments';
 import { GetLoginToken } from '../../util/StorageLogin';
-import { AntDesign } from '@expo/vector-icons';
 import api from '../../services/api';
 import PickImage from '../../util/PickImage';
 import styles from './styles';
-import { SafeAreaView, ScrollView } from 'react-native';
-
 
 export default function AnswerQuestion({navigation, route}) {
     const [image, setImage] = useState(null);
-    const [imageError, setImageError] = useState(null);
+    const [ responses, setResponses ] = useState(null);
+    const [ myResponse, setMyResponse ] = useState('');
+    const toast = useToast();
 
     const GetImage = async () => {
         const img1 = await PickImage();
         setImage(img1);
     }
 
-    const [resposta, setResposta]= useState('')
-    const [total, setTotal]= useState([0]);
-
-    const duvidaResponida =()=>{
-        // setInterval('Resposta enviada!', 1000)
-        setResposta('Resposta enviada!')
-    }
-
-    const [ responses, setResponses ] = useState(null);
-    const [ myResponse, setMyResponse ] = useState('');
-
-    const somar1 =()=>{
-        setTotal(total+1)
-    }
-  
     const PostResponse = async ()=>{
-        console.log(route.params)
-        console.log(myResponse)
         try{
             await api.post('/respostas/', {
                 'duvida': route.params.id,
@@ -46,6 +28,10 @@ export default function AnswerQuestion({navigation, route}) {
                 headers: {
                     'Authorization': 'Token ' + await GetLoginToken()
                 },
+            });
+            toast.show({
+                title: 'Resposta publicada com sucesso!',
+                placement: 'bottom'
             });
         }catch(error){
             console.log(error.response.data)
@@ -66,10 +52,12 @@ export default function AnswerQuestion({navigation, route}) {
             console.log(error.response.data)
         }
     }  
-    
-    const PutResponse = async () => {
+
+    const MarkResponse = async (id) => {
         try{
-            const response = await api.put(`/respostas/${id}/`, {
+            const response = await api.post(`/duvida/${route.params.id}/correta/`,{
+                id: id     
+            }, {
                 headers: {
                     'Authorization': 'Token ' + await GetLoginToken()
                 }
@@ -78,7 +66,6 @@ export default function AnswerQuestion({navigation, route}) {
             console.log(error.response.data)
         }
     } 
-    
 
     useEffect(()=>{
         GetResponses();
@@ -95,7 +82,6 @@ export default function AnswerQuestion({navigation, route}) {
                 />
                 <Text style={styles.title}>Responder dúvida</Text>
             </HStack>
-
             <View style={{paddingTop: '10%'}}>
                 <HStack>
                     <Avatar 
@@ -106,20 +92,20 @@ export default function AnswerQuestion({navigation, route}) {
                         }}
                         style={{marginLeft: '8%'}}
                     />
-                        <Text 
-                            style={{
-                                fontSize:20, 
-                                marginLeft: '3%', 
-                                marginTop: '1%',
-                                fontWeight:'bold'
-                            }}
-                        >
-                            Max
-                        </Text>
+                    <Text 
+                        style={{
+                            fontSize:20, 
+                            marginLeft: '3%', 
+                            marginTop: '1%',
+                            fontWeight:'bold'
+                        }}
+                    >
+                        {route.params.autor.perfil.nome_exibicao}
+                    </Text>
                 </HStack>
                 <View style={styles.BorderDoubt}>
-                    <Text fontSize={15} fontWeight={'bold'} >Equação do segundo grau:</Text>
-                    <Text style={styles.doubt}>Como faço para resolver a seguinte equação: 5x + 3x + 2?</Text>
+                    <Text fontSize={15} fontWeight={'bold'} >{route.params.titulo}</Text>
+                    <Text style={styles.doubt}>{route.params.descricao}</Text>
                 </View>
                 <View 
                     justifyContent='center' 
@@ -133,14 +119,12 @@ export default function AnswerQuestion({navigation, route}) {
                      27/07/2022
                     </Text>
                 </View>
-        
                 <Input 
                     marginLeft={8}
                     width='88%'  
                     placeholder='Comentar'    
                     fontSize='15'
                     onChangeText={(text)=> setMyResponse(text)}
-
                 />
                 <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                     <View style={{justifyContent:"center", alignItems:"center"}}>
@@ -153,29 +137,21 @@ export default function AnswerQuestion({navigation, route}) {
                             borderRadius='2xl' 
                             width={40} 
                             height={10} 
-                            // onPress={()=>{PostResponse(), duvidaResponida(), somar1()}}
+                            onPress={()=>PostResponse()}
                             _text={{
                                 fontWeight: 800,
                                 color: '#fff',
                             }}
-
-                        >add
-
+                        >
+                            Enviar
                         </Button>
                     </View>
                 </View>
-                <View>
-                    <Text style={{color:"green",textAlign:"center", marginTop:'3%'}}>{resposta}</Text>
-                </View>
-            
-        <View>
-            <FlatList
-                data={responses}
-                renderItem={(comment)=> <Comments comment={comment.item}/>}
-                keyExtractor={comment => comment.id}
-            />
-        </View>
-        
+                <FlatList
+                    data={responses}
+                    renderItem={(comment)=> <Comments MarkResponse={MarkResponse} comment={comment.item}/>}
+                    keyExtractor={comment => comment.id}
+                />
             </View>
         </View>
     );
