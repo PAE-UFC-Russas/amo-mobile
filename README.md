@@ -20,7 +20,7 @@ Clone o projeto e acesse a pasta do mesmo.
 
 ```bash
 $ git clone https://github.com/PAE-UFC-Russas/amo-mobile.git
-$ cd monitoria-online-mobile
+$ cd amo-mobile
 ```
 
 Para iniciá-lo, siga os passos abaixo:
