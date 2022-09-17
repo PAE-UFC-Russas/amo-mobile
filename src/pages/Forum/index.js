@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { FlatList } from 'react-native'
-import { Center, Text, IconButton } from 'native-base';
+import { Center, Text, IconButton, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
@@ -15,7 +15,7 @@ export default function Forum({navigation, route}) {
     late: false,
     mostAnswered: false,
     lessAnswered: false,
-    name: '',
+    text: '',
   });
   const [displayValue, setDisplayValue] = useState('');
   const [showSearch, setShowSearch] = useState(true);
@@ -25,14 +25,17 @@ export default function Forum({navigation, route}) {
     async function GetQuestions(){
       try{
         let url = `/duvidas/?disciplina_id=${route.params.id}`
-        console.log(filters.name)
-        if(filters.name.length > 1){
-          url += `&search=${filters.name}`
+
+        if(filters.name){
+          url += `&search=${filters.text}`
+        }
+        if(filters.late){
+          url += '&ordering=-data'
         }
         if(filters.date){
-          url += `&ordering=-${filters.date.toISOString().split('T')[0]}`
+          url += `&ordering=${filters.date.toISOString().split('T')[0]}`
         }
-
+        console.log(url)
         const response = await api.get(url, {
           headers: {
             'Authorization': 'Token ' + await GetLoginToken()
@@ -87,17 +90,21 @@ export default function Forum({navigation, route}) {
   return (
     <Center
       style={styles.container}
-      bgColor='#fff'
     >
       {
         showSearch&&<ForumSearch displayValue={displayValue} setDisplayValue={setDisplayValue} filters={filters} setFilters={setFilters}/>
       }
-      <FlatList
-        data={data.sort((a, b) => a.date - b.date)}
-        renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation, route.params)}
-        keyExtractor={quest => quest.id}
-        style={styles.flatListContainer}
-      />
+      {
+        displayValue === filters.text?
+          <FlatList
+            data={data}
+            renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation, route.params)}
+            keyExtractor={quest => quest.id}
+            style={styles.flatListContainer}
+          />
+        :
+          <Spinner marginTop='auto' marginBottom='auto' size='lg'/>
+      }
       <IconButton 
         style={styles.addButton} 
         variant='solid' 

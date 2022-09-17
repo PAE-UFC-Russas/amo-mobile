@@ -21,20 +21,20 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
     }
 
     const handleChange = (text) => {
-        setFilters({...filters, name: text});
+        setFilters({...filters, text: text});
     }
 
     const handler = useCallback(debounce(handleChange, 3000), []);
 
     const handleChangeFilters = (type) => {
         if(type === 'mostAnswered'){
-            setFilters({mostAnswered: !filters.mostAnswered, lessAnswered: false, recent: false, late: false});
+            setFilters({mostAnswered: !filters.mostAnswered, lessAnswered: false, recent: false, late: false, text: filters.text});
         }else if(type === 'lessAnswered'){
-            setFilters({mostAnswered: false, lessAnswered: !filters.lessAnswered, recent: false, late: false});
+            setFilters({mostAnswered: false, lessAnswered: !filters.lessAnswered, recent: false, late: false, text: filters.text});
         }else if(type === 'recent'){
-            setFilters({mostAnswered: false, lessAnswered: false, recent: !filters.recent, late: false});
+            setFilters({mostAnswered: false, lessAnswered: false, recent: !filters.recent, late: false, text: filters.text});
         }else if(type === 'late'){
-            setFilters({mostAnswered: false, lessAnswered: false, recent: false, late: !filters.late});
+            setFilters({mostAnswered: false, lessAnswered: false, recent: false, late: !filters.late, text: filters.text});
         }
     }
 
