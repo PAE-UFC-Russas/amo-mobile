@@ -33,7 +33,7 @@ export default function RegisterDoubt({navigation, route}) {
     }
 
     const PostQuestion = async () => {
-        if(question.titulo.length > 0 || question.descricao.length > 0){
+        if(question.titulo.length > 0 && question.descricao.length > 0){
             try{
                 await api.post('/duvidas/', {
                     'titulo': question.titulo,
@@ -61,7 +61,10 @@ export default function RegisterDoubt({navigation, route}) {
                 return error.response.data
             }
         }else{
-            console.log('erro')
+            toast.show({
+                title: 'Titulo e descrição obrigatórios, preencha-os!',
+                placement: 'bottom'
+            });
         }
     }
     

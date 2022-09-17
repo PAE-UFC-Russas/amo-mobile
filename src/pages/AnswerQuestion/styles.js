@@ -2,26 +2,26 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1, 
-        marginTop:'15%',
+        height: '100%',
+        paddingTop:'10%'
     },
     title:{
         fontSize:20,
         color:'#52D6FB',
         fontFamily:'Roboto',
         textAlign:'center',
-        marginLeft:'23%',
+        marginLeft:'20%',
         fontWeight:'bold'
     },
-    BorderDoubt:{
-        width:'100%',
-        padding:25
-    },
-    doubt:{
+    textDoubt:{
         fontSize: 15,
-        marginTop: 10
+        marginTop: 5
+    },
+    textDate: {
+        fontWeight: 'bold',
+        alignSelf: 'flex-end',
+        marginRight: 15
     }
-    
 });
 
 export default styles;

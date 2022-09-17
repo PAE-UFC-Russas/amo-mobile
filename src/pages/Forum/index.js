@@ -21,40 +21,41 @@ export default function Forum({navigation, route}) {
   const [showSearch, setShowSearch] = useState(true);
   const [data, setData] = useState([]);
 
-  useEffect(()=>{
-    async function GetQuestions(){
-      try{
-        let url = `/duvidas/?disciplina_id=${route.params.id}`;
+  const GetQuestions = async () => {
+    try{
+      let url = `/duvidas/?disciplina_id=${route.params.id}`;
 
-        if((!filters.recent && !filters.late)){
-          url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
-        }
-        if(filters.recent){
-          url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
-        }
-        if(filters.text){
-          url += `&search=${filters.text}`;
-        }
-        if(filters.date){
-          url += `&ordering=${filters.date.toISOString().split('T')[0]}`;
-        }
-
-        const response = await api.get(url, {
-          headers: {
-            'Authorization': 'Token ' + await GetLoginToken()
-          }
-        });
-
-        setData(Array.isArray(response.data)?response.data:[response.data]);
-      }catch(error){
-        console.log(error);
+      if((!filters.recent && !filters.late)){
+        url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
       }
-    }
+      if(filters.recent){
+        url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
+      }
+      if(filters.text){
+        url += `&search=${filters.text}`;
+      }
+      if(filters.date){
+        url += `&ordering=${filters.date.toISOString().split('T')[0]}`;
+      }
 
-    GetQuestions();
+      const response = await api.get(url, {
+        headers: {
+          'Authorization': 'Token ' + await GetLoginToken()
+        }
+      });
+
+      setData(Array.isArray(response.data)?response.data:[response.data]);
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    GetQuestions();  
   },[filters])
 
-  useLayoutEffect(() => {
+  useLayoutEffect(() => {    
+    const refreshData = navigation.addListener('focus', async () => {GetQuestions()})
     navigation.setOptions({
       headerBackVisible: false,
       headerLeft: () => (
@@ -78,6 +79,8 @@ export default function Forum({navigation, route}) {
         />
       )
     });
+
+    return refreshData
   }, [navigation, showSearch]);
 
   const handleLikeButton = (id) => {

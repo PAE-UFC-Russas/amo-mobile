@@ -1,20 +1,12 @@
 import { View } from 'react-native';
 import { Avatar, Box, HStack, Text } from 'native-base';
-import ForumQuestionMenu from '../ForumQuestionMenu';
 import { AntDesign } from '@expo/vector-icons'; 
 import { EvilIcons } from '@expo/vector-icons'; 
 import ImageModal from 'react-native-image-modal';
+import ForumQuestionMenu from '../ForumQuestionMenu';
+import DateISOToFormated from '../../util/DateISOToFormated';
 
 export default function ForumQuest(quest, handleLikeButton, navigation){
-    const DateISOToFormated = (date) => {
-        date = new Date(date);
-        const year = date.getFullYear();
-        const month = (1 + date.getMonth()).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-    
-        return day + '/'+ month + '/' + year;
-    }
-
     return(
         <Box marginTop='3' width='5/6' justifyContent='space-between'>
             <HStack space='2'>
