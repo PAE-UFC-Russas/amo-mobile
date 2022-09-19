@@ -47,11 +47,11 @@ export default function AuthContextProvider({ children }){
                 'email': newUser.email,
                 'password': newUser.password
             });
-            const token = response.data.token;
+            const token = response.data.data.auth_token;
             const userData = await GetUser(token);
 
             setUser({...userData});
-
+            
             await StoreLoginToken(token);
         }catch(error){
             console.log(error.response);
@@ -85,7 +85,6 @@ export default function AuthContextProvider({ children }){
 
     async function Active(token){
         try{
-            console.log(token)
             await api.post('/registrar/confirmar_email/', {
                 'token': token
             },{
@@ -99,8 +98,7 @@ export default function AuthContextProvider({ children }){
             console.log(error.response);
             if(error.response.status === 401 || error.response.status === 404 || error.response.status === 409){
                 return error.response.data.detail
-            }
-            else{
+            }else{
                 return 'Falha ao ativar o token, verifique se o código está correto ou se o celular está conectado a internet!'
             }
         }

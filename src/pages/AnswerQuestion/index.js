@@ -52,7 +52,20 @@ export default function AnswerQuestion({navigation, route}) {
                 }
             });
 
-            setResponses(response.data);
+            if(route.params.resposta_correta){
+                let data = response.data;
+
+                data.forEach(function(item,i){
+                    if(item.id === route.params.resposta_correta){
+                      data.splice(i, 1);
+                      data.unshift(item);
+                    }
+                });
+
+                setResponses(data);
+            }else{
+                setResponses(response.data);
+            }
         }catch(error){
             console.log(error.response.data)
         }
@@ -108,7 +121,7 @@ export default function AnswerQuestion({navigation, route}) {
                     </Text>
                 </HStack>
                 <View marginBottom={3} marginLeft={5}>
-                    <Text fontSize={15} fontWeight={'bold'} >{route.params.titulo}</Text>
+                    <Text fontSize={15} fontWeight='bold'>{route.params.titulo}</Text>
                     <HStack justifyContent='space-between'>
                         <Text style={styles.textDoubt}>{route.params.descricao}</Text>
                         <Text style={styles.textDate}>{DateISOToFormated(route.params.data)}</Text>
@@ -123,7 +136,7 @@ export default function AnswerQuestion({navigation, route}) {
                     />
                     <IconButton onPress={GetImage} icon={<FontAwesome name='photo' size={24} color='#52D6FB'/>}/>
                     <IconButton onPress={PostResponse} icon={<MaterialIcons name='send' size={24} color='#52D6FB'/>}/>  
-                </HStack>            
+                </HStack>          
                 <FlatList
                     style={{height: '75%'}}
                     data={responses}
