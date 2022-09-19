@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     buttons: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 150
+        marginVertical:'10%'
         
     }
 });

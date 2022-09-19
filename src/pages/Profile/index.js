@@ -14,6 +14,9 @@ export default function Profile({navigation}) {
     const [profile, setProfile] = useState({
         nome_completo: user.perfil.nome_completo,
         nome_exibicao: user.perfil.nome_exibicao,
+        matricula: user.matricula,
+        entrada: user.entrada,
+        curso: user.curso,
         data_nascimento: new Date()
     });
     const [showDate, setShowDate] = useState(false);
@@ -56,14 +59,13 @@ export default function Profile({navigation}) {
     
     return ( 
         <View>
-            <Text marginTop={10} marginLeft={5} fontSize={25}>Editar Perfil</Text>
+            <Text marginTop={5} alignSelf='center' fontSize={25}>Editar Perfil</Text>
             <Center>
                 <TouchableOpacity onPress={()=>GetImage()}>
                     <Avatar 
-                        marginLeft={30}
-                        marginTop={50} 
-                        margin={5}
+                        alignSelf='center' 
                         bg='tertiaryBlue' 
+                        margin={5}
                         size='xl'
                         source={{
                             uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
@@ -78,8 +80,18 @@ export default function Profile({navigation}) {
                     </View>
                 </TouchableOpacity>
             </Center>
-            <View padding={2} margin={3}>
+            <View 
+                style={{
+                    marginHorizontal:'5%', 
+                    backgroundColor:'#ddd', 
+                    paddingHorizontal:'5%',
+                    paddingVertical:'5%', 
+                    borderRadius:20, 
+                    height:'59%'
+                }}
+            >
                 <Text 
+                    marginTop={1}
                     fontSize={15}
                 >
                     Nome
@@ -90,7 +102,9 @@ export default function Profile({navigation}) {
                     fontSize={15} 
                     onChangeText={text=>setProfile({...profile, name: text})} 
                     value={profile.name}
-                    variant='underlined'
+                    variant='outline'
+                    borderRadius={15}
+                    backgroundColor='#fff'
                 />
                 <Text
                     marginTop={5} 
@@ -101,22 +115,27 @@ export default function Profile({navigation}) {
                 <Input 
                     placeholder='Digite seu nome de exibição' 
                     fontSize={15}
-                    variant='underlined'
                     onChangeText={text=>setProfile({...profile, nickname: text})} 
                     value={profile.nickname}
+                    variant='outline'
+                    borderRadius={15}
+                    backgroundColor='#fff'
                 />
                 <Text 
                     marginTop={5} 
                     fontSize={15}
                 >
-                    Data de aniversário
+                    Data de nascimento
                 </Text>
-                <Input 
+                <Input
                     type='text' 
                     fontSize={15} 
-                    value={DateToString(profile.data_nascimento)}
                     onPressIn={()=>setShowDate(!showDate)}
-                    variant='underlined'
+                    variant='outline'
+                    borderRadius={15}
+                    backgroundColor='#fff'
+                    placeholder='Coloque sua data de nascimento'
+
                 />
                 {
                     showDate&&
@@ -129,14 +148,45 @@ export default function Profile({navigation}) {
                     />
                 }
                 <Text>{textError}</Text>
+
+                <Text 
+                    fontSize={15}
+                >
+                    Matricula
+                </Text>
+                <Input 
+                    placeholder='Digite sua matricula' 
+                    fontSize={15}
+                    onChangeText={text=>setProfile({...profile, matricula: text})} 
+                    value={profile.matricula}
+                    variant='outline'
+                    borderRadius={15}
+                    backgroundColor='#fff'
+                />
+
+                <Text 
+                    marginTop={5} 
+                    fontSize={15}
+                >
+                    Entrada
+                </Text>
+                <Input 
+                    placeholder='Semestre engressado' 
+                    fontSize={15}
+                    onChangeText={text=>setProfile({...profile, entrada: text})} 
+                    value={profile.entrada}
+                    variant='outline'
+                    borderRadius={15}
+                    backgroundColor='#fff'
+                />
             </View>
             <View style={styles.buttons}>
-                <Button borderWidth={2} borderColor='#52D6FB' variant='outline' borderRadius={20} width={100} _text={{
+                <Button borderWidth={2} borderColor='#52D6FB' variant='outline' borderRadius={10} width={100} _text={{
                     color: '#4B4A4A',
                 }} onPress={() => navigation.goBack()}>
                     Cancelar
                 </Button>
-                <Button bgColor='#52D6FB' borderRadius={20} width={100} onPress={Save}>
+                <Button bgColor='#52D6FB' borderRadius={10} width={100} onPress={Save}>
                     Salvar
                 </Button>
             </View>

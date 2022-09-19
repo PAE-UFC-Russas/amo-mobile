@@ -80,7 +80,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                     marginRight={3} 
                     borderColor='#52D6FB'
                     _text={{
-                        color: 'tertiaryBlue'
+                        color: filters.mostAnswered?'#fff':'#52D6FB'
                     }}
                     variant={filters.mostAnswered?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('mostAnswered')}>
@@ -91,7 +91,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                     marginRight={3} 
                     borderColor='#52D6FB' 
                     _text={{
-                        color: 'tertiaryBlue'
+                        color: filters.lessAnswered?'#fff':'#52D6FB'
                     }}
                     variant={filters.lessAnswered?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('lessAnswered')}>
@@ -102,7 +102,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                     marginRight={3} 
                     borderColor='#52D6FB' 
                     _text={{
-                        color: 'tertiaryBlue'
+                        color: filters.recent?'#fff':'#52D6FB'
                     }}
                     variant={filters.recent?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('recent')}>
@@ -113,7 +113,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                     marginRight={3} 
                     borderColor='#52D6FB'
                     _text={{
-                        color: 'tertiaryBlue'
+                        color: filters.late?'#fff':'#52D6FB'
                     }}
                     variant={filters.late?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('late')}>
