@@ -4,6 +4,7 @@ import { Center, Text, View, Avatar, Input, Button } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import PickImage from '../../util/PickImage';
+import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import { useAuth } from '../../contexts/auth';
 import styles from './styles';
@@ -13,10 +14,10 @@ export default function Profile({navigation}) {
     const [profile, setProfile] = useState({
         nome_completo: user.perfil.nome_completo,
         nome_exibicao: user.perfil.nome_exibicao,
-        // data_nascimento: user.perfil.data_nascimento
         data_nascimento: new Date()
     });
     const [showDate, setShowDate] = useState(false);
+    const [textError, setTextError] = useState('');
 
     const GetImage = async () => {
         const avatar = await PickImage();
@@ -31,17 +32,26 @@ export default function Profile({navigation}) {
         return day + '/' + month + '/' + year;
     }
 
-    const Salvar = async () => {
-        const response = await api.patch('/usuario/eu/', 
-            {
-                "perfil": profile
-            }, 
-            {
-                headers: {
-                    'Authorization': 'Token ' + token
-                }
+    const Save = async () => {
+        if(!profile.nome_exibicao || !profile.nome_completo || profile.data_nascimento === new Date()){
+            setTextError('Não deixe os campos vazios!');
+        }else{
+            try{
+                const response = await api.patch('/usuario/eu/', 
+                    {
+                        "perfil": profile
+                    }, 
+                    {
+                        headers: {
+                            'Authorization': 'Token ' + GetLoginToken()
+                        }
+                    }
+                );
+            }catch(error){
+                setTextError('Não foi possivel salvar as modificações, verifique se está conectado a internet!');
+                console.log(error.response.data);
             }
-        );
+        }
     }
     
     return ( 
@@ -118,6 +128,7 @@ export default function Profile({navigation}) {
                         onChange={(event, date) => {setShowDate(false);setPersonalData({...profile, data_nascimento: date})}}
                     />
                 }
+                <Text>{textError}</Text>
             </View>
             <View style={styles.buttons}>
                 <Button borderWidth={2} borderColor='#52D6FB' variant='outline' borderRadius={20} width={100} _text={{
@@ -125,7 +136,7 @@ export default function Profile({navigation}) {
                 }} onPress={() => navigation.goBack()}>
                     Cancelar
                 </Button>
-                <Button bgColor='#52D6FB' borderRadius={20} width={100} onPress={Salvar}>
+                <Button bgColor='#52D6FB' borderRadius={20} width={100} onPress={Save}>
                     Salvar
                 </Button>
             </View>
