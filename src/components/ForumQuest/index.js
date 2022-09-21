@@ -1,7 +1,6 @@
 import { TouchableOpacity, View } from 'react-native';
 import { Avatar, Box, HStack, Text } from 'native-base';
 import { AntDesign } from '@expo/vector-icons'; 
-import { EvilIcons } from '@expo/vector-icons'; 
 import ImageModal from 'react-native-image-modal';
 import ForumQuestionMenu from '../ForumQuestionMenu';
 import DateISOToFormated from '../../util/DateISOToFormated';
@@ -48,20 +47,20 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                             />
                     }
                     <HStack marginTop='1' justifyContent='space-between'>
-                        <Box flexDirection='row'>
-                            <Text marginLeft={2}>3</Text>
+                        <Box alignItems='center' flexDirection='row'>
+                            <Text marginRight={1}>3</Text>
                             <AntDesign
                                 onPress={() => handleLikeButton(quest.id)}
                                 color={quest.liked?'#f00':'#808080'}
                                 size={20}
                                 name={quest.liked?'heart':'hearto'}
-                                style={{marginRight: 5}}
                             />
-                            <Text marginLeft={2}>2</Text>
-                            <EvilIcons
+                            <Text marginLeft={3} marginRight={1}>2</Text>
+                            <AntDesign
                                 color='#808080'
-                                size={24}
-                                name='comment'
+                                size={20}
+                                name='message1'
+                                onPress={() => navigation.navigate('AnswerQuestion', quest)}
                             />
                         </Box>
                         <Text fontSize='xs' fontWeight='thin'>

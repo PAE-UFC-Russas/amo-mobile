@@ -156,11 +156,14 @@ export default function SignIn({navigation}) {
             !keyboardIsOpen &&
             <Button 
               marginBottom={keyboardIsOpen?70:0} 
-              variant='ghost'
               _text={{
                 color: '#fff',
-                fontWeight: 800
+                fontWeight: 300,
+                textDecorationLine: 'underline',
+                textDecorationStyle: 'solid',
+                textDecorationColor: '#fff'
               }}
+              variant='unstyled'
               onPress={()=>{navigation.navigate('About')}}
             >
               Sobre o aplicativo
