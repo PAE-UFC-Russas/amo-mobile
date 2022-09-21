@@ -122,10 +122,10 @@ export default function AnswerQuestion({navigation, route}) {
                 </HStack>
                 <View marginBottom={3} marginLeft={5}>
                     <Text fontSize={15} fontWeight='bold'>{route.params.titulo}</Text>
-                    <HStack justifyContent='space-between'>
+                    <View>
                         <Text style={styles.textDoubt}>{route.params.descricao}</Text>
                         <Text style={styles.textDate}>{DateISOToFormated(route.params.data)}</Text>
-                    </HStack>
+                    </View>
                 </View>
                 <HStack marginBottom={2}>
                     <Input 

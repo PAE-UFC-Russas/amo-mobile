@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Avatar, Box, HStack, Text } from 'native-base';
 import { AntDesign } from '@expo/vector-icons'; 
 import { EvilIcons } from '@expo/vector-icons'; 
@@ -18,18 +18,20 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                     }}
                 />
                 <View style={{width: '100%'}}>
-                    <HStack justifyContent='space-between'>
-                        <Text fontWeight='extrabold'>
-                            {quest.autor.perfil.nome_exibicao}
+                    <TouchableOpacity onPress={() => navigation.navigate('AnswerQuestion', quest)}>
+                        <HStack justifyContent='space-between'>
+                            <Text fontWeight='extrabold'>
+                                {quest.autor.perfil.nome_exibicao}
+                            </Text>
+                            <ForumQuestionMenu/>
+                        </HStack>
+                        <Text fontWeight='semibold'>
+                            {quest.titulo}
                         </Text>
-                        <ForumQuestionMenu/>
-                    </HStack>
-                    <Text fontWeight='semibold'>
-                        {quest.titulo}
-                    </Text>
-                    <Text fontWeight='light'>
-                        {quest.descricao}
-                    </Text>
+                        <Text fontWeight='light'>
+                            {quest.descricao}
+                        </Text> 
+                    </TouchableOpacity>
                     {
                         !!quest.content&&
                             <ImageModal
@@ -47,6 +49,7 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                     }
                     <HStack marginTop='1' justifyContent='space-between'>
                         <Box flexDirection='row'>
+                            <Text marginLeft={2}>3</Text>
                             <AntDesign
                                 onPress={() => handleLikeButton(quest.id)}
                                 color={quest.liked?'#f00':'#808080'}
@@ -54,11 +57,11 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                                 name={quest.liked?'heart':'hearto'}
                                 style={{marginRight: 5}}
                             />
+                            <Text marginLeft={2}>2</Text>
                             <EvilIcons
                                 color='#808080'
                                 size={24}
                                 name='comment'
-                                onPress={() => navigation.navigate('AnswerQuestion', quest)}
                             />
                         </Box>
                         <Text fontSize='xs' fontWeight='thin'>
