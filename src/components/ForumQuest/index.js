@@ -13,7 +13,7 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                     bg='tertiaryBlue' 
                     size='md' 
                     source={{
-                        uri: !quest.autor.perfil.avatar?'':quest.autor.perfil.avatar
+                        uri: !quest.autor.perfil.avatar?null:quest.autor.perfil.avatar
                     }}
                 />
                 <View style={{width: '100%'}}>

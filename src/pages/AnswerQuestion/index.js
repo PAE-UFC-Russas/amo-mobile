@@ -5,19 +5,21 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import DateISOToFormated from '../../util/DateISOToFormated';
 import Comments from '../../components/Comments';
 import { GetLoginToken } from '../../util/StorageLogin';
+import { useAuth } from '../../contexts/auth';
 import api from '../../services/api';
 import PickImage from '../../util/PickImage';
 import styles from './styles';
 
 export default function AnswerQuestion({navigation, route}) {
-    const [ image, setImage ] = useState(null);
     const [ responses, setResponses ] = useState(null);
-    const [ myResponse, setMyResponse ] = useState('');
+    const [ myResponse, setMyResponse ] = useState({content: null, response: ''});
+    const [markEnable, setMarkEnable] = useState(false);
+    const { user } = useAuth();
     const toast = useToast();
 
     const GetImage = async () => {
-        const img1 = await PickImage();
-        setImage(img1);
+        const content = await PickImage();
+        setMyResponse({...myResponse, content: content})
     }
 
     const PostResponse = async ()=>{
@@ -85,7 +87,17 @@ export default function AnswerQuestion({navigation, route}) {
         }
     } 
 
-    useEffect(()=>{
+    useEffect(()=>{   
+        const EnableMark = () => {
+            if(user.perfil.cargos.indexOf('monitor') !== -1 && user.perfil.cargos.indexOf('professor') !== -1){
+                return true
+            }else if(user.perfil.id === route.params.autor.id){
+                return true
+            }else{
+                return false
+            }
+        }
+        setMarkEnable(EnableMark());
         GetResponses();
     },[])
 
@@ -106,7 +118,7 @@ export default function AnswerQuestion({navigation, route}) {
                         bg='tertiaryBlue' 
                         size='md' 
                         source={{
-                            uri: !route.params.autor.perfil.avatar?'':route.params.autor.perfil.avatar
+                            uri: !route.params.autor.perfil.avatar?null:route.params.autor.perfil.avatar
                         }}
                         marginLeft={5}
                     />
@@ -132,7 +144,7 @@ export default function AnswerQuestion({navigation, route}) {
                         marginLeft={3}
                         width='72'
                         placeholder='Comentar'    
-                        onChangeText={(text)=> setMyResponse(text)}
+                        onChangeText={(text)=> setMyResponse({...myResponse, response: text})}
                     />
                     <IconButton onPress={GetImage} icon={<FontAwesome name='photo' size={24} color='#52D6FB'/>}/>
                     <IconButton onPress={PostResponse} icon={<MaterialIcons name='send' size={24} color='#52D6FB'/>}/>  
@@ -140,7 +152,7 @@ export default function AnswerQuestion({navigation, route}) {
                 <FlatList
                     style={{height: '75%'}}
                     data={responses}
-                    renderItem={(comment)=> <Comments correctResponse={route.params.resposta_correta} MarkResponse={MarkResponse} comment={comment.item}/>}
+                    renderItem={(comment)=> <Comments comment={comment.item} correctResponse={route.params.resposta_correta} MarkResponse={MarkResponse} enableMark={markEnable}/>}
                     keyExtractor={comment => comment.id}
                 />
             </View>

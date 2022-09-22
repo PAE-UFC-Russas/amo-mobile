@@ -3,7 +3,7 @@ import { Avatar, Text, View,  ScrollView , HStack } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
 import DateISOToFormated from '../../util/DateISOToFormated';
 
-export default function Comments({comment, MarkResponse, correctResponse}){
+export default function Comments({comment, MarkResponse, correctResponse, enableMark}){
     const [clickHearto, setClickHearto] = useState(false)
 
     return(
@@ -20,7 +20,7 @@ export default function Comments({comment, MarkResponse, correctResponse}){
                     bg='tertiaryBlue' 
                     size='md' 
                     source={{
-                        uri: !comment.autor.perfil.avatar?'':comment.autor.perfil.avatar
+                        uri: !comment.autor.perfil.avatar?null:comment.autor.perfil.avatar
                     }}
                 />
                 <Text marginLeft={3} fontSize={18} fontWeight='bold'>{comment.autor.perfil.nome_exibicao}</Text>
@@ -34,12 +34,16 @@ export default function Comments({comment, MarkResponse, correctResponse}){
                         color={clickHearto?'red':'grey'}
                         onPress={()=> setClickHearto(!clickHearto)}
                     />
-                    <AntDesign 
-                        name='checkcircle'
-                        size={20} 
-                        color={correctResponse === comment.id?'green':'grey'}
-                        onPress={()=> MarkResponse(comment.id)}
-                    />
+                    {
+                        enableMark && (
+                            <AntDesign 
+                                name='checkcircle'
+                                size={20} 
+                                color={correctResponse === comment.id?'green':'grey'}
+                                onPress={()=> MarkResponse(comment.id)}
+                            />
+                        )
+                    }
                 </HStack>
                 <Text fontWeight='bold'>{DateISOToFormated(comment.data)}</Text>
             </View>
