@@ -32,3 +32,25 @@ $ npm install
 $ expo start
 ```
 O app pode ser acessado pelo o aplicativo do expo ao ler o qrcode do terminal.
+
+</br>Criar build do projeto</br>
+</br>-Primeiro passo: 
+ </br>. Instalar dependencia EAS CLI 
+  ```bash
+  $ npm install -g eas-cli
+  ```
+  
+-Segundo passo:</br>
+  .Logar na conta
+  ```bash
+  $ eas login
+  ```
+  
+-Terceiro passo:</br>
+  .Criar build
+  ```bash
+  $ eas build -p android --profile preview
+  ```
+
+-Quarto passo:</br>
+  .Instalar entrando no link que vai ser gerado.
