@@ -11,12 +11,12 @@ export default function SelectCourses({navigation}) {
     useEffect(()=>{
         async function GetCourses(){
             try{
-                const response = await api.get('/cursos/', {
+                const response = await api.get('/cursos/?page=1', {
                     headers: {
                         'Authorization': 'Token ' + await GetLoginToken()
                     }
                 });
-                setCourses(response.data);
+                setCourses(response.data.results);
             }catch(error){
                 console.log(error.response.data)
             }

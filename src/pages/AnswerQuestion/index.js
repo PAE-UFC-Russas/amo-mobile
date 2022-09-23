@@ -26,7 +26,7 @@ export default function AnswerQuestion({navigation, route}) {
         try{
             await api.post('/respostas/', {
                 'duvida': route.params.id,
-                'resposta': myResponse
+                'resposta': myResponse.response
             },
             {
                 headers: {
@@ -48,14 +48,14 @@ export default function AnswerQuestion({navigation, route}) {
     const GetResponses = async () => {
         try{
             const idDuvida = route.params.id;
-            const response = await api.get(`/respostas/?duvida=${idDuvida}`, {
+            const response = await api.get(`/respostas/?pages=1&duvida=${idDuvida}`, {
                 headers: {
                     'Authorization': 'Token ' + await GetLoginToken()
                 }
             });
 
             if(route.params.resposta_correta){
-                let data = response.data;
+                let data = response.data.results;
 
                 data.forEach(function(item,i){
                     if(item.id === route.params.resposta_correta){
@@ -66,7 +66,7 @@ export default function AnswerQuestion({navigation, route}) {
 
                 setResponses(data);
             }else{
-                setResponses(response.data);
+                setResponses(response.data.results);
             }
         }catch(error){
             console.log(error.response.data)
@@ -75,13 +75,24 @@ export default function AnswerQuestion({navigation, route}) {
 
     const MarkResponse = async (id) => {
         try{
-            await api.post(`/duvidas/${route.params.id}/correta/`, {
-                id: id     
-            }, {
-                headers: {
-                    'Authorization': 'Token ' + await GetLoginToken()
-                }
-            });
+            if(id === route.params.resposta_correta){
+                await api.delete(`/duvidas/${route.params.id}/correta/`, { 
+                    headers: {
+                        'Authorization': 'Token ' + await GetLoginToken()
+                    },
+                    data:{
+                        id: id
+                    }
+                });
+            }else{
+                await api.post(`/duvidas/${route.params.id}/correta/`, {
+                    id: id     
+                }, {
+                    headers: {
+                        'Authorization': 'Token ' + await GetLoginToken()
+                    }
+                });
+            }
         }catch(error){
             console.log(error.response)
         }
@@ -97,6 +108,7 @@ export default function AnswerQuestion({navigation, route}) {
                 return false
             }
         }
+
         setMarkEnable(EnableMark());
         GetResponses();
     },[])

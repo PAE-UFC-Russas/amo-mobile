@@ -1,13 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
-import { Button, Center, Input, Text } from 'native-base';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import React, { useCallback } from 'react';
+import { ScrollView } from 'react-native';
+import { Button, Center, Input } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
-import styles from './styles';
 
 export default function ForumSearch({displayValue, setDisplayValue, setFilters, filters}){
-    const [showDate, setShowDate] = useState(false);
-
     const debounce = (func) => {
         let timer;
         return function(...args){
@@ -62,22 +58,10 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                 showsHorizontalScrollIndicator={false} 
                 contentContainerStyle={{ flexGrow: 1 }}
             >
-                <TouchableOpacity 
-                    onPress={()=>setShowDate(true)}
-                    style={styles.dateTimeFilterButton}
-                >
-                    <Text color='tertiaryBlue'>
-                       Ordenar por
-                    </Text>
-                    <MaterialIcons
-                        color='#52D6FB'
-                        size={24}
-                        name='keyboard-arrow-down'
-                    />
-                </TouchableOpacity>
                 <Button 
                     borderRadius='full' 
                     marginRight={3} 
+                    marginLeft={3} 
                     borderColor='#52D6FB'
                     _text={{
                         color: filters.mostAnswered?'#fff':'#52D6FB'
@@ -120,17 +104,6 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                         Mais antigas
                 </Button>
             </ScrollView>
-            {
-                showDate&&
-                    <RNDateTimePicker 
-                        mode='date'
-                        display='spinner'
-                        value={filters.date?filters.date:new Date()}
-                        minimumDate={new Date(2021, 0, 1)}
-                        onTouchCancel={()=>setShowDate(false)}
-                        onChange={(event, date) => {setShowDate(false);setFilters({...filters, date: date})}}
-                    />
-                }
         </Center>
     )
 };

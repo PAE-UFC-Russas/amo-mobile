@@ -10,7 +10,6 @@ import styles from './styles';
 
 export default function Forum({navigation, route}) {
   const [filters, setFilters] = useState({
-    date: null,
     recent: false,
     late: false,
     mostAnswered: false,
@@ -23,19 +22,16 @@ export default function Forum({navigation, route}) {
 
   const GetQuestions = async () => {
     try{
-      let url = `/duvidas/?disciplina_id=${route.params.id}`;
+      let url = `/duvidas/?pages=1&disciplina_id=${route.params.id}`;
 
       if((!filters.recent && !filters.late)){
-        url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
+        url = `/duvidas/?pages=1&disciplina_id=${route.params.id}&ordering=-data`;
       }
       if(filters.recent){
-        url = `/duvidas/?disciplina_id=${route.params.id}&ordering=-data`;
+        url = `/duvidas/?pages=1&disciplina_id=${route.params.id}&ordering=-data`;
       }
       if(filters.text){
         url += `&search=${filters.text}`;
-      }
-      if(filters.date){
-        url += `&ordering=${filters.date.toISOString().split('T')[0]}`;
       }
 
       const response = await api.get(url, {
@@ -44,7 +40,7 @@ export default function Forum({navigation, route}) {
         }
       });
 
-      setData(Array.isArray(response.data)?response.data:[response.data]);
+      setData(Array.isArray(response.data.results)?response.data.results:[response.data.results]);
     }catch(error){
       console.log(error);
     }

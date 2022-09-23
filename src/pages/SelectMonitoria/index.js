@@ -13,16 +13,13 @@ export default function SelectMonitoria({route, navigation}) {
     useEffect(()=>{
         async function GetSubjects(){
             try{
-                const response = await api.get(`/disciplinas/${route.params}`, {
+                const response = await api.get(`/disciplinas/?pages=1&search=${filterMonitoria}`, {
                     headers: {
                         'Authorization': 'Token ' + await GetLoginToken()
                     }
                 });
 
-                setMonitorias([response.data].filter((item)=>{
-                    const itemUpperCase = item.nome.toUpperCase();
-                    return itemUpperCase.indexOf(filterMonitoria.toUpperCase()) > -1;
-                }));
+                setMonitorias(response.data.results);
             }catch(error){
                 console.log(error.response.data)
             }
