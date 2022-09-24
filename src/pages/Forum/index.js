@@ -7,6 +7,7 @@ import ForumQuest from '../../components/ForumQuest';
 import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
+import ButtonGetNextValues from '../../components/ButtonGetNextValues';
 
 export default function Forum({navigation, route}) {
   const [filters, setFilters] = useState({
@@ -14,21 +15,23 @@ export default function Forum({navigation, route}) {
     late: false,
     mostAnswered: false,
     lessAnswered: false,
-    text: '',
+    text: ''
   });
+  const [page, setPage] = useState(1);
   const [displayValue, setDisplayValue] = useState('');
   const [showSearch, setShowSearch] = useState(true);
   const [data, setData] = useState([]);
 
-  const GetQuestions = async () => {
+  const GetQuestions = async (next) => {
     try{
-      let url = `/duvidas/?pages=1&disciplina_id=${route.params.id}`;
+      let url = `/duvidas/?pages=${page}&disciplina_id=${route.params.id}`;
 
-      if((!filters.recent && !filters.late)){
-        url = `/duvidas/?pages=1&disciplina_id=${route.params.id}&ordering=-data`;
+      if(next && data.next){
+        url = `/duvidas/?pages=${data.next?data.next.substring(-1):page+1}&disciplina_id=${route.params.id}`;
+        setPage(page+1);
       }
       if(filters.recent){
-        url = `/duvidas/?pages=1&disciplina_id=${route.params.id}&ordering=-data`;
+        url += '&ordering=-data';
       }
       if(filters.text){
         url += `&search=${filters.text}`;
@@ -39,8 +42,14 @@ export default function Forum({navigation, route}) {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
+      
+      if(next && data.next){
+        const results = [...data.results, ...response.data.results]
+        setData({...response.data, results: results});
+      }else{
+        setData(response.data);
+      }
 
-      setData(Array.isArray(response.data.results)?response.data.results:[response.data.results]);
     }catch(error){
       console.log(error);
     }
@@ -79,16 +88,6 @@ export default function Forum({navigation, route}) {
     return refreshData
   }, [navigation, showSearch]);
 
-  const handleLikeButton = (id) => {
-    data.map((item, index)=>{
-      if(item.id === id){
-        let newData = data;
-        newData[index].liked = !item.liked;
-        setData([...newData]);
-      }
-    });
-  }
-
   return (
     <Center
       style={styles.container}
@@ -99,10 +98,11 @@ export default function Forum({navigation, route}) {
       {
         displayValue === filters.text?
           <FlatList
-            data={data}
-            renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation)}
+            data={data.results}
+            renderItem={quest => ForumQuest(quest.item, navigation)}
             keyExtractor={quest => quest.id}
             style={styles.flatListContainer}
+            ListFooterComponent={data.next&&<ButtonGetNextValues label='perguntas' onPress={GetQuestions}/>}
           />
         :
           <Spinner marginTop='auto' marginBottom='auto' size='lg'/>

@@ -5,7 +5,7 @@ import ImageModal from 'react-native-image-modal';
 import ForumQuestionMenu from '../ForumQuestionMenu';
 import DateISOToFormated from '../../util/DateISOToFormated';
 
-export default function ForumQuest(quest, handleLikeButton, navigation){
+export default function ForumQuest(quest, navigation){
     return(
         <Box marginTop='3' width='5/6' justifyContent='space-between'>
             <HStack space='2'>
@@ -50,7 +50,6 @@ export default function ForumQuest(quest, handleLikeButton, navigation){
                         <Box alignItems='center' flexDirection='row'>
                             <Text marginRight={1}>3</Text>
                             <AntDesign
-                                onPress={() => handleLikeButton(quest.id)}
                                 color={quest.liked?'#f00':'#808080'}
                                 size={20}
                                 name={quest.liked?'heart':'hearto'}
