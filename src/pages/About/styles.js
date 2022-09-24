@@ -7,6 +7,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingBottom: 40
+    },
+    Button:{
+        backgroundColor:'#52D6FB',
+        width:'80%',
+        height:50,
+        alignItems:'center',
+        borderRadius:20,
+        flexDirection:'row',
+        marginTop:30,
+        justifyContent:'center'
     }
 });
 

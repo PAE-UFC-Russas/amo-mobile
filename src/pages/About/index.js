@@ -36,7 +36,7 @@ export default function About({navigation}) {
                 <View width='100%' alignItems='center'>
                     <TouchableOpacity
                         onPress={()=> Linking.openURL('https://github.com/PAE-UFC-Russas')} 
-                        style={{backgroundColor:'#52D6FB', width:'80%', height:50, alignItems:'center', borderRadius:20, flexDirection:'row', marginTop:30, justifyContent:'center'}}
+                        style={styles.Button}
                     >
                         <Text color={'#fff'} justifyContent='center' fontWeight='bold'>GitHub</Text>
                         <EvilIcons
@@ -52,7 +52,6 @@ export default function About({navigation}) {
                         alt='Identidade Visual UFC'
                         source={require('../../assets/ufc.png')}
                         marginTop={5}
-                        
                     />
                 </View>
             </View>
