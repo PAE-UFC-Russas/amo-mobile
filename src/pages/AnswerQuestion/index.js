@@ -13,7 +13,8 @@ import styles from './styles';
 export default function AnswerQuestion({navigation, route}) {
     const [ responses, setResponses ] = useState(null);
     const [ myResponse, setMyResponse ] = useState({content: null, response: ''});
-    const [markEnable, setMarkEnable] = useState(false);
+    const [ doubt, setDoubt ] = useState(route.params);
+    const [ markEnable, setMarkEnable ] = useState(false);
     const { user } = useAuth();
     const toast = useToast();
 
@@ -25,7 +26,7 @@ export default function AnswerQuestion({navigation, route}) {
     const PostResponse = async ()=>{
         try{
             await api.post('/respostas/', {
-                'duvida': route.params.id,
+                'duvida': doubt.id,
                 'resposta': myResponse.response
             },
             {
@@ -47,18 +48,18 @@ export default function AnswerQuestion({navigation, route}) {
 
     const GetResponses = async () => {
         try{
-            const idDuvida = route.params.id;
+            const idDuvida = doubt.id;
             const response = await api.get(`/respostas/?pages=1&duvida=${idDuvida}`, {
                 headers: {
                     'Authorization': 'Token ' + await GetLoginToken()
                 }
             });
 
-            if(route.params.resposta_correta){
+            if(doubt.resposta_correta){
                 let data = response.data.results;
 
                 data.forEach(function(item,i){
-                    if(item.id === route.params.resposta_correta){
+                    if(item.id === doubt.resposta_correta){
                       data.splice(i, 1);
                       data.unshift(item);
                     }
@@ -75,8 +76,8 @@ export default function AnswerQuestion({navigation, route}) {
 
     const MarkResponse = async (id) => {
         try{
-            if(id === route.params.resposta_correta){
-                await api.delete(`/duvidas/${route.params.id}/correta/`, { 
+            if(id === doubt.resposta_correta){
+                await api.delete(`/duvidas/${doubt.id}/correta/`, { 
                     headers: {
                         'Authorization': 'Token ' + await GetLoginToken()
                     },
@@ -84,14 +85,16 @@ export default function AnswerQuestion({navigation, route}) {
                         id: id
                     }
                 });
+                setDoubt({...doubt, resposta_correta: null})
             }else{
-                await api.post(`/duvidas/${route.params.id}/correta/`, {
+                await api.post(`/duvidas/${doubt.id}/correta/`, {
                     id: id     
                 }, {
                     headers: {
                         'Authorization': 'Token ' + await GetLoginToken()
                     }
                 });
+                setDoubt({...doubt, resposta_correta: id})
             }
         }catch(error){
             console.log(error.response)
@@ -102,7 +105,7 @@ export default function AnswerQuestion({navigation, route}) {
         const EnableMark = () => {
             if(user.perfil.cargos.indexOf('monitor') !== -1 && user.perfil.cargos.indexOf('professor') !== -1){
                 return true
-            }else if(user.perfil.id === route.params.autor.id){
+            }else if(user.perfil.id === doubt.autor.id){
                 return true
             }else{
                 return false
@@ -130,7 +133,7 @@ export default function AnswerQuestion({navigation, route}) {
                         bg='tertiaryBlue' 
                         size='md' 
                         source={{
-                            uri: !route.params.autor.perfil.avatar?null:route.params.autor.perfil.avatar
+                            uri: !doubt.autor.perfil.avatar?null:doubt.autor.perfil.avatar
                         }}
                         marginLeft={5}
                     />
@@ -141,14 +144,14 @@ export default function AnswerQuestion({navigation, route}) {
                             fontWeight:'bold'
                         }}
                     >
-                        {route.params.autor.perfil.nome_exibicao}
+                        {doubt.autor.perfil.nome_exibicao}
                     </Text>
                 </HStack>
                 <View marginBottom={3} marginLeft={5}>
-                    <Text fontSize={15} fontWeight='bold'>{route.params.titulo}</Text>
+                    <Text fontSize={15} fontWeight='bold'>{doubt.titulo}</Text>
                     <View>
-                        <Text style={styles.textDoubt}>{route.params.descricao}</Text>
-                        <Text style={styles.textDate}>{DateISOToFormated(route.params.data)}</Text>
+                        <Text style={styles.textDoubt}>{doubt.descricao}</Text>
+                        <Text style={styles.textDate}>{DateISOToFormated(doubt.data)}</Text>
                     </View>
                 </View>
                 <HStack marginBottom={2}>
@@ -164,7 +167,7 @@ export default function AnswerQuestion({navigation, route}) {
                 <FlatList
                     style={{height: '75%'}}
                     data={responses}
-                    renderItem={(comment)=> <Comments comment={comment.item} correctResponse={route.params.resposta_correta} MarkResponse={MarkResponse} enableMark={markEnable}/>}
+                    renderItem={(comment)=> <Comments comment={comment.item} correctResponse={doubt.resposta_correta} MarkResponse={MarkResponse} enableMark={markEnable}/>}
                     keyExtractor={comment => comment.id}
                 />
             </View>

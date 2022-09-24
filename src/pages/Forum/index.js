@@ -100,7 +100,7 @@ export default function Forum({navigation, route}) {
         displayValue === filters.text?
           <FlatList
             data={data}
-            renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation, route.params)}
+            renderItem={quest => ForumQuest(quest.item, handleLikeButton, navigation)}
             keyExtractor={quest => quest.id}
             style={styles.flatListContainer}
           />
