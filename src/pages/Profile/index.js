@@ -80,16 +80,7 @@ export default function Profile({navigation}) {
                     </View>
                 </TouchableOpacity>
             </Center>
-            <View 
-                style={{
-                    marginHorizontal:'5%', 
-                    backgroundColor:'#ddd', 
-                    paddingHorizontal:'5%',
-                    paddingVertical:'5%', 
-                    borderRadius:20, 
-                    height:'59%'
-                }}
-            >
+            <View style={styles.edgeProfile}>
                 <Text 
                     marginTop={1}
                     fontSize={15}

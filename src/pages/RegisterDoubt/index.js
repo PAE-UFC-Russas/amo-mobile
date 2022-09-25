@@ -118,10 +118,10 @@ export default function RegisterDoubt({navigation, route}) {
                         onChangeText={(text)=> setQuestion({...question, titulo:text})}
                         placeholder='Insira um titulo'
                     />
-                    <Text style={{fontSize:11, fontFamily:'Roboto', flexWrap:'wrap', width:'80%', marginLeft:35}}>
+                    <Text style={styles.descriptionTitle}>
                         O titulo deve conter palavras chaves, ex: equação do segundo grau
                     </Text>
-                    <TextArea 
+                    <TextArea
                         size='md' 
                         borderColor='#52D6FB' 
                         color='#52D6FB' 
@@ -135,7 +135,7 @@ export default function RegisterDoubt({navigation, route}) {
                         onChangeText={(text)=> setQuestion({...question, descricao:text})} 
                         placeholder='Insira um descrição'
                     />
-                    <Text style={{ height:100, fontSize:11, width:230, fontFamily:'Roboto', marginLeft:35}}>
+                    <Text style={styles.description}>
                         A descrição deve conter 500 caracteres
                     </Text>
                 </View>
@@ -167,7 +167,12 @@ export default function RegisterDoubt({navigation, route}) {
                         onPress={()=>GetImage('cam')}           
                     />
                 </HStack>
-                <Button style={{width:'30%', borderRadius:30}} onPress={PostQuestion}>Publicar</Button>
+                <Button 
+                    style={{width:'30%', borderRadius:30}} 
+                    onPress={PostQuestion}
+                >
+                    Publicar
+                </Button>
             </HStack>
             {
                 openModal && <OnDeleteModal setOpenModal={setOpenModal} openModal={openModal} navigation={navigation} />
