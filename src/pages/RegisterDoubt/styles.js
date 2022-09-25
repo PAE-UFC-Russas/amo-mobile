@@ -16,6 +16,20 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontWeight:'bold'
     },
+    descriptionTitle:{
+        fontSize:11, 
+        fontFamily:'Roboto', 
+        flexWrap:'wrap', 
+        width:'80%', 
+        marginLeft:35
+    },
+    description:{
+        height:100, 
+        fontSize:11, 
+        width:230, 
+        fontFamily:'Roboto', 
+        marginLeft:35
+    },
     InputTitle:{
         width:250,
         height:45,
