@@ -24,10 +24,10 @@ export default function Forum({navigation, route}) {
 
   const GetQuestions = async (next) => {
     try{
-      let url = `/duvidas/?pages=${page}&disciplina_id=${route.params.id}`;
+      let url = `/duvidas/?page=${page}&disciplina_id=${route.params.id}`;
 
       if(next && data.next){
-        url = `/duvidas/?pages=${data.next?data.next.substring(-1):page+1}&disciplina_id=${route.params.id}`;
+        url = `/duvidas/?page=${data.next?data.next.substring(-1):page+1}&disciplina_id=${route.params.id}`;
         setPage(page+1);
       }
       if(filters.recent){

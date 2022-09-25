@@ -4,6 +4,7 @@ import { Avatar, Text,  Input, HStack, View, useToast, IconButton} from 'native-
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import DateISOToFormated from '../../util/DateISOToFormated';
 import Comments from '../../components/Comments';
+import ButtonGetNextValues from '../../components/ButtonGetNextValues';
 import { GetLoginToken } from '../../util/StorageLogin';
 import { useAuth } from '../../contexts/auth';
 import api from '../../services/api';
@@ -11,10 +12,11 @@ import PickImage from '../../util/PickImage';
 import styles from './styles';
 
 export default function AnswerQuestion({navigation, route}) {
-    const [ responses, setResponses ] = useState(null);
+    const [ responses, setResponses ] = useState([]);
     const [ myResponse, setMyResponse ] = useState({content: null, response: ''});
     const [ doubt, setDoubt ] = useState(route.params);
     const [ markEnable, setMarkEnable ] = useState(false);
+    const [ page, setPage ] = useState(1);
     const { user } = useAuth();
     const toast = useToast();
 
@@ -46,29 +48,41 @@ export default function AnswerQuestion({navigation, route}) {
         }
     } 
 
-    const GetResponses = async () => {
+    const GetResponses = async (next) => {
         try{
-            const idDuvida = doubt.id;
-            const response = await api.get(`/respostas/?pages=1&duvida=${idDuvida}`, {
+            let url = `/respostas/?duvida=${ doubt.id}&page=${page}`;
+            let results = [];
+
+            if(next && responses.next){
+                url = `/respostas/?duvida=${doubt.id}&page=${responses.next?responses.next.substring(-1):page+1}`;
+                setPage(page+1);
+            }
+
+            const response = await api.get(url, {
                 headers: {
                     'Authorization': 'Token ' + await GetLoginToken()
                 }
             });
 
-            if(doubt.resposta_correta){
-                let data = response.data.results;
+            results = !responses.results?response.data.results:[...responses.results, ...response.data.results];
 
-                data.forEach(function(item,i){
+            if(doubt.resposta_correta){
+                results.forEach(function(item,i){
                     if(item.id === doubt.resposta_correta){
-                      data.splice(i, 1);
-                      data.unshift(item);
+                        results.splice(i, 1);
+                        results.unshift(item);
                     }
                 });
 
-                setResponses(data);
+                setResponses({...response.data, results: results});
             }else{
-                setResponses(response.data.results);
+                if(next && responses.next){
+                    setResponses({...response.data, results: results});
+                }else{
+                    setResponses(response.data);
+                }
             }
+
         }catch(error){
             console.log(error.response.data)
         }
@@ -166,9 +180,10 @@ export default function AnswerQuestion({navigation, route}) {
                 </HStack>          
                 <FlatList
                     style={{height: '75%'}}
-                    data={responses}
+                    data={responses.results}
                     renderItem={(comment)=> <Comments comment={comment.item} correctResponse={doubt.resposta_correta} MarkResponse={MarkResponse} enableMark={markEnable}/>}
                     keyExtractor={comment => comment.id}
+                    ListFooterComponent={responses.next&&<ButtonGetNextValues label='respostas' onPress={GetResponses}/>}
                 />
             </View>
         </View>
