@@ -54,7 +54,7 @@ export default function StudentProfile({navigation}) {
                         'Authorization': 'Token ' + await GetLoginToken()
                     }
                 });
-                const listCourses = response.data;
+                const listCourses = response.data.results;
 
                 setCourses(listCourses);
             }catch(error){

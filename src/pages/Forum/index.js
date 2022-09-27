@@ -85,6 +85,14 @@ export default function Forum({navigation, route}) {
       )
     });
 
+    setFilters({
+      recent: false,
+      late: false,
+      mostAnswered: false,
+      lessAnswered: false,
+      text: ''
+    })
+
     return refreshData
   }, [navigation, showSearch]);
 
