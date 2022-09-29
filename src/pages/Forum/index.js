@@ -20,9 +20,11 @@ export default function Forum({navigation, route}) {
   const [page, setPage] = useState(1);
   const [displayValue, setDisplayValue] = useState('');
   const [data, setData] = useState([]);
+  const [ loading, setLoading ] = useState(true);
 
   const GetQuestions = async (next) => {
     try{
+      setLoading(true);
       let url = `/duvidas/?page=${page}&disciplina_id=${route.params.id}`;
 
       if(next && data.next){
@@ -44,14 +46,14 @@ export default function Forum({navigation, route}) {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
-      console.log('res',filters)
+
       if(next && data.next){
         const results = [...data.results, ...response.data.results]
         setData({...response.data, results: results});
       }else{
         setData(response.data);
       }
-
+      setLoading(false);
     }catch(error){
       console.log(error);
     }
@@ -87,10 +89,10 @@ export default function Forum({navigation, route}) {
     GetQuestions();  
   },[filters])
 
-  useEffect(()=>{
-    const refreshData = navigation.addListener('focus', async () => {GetQuestions()})
-    return refreshData;
-  })
+  // useEffect(()=>{
+  //   const refreshData = navigation.addListener('focus', async () => {GetQuestions()})
+  //   return refreshData;
+  // })
 
   return (
     <Center
@@ -98,16 +100,16 @@ export default function Forum({navigation, route}) {
     >
       <ForumSearch displayValue={displayValue} setDisplayValue={setDisplayValue} filters={filters} setFilters={setFilters}/>
       {
-        displayValue === filters.text?
-          <FlatList
-            data={data.results}
-            renderItem={quest => ForumQuest(quest.item, navigation, PostLike, DeleteLike)}
-            keyExtractor={quest => quest.id}
-            style={styles.flatListContainer}
-            ListFooterComponent={data.next&&<ButtonGetNextValues label='perguntas' onPress={GetQuestions}/>}
-          />
-        :
+        loading || !(displayValue === filters.text)?
           <Spinner marginTop='auto' marginBottom='auto' size='lg'/>
+        :
+        <FlatList
+          data={data.results}
+          renderItem={quest => ForumQuest(quest.item, navigation, PostLike, DeleteLike)}
+          keyExtractor={quest => quest.id}
+          style={styles.flatListContainer}
+          ListFooterComponent={data.next&&<ButtonGetNextValues label='perguntas' onPress={GetQuestions}/>}
+        />
       }
       <IconButton 
         style={styles.addButton} 

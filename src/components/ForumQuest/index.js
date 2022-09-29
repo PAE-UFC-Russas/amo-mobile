@@ -22,7 +22,7 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike){
                             <Text fontWeight='extrabold'>
                                 {quest.autor.perfil.nome_exibicao}
                             </Text>
-                            <ForumQuestionMenu/>
+                            <ForumQuestionMenu id={quest.id}/>
                         </HStack>
                         <Text fontWeight='semibold'>
                             {quest.titulo}
@@ -46,7 +46,7 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike){
                                 }}
                             />
                     }
-                    <HStack marginTop='1' justifyContent='space-between'>
+                    <HStack justifyContent='space-between'>
                         <Box alignItems='center' flexDirection='row'>
                             <Text marginRight={1}>{quest.votos}</Text>
                             <IconButton onPress={() => quest.votou?DeleteLike(quest.id):PostLike(quest.id)} icon={

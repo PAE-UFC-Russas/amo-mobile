@@ -23,7 +23,6 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
     const handler = useCallback(debounce(handleChange, 3000), []);
 
     const handleChangeFilters = (type) => {
-        console.log('pora')
         if(type === 'mostLiked'){
             setFilters({mostLiked: !filters.mostLiked, lessLiked: false, recent: false, late: false, text: filters.text});
         }else if(type === 'lessLiked'){
