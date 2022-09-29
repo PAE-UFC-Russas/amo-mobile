@@ -23,14 +23,15 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
     const handler = useCallback(debounce(handleChange, 3000), []);
 
     const handleChangeFilters = (type) => {
-        if(type === 'mostAnswered'){
-            setFilters({mostAnswered: !filters.mostAnswered, lessAnswered: false, recent: false, late: false, text: filters.text});
-        }else if(type === 'lessAnswered'){
-            setFilters({mostAnswered: false, lessAnswered: !filters.lessAnswered, recent: false, late: false, text: filters.text});
+        console.log('pora')
+        if(type === 'mostLiked'){
+            setFilters({mostLiked: !filters.mostLiked, lessLiked: false, recent: false, late: false, text: filters.text});
+        }else if(type === 'lessLiked'){
+            setFilters({mostLiked: false, lessLiked: !filters.lessLiked, recent: false, late: false, text: filters.text});
         }else if(type === 'recent'){
-            setFilters({mostAnswered: false, lessAnswered: false, recent: !filters.recent, late: false, text: filters.text});
+            setFilters({mostLiked: false, lessLiked: false, recent: !filters.recent, late: false, text: filters.text});
         }else if(type === 'late'){
-            setFilters({mostAnswered: false, lessAnswered: false, recent: false, late: !filters.late, text: filters.text});
+            setFilters({mostLiked: false, lessLiked: false, recent: false, late: !filters.late, text: filters.text});
         }
     }
 
@@ -64,22 +65,22 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                     marginLeft={3} 
                     borderColor='#52D6FB'
                     _text={{
-                        color: filters.mostAnswered?'#fff':'#52D6FB'
+                        color: filters.mostLiked?'#fff':'#52D6FB'
                     }}
-                    variant={filters.mostAnswered?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('mostAnswered')}>
-                        Mais respondidas
+                    variant={filters.mostLiked?'solid':'outline'} 
+                    onPress={()=>handleChangeFilters('mostLiked')}>
+                        Mais curtidas
                 </Button>
                 <Button 
                     borderRadius='full' 
                     marginRight={3} 
                     borderColor='#52D6FB' 
                     _text={{
-                        color: filters.lessAnswered?'#fff':'#52D6FB'
+                        color: filters.lessLiked?'#fff':'#52D6FB'
                     }}
-                    variant={filters.lessAnswered?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('lessAnswered')}>
-                        Menos respondidas
+                    variant={filters.lessLiked?'solid':'outline'} 
+                    onPress={()=>handleChangeFilters('lessLiked')}>
+                        Menos curtidas
                 </Button>
                 <Button 
                     borderRadius='full' 
