@@ -20,7 +20,7 @@ export default function Forum({navigation, route}) {
   const [page, setPage] = useState(1);
   const [displayValue, setDisplayValue] = useState('');
   const [data, setData] = useState([]);
-  const [ loading, setLoading ] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const GetQuestions = async (next) => {
     try{
@@ -59,6 +59,20 @@ export default function Forum({navigation, route}) {
     }
   }
 
+  const handleLikeButton = (id) => {
+    data.results.map((item, index)=>{
+      if(item.id === id){
+        let newData = data.results;
+        const votou = data.results[index].votou;
+        const votos = data.results[index].votos;
+
+        newData[index].votos = votou?votos - 1:votos + 1;
+        newData[index].votou = !item.votou;
+        setData({...data, results: newData});
+      }
+    });
+  }
+
   const PostLike = async (id) => {
     try{
       await api.post(`/duvidas/${id}/votar/`, {}, {
@@ -66,7 +80,8 @@ export default function Forum({navigation, route}) {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
-      GetQuestions();
+
+      handleLikeButton(id);
     }catch(error){
       console.log(error.response);
     }
@@ -79,7 +94,8 @@ export default function Forum({navigation, route}) {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
-      GetQuestions();
+
+      handleLikeButton(id);
     }catch(error){
       console.log(error.response);
     }
@@ -89,10 +105,10 @@ export default function Forum({navigation, route}) {
     GetQuestions();  
   },[filters])
 
-  // useEffect(()=>{
-  //   const refreshData = navigation.addListener('focus', async () => {GetQuestions()})
-  //   return refreshData;
-  // })
+  useEffect(()=>{
+    const refreshData = navigation.addListener('focus', async () => {GetQuestions()})
+    return refreshData;
+  },[])
 
   return (
     <Center
