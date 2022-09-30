@@ -5,7 +5,7 @@ import ImageModal from 'react-native-image-modal';
 import ForumQuestionMenu from '../ForumQuestionMenu';
 import DateISOToFormated from '../../util/DateISOToFormated';
 
-export default function ForumQuest(quest, navigation, PostLike, DeleteLike){
+export default function ForumQuest(quest, navigation, PostLike, DeleteLike, DeleteQuestion){
     return(
         <Box marginTop='3' width='5/6' justifyContent='space-between'>
             <HStack space='2'>
@@ -22,7 +22,7 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike){
                             <Text fontWeight='extrabold'>
                                 {quest.autor.perfil.nome_exibicao}
                             </Text>
-                            <ForumQuestionMenu id={quest.id}/>
+                            <ForumQuestionMenu DeleteQuestion={()=>DeleteQuestion(quest.id)}/>
                         </HStack>
                         <Text fontWeight='semibold'>
                             {quest.titulo}

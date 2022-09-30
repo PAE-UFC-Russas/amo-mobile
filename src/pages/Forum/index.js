@@ -59,6 +59,19 @@ export default function Forum({navigation, route}) {
     }
   }
 
+  const DeleteQuestion = async (id) => {
+    try{
+      await api.delete(`/duvidas/${id}/`, {
+        headers: {
+          'Authorization': 'Token ' + await GetLoginToken()
+        }
+      });
+      GetQuestions();
+    }catch(error){
+      console.log(error.response);
+    }
+  }
+
   const handleLikeButton = (id) => {
     data.results.map((item, index)=>{
       if(item.id === id){
@@ -116,7 +129,7 @@ export default function Forum({navigation, route}) {
         :
         <FlatList
           data={data.results}
-          renderItem={quest => ForumQuest(quest.item, navigation, PostLike, DeleteLike)}
+          renderItem={quest => ForumQuest(quest.item, navigation, PostLike, DeleteLike, DeleteQuestion)}
           keyExtractor={quest => quest.id}
           style={styles.flatListContainer}
           ListFooterComponent={data.next&&<ButtonGetNextValues label='perguntas' onPress={GetQuestions}/>}
