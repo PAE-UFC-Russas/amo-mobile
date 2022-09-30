@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { VStack, Center, Button } from 'native-base';
+import { VStack, Center, Button, Spinner } from 'native-base';
 import AuthHeader from '../../components/AuthHeader';
 import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
@@ -7,15 +7,17 @@ import styles from './styles';
 
 export default function SelectCourses({navigation}) {
     const [courses, setCourses] = useState([]);
-
+    const [ loading, setLoading ] = useState(true);
     useEffect(()=>{
         async function GetCourses(){
             try{
+                setLoading(true)
                 const response = await api.get('/cursos/?page=1', {
                     headers: {
                         'Authorization': 'Token ' + await GetLoginToken()
                     }
                 });
+                setLoading(false)
                 setCourses(response.data.results);
             }catch(error){
                 console.log(error.response.data)
@@ -34,7 +36,11 @@ export default function SelectCourses({navigation}) {
                 Selecione o curso
             </AuthHeader>
             <VStack space='3' alignItems={'center'} width={'100%'}>
-                {courses.map((item, index)=>{
+                {loading?(
+                    <Spinner marginTop='auto' marginBottom='auto' size='lg'/>
+                )
+                :
+                courses.map((item, index)=>{
                     return (
                         <Button
                             key={index}
