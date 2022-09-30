@@ -33,14 +33,15 @@ export default function SelectCourses({navigation}) {
             <AuthHeader>
                 Selecione o curso
             </AuthHeader>
-            <VStack space='3'>
+            <VStack space='3' alignItems={'center'} width={'100%'}>
                 {courses.map((item, index)=>{
                     return (
-                        <Button 
+                        <Button
                             key={index}
+                            textAlign={'center'}
                             bgColor='tertiaryBlue' 
                             borderRadius='2xl' 
-                            width={80} 
+                            width={'80%'} 
                             height={60}
                             onPress={()=>navigation.navigate('SelectMonitoria', item.id)} 
                             _text={{

@@ -168,10 +168,10 @@ export default function AnswerQuestion({navigation, route}) {
                         <Text style={styles.textDate}>{DateISOToFormated(doubt.data)}</Text>
                     </View>
                 </View>
-                <HStack marginBottom={2}>
+                <HStack marginBottom={2} justifyContent={'space-between'}>
                     <Input 
                         marginLeft={3}
-                        width='72'
+                        width='70%'
                         placeholder='Comentar'    
                         onChangeText={(text)=> setMyResponse({...myResponse, response: text})}
                     />

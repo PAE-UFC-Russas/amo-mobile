@@ -18,7 +18,7 @@ export default function SignIn({navigation}) {
     errosPassword: null
   });
   const { IsConnected, Login } = useAuth();
-  
+
   useEffect(()=>{
     setUserLogin({
       email: '',
@@ -92,7 +92,7 @@ export default function SignIn({navigation}) {
         width={500}
         height={500}
       />
-      <Flex direction='column' width='5/6' height={380} justifyContent='space-between'>
+      <Flex direction='column' width='5/6' height={380} justifyContent='center'>
         <VStack space={3}>
           <DefaultFormInput
             label='Email'
@@ -140,6 +140,7 @@ export default function SignIn({navigation}) {
             </>
           }
           <Button 
+            marginTop={5}
             marginBottom={keyboardIsOpen?70:0} 
             bgColor='#fff'
             width={80} 

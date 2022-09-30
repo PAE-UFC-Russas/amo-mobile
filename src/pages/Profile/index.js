@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native';
 import { Center, Text, View, Avatar, Input, Button } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import RNDateTimePicker from '@react-native-community/datetimepicker';
@@ -58,7 +58,7 @@ export default function Profile({navigation}) {
     }
     
     return ( 
-        <View>
+        <ScrollView>
             <Text marginTop={5} alignSelf='center' fontSize={25}>Editar Perfil</Text>
             <Center>
                 <TouchableOpacity onPress={()=>GetImage()}>
@@ -181,6 +181,6 @@ export default function Profile({navigation}) {
                     Salvar
                 </Button>
             </View>
-        </View>
+        </ScrollView>
     );
 }

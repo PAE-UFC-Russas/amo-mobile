@@ -1,9 +1,10 @@
 import { Button } from 'native-base';
 
-export default function DefaultBlueButton({onPress, children}){
 
+export default function DefaultBlueButton({onPress, children}){
     return (
         <Button 
+            alignItems={'center'}
             bgColor='defaultBlue' 
             borderRadius='2xl' 
             width={80} 
