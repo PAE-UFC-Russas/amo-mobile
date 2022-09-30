@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         paddingTop: 50,
-        paddingBottom: 50
+        paddingBottom: 50,
     }
 });
 

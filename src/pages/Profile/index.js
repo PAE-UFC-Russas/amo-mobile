@@ -44,7 +44,7 @@ export default function Profile({navigation}) {
             try{
                 const response = await api.patch('/usuario/eu/', 
                     {
-                        "perfil": profile
+                        'perfil': profile
                     }, 
                     {
                         headers: {
@@ -123,6 +123,10 @@ export default function Profile({navigation}) {
                     Nome de exibição
                 </Text>
                 <Input 
+                    _text={{
+                        color: 'green',
+                        fontSize:12
+                    }}
                     borderWidth={1}
                     borderColor='black'
                     placeholder='Digite seu nome de exibição' 
@@ -155,11 +159,13 @@ export default function Profile({navigation}) {
                     Entrada
                 </Text>
                 <DefaultSelect
+                    style={{color:'black', backgroundColor:'white'}}
                     backgroundColor='white'
                     placeholder='Ano de entrada' 
                     items={GetYearsPerSemester()}
                     value={profile.entrada} 
-                    setValue={itemValue => setProfile({...profile, entrada: itemValue})}                      
+                    setValue={itemValue => setProfile({...profile, entrada: itemValue})} 
+                    color='black'                     
                 />
             </View>
             <View style={styles.buttons}>

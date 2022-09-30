@@ -1,7 +1,21 @@
 import { IconButton, Menu, Text } from 'native-base';
 import { Entypo } from '@expo/vector-icons'; 
+import api from '../../services/api';
+import { GetLoginToken } from '../../util/StorageLogin';
 
-export default function ForumQuestionMenu(){
+export default function ForumQuestionMenu({id}){
+    const DeleteQuestion = async () => {
+        try{
+          await api.delete(`/duvidas/${id}/`, {
+            headers: {
+              'Authorization': 'Token ' + await GetLoginToken()
+            }
+          });
+        }catch(error){
+          console.log(error.response);
+        }
+    }
+
     return (
         <Menu trigger={triggerProps => {
             return <IconButton icon={
@@ -21,7 +35,7 @@ export default function ForumQuestionMenu(){
                     Denunciar pergunta
                 </Text>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item onPress={()=>DeleteQuestion()}>
                 <Text>
                     Deletar pergunta
                 </Text>

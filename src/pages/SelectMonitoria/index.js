@@ -50,18 +50,18 @@ export default function SelectMonitoria({route, navigation}) {
                                     color='#52D6FB'
                                     size={32}
                                     name='search'
-                                    style={{marginLeft: 10}}
+                                    style={{marginHorizontal:10}}
                                 />
                 }
             />
-            <VStack space='3'>
+            <VStack space='3' width='100%' alignItems='center' marginTop='2%'>
                 {monitorias.map((item, index)=>{
                     return (
                         <Button 
                             key={index}
                             bgColor='tertiaryBlue'
                             borderRadius='2xl' 
-                            width={80} 
+                            width={'80%'} 
                             height={60}
                             onPress={()=>navigation.navigate('ForumDrawer', item)} 
                             _text={{

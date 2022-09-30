@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { Text } from 'native-base';
 import Forum from '../pages/Forum';
 import Schedule from '../pages/Schedule';
 import Profile from '../pages/Profile';
@@ -7,7 +8,7 @@ import Notifications from '../pages/Notifications'
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigation({route}){
+export default function TabNavigation({navigation, route}){
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
@@ -35,8 +36,31 @@ export default function TabNavigation({route}){
                 headerShown: false
             })}
         >
-            <Tab.Screen name='Forum' initialParams={route.params} component={Forum} options={{headerShown: true}}/>
-            <Tab.Screen name='Agendar' component={Schedule} options={{headerShown:true}}/>
+            <Tab.Screen name='Forum' initialParams={route.params} component={Forum} options={{
+                    headerShown: true,
+                    headerLeft: () => (
+                        <MaterialIcons
+                            onPress={() => navigation.openDrawer()}
+                            color='#52D6FB'
+                            size={32}
+                            name='menu'
+                            style={{marginLeft: 10}}
+                        />
+                    ),
+                    headerTitleAlign: 'center',
+                    headerTitle: () => <Text fontWeight='bold' fontSize='sm' color='tertiaryBlue'>Fórum</Text>,
+                    drawerIcon: ({color})=>{
+                        return(
+                            <MaterialIcons
+                                color={color}
+                                size={24}
+                                name='forum'
+                            /> 
+                        )
+                    }
+                }} 
+            />
+            <Tab.Screen name='Agendar' component={Schedule} options={{headerShown: true}}/>
             <Tab.Screen name='Notificação' component={Notifications}/>
             <Tab.Screen name='Profile' component={Profile} options={{tabBarLabel: 'Perfil'}}/>
         </Tab.Navigator>

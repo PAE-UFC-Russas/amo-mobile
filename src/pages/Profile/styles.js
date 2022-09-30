@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
         paddingTop: 5,
     },
     edgeProfile:{
-        marginHorizontal:'5%', 
         backgroundColor:'#ddd', 
         paddingHorizontal:'5%',
         paddingVertical:'5%', 
-        borderRadius:20
+        borderRadius:20, 
+        height:'50%'
     },
     avatarBadge: {
         position: 'absolute',
