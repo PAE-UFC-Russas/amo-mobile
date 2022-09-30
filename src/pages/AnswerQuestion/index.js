@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { Avatar, Text,  Input, HStack, View, useToast, IconButton} from 'native-base';
+import { Avatar, Text,  Input, HStack, View, useToast, IconButton, Spinner} from 'native-base';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import DateISOToFormated from '../../util/DateISOToFormated';
 import Comments from '../../components/Comments';
@@ -12,6 +12,7 @@ import PickImage from '../../util/PickImage';
 import styles from './styles';
 
 export default function AnswerQuestion({navigation, route}) {
+    const [ loading, setLoading ] = useState(true);
     const [ responses, setResponses ] = useState([]);
     const [ myResponse, setMyResponse ] = useState({content: null, response: ''});
     const [ doubt, setDoubt ] = useState(route.params);
@@ -50,6 +51,7 @@ export default function AnswerQuestion({navigation, route}) {
 
     const GetResponses = async (next) => {
         try{
+            setLoading(true)
             let url = `/respostas/?duvida=${ doubt.id}&page=${page}`;
             let results = [];
 
@@ -82,7 +84,7 @@ export default function AnswerQuestion({navigation, route}) {
                     setResponses(response.data);
                 }
             }
-
+            setLoading(false)
         }catch(error){
             console.log(error.response.data)
         }
@@ -131,6 +133,7 @@ export default function AnswerQuestion({navigation, route}) {
     },[])
 
     return ( 
+        
         <View style={styles.container}>
            <HStack marginLeft={5}>
                 <MaterialIcons
@@ -177,7 +180,10 @@ export default function AnswerQuestion({navigation, route}) {
                     />
                     <IconButton onPress={GetImage} icon={<FontAwesome name='photo' size={24} color='#52D6FB'/>}/>
                     <IconButton onPress={PostResponse} icon={<MaterialIcons name='send' size={24} color='#52D6FB'/>}/>  
-                </HStack>          
+                </HStack>   
+                {loading?(<Spinner marginTop='auto' marginBottom='auto' size='lg'/>
+                )
+                :
                 <FlatList
                     style={{height: '75%'}}
                     data={responses.results}
@@ -185,6 +191,7 @@ export default function AnswerQuestion({navigation, route}) {
                     keyExtractor={comment => comment.id}
                     ListFooterComponent={responses.next&&<ButtonGetNextValues label='respostas' onPress={GetResponses}/>}
                 />
+                }       
             </View>
         </View>
     );
