@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Center, Text, View, Avatar, Input, Button, useToast } from 'native-base';
+import { Center, Text, View, Avatar, Input, Button, useToast, ScrollView } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import PickImage from '../../util/PickImage';
 import { GetLoginToken } from '../../util/StorageLogin';
@@ -93,8 +93,14 @@ export default function Profile({navigation}) {
     }, [])
 
     return ( 
-        <View>
-            <Text marginTop={7} alignSelf='center' fontSize={25}>Editar Perfil</Text>
+        <ScrollView>
+            <Text 
+                marginTop={7} 
+                alignSelf='center' 
+                fontSize={25}
+            >
+                Editar Perfil
+            </Text>
             <Center>
                 <TouchableOpacity onPress={()=>GetImage()}>
                     <Avatar 
@@ -117,16 +123,12 @@ export default function Profile({navigation}) {
             </Center>
             <View style={styles.edgeProfile}>
                 <Text
-                    marginTop={5} 
+                    marginTop={2} 
                     fontSize={15} 
                 >
                     Nome de exibição
                 </Text>
-                <Input 
-                    _text={{
-                        color: 'green',
-                        fontSize:12
-                    }}
+                <Input
                     borderWidth={1}
                     borderColor='black'
                     placeholder='Digite seu nome de exibição' 
@@ -144,6 +146,7 @@ export default function Profile({navigation}) {
                     Curso
                 </Text>
                 <SelectForProfilePage
+                    borderColor='grey'
                     backgroundColor='white' 
                     style={{color:'black', backgroundColor:'white'}}
                     placeholder='Escolha seu curso' 
@@ -184,6 +187,6 @@ export default function Profile({navigation}) {
                     Salvar
                 </Button>
             </View>
-        </View>
+        </ScrollView>
     );
 }
