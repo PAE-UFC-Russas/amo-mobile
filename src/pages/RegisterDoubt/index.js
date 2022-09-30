@@ -19,9 +19,7 @@ export default function RegisterDoubt({navigation, route}) {
 
     const GetImage = async (type) => {
         const img = type === 'cam'?await LaunchCamera():await PickImage();
-        console.log(img)
         setImage(img);
-        
     }
 
     const OnDelete = () => {
@@ -83,7 +81,6 @@ export default function RegisterDoubt({navigation, route}) {
                 <HStack>
                     <Avatar 
                         marginLeft={30}
-                        marginTop={50} 
                         marginRight={3}
                         bg='tertiaryBlue' 
                         size='md' 
@@ -93,7 +90,6 @@ export default function RegisterDoubt({navigation, route}) {
                     />
                     <Select 
                         placeholder='Privacidade do Autor' 
-                        marginTop={28}
                         height={38}
                         width={190}
                         borderRadius={20} 

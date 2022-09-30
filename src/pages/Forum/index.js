@@ -13,7 +13,7 @@ export default function Forum({navigation, route}) {
   const [filters, setFilters] = useState({
     recent: false,
     late: false,
-    mostLiked: false,
+    mostLiked: true,
     lessLiked: false,
     text: ''
   });
@@ -33,8 +33,8 @@ export default function Forum({navigation, route}) {
       }
       if(filters.recent){
         url += '&ordering=-data';
-      }else if(filters.recent){
-        url += '&ordering=-data';
+      }else if(filters.late){
+        url += '&ordering=data';
       }else if(filters.mostLiked){
         url += '&ordering=-votos';
       }else if(filters.lessLiked){
@@ -104,11 +104,6 @@ export default function Forum({navigation, route}) {
   useEffect(()=>{
     GetQuestions();  
   },[filters])
-
-  useEffect(()=>{
-    const refreshData = navigation.addListener('focus', async () => {GetQuestions()})
-    return refreshData;
-  },[])
 
   return (
     <Center

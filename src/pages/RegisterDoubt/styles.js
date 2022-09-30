@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
         color:'#52D6FB',
         fontFamily:'Roboto',
         textAlign:'center',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        marginBottom: 25
     },
     descriptionTitle:{
         fontSize:11, 
