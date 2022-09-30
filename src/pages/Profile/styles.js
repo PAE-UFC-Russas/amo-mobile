@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:'5%',
         paddingVertical:'5%', 
         borderRadius:20, 
-        height:'60%'
+        height:'50%'
     },
     avatarBadge: {
         position: 'absolute',
