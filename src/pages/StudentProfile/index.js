@@ -14,7 +14,7 @@ import { GetLoginToken } from '../../util/StorageLogin';
 
 export default function StudentProfile({navigation}) {
     const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
-    const [showDate, setShowDate] = useState(false);
+    const [showDate, setShowDate] = useState(false);    
     const [courses, setCourses] = useState([]);
     const [years, setYears] = useState([]);
     const [personalData, setPersonalData] = useState({

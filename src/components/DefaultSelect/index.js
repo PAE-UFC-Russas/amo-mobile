@@ -1,6 +1,6 @@
 import { FormControl, Select } from 'native-base';
 
-export default function DefaultFormInput({placeholder, value, setValue, color, error, items}){
+export default function DefaultSelect({placeholder, value, setValue, color, backgroundColor, error, items}){
     return (
         <FormControl isInvalid={error?true:false}>
             <Select 
@@ -11,6 +11,7 @@ export default function DefaultFormInput({placeholder, value, setValue, color, e
                 placeholderTextColor={color}
                 borderColor={color}
                 color={color}
+                backgroundColor={backgroundColor}
                 borderRadius={15}
                 _selectedItem={{
                     bg: color
