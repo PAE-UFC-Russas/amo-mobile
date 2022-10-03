@@ -48,20 +48,23 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike, Dele
                     }
                     <HStack justifyContent='space-between'>
                         <Box alignItems='center' flexDirection='row'>
-                            <Text marginRight={1}>{quest.votos}</Text>
+                            <Text>{quest.votos}</Text>
                             <IconButton onPress={() => quest.votou?DeleteLike(quest.id):PostLike(quest.id)} icon={
-                                <AntDesign
-                                    color={quest.votou?'#f00':'#808080'}
-                                    size={20}
-                                    name={quest.votou>0?'heart':'hearto'}
-                                />
-                            }/>
-                            <Text marginLeft={3} marginRight={1}>2</Text>
-                            <AntDesign
-                                color='#808080'
-                                size={20}
-                                name='message1'
-                                onPress={() => navigation.navigate('AnswerQuestion', quest)}
+                                    <AntDesign
+                                        color={quest.votou?'#f00':'#808080'}
+                                        size={20}
+                                        name={quest.votou>0?'heart':'hearto'}
+                                    />
+                                }
+                            />
+                            <Text marginLeft={3}>2</Text>
+                            <IconButton onPress={() => navigation.navigate('AnswerQuestion', quest)} icon={
+                                    <AntDesign
+                                        color='#808080'
+                                        size={20}
+                                        name='message1'
+                                    />
+                                }
                             />
                         </Box>
                         <Text fontSize='xs' fontWeight='thin'>

@@ -13,7 +13,7 @@ export default function Forum({navigation, route}) {
   const [filters, setFilters] = useState({
     recent: false,
     late: false,
-    mostLiked: true,
+    mostLiked: false,
     lessLiked: false,
     text: ''
   });
@@ -114,9 +114,16 @@ export default function Forum({navigation, route}) {
     }
   }
 
-  useEffect(()=>{
-    GetQuestions();  
-  },[filters])
+  useEffect(() => {
+    if(filters.late || filters.lessLiked || filters.mostLiked || filters.recent || filters.text.length > 0){
+      GetQuestions(); 
+    }else{
+      const focusHandler = navigation.addListener('focus', () => {
+        GetQuestions(); 
+      });
+      return focusHandler;
+    }
+  }, [navigation,filters]);
 
   return (
     <Center
