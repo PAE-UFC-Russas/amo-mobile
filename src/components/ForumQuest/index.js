@@ -26,7 +26,6 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike, Dele
                         </HStack>
                         <Text fontWeight='semibold'>
                             {quest.autor.cargos[0]}
-                            {console.log(quest)}
                         </Text>
                         <Text fontWeight='semibold'>
                             {quest.titulo}

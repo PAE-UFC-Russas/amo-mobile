@@ -117,16 +117,33 @@ export default function AnswerQuestion({navigation, route}) {
     } 
 
     useEffect(()=>{   
-        const EnableMark = () => {
-            if(user.perfil.cargos.indexOf('monitor') !== -1 && user.perfil.cargos.indexOf('professor') !== -1){
-                return true
-            }else if(user.perfil.id === doubt.autor.id){
-                return true
-            }else{
-                return false
+        const EnableMark = async () => {
+            try{
+                const response = await api.get(`/disciplinas/${doubt.disciplina}/`, {
+                    headers: {
+                        'Authorization': 'Token ' + await GetLoginToken()
+                    }
+                });
+
+                const monitors = response.data.monitores;
+                const isMonitor = monitors.find(obj => obj.id == user.perfil.id)?true:false;
+
+                const professores = response.data.professores;
+                const isProfessor = professores.find(obj => obj.id == user.perfil.id)?true:false;
+
+                if(isMonitor || isProfessor){
+                    setMarkEnable(true);
+                }else if(user.perfil.id === doubt.autor.id){
+                    setMarkEnable(true);
+                }else{
+                    setMarkEnable(false);
+                }
+            }catch(error){
+                console.log(error.response.data)
             }
         }
-        setMarkEnable(EnableMark());
+
+        EnableMark();
         GetResponses();
     },[])
 
