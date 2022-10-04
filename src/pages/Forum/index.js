@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList } from 'react-native'
-import { Center, IconButton, Spinner } from 'native-base';
+import { Center, IconButton, Spinner, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
@@ -54,6 +54,7 @@ export default function Forum({navigation, route}) {
         setData(response.data);
       }
       setLoading(false);
+      
     }catch(error){
       console.log(error);
     }

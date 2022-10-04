@@ -75,7 +75,6 @@ export default function AnswerQuestion({navigation, route}) {
                         results.unshift(item);
                     }
                 });
-
                 setResponses({...response.data, results: results});
             }else{
                 if(next && responses.next){
@@ -127,7 +126,6 @@ export default function AnswerQuestion({navigation, route}) {
                 return false
             }
         }
-
         setMarkEnable(EnableMark());
         GetResponses();
     },[])
@@ -154,15 +152,20 @@ export default function AnswerQuestion({navigation, route}) {
                         }}
                         marginLeft={5}
                     />
-                    <Text 
-                        style={{
-                            fontSize:20, 
-                            marginLeft: '3%', 
-                            fontWeight:'bold'
-                        }}
-                    >
-                        {doubt.autor.perfil.nome_exibicao}
-                    </Text>
+                    <View>
+                        <Text 
+                            style={{
+                                fontSize:20, 
+                                marginLeft: '3%', 
+                                fontWeight:'bold'
+                            }}
+                        >
+                            {doubt.autor.perfil.nome_exibicao}
+                        </Text>
+                        <Text marginLeft={'5%'}>
+                            {doubt.autor.cargos[0]}
+                        </Text>
+                    </View>
                 </HStack>
                 <View marginBottom={3} marginLeft={5}>
                     <Text fontSize={15} fontWeight='bold'>{doubt.titulo}</Text>
