@@ -1,7 +1,11 @@
 import { IconButton, Menu, Text } from 'native-base';
 import { Entypo } from '@expo/vector-icons'; 
+import { useAuth } from '../../contexts/auth';
 
-export default function ForumQuestionMenu({DeleteQuestion}){
+export default function ForumQuestionMenu({DeleteQuestion, id}){
+    const { user } = useAuth();
+    const privileges = (user.perfil.id === id) || user.perfil.cargos[0] !== 'aluno'?true:false;
+
     return (
         <Menu trigger={triggerProps => {
             return <IconButton icon={
@@ -15,15 +19,19 @@ export default function ForumQuestionMenu({DeleteQuestion}){
                     accessibilityLabel='opções do comentario' 
                     {...triggerProps}
                 />
-          }}>
+          }}
+        >
+            {
+                privileges&&
+                <Menu.Item onPress={DeleteQuestion}>
+                    <Text>
+                        Deletar pergunta
+                    </Text>
+                </Menu.Item>
+            }
             <Menu.Item>
                 <Text>
                     Denunciar pergunta
-                </Text>
-            </Menu.Item>
-            <Menu.Item onPress={DeleteQuestion}>
-                <Text>
-                    Deletar pergunta
                 </Text>
             </Menu.Item>
         </Menu>
