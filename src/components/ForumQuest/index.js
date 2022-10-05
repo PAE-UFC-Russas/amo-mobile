@@ -22,9 +22,9 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike, Dele
                             <Text fontWeight='extrabold'>
                                 {quest.autor.perfil.nome_exibicao}
                             </Text>
-                            <ForumQuestionMenu DeleteQuestion={()=>DeleteQuestion(quest.id)}/>
+                            <ForumQuestionMenu id={quest.autor.id} DeleteQuestion={()=>DeleteQuestion(quest.id)}/>
                         </HStack>
-                        <Text fontWeight='semibold'>
+                        <Text fontWeight='medium'>
                             {quest.autor.cargos[0]}
                         </Text>
                         <Text fontWeight='semibold'>
@@ -52,7 +52,7 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike, Dele
                     <HStack justifyContent='space-between'>
                         <Box alignItems='center' flexDirection='row'>
                             <Text>{quest.votos}</Text>
-                            <IconButton onPress={() => quest.votou?DeleteLike(quest.id):PostLike(quest.id)} icon={
+                            <IconButton bgColor='#fff' onPress={() => quest.votou?DeleteLike(quest.id):PostLike(quest.id)} icon={
                                     <AntDesign
                                         color={quest.votou?'#f00':'#808080'}
                                         size={20}

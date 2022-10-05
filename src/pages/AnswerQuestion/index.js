@@ -125,11 +125,8 @@ export default function AnswerQuestion({navigation, route}) {
                     }
                 });
 
-                const monitors = response.data.monitores;
-                const isMonitor = monitors.find(obj => obj.id == user.perfil.id)?true:false;
-
-                const professores = response.data.professores;
-                const isProfessor = professores.find(obj => obj.id == user.perfil.id)?true:false;
+                const isMonitor = response.data.professores.find(obj => obj.id == user.perfil.id)?true:false;
+                const isProfessor = response.data.professores.find(obj => obj.id == user.perfil.id)?true:false;
 
                 if(isMonitor || isProfessor){
                     setMarkEnable(true);
