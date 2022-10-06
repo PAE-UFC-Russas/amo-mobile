@@ -37,6 +37,22 @@ export default function DrawerInfo(props){
                 </Text>
             </Center>
             <DrawerItemList {...props}/>
+            <Button 
+                alignSelf='flex-start' 
+                variant='link' 
+                onPress={()=>props.navigation.navigate('SelectMonitoria')}
+            >
+                <HStack space={8} alignItems='center'>
+                    <AntDesign 
+                        name='book' 
+                        size={28} 
+                        color='grey'
+                    /> 
+                    <Text fontSize={14}>
+                        Trocar de disciplina
+                    </Text>
+                </HStack>
+            </Button>
             <View style={{ flex: 1 }} />
             <Button 
                 alignSelf='flex-start' 
