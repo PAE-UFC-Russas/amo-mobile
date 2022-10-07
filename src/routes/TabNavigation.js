@@ -60,7 +60,12 @@ export default function TabNavigation({navigation, route}){
                     }
                 }} 
             />
-            <Tab.Screen name='Agendar' component={Schedule} options={{headerShown: true}}/>
+            <Tab.Screen name='Agendar' component={Schedule} options={{
+                    headerShown: true,
+                    headerTitleAlign: 'center',
+                    headerTitle: () => <Text fontWeight='bold' fontSize='sm' color='tertiaryBlue'>Agendamento</Text>,
+                }} 
+            />
             <Tab.Screen name='Notificação' component={Notifications}/>
             <Tab.Screen name='Profile' component={Profile} options={{tabBarLabel: 'Perfil'}}/>
         </Tab.Navigator>
