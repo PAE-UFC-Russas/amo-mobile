@@ -2,11 +2,15 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     edgeProfile:{
-        backgroundColor:'#ddd', 
+        borderWidth:2,
+        borderColor:'#52D6FB',
         paddingHorizontal:'5%',
-        paddingVertical:'5%', 
+        justifyContent:"center",
         borderRadius:20, 
-        height:'49%'
+        height:'49%',
+        marginHorizontal:'3%',
+        
+
     },
     avatarBadge: {
         position: 'absolute',

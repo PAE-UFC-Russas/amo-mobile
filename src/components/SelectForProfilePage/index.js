@@ -1,9 +1,10 @@
 import { FormControl, Select } from 'native-base';
 
-export default function SelectForProfilePage({placeholder, setValue, color, error, items, backgroundColor}){
+export default function SelectForProfilePage({placeholder, setValue, color, error, items, backgroundColor, borderWidth}){
     return (
         <FormControl isInvalid={error?true:false}>
             <Select 
+                borderWidth={borderWidth}
                 backgroundColor={backgroundColor}
                 accessibilityLabel={placeholder}
                 minWidth='5/6'

@@ -15,6 +15,7 @@ import RegisterDoubt from '../pages/RegisterDoubt';
 import AnswerQuestion from '../pages/AnswerQuestion';
 import About from '../pages/About';
 import { useAuth } from '../contexts/auth';
+import EditProfile from '../pages/EditProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ export default  function Routes(){
                         <Stack.Screen name='RegisterDoubt' component={RegisterDoubt}/>
                         <Stack.Screen name='AnswerQuestion' component={AnswerQuestion}/>
                         <Stack.Screen name='ForumDrawer' component={DrawerNavigation}/>
+                        <Stack.Screen name='EditProfile' component={EditProfile}/>
                     </>
                 )
             }
