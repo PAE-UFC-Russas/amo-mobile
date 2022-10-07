@@ -18,15 +18,17 @@ export default function ForumQuest(quest, navigation, PostLike, DeleteLike, Dele
                 />
                 <View style={{width: '100%'}}>
                     <TouchableOpacity onPress={() => navigation.navigate('AnswerQuestion', quest)}>
-                        <HStack justifyContent='space-between'>
-                            <Text fontWeight='extrabold'>
-                                {quest.autor.perfil.nome_exibicao}
-                            </Text>
+                        <HStack marginBottom={1} justifyContent='space-between'>
+                            <View>
+                                <Text fontWeight='extrabold'>
+                                    {quest.autor.perfil.nome_exibicao}
+                                </Text>
+                                <Text fontWeight='light'>
+                                    {quest.autor.cargos[0]}
+                                </Text>
+                            </View>
                             <ForumQuestionMenu id={quest.autor.id} DeleteQuestion={()=>DeleteQuestion(quest.id)}/>
                         </HStack>
-                        <Text fontWeight='medium'>
-                            {quest.autor.cargos[0]}
-                        </Text>
                         <Text fontWeight='semibold'>
                             {quest.titulo}
                         </Text>

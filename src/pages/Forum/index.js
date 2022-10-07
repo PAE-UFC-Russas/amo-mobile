@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList } from 'react-native'
-import { Center, IconButton, Spinner, Text } from 'native-base';
+import { Center, IconButton, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
 import { GetLoginToken } from '../../util/StorageLogin';
+import ButtonGetNextValues from '../../components/ButtonGetNextValues';
+import ForumStagger from '../../components/ForumStagger';
 import api from '../../services/api';
 import styles from './styles';
-import ButtonGetNextValues from '../../components/ButtonGetNextValues';
 
 export default function Forum({navigation, route}) {
   const [filters, setFilters] = useState({
@@ -143,20 +144,22 @@ export default function Forum({navigation, route}) {
           ListFooterComponent={data.next&&<ButtonGetNextValues label='perguntas' onPress={GetQuestions}/>}
         />
       }
-      <IconButton 
-        style={styles.addButton} 
-        variant='solid' 
-        bgColor='tertiaryBlue'
-        borderRadius='full' 
-        icon={
-          <MaterialIcons
-            color='#fff'
-            size={32}
-            name='add'
-          />
-        }
-        onPress={()=>navigation.navigate('RegisterDoubt', route.params)}
-      />
+      <ForumStagger>
+        <IconButton 
+          variant='solid' 
+          borderRadius='full' 
+          bgColor='teal.400'
+          marginY={2}
+          icon={
+            <MaterialIcons
+              color='#fff'
+              size={24}
+              name='add'
+            />
+          }
+          onPress={()=>navigation.navigate('RegisterDoubt', route.params)}
+        />
+      </ForumStagger>
     </Center>
   );
 }
