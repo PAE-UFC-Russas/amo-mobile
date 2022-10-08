@@ -31,7 +31,7 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                 </Center>
 
                 <VStack style={{height:'90%', paddingHorizontal:'5%', paddingVertical:'3%'}}
-                    space={1}
+                    space={2}
                 >
                     <Text>
                         Assunto:
@@ -107,7 +107,6 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                                 height={'40%'}               
                                 placeholderTextColor='#52D6FB' 
                                 placeholder='HH/MM'
-
                             />
                         </View>
                     </HStack>
@@ -129,7 +128,7 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                         </Select>
                     </HStack>
 
-                    <Button style={{width:'80%',height:'9%',borderRadius: 16, alignSelf:'center', marginVertical:'15%'}}>Solicitar agendamento</Button>
+                    <Button style={{width:'80%',height:'9%',borderRadius: 16, alignSelf:'center', marginVertical:'10%'}}>Solicitar agendamento</Button>
                 </VStack>
             </Modal.Content>
         </Modal>
