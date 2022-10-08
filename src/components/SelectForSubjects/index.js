@@ -1,9 +1,12 @@
 import { FormControl, Select } from 'native-base';
 
-export default function SelectForSubjects({placeholder, value, setValue, color, backgroundColor, error, items}){
+export default function SelectForSubjects({placeholder, value, setValue, color, backgroundColor, error, items, width, justfyContent, alignItems}){
     return (
         <FormControl isInvalid={error?true:false}>
             <Select 
+                alignItems={alignItems}
+                justifyContent={justfyContent}
+                width={width}
                 selectedValue={value} 
                 accessibilityLabel={placeholder}
                 minWidth='5/6'
