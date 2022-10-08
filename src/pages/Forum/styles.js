@@ -9,11 +9,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: 5
     },
-    addButton: {
-        position: 'absolute',
-        bottom: 25,
-        right: 25
-    },
     flatListContainer: {
         width: '90%',
         marginTop: 5

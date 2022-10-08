@@ -10,7 +10,7 @@ import RecoverPassword from '../pages/RecoverPassword';
 import ChangePassword from '../pages/ChangePassword';
 import RegistrationComplete from '../pages/RegistrationComplete';
 import SelectCourses from '../pages/SelectCourses';
-import SelectMonitoria from '../pages/SelectMonitoria';
+import SelectSubjects from '../pages/SelectSubjects';
 import RegisterDoubt from '../pages/RegisterDoubt';
 import AnswerQuestion from '../pages/AnswerQuestion';
 import About from '../pages/About';
@@ -37,7 +37,7 @@ export default  function Routes(){
                 !!user&& (
                     <>
                         <Stack.Screen name='SelectCourses' component={SelectCourses}/>
-                        <Stack.Screen name='SelectMonitoria' component={SelectMonitoria}/>
+                        <Stack.Screen name='SelectSubjects' component={SelectSubjects}/>
                         <Stack.Screen name='RegisterDoubt' component={RegisterDoubt}/>
                         <Stack.Screen name='AnswerQuestion' component={AnswerQuestion}/>
                         <Stack.Screen name='ForumDrawer' component={DrawerNavigation}/>

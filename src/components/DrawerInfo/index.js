@@ -40,7 +40,7 @@ export default function DrawerInfo(props){
             <Button 
                 alignSelf='flex-start' 
                 variant='link' 
-                onPress={()=>props.navigation.navigate('SelectMonitoria')}
+                onPress={()=>props.navigation.navigate('SelectSubjects')}
             >
                 <HStack space={8} alignItems='center'>
                     <AntDesign 

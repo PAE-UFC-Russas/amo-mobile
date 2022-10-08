@@ -49,7 +49,7 @@ export default function SelectCourses({navigation}) {
                             borderRadius='2xl' 
                             width={'80%'} 
                             height={60}
-                            onPress={()=>navigation.navigate('SelectMonitoria', item.id)} 
+                            onPress={()=>navigation.navigate('SelectSubjects', item.id)} 
                             _text={{
                                 fontWeight: 800,
                                 color: '#fff',
