@@ -1,8 +1,7 @@
 import React from 'react';
-import {Text, Modal, HStack , Input, View, Select, Button, Center, VStack} from 'native-base';
+import { Text, Modal, HStack , Input, View, Select, Button, Center, VStack } from 'native-base';
 
-
-export default function ModalScheduling({setOpenModal, openModal, navigation}){
+export default function ModalScheduling({setOpenModal, openModal}){
     const HandleOnClose = () =>{
         setOpenModal(false)
     }
@@ -11,7 +10,7 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
         <Modal 
             isOpen={openModal} 
             onClose={HandleOnClose} 
-            marginTop={'5%'} 
+            marginTop='5%'
         >
             <Modal.Content 
                 padding='1' 
@@ -30,7 +29,10 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                     </Text>
                 </Center>
 
-                <VStack style={{height:'90%', paddingHorizontal:'5%', paddingVertical:'3%'}}
+                <VStack 
+                    height='90%'
+                    paddingHorizontal= '5%'
+                    paddingVertical='3%'
                     space={2}
                 >
                     <Text>
@@ -41,7 +43,7 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                         color='#52D6FB' 
                         borderRadius={6} 
                         width='100%' 
-                        height={'15%'}
+                        height='15%'
                         placeholderTextColor='#52D6FB' 
                         placeholder='Digitar assunto aqui'
                     />
@@ -53,7 +55,7 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                         color='#52D6FB' 
                         borderRadius={6} 
                         width='100%' 
-                        height={'15%'} 
+                        height='15%'
                         placeholderTextColor='#52D6FB' 
                         placeholder='Digite sua dúvida'
                     />
@@ -63,7 +65,7 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                     <Select 
                         placeholder='Seleciona a disciplina' 
                         height={10}
-                        width={'100%'}
+                        width='100%'
                         borderRadius={6} 
                         borderColor='grey'
                         placeholderTextColor='#52D6FB'
@@ -74,44 +76,51 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                     </Select>
 
                     <HStack 
-                        style={{
-                            height:'15%', 
-                            marginVertical:'5%'
-                        }}
+                        height='15%'
+                        marginVertical='5%'
                         space={5}
                     >
-                        <View style={{width:'50%', flexDirection:'row',alignItems:'center'}}>
-                            <Text style={{paddingRight:'5%'}}>
+                        <View 
+                            width='50%'
+                            flexDirection='row'
+                            alignItems='center'
+                        >
+                            <Text paddingRight='5%'>
                                 Data:
                             </Text>
                             <Input
+                                fontSize={10}
                                 borderColor='grey' 
                                 color='#52D6FB' 
                                 borderRadius={6} 
                                 width='70%' 
-                                height={'40%'}
+                                height='50%'
                                 placeholderTextColor='#52D6FB' 
                                 placeholder='DD/MM/AAAA'
                             />
                         </View>
-                        
-                        <View style={{width:'50%', flexDirection:'row',alignItems:'center'}}>
-                            <Text style={{paddingRight:'5%'}}>
+                        <View 
+                            width='50%'
+                            flexDirection='row'
+                            alignItems='center'
+                        >
+                            <Text paddingRight='5%'>
                                 Horario:
                             </Text>
                             <Input
+                                fontSize={10}
                                 borderColor='grey' 
                                 color='#52D6FB' 
                                 borderRadius={6}               
                                 width='50%' 
-                                height={'40%'}               
+                                height='50%'           
                                 placeholderTextColor='#52D6FB' 
-                                placeholder='HH/MM'
+                                placeholder='HH:MM'
                             />
                         </View>
                     </HStack>
                     <HStack>
-                        <Text style={{paddingRight:'5%'}}>
+                        <Text paddingRight='5%'>
                             Tipo:
                         </Text>
                         <Select 
@@ -127,8 +136,15 @@ export default function ModalScheduling({setOpenModal, openModal, navigation}){
                             <Select.Item label='...' value='...'/>
                         </Select>
                     </HStack>
-
-                    <Button style={{width:'80%',height:'9%',borderRadius: 16, alignSelf:'center', marginVertical:'10%'}}>Solicitar agendamento</Button>
+                    <Button 
+                        width='80%'
+                        height='9%'
+                        borderRadius={16}
+                        alignSelf='center' 
+                        marginVertical='10%'
+                    >
+                        Solicitar agendamento
+                    </Button>
                 </VStack>
             </Modal.Content>
         </Modal>
