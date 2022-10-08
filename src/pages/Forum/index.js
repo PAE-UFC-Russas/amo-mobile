@@ -6,7 +6,7 @@ import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
 import { GetLoginToken } from '../../util/StorageLogin';
 import ButtonGetNextValues from '../../components/ButtonGetNextValues';
-import ForumStagger from '../../components/ForumStagger';
+import DefaultStagger from '../../components/DefaultStagger';
 import api from '../../services/api';
 import styles from './styles';
 
@@ -144,7 +144,7 @@ export default function Forum({navigation, route}) {
           ListFooterComponent={data.next&&<ButtonGetNextValues label='perguntas' onPress={GetQuestions}/>}
         />
       }
-      <ForumStagger>
+      <DefaultStagger>
         <IconButton 
           variant='solid' 
           borderRadius='full' 
@@ -159,7 +159,7 @@ export default function Forum({navigation, route}) {
           }
           onPress={()=>navigation.navigate('RegisterDoubt', route.params)}
         />
-      </ForumStagger>
+      </DefaultStagger>
     </Center>
   );
 }

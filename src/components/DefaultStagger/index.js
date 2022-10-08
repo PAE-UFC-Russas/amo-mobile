@@ -1,7 +1,7 @@
 import { useDisclose, Box, Center, Stagger, IconButton, Icon, HStack } from "native-base";
 import { MaterialIcons, Entypo } from '@expo/vector-icons'; 
 
-export default function ForumStagger({children}){
+export default function DefaultStagger({children}){
     const {
       isOpen,
       onToggle
