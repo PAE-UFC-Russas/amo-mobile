@@ -7,7 +7,7 @@ import DefaultStagger from '../../components/DefaultStagger';
 import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
-import Caixinha from '../../components/Caixinha';
+import ScheduleBox from '../../components/ScheduleBox';
 
 export default function Schedule({navigation, route}) {
   const [ subjects, setSubjects] = useState([]);
@@ -60,7 +60,8 @@ export default function Schedule({navigation, route}) {
           <View style={{flex:1, marginLeft:'7%'}}>
             <FlatList 
               data={[1, 2, 3, 4, 5, 6]}
-              renderItem={(item, index)=><Caixinha key={index}/>}/>
+              renderItem={(item, index)=><ScheduleBox key={index}/>}
+            />
           </View>
           <DefaultStagger>
             <IconButton 

@@ -48,7 +48,7 @@ export default function TabNavigation({navigation, route}){
                         />
                     ),
                     headerTitleAlign: 'center',
-                    headerTitle: () => <Text fontWeight='bold' fontSize='sm' color='tertiaryBlue'>Fórum</Text>,
+                    headerTitle: () => <Text fontWeight='bold' fontSize='md' color='tertiaryBlue'>Fórum</Text>,
                     drawerIcon: ({color})=>{
                         return(
                             <MaterialIcons
@@ -63,7 +63,7 @@ export default function TabNavigation({navigation, route}){
             <Tab.Screen name='Agendar' component={Schedule} options={{
                     headerShown: true,
                     headerTitleAlign: 'center',
-                    headerTitle: () => <Text fontWeight='bold' fontSize='sm' color='tertiaryBlue'>Agendamento</Text>,
+                    headerTitle: () => <Text fontWeight='bold' fontSize='md' color='tertiaryBlue'>Agendamento</Text>,
                 }} 
             />
             <Tab.Screen name='Notificação' component={Notifications}/>
