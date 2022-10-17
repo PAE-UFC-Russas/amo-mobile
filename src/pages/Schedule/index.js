@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ModalScheduling from '../../components/ModalScheduling';
 import SelectForSubjects from '../../components/SelectForSubjects';
 import DefaultStagger from '../../components/DefaultStagger';
+import SchedulingFilter from '../../components/SchedulingFilter';
 import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
@@ -14,6 +15,12 @@ export default function Schedule({navigation, route}) {
   const [ openDetailModal, setOpenDetailModal] = useState(false);
   const [ loading, setLoading ] = useState(true);
   const [ newSchedule, setNewSchedule ] = useState({subject: null});
+  const [filters, setFilters] = useState({
+    recent: false,
+    late: false,
+    mostLiked: false,
+    lessLiked: false,
+  });
 
   useEffect(()=>{
     async function GetSubjects(){
@@ -39,6 +46,7 @@ export default function Schedule({navigation, route}) {
       style={styles.container}
       bgColor='#fff'
     >
+      <SchedulingFilter filters={filters} setFilters={setFilters} />
       {
         loading?
           <Spinner marginTop='auto' marginBottom='auto' size='lg'/>
