@@ -16,7 +16,14 @@ export default function Schedule({navigation, route}) {
   const [ openAddModal, setOpenAddModal] = useState(false);
   const [ openDetailModal, setOpenDetailModal] = useState(false);
   const [ loading, setLoading ] = useState(true);
-  const [ newSchedule, setNewSchedule ] = useState({subject: null});
+  const [ schedules, setSchedules ] = useState([]);
+  const [ newSchedule, setNewSchedule ] = useState({
+    tipo: '',
+    data: new Date(),
+    assunto: '',
+    descricao: '',
+    disciplina: null
+  });
   const [filters, setFilters] = useState({
     recent: false,
     late: false,
@@ -24,23 +31,52 @@ export default function Schedule({navigation, route}) {
     lessLiked: false,
   });
 
-  useEffect(()=>{
-    async function GetSubjects(){
-      try{
-        setLoading(true);
-        const response = await api.get(`/disciplinas/?pages=1`, {
-            headers: {
-              'Authorization': 'Token ' + await GetLoginToken()
-            }
-        });
-        setSubjects(response.data.results);
-        setLoading(false);
-      }catch(error){
-        console.log(error)
-      }
-    }
+  async function GetSubjects(){
+    try{
+      const response = await api.get(`/disciplinas/?pages=1`, {
+          headers: {
+            'Authorization': 'Token ' + await GetLoginToken()
+          }
+      });
+      setSubjects(response.data.results);
 
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  async function GetSchedules(){
+    try{
+      setLoading(true);
+      const response = await api.get(`/agendamentos/?pages=1`, {
+          headers: {
+            'Authorization': 'Token ' + await GetLoginToken()
+          }
+      });
+      setSchedules(response.data);
+      setLoading(false);
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  async function PostNewSchedule(){
+    try{
+      await api.post(`/agendamentos/`, {
+        ...newSchedule
+      }, {
+        headers: {
+          'Authorization': 'Token ' + await GetLoginToken()
+        }
+      });
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
     GetSubjects();
+    GetSchedules();
   },[]);
 
   return (
@@ -63,14 +99,14 @@ export default function Schedule({navigation, route}) {
             style={{color:'black', backgroundColor:'white'}}
             placeholder='Selecione a monitoria' 
             items={subjects}
-            setValue={itemValue => setNewSchedule({...newSchedule, subject: itemValue})} 
+            setValue={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue})} 
             color='#52D6FB'
           />
-          <ModalAddScheduling openModal={openAddModal} setOpenModal={setOpenAddModal}/>
+          <ModalAddScheduling PostNewSchedule={PostNewSchedule} subjects={subjects} newSchedule={newSchedule} setNewSchedule={setNewSchedule} openModal={openAddModal} setOpenModal={setOpenAddModal}/>
           <ModalDetailScheduling openModal={openDetailModal} setOpenModal={setOpenDetailModal}/>
           <View style={{flex:1, marginLeft:'7%'}}>
             <FlatList 
-              data={[1, 2, 3, 4, 5, 6]}
+              data={schedules.results}
               renderItem={(item, index)=><ScheduleBox setOpenDetailModal={setOpenDetailModal} key={index}/>}
             />
           </View>
