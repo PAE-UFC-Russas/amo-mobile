@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Center, Spinner, FlatList, View, IconButton } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
-import ModalScheduling from '../../components/ModalScheduling';
+import ModalAddScheduling from '../../components/ModalAddScheduling';
+import ModalDetailScheduling from '../../components/ModalDetailScheduling';
 import SelectForSubjects from '../../components/SelectForSubjects';
 import DefaultStagger from '../../components/DefaultStagger';
 import SchedulingFilter from '../../components/SchedulingFilter';
@@ -12,6 +13,7 @@ import ScheduleBox from '../../components/ScheduleBox';
 
 export default function Schedule({navigation, route}) {
   const [ subjects, setSubjects] = useState([]);
+  const [ openAddModal, setOpenAddModal] = useState(false);
   const [ openDetailModal, setOpenDetailModal] = useState(false);
   const [ loading, setLoading ] = useState(true);
   const [ newSchedule, setNewSchedule ] = useState({subject: null});
@@ -64,11 +66,12 @@ export default function Schedule({navigation, route}) {
             setValue={itemValue => setNewSchedule({...newSchedule, subject: itemValue})} 
             color='#52D6FB'
           />
-          <ModalScheduling openModal={openDetailModal} setOpenModal={setOpenDetailModal}/>
+          <ModalAddScheduling openModal={openAddModal} setOpenModal={setOpenAddModal}/>
+          <ModalDetailScheduling openModal={openDetailModal} setOpenModal={setOpenDetailModal}/>
           <View style={{flex:1, marginLeft:'7%'}}>
             <FlatList 
               data={[1, 2, 3, 4, 5, 6]}
-              renderItem={(item, index)=><ScheduleBox key={index}/>}
+              renderItem={(item, index)=><ScheduleBox setOpenDetailModal={setOpenDetailModal} key={index}/>}
             />
           </View>
           <DefaultStagger>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Modal, HStack , Input, View, Select, Button, Center, VStack } from 'native-base';
 
-export default function ModalScheduling({setOpenModal, openModal}){
+export default function ModalAddScheduling({setOpenModal, openModal}){
     const HandleOnClose = () =>{
         setOpenModal(false)
     }
