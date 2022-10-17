@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { Button, Center } from 'native-base';
+import { ScrollView, } from 'react-native';
+import { Button, Center, View } from 'native-base';
 
 export default function SchedulingFilter({ setFilters, filters }){
 
@@ -17,58 +17,54 @@ export default function SchedulingFilter({ setFilters, filters }){
     }
 
     return(
-        <Center height='100'>
-            <ScrollView 
-                horizontal={true} 
-                showsHorizontalScrollIndicator={false} 
-                contentContainerStyle={{ flexGrow: 1 }}
-            >
+        <View height='20' width='100%' justifyContent={'space-around'}>
+            <View flexDirection={'row'} justifyContent={'space-evenly'}>
                 <Button 
-                    borderRadius='full' 
-                    marginRight={3} 
-                    marginLeft={3} 
+                    borderRadius='20' 
+                    width={'24%'}
                     borderColor='#52D6FB'
                     _text={{
                         color: filters.mostLiked?'#fff':'#52D6FB'
                     }}
                     variant={filters.mostLiked?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('mostLiked')}>
-                        Mais curtidas
+                        Meus 
                 </Button>
                 <Button 
+                    width={'24%'}
                     borderRadius='full' 
-                    marginRight={3} 
+                    
                     borderColor='#52D6FB' 
                     _text={{
                         color: filters.lessLiked?'#fff':'#52D6FB'
                     }}
                     variant={filters.lessLiked?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('lessLiked')}>
-                        Menos curtidas
+                        Todos
                 </Button>
                 <Button 
                     borderRadius='full' 
-                    marginRight={3} 
+                    width={'24%'}
                     borderColor='#52D6FB' 
                     _text={{
                         color: filters.recent?'#fff':'#52D6FB'
                     }}
                     variant={filters.recent?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('recent')}>
-                        Mais recentes
+                        Abertos
                 </Button>
                 <Button 
                     borderRadius='full' 
-                    marginRight={3} 
+                    width={'25%'}
                     borderColor='#52D6FB'
                     _text={{
                         color: filters.late?'#fff':'#52D6FB'
                     }}
                     variant={filters.late?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('late')}>
-                        Mais antigas
+                        Encerrados
                 </Button>
-            </ScrollView>
-        </Center>
+            </View>
+        </View>
     )
 };
