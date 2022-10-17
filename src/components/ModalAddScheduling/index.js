@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, Modal, HStack , Input, View, Select, Button, Center, VStack } from 'native-base';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import FormateTime from '../../util/FormateTime';
+import DateISOToFormated from '../../util/DateISOToFormated';
+import SelectForSubjects from '../SelectForSubjects';
 
-export default function ModalAddScheduling({setOpenModal, openModal}){
+export default function ModalAddScheduling({setOpenModal, openModal, PostNewSchedule, setNewSchedule, newSchedule, subjects}){
     const HandleOnClose = () =>{
         setOpenModal(false)
     }
+    const [ showDate, setShowDate ] = useState({active: false, type: 'date'});
 
     return(
         <Modal 
@@ -28,7 +33,6 @@ export default function ModalAddScheduling({setOpenModal, openModal}){
                         Solicitar agendamento
                     </Text>
                 </Center>
-
                 <VStack 
                     height='90%'
                     paddingHorizontal= '5%'
@@ -46,6 +50,7 @@ export default function ModalAddScheduling({setOpenModal, openModal}){
                         height='15%'
                         placeholderTextColor='#52D6FB' 
                         placeholder='Digitar assunto aqui'
+                        onChangeText={text => {setNewSchedule({...newSchedule, assunto: text})}}
                     />
                     <Text>
                         Descrição:
@@ -58,27 +63,25 @@ export default function ModalAddScheduling({setOpenModal, openModal}){
                         height='15%'
                         placeholderTextColor='#52D6FB' 
                         placeholder='Digite sua dúvida'
+                        onChangeText={text => {setNewSchedule({...newSchedule, descricao: text})}}
                     />
                     <Text>
                         Disciplina:
                     </Text>
-                    <Select 
-                        placeholder='Seleciona a disciplina' 
-                        height={10}
+                    <SelectForSubjects
+                        alignItems='center'
+                        justfyContent='center'
                         width='100%'
-                        borderRadius={6} 
-                        borderColor='grey'
-                        placeholderTextColor='#52D6FB'
-                        color='#52D6FB'
-                    >
-                        <Select.Item label='...' value='...'/>
-                        <Select.Item label='...' value='...'/>
-                    </Select>
-
+                        borderWidth={1}
+                        backgroundColor='white' 
+                        style={{color:'black', backgroundColor:'white', borderColor: 'grey'}}
+                        placeholder='Selecione a monitoria' 
+                        items={subjects}
+                        setValue={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue})} 
+                    />
                     <HStack 
                         height='15%'
                         marginVertical='5%'
-                        space={5}
                     >
                         <View 
                             width='50%'
@@ -88,16 +91,17 @@ export default function ModalAddScheduling({setOpenModal, openModal}){
                             <Text paddingRight='5%'>
                                 Data:
                             </Text>
-                            <Input
+                            <Button
                                 fontSize={10}
                                 borderColor='grey' 
                                 color='#52D6FB' 
                                 borderRadius={6} 
-                                width='70%' 
                                 height='50%'
-                                placeholderTextColor='#52D6FB' 
-                                placeholder='DD/MM/AAAA'
-                            />
+                                variant='outline'
+                                onPress={()=>setShowDate({type: 'date', active: true})}
+                            >
+                                {DateISOToFormated(newSchedule.data)}
+                            </Button>
                         </View>
                         <View 
                             width='50%'
@@ -107,16 +111,18 @@ export default function ModalAddScheduling({setOpenModal, openModal}){
                             <Text paddingRight='5%'>
                                 Horario:
                             </Text>
-                            <Input
+                            <Button
                                 fontSize={10}
                                 borderColor='grey' 
                                 color='#52D6FB' 
-                                borderRadius={6}               
-                                width='50%' 
-                                height='50%'           
-                                placeholderTextColor='#52D6FB' 
-                                placeholder='HH:MM'
-                            />
+                                borderRadius={6} 
+                                width='60%' 
+                                height='50%'
+                                variant='outline'
+                                onPress={()=>setShowDate({type: 'time', active: true})}
+                            >
+                                {FormateTime(newSchedule.data)}
+                            </Button>
                         </View>
                     </HStack>
                     <HStack>
@@ -126,15 +132,26 @@ export default function ModalAddScheduling({setOpenModal, openModal}){
                         <Select 
                             placeholder='Tipo' 
                             height={8}
-                            width='150%'
+                            width='200%'
                             borderRadius={6} 
                             borderColor='grey'
                             placeholderTextColor='#52D6FB'
                             color='#52D6FB'
+                            onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
                         >
-                            <Select.Item label='...' value='...'/>
-                            <Select.Item label='...' value='...'/>
+                            <Select.Item label='Presencial' value='presencial'/>
+                            <Select.Item label='Remoto' value='remoto'/>
                         </Select>
+                        {
+                            showDate.active&&
+                                <RNDateTimePicker 
+                                    mode={showDate.type}
+                                    value={newSchedule.data}
+                                    minimumDate={new Date()}
+                                    onTouchCancel={()=>setShowDate({...showDate, active: false})}
+                                    onChange={(event, date) => {setShowDate({...showDate, active: false});setNewSchedule({...newSchedule, data: date})}}
+                                />
+                        }
                     </HStack>
                     <Button 
                         width='80%'
@@ -142,6 +159,7 @@ export default function ModalAddScheduling({setOpenModal, openModal}){
                         borderRadius={16}
                         alignSelf='center' 
                         marginVertical='10%'
+                        onPress={PostNewSchedule}
                     >
                         Solicitar agendamento
                     </Button>
