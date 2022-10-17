@@ -6,10 +6,10 @@ import ModalDetailScheduling from '../../components/ModalDetailScheduling';
 import SelectForSubjects from '../../components/SelectForSubjects';
 import DefaultStagger from '../../components/DefaultStagger';
 import SchedulingFilter from '../../components/SchedulingFilter';
+import ScheduleBox from '../../components/ScheduleBox';
 import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
-import ScheduleBox from '../../components/ScheduleBox';
 
 export default function Schedule({navigation, route}) {
   const [ subjects, setSubjects] = useState([]);
@@ -87,7 +87,7 @@ export default function Schedule({navigation, route}) {
                   name='add'
                 />
               }
-              onPress={()=>setOpenDetailModal(true)}
+              onPress={()=>setOpenAddModal(true)}
             />
           </DefaultStagger>
         </>
