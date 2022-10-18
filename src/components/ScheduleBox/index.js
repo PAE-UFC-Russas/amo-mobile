@@ -1,12 +1,14 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { HStack } from 'native-base'
-import { AntDesign } from '@expo/vector-icons'; 
+import { HStack, VStack } from 'native-base'
 import styles from './styles';
 
-export default function ScheduleBox({setOpenDetailModal}) {
+export default function ScheduleBox({setOpenDetailModal, Schedule}) {
   return (
     <View style={styles.container}>
-        <AntDesign name='login' size={24} color='#52D6FB'/>
+      <VStack>
+        <View style={{...styles.status,backgroundColor: 'red'}}></View>
+        <Text>{Schedule.status}</Text>
+      </VStack>
         <TouchableOpacity onPress={()=>setOpenDetailModal(true)} style={styles.box}>
           <HStack justifyContent='space-between'>
             <Text style={{fontSize:20}}>Assunto</Text>

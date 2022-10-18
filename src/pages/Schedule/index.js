@@ -49,10 +49,11 @@ export default function Schedule({navigation, route}) {
     try{
       setLoading(true);
       const response = await api.get(`/agendamentos/?pages=1`, {
-          headers: {
-            'Authorization': 'Token ' + await GetLoginToken()
-          }
+        headers: {
+          'Authorization': 'Token ' + await GetLoginToken()
+        }
       });
+
       setSchedules(response.data);
       setLoading(false);
     }catch(error){
@@ -69,8 +70,11 @@ export default function Schedule({navigation, route}) {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
+      GetSchedules();
+      return true
     }catch(error){
-      console.log(error)
+      console.log(error.response)
+      return false
     }
   }
 
@@ -107,7 +111,7 @@ export default function Schedule({navigation, route}) {
           <View style={{flex:1, marginLeft:'7%'}}>
             <FlatList 
               data={schedules.results}
-              renderItem={(item, index)=><ScheduleBox setOpenDetailModal={setOpenDetailModal} key={index}/>}
+              renderItem={(item, index)=><ScheduleBox Schedule={item.item} setOpenDetailModal={setOpenDetailModal} key={index}/>}
             />
           </View>
           <DefaultStagger>

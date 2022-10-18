@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
-import { Text, Modal, HStack , Input, View, Select, Button, Center, VStack } from 'native-base';
+import { Text, Modal, HStack , Input, View, Select, Button, Center, VStack, useToast } from 'native-base';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import FormateTime from '../../util/FormateTime';
 import DateISOToFormated from '../../util/DateISOToFormated';
 import SelectForSubjects from '../SelectForSubjects';
 
 export default function ModalAddScheduling({setOpenModal, openModal, PostNewSchedule, setNewSchedule, newSchedule, subjects}){
+    const [ showDate, setShowDate ] = useState({active: false, type: 'date'});
+    const [ errors, setErros ] = useState(null);
+    const toast = useToast();
+
     const HandleOnClose = () =>{
         setOpenModal(false)
     }
-    const [ showDate, setShowDate ] = useState({active: false, type: 'date'});
+
+    const HandlePostNewSchedule = () => {
+        if(newSchedule.assunto.length > 3){
+            const postResponse = PostNewSchedule();
+            if(postResponse){
+                toast.show({
+                    title: 'Agendamento realizado com sucesso!',
+                    placement: 'bottom'
+                });
+                HandleOnClose();
+            }else{
+                toast.show({
+                    title: 'Erro ao realizar agendamento, tente novamente mais tarde!',
+                    placement: 'bottom'
+                });
+            }
+        }
+    }
 
     return(
         <Modal 
@@ -140,7 +161,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                             onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
                         >
                             <Select.Item label='Presencial' value='presencial'/>
-                            <Select.Item label='Remoto' value='remoto'/>
+                            <Select.Item label='Online' value='online'/>
                         </Select>
                         {
                             showDate.active&&
@@ -159,7 +180,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                         borderRadius={16}
                         alignSelf='center' 
                         marginVertical='10%'
-                        onPress={PostNewSchedule}
+                        onPress={HandlePostNewSchedule}
                     >
                         Solicitar agendamento
                     </Button>

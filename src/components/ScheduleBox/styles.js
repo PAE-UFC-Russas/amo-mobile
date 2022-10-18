@@ -17,7 +17,11 @@ const styles = StyleSheet.create({
         marginLeft:30, 
         borderRadius:15,
     },
-
+    status: {
+        width: 5,
+        height: 5,
+        borderRadius: 100
+    }
 });
 
 export default styles;
