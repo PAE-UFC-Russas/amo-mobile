@@ -2,17 +2,16 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
         height:100,
         flexDirection:'row', 
-        alignItems:"center",
-        width:'100%',
+        alignItems:'center',
+        width:'95%',
         backgroundColor:'whitesmoke',
         borderRadius:15,
         padding:25,
         marginTop:'3%', 
         justifyContent:'center',
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 11,
@@ -22,17 +21,18 @@ const styles = StyleSheet.create({
         elevation: 22,  
     },
     box:{
-        marginRight:30,
+        marginRight: 20,
+        marginLeft: 20,
         width:'100%', 
         height:100, 
-        padding:20, 
         justifyContent:'center', 
         marginTop:5, 
     },
     status: {
-        width: 20,
-        height: 20,
-        borderRadius: 100
+        width: 15,
+        height: 15,
+        borderRadius: 100,
+        marginLeft: 20
     }
 });
 export default styles;

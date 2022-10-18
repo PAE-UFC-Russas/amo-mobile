@@ -25,10 +25,11 @@ export default function Schedule({navigation, route}) {
     disciplina: null
   });
   const [filters, setFilters] = useState({
-    recent: false,
-    late: false,
-    mostLiked: false,
-    lessLiked: false,
+    mine: false,
+    all: false,
+    opens: false,
+    closed: false,
+    subject: null
   });
 
   async function GetSubjects(){
@@ -46,9 +47,21 @@ export default function Schedule({navigation, route}) {
   }
 
   async function GetSchedules(){
+    let url = '/agendamentos/?pages=1';
+    
+    if(filters.subject !== null){
+      url += `&disciplina=${filters.subject}`;
+    }else if(filters.all){
+      url = '/agendamentos/?pages=1';
+    }else if(filters.confimed){
+      url += '&status=confirmado&status=aguardando';
+    }else if(filters.closed){
+      url += '&status=cancelado';
+    }
+
     try{
       setLoading(true);
-      const response = await api.get(`/agendamentos/?pages=1`, {
+      const response = await api.get(url, {
         headers: {
           'Authorization': 'Token ' + await GetLoginToken()
         }
@@ -79,6 +92,10 @@ export default function Schedule({navigation, route}) {
   }
 
   useEffect(()=>{
+    GetSchedules();
+  },[filters]);
+
+  useEffect(()=>{
     GetSubjects();
     GetSchedules();
   },[]);
@@ -103,17 +120,16 @@ export default function Schedule({navigation, route}) {
             style={{color:'black', backgroundColor:'white'}}
             placeholder='Selecione a monitoria' 
             items={subjects}
-            setValue={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue})} 
+            setValue={itemValue => setFilters({...filters, subject: itemValue})} 
             color='#52D6FB'
           />
           <ModalAddScheduling PostNewSchedule={PostNewSchedule} subjects={subjects} newSchedule={newSchedule} setNewSchedule={setNewSchedule} openModal={openAddModal} setOpenModal={setOpenAddModal}/>
           <ModalDetailScheduling openModal={openDetailModal} setOpenModal={setOpenDetailModal}/>
-          <View style={{flex:1, marginLeft:'7%'}}>
-            <FlatList 
-              data={schedules.results}
-              renderItem={(item, index)=><ScheduleBox Schedule={item.item} setOpenDetailModal={setOpenDetailModal} key={index}/>}
-            />
-          </View>
+          <FlatList 
+            data={schedules.results}
+            contentContainerStyle={{padding: 10}}
+            renderItem={(item, index)=><ScheduleBox Schedule={item.item} setOpenDetailModal={setOpenDetailModal} key={index}/>}
+          />
           <DefaultStagger>
             <IconButton 
               variant='solid' 

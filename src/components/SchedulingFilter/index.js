@@ -1,67 +1,65 @@
 import React from 'react';
-import { ScrollView, } from 'react-native';
-import { Button, Center, View } from 'native-base';
+import { Button, View } from 'native-base';
 
 export default function SchedulingFilter({ setFilters, filters }){
 
     const handleChangeFilters = (type) => {
-        if(type === 'mostLiked'){
-            setFilters({mostLiked: !filters.mostLiked, lessLiked: false, recent: false, late: false});
-        }else if(type === 'lessLiked'){
-            setFilters({mostLiked: false, lessLiked: !filters.lessLiked, recent: false, late: false});
-        }else if(type === 'recent'){
-            setFilters({mostLiked: false, lessLiked: false, recent: !filters.recent, late: false});
-        }else if(type === 'late'){
-            setFilters({mostLiked: false, lessLiked: false, recent: false, late: !filters.late});
+        if(type === 'mine'){
+            setFilters({mine: !filters.mine, all: false, opens: false, closed: false, subject: filters.subject});
+        }else if(type === 'all'){
+            setFilters({mine: false, all: !filters.all, opens: false, closed: false, subject: filters.subject});
+        }else if(type === 'opens'){
+            setFilters({mine: false, all: false, opens: !filters.opens, closed: false, subject: filters.subject});
+        }else if(type === 'closed'){
+            setFilters({mine: false, all: false, opens: false, closed: !filters.closed, subject: filters.subject});
         }
     }
 
     return(
-        <View height='20' width='100%' justifyContent={'space-around'}>
-            <View flexDirection={'row'} justifyContent={'space-evenly'}>
+        <View height='20' width='100%' justifyContent='space-around'>
+            <View flexDirection='row' justifyContent='space-evenly'>
                 <Button 
                     borderRadius='20' 
-                    width={'24%'}
+                    width='24%'
                     borderColor='#52D6FB'
                     _text={{
-                        color: filters.mostLiked?'#fff':'#52D6FB'
+                        color: filters.mine?'#fff':'#52D6FB'
                     }}
-                    variant={filters.mostLiked?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('mostLiked')}>
+                    variant={filters.mine?'solid':'outline'} 
+                    onPress={()=>handleChangeFilters('mine')}>
                         Meus 
                 </Button>
                 <Button 
-                    width={'24%'}
-                    borderRadius='full' 
-                    
+                    width='24%'
+                    borderRadius='full'
                     borderColor='#52D6FB' 
                     _text={{
-                        color: filters.lessLiked?'#fff':'#52D6FB'
+                        color: filters.all?'#fff':'#52D6FB'
                     }}
-                    variant={filters.lessLiked?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('lessLiked')}>
+                    variant={filters.all?'solid':'outline'} 
+                    onPress={()=>handleChangeFilters('all')}>
                         Todos
                 </Button>
                 <Button 
                     borderRadius='full' 
-                    width={'24%'}
+                    width='24%'
                     borderColor='#52D6FB' 
                     _text={{
-                        color: filters.recent?'#fff':'#52D6FB'
+                        color: filters.opens?'#fff':'#52D6FB'
                     }}
-                    variant={filters.recent?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('recent')}>
+                    variant={filters.opens?'solid':'outline'} 
+                    onPress={()=>handleChangeFilters('opens')}>
                         Abertos
                 </Button>
                 <Button 
                     borderRadius='full' 
-                    width={'25%'}
+                    width='25%'
                     borderColor='#52D6FB'
                     _text={{
-                        color: filters.late?'#fff':'#52D6FB'
+                        color: filters.closed?'#fff':'#52D6FB'
                     }}
-                    variant={filters.late?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('late')}>
+                    variant={filters.closed?'solid':'outline'} 
+                    onPress={()=>handleChangeFilters('closed')}>
                         Encerrados
                 </Button>
             </View>
