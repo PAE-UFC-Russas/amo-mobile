@@ -3,6 +3,7 @@ function padTo2Digits(num) {
 }
 
 export default function FormateTime(date){
+    date = new Date(date);
     const hoursAndMinutes = padTo2Digits(date.getHours()) + ':' + padTo2Digits(date.getMinutes());
     return hoursAndMinutes
 }
