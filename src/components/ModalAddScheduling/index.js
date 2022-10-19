@@ -69,7 +69,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                         borderRadius={6} 
                         width='100%' 
                         height='15%'
-                        placeholderTextColor='#52D6FB' 
+                        placeholderTextColor='grey' 
                         placeholder='Digitar assunto aqui'
                         onChangeText={text => {setNewSchedule({...newSchedule, assunto: text})}}
                     />
@@ -82,7 +82,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                         borderRadius={6} 
                         width='100%' 
                         height='15%'
-                        placeholderTextColor='#52D6FB' 
+                        placeholderTextColor='grey' 
                         placeholder='Digite sua dúvida'
                         onChangeText={text => {setNewSchedule({...newSchedule, descricao: text})}}
                     />
@@ -113,6 +113,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                                 Data:
                             </Text>
                             <Button
+                                paddingTop={'4%'}
                                 fontSize={10}
                                 borderColor='grey' 
                                 color='#52D6FB' 
@@ -133,6 +134,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                                 Horario:
                             </Text>
                             <Button
+                                paddingTop={'4%'}
                                 fontSize={10}
                                 borderColor='grey' 
                                 color='#52D6FB' 
@@ -181,6 +183,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                         alignSelf='center' 
                         marginVertical='10%'
                         onPress={HandlePostNewSchedule}
+                        backgroundColor='#024284'
                     >
                         Solicitar agendamento
                     </Button>
