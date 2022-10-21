@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Center, Spinner, FlatList, View, IconButton } from 'native-base';
+import { Center, Spinner, FlatList, IconButton } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ModalAddScheduling from '../../components/ModalAddScheduling';
 import ModalDetailScheduling from '../../components/ModalDetailScheduling';
@@ -11,7 +11,7 @@ import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
 
-export default function Schedule({navigation, route}) {
+export default function Schedule() {
   const [ subjects, setSubjects] = useState([]);
   const [ openAddModal, setOpenAddModal] = useState(false);
   const [ openDetailModal, setOpenDetailModal] = useState(false);
@@ -35,12 +35,12 @@ export default function Schedule({navigation, route}) {
   async function GetSubjects(){
     try{
       const response = await api.get(`/disciplinas/?pages=1`, {
-          headers: {
-            'Authorization': 'Token ' + await GetLoginToken()
-          }
+        headers: {
+          'Authorization': 'Token ' + await GetLoginToken()
+        }
       });
-      setSubjects(response.data.results);
 
+      setSubjects(response.data.results);
     }catch(error){
       console.log(error)
     }
@@ -92,13 +92,11 @@ export default function Schedule({navigation, route}) {
   }
 
   useEffect(()=>{
+    if(schedules.length < 1){
+      GetSubjects();
+    }
     GetSchedules();
   },[filters]);
-
-  useEffect(()=>{
-    GetSubjects();
-    GetSchedules();
-  },[]);
 
   return (
     <Center
@@ -123,12 +121,10 @@ export default function Schedule({navigation, route}) {
             setValue={itemValue => setFilters({...filters, subject: itemValue})} 
             color='#52D6FB'
           />
-          <ModalAddScheduling PostNewSchedule={PostNewSchedule} subjects={subjects} newSchedule={newSchedule} setNewSchedule={setNewSchedule} openModal={openAddModal} setOpenModal={setOpenAddModal}/>
-          <ModalDetailScheduling openModal={openDetailModal} setOpenModal={setOpenDetailModal}/>
           <FlatList 
             data={schedules.results}
             contentContainerStyle={{padding: 10}}
-            renderItem={(item, index)=><ScheduleBox Schedule={item.item} setOpenDetailModal={setOpenDetailModal} key={index}/>}
+            renderItem={(item, index)=><ScheduleBox Schedule={item.item} setNewSchedule={setNewSchedule} setOpenDetailModal={setOpenDetailModal} key={index}/>}
           />
           <DefaultStagger>
             <IconButton 
@@ -146,6 +142,11 @@ export default function Schedule({navigation, route}) {
               onPress={()=>setOpenAddModal(true)}
             />
           </DefaultStagger>
+          {
+            openDetailModal &&
+            <ModalDetailScheduling subjects={subjects} details={newSchedule} openModal={openDetailModal} setOpenModal={setOpenDetailModal}/> 
+          }
+          <ModalAddScheduling PostNewSchedule={PostNewSchedule} subjects={subjects} newSchedule={newSchedule} setNewSchedule={setNewSchedule} openModal={openAddModal} setOpenModal={setOpenAddModal}/>
         </>
       }
     </Center>

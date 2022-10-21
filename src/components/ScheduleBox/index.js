@@ -1,22 +1,19 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { HStack } from 'native-base'
 import DateISOToFormated from '../../util/DateISOToFormated';
 import FormateTime from '../../util/FormateTime';
 import styles from './styles';
 
-export default function ScheduleBox({setOpenDetailModal, Schedule}) {
+export default function ScheduleBox({setOpenDetailModal, setNewSchedule, Schedule}) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={{...styles.status, backgroundColor: 'red'}}></TouchableOpacity>
-      <TouchableOpacity onPress={()=>setOpenDetailModal(true)} style={styles.box}>
-        <HStack justifyContent='space-between'>
-          <Text style={{fontSize:20}}>{Schedule.assunto}</Text>
-          <View>          
-            <Text>{FormateTime(Schedule.data)}</Text>
-          </View>
-        </HStack>
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+      <TouchableOpacity style={{...styles.status, backgroundColor: 'red'}}/>
+      <TouchableOpacity onPress={()=>{setOpenDetailModal(true);setNewSchedule(Schedule)}} style={styles.box}>
+        <View style={{maxWidth: '80%'}}>
+          <Text style={{fontSize:18}}>{Schedule.assunto}</Text>
           <Text>{Schedule.descricao}</Text>
+        </View>
+        <View>
+          <Text style={styles.hourText}>{FormateTime(Schedule.data)}</Text>
           <Text>{DateISOToFormated(Schedule.data)}</Text>
         </View>
       </TouchableOpacity>

@@ -23,16 +23,23 @@ const styles = StyleSheet.create({
     box:{
         marginRight: 20,
         marginLeft: 20,
-        width:'100%', 
-        height:100, 
-        justifyContent:'center', 
-        marginTop:5, 
+        marginTop: 5,
+        width: '100%', 
+        height: 100, 
+        flexDirection: 'row',
+        justifyContent: 'space-between', 
+        alignItems: 'center'
     },
     status: {
         width: 15,
         height: 15,
         borderRadius: 100,
         marginLeft: 20
+    },
+    hourText:{
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
     }
 });
 export default styles;

@@ -42,7 +42,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                 padding='1' 
                 bgColor='#fff'
                 width='80%'
-                height='70%'
+                height='75%'
                 borderRadius={15}
             >
                 <Center>
@@ -65,10 +65,9 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                     </Text>
                     <Input
                         borderColor='grey' 
-                        color='#52D6FB' 
-                        borderRadius={6} 
+                        borderRadius={6}
+                        maxLength={64}
                         width='100%' 
-                        height='15%'
                         placeholderTextColor='grey' 
                         placeholder='Digitar assunto aqui'
                         onChangeText={text => {setNewSchedule({...newSchedule, assunto: text})}}
@@ -78,12 +77,12 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                     </Text>
                     <Input
                         borderColor='grey' 
-                        color='#52D6FB' 
                         borderRadius={6} 
+                        maxLength={96}
                         width='100%' 
                         height='15%'
                         placeholderTextColor='grey' 
-                        placeholder='Digite sua dúvida'
+                        placeholder='Digite a descrição'
                         onChangeText={text => {setNewSchedule({...newSchedule, descricao: text})}}
                     />
                     <Text>
@@ -96,97 +95,77 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                         borderWidth={1}
                         backgroundColor='white' 
                         style={{color:'black', backgroundColor:'white', borderColor: 'grey'}}
-                        placeholder='Selecione a monitoria' 
+                        placeholder='Selecione a disciplina' 
                         items={subjects}
                         setValue={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue})} 
                     />
-                    <HStack 
-                        height='15%'
-                        marginVertical='5%'
+                    <Text paddingRight='5%'>
+                        Data:
+                    </Text>
+                    <Button
+                        paddingTop='4%'
+                        fontSize={10}
+                        borderColor='grey' 
+                        borderRadius={6} 
+                        variant='outline'
+                        width='40%'
+                        _text={{
+                            color:'black'
+                        }}
+                        onPress={()=>setShowDate({type: 'date', active: true})}
                     >
-                        <View 
-                            width='50%'
-                            flexDirection='row'
-                            alignItems='center'
-                        >
-                            <Text paddingRight='5%'>
-                                Data:
-                            </Text>
-                            <Button
-                                paddingTop={'4%'}
-                                fontSize={10}
-                                borderColor='grey' 
-                                color='#52D6FB' 
-                                borderRadius={6} 
-                                height='50%'
-                                variant='outline'
-                                onPress={()=>setShowDate({type: 'date', active: true})}
-                            >
-                                {DateISOToFormated(newSchedule.data)}
-                            </Button>
-                        </View>
-                        <View 
-                            width='50%'
-                            flexDirection='row'
-                            alignItems='center'
-                        >
-                            <Text paddingRight='5%'>
-                                Horario:
-                            </Text>
-                            <Button
-                                paddingTop={'4%'}
-                                fontSize={10}
-                                borderColor='grey' 
-                                color='#52D6FB' 
-                                borderRadius={6} 
-                                width='60%' 
-                                height='50%'
-                                variant='outline'
-                                onPress={()=>setShowDate({type: 'time', active: true})}
-                            >
-                                {FormateTime(newSchedule.data)}
-                            </Button>
-                        </View>
-                    </HStack>
-                    <HStack>
-                        <Text paddingRight='5%'>
-                            Tipo:
-                        </Text>
-                        <Select 
-                            placeholder='Tipo' 
-                            height={8}
-                            width='200%'
-                            borderRadius={6} 
-                            borderColor='grey'
-                            placeholderTextColor='#52D6FB'
-                            color='#52D6FB'
-                            onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
-                        >
-                            <Select.Item label='Presencial' value='presencial'/>
-                            <Select.Item label='Online' value='online'/>
-                        </Select>
-                        {
-                            showDate.active&&
-                                <RNDateTimePicker 
-                                    mode={showDate.type}
-                                    value={newSchedule.data}
-                                    minimumDate={new Date()}
-                                    onTouchCancel={()=>setShowDate({...showDate, active: false})}
-                                    onChange={(event, date) => {setShowDate({...showDate, active: false});setNewSchedule({...newSchedule, data: date})}}
-                                />
-                        }
-                    </HStack>
+                        {DateISOToFormated(newSchedule.data)}
+                    </Button>
+                    <Text marginRight='3%'>
+                        Horario:
+                    </Text>
+                    <Button
+                        paddingTop='4%'
+                        fontSize={10}
+                        borderColor='grey' 
+                        borderRadius={6} 
+                        variant='outline'
+                        width='25%'
+                        _text={{
+                            color:'black'
+                        }}
+                        onPress={()=>setShowDate({type: 'time', active: true})}
+                    >
+                        {FormateTime(newSchedule.data)}
+                    </Button>
+                    <Text>
+                        Tipo:
+                    </Text>
+                    <Select 
+                        placeholder='Tipo' 
+                        height={8}
+                        width='50%'
+                        borderRadius={6} 
+                        borderColor='grey'
+                        onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
+                    >
+                        <Select.Item label='Presencial' value='presencial'/>
+                        <Select.Item label='Online' value='online'/>
+                    </Select>
                     <Button 
                         width='80%'
-                        height='9%'
                         borderRadius={16}
                         alignSelf='center' 
-                        marginVertical='10%'
                         onPress={HandlePostNewSchedule}
                         backgroundColor='#024284'
                     >
                         Solicitar agendamento
                     </Button>
+                    {
+                            showDate.active&&
+                                <RNDateTimePicker 
+                                    mode={showDate.type}
+                                    value={new Date()}
+                                    minimumDate={new Date()}
+                                    onTouchCancel={()=>setShowDate({...showDate, active: false})}
+                                    onChange={(event, date) => {setShowDate({...showDate, active: false});setNewSchedule({...newSchedule, data: date})}}
+                                />
+                        }
                 </VStack>
             </Modal.Content>
         </Modal>
