@@ -4,9 +4,10 @@ import { Center, IconButton, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import ForumSearch from '../../components/ForumSearch';
 import ForumQuest from '../../components/ForumQuest';
-import { GetLoginToken } from '../../util/StorageLogin';
 import ButtonGetNextValues from '../../components/ButtonGetNextValues';
 import DefaultStagger from '../../components/DefaultStagger';
+import ConfirmQuestDelete from '../../components/ConfirmQuestDelete';
+import { GetLoginToken } from '../../util/StorageLogin';
 import api from '../../services/api';
 import styles from './styles';
 
@@ -18,6 +19,7 @@ export default function Forum({navigation, route}) {
     lessLiked: false,
     text: ''
   });
+  const [confirmDeleteQuest, setConfirmDeleteQuest] = useState({open: false, id: null});
   const [page, setPage] = useState(1);
   const [displayValue, setDisplayValue] = useState('');
   const [data, setData] = useState([]);
@@ -61,13 +63,14 @@ export default function Forum({navigation, route}) {
     }
   }
 
-  const DeleteQuestion = async (id) => {
+  const DeleteQuestion = async () => {
     try{
-      await api.delete(`/duvidas/${id}/`, {
+      await api.delete(`/duvidas/${confirmDeleteQuest.id}/`, {
         headers: {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
+      setConfirmDeleteQuest({open: false, id: null})
       GetQuestions();
     }catch(error){
       console.log(error.response);
@@ -90,13 +93,12 @@ export default function Forum({navigation, route}) {
 
   const PostLike = async (id) => {
     try{
+      handleLikeButton(id);
       await api.post(`/duvidas/${id}/votar/`, {}, {
         headers: {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
-
-      handleLikeButton(id);
     }catch(error){
       console.log(error.response);
     }
@@ -104,13 +106,12 @@ export default function Forum({navigation, route}) {
 
   const DeleteLike = async (id) => {
     try{
+      handleLikeButton(id);
       await api.delete(`/duvidas/${id}/votar/`, {
         headers: {
           'Authorization': 'Token ' + await GetLoginToken()
         }
       });
-
-      handleLikeButton(id);
     }catch(error){
       console.log(error.response);
     }
@@ -138,12 +139,13 @@ export default function Forum({navigation, route}) {
         :
         <FlatList
           data={data.results}
-          renderItem={quest => ForumQuest(quest.item, navigation, PostLike, DeleteLike, DeleteQuestion)}
+          renderItem={quest => ForumQuest(quest.item, navigation, PostLike, DeleteLike, setConfirmDeleteQuest)}
           keyExtractor={quest => quest.id}
           style={styles.flatListContainer}
           ListFooterComponent={data.next&&<ButtonGetNextValues label='perguntas' onPress={GetQuestions}/>}
         />
       }
+      <ConfirmQuestDelete confirmDeleteQuest={confirmDeleteQuest} setOpen={setConfirmDeleteQuest} DeleteQuestion={DeleteQuestion}/>
       <DefaultStagger>
         <IconButton 
           variant='solid' 

@@ -2,9 +2,9 @@ import { IconButton, Menu, Text } from 'native-base';
 import { Entypo } from '@expo/vector-icons'; 
 import { useAuth } from '../../contexts/auth';
 
-export default function ForumQuestionMenu({DeleteQuestion, id}){
+export default function ForumQuestionMenu({setConfirmDeleteQuest, author, id}){
     const { user } = useAuth();
-    const privileges = (user.perfil.id === id) || user.perfil.cargos[0] !== 'aluno'?true:false;
+    const privileges = (user.perfil.id === author) || user.perfil.cargos[0] !== 'aluno'?true:false;
 
     return (
         <Menu trigger={triggerProps => {
@@ -23,7 +23,7 @@ export default function ForumQuestionMenu({DeleteQuestion, id}){
         >
             {
                 privileges&&
-                <Menu.Item onPress={DeleteQuestion}>
+                <Menu.Item onPress={()=>setConfirmDeleteQuest({open: true, id: id})}>
                     <Text>
                         Deletar pergunta
                     </Text>
