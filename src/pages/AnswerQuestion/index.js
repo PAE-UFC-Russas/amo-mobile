@@ -125,7 +125,7 @@ export default function AnswerQuestion({navigation, route}) {
                     }
                 });
 
-                const isMonitor = response.data.professores.find(obj => obj.id == user.perfil.id)?true:false;
+                const isMonitor = response.data.monitores.find(obj => obj.id == user.perfil.id)?true:false;
                 const isProfessor = response.data.professores.find(obj => obj.id == user.perfil.id)?true:false;
 
                 if(isMonitor || isProfessor){
