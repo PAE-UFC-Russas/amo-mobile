@@ -11,14 +11,15 @@ const styles = StyleSheet.create({
         padding:25,
         marginTop:'3%', 
         justifyContent:'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 11,
-        },
-        shadowOpacity: 0.55,
-        shadowRadius: 14.78,
-        elevation: 22,  
+        shadowColor: "#000",
+            shadowOffset: {
+                width: 0,
+                height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+
+            elevation: 5,
     },
     box:{
         marginRight: 20,
@@ -31,8 +32,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     status: {
-        width: 15,
-        height: 15,
+        width: 10,
+        height: 10,
         borderRadius: 100,
         marginLeft: 20
     },
