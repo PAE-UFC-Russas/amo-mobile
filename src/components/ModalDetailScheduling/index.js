@@ -36,7 +36,7 @@ export default function ModalDetailScheduling({setOpenModal, openModal, details,
         if(desc.lenght < 27){
             return desc;
         }
-        return `${desc.substring(0,40)}...`;
+        return `${desc.substring(0,20)}...`;
     }
 
     return(
@@ -63,7 +63,7 @@ export default function ModalDetailScheduling({setOpenModal, openModal, details,
                         Detalhes do agendamento
                     </Text>
                 </Center>
-                <View width='85%' height='54%' alignSelf='center' borderWidth={1} borderColor='grey' borderRadius={5} marginTop='5%' padding='3%'>
+                <View width='85%' padding='5%' alignSelf='center' borderWidth={1} borderColor='grey' borderRadius={5} marginTop='5%'>
                     <View marginBottom='2%'>
                         <Text fontSize={20} color='grey'>Solicitante:</Text>
                         <Text fontSize={15}>{details.solicitante.nome_exibicao}</Text>
