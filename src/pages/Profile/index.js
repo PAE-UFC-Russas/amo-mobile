@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Center, Text, View, Avatar, Button, ScrollView} from 'native-base';
 import { useAuth } from '../../contexts/auth';
@@ -70,14 +70,11 @@ export default function Profile({navigation}) {
                         <Text style={{fontSize:15}}>{profile.entrada}</Text>
                     </View>
                 </View>
-                    
-                
             </View>
             <View style={styles.buttons}>
-                <Button bgColor='#52D6FB' borderRadius={10} width={'50%'} onPress={()=> navigation.navigate('EditProfile')}>
+                <Button bgColor='#52D6FB' borderRadius={10} width='50%' onPress={()=> navigation.navigate('EditProfile')}>
                     Editar
                 </Button>
-               
             </View>
         </ScrollView>
     );

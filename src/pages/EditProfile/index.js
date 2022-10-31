@@ -4,10 +4,10 @@ import { Center, Text, View, Avatar, Input, Button, useToast, ScrollView } from 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import PickImage from '../../util/PickImage';
 import { GetLoginToken } from '../../util/StorageLogin';
-import api from '../../services/api';
 import { useAuth } from '../../contexts/auth';
 import SelectForProfilePage from '../../components/SelectForProfilePage';
 import DefaultSelect from '../../components/DefaultSelect';
+import api from '../../services/api';
 import styles from './styles';
 
 export default function EditProfile({navigation}) {
@@ -42,7 +42,7 @@ export default function EditProfile({navigation}) {
             });
         }else{
             try{
-                const response = await api.patch('/usuario/eu/', 
+                await api.patch('/usuario/eu/', 
                     {
                         'perfil': profile
                     }, 
@@ -53,6 +53,7 @@ export default function EditProfile({navigation}) {
                     }  
                 );
                 IsConnected();
+                navigation.goBack();
                 toast.show({
                     title: 'Dados cadastrados com sucesso!',
                     placement: 'bottom'
@@ -83,7 +84,6 @@ export default function EditProfile({navigation}) {
                     }
                 });
                 const listCourses = response.data.results;
-
                 setCourses(listCourses);
             }catch(error){
                 console.log(error.response.data);
