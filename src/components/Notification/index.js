@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Avatar } from 'native-base';
+import { View, Avatar, ScrollView } from 'native-base';
 import { Text } from 'react-native';
 
 export default function Notification({notification, lastWeek}){
@@ -14,7 +14,7 @@ export default function Notification({notification, lastWeek}){
 
     return(
         <View>
-            <View style={{flexDirection:'row', borderColor:'#52D6FB', borderEndWidth:3, marginTop: 10}}>
+            <View style={{flexDirection:'row', borderColor:'#52D6FB', borderWidth:1, marginTop: 10, borderRadius:25, alignItems:"center", padding:5, height:130}}>
                 <Avatar 
                     bg='tertiaryBlue' 
                     size='lg'
@@ -23,6 +23,8 @@ export default function Notification({notification, lastWeek}){
                     }}
                     marginBottom={10}
                     marginRight={3}
+                    alignSelf={"center"}
+                    marginTop={5}
                 />
                 <View style={{margin: 5}} width='4/5'>
                     <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
@@ -33,7 +35,7 @@ export default function Notification({notification, lastWeek}){
                     <Text style={{fontSize:13, fontWeight:'200'}}>{notification.tipo}</Text>
                 </View>
             </View>
-            {lastWeek[0] == notification.id && <Text style={{fontSize:20, color:'#52D6FB'}}>Anteriores</Text>}
+            {lastWeek[0] == notification.id && <Text style={{fontSize:25, color:'#52D6FB', marginTop:'10%'}}>Anteriores</Text>}
         </View>
     )
 }

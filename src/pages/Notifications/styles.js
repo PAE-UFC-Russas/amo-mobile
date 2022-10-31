@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         paddingTop: 40,
-        padding: 20
+        padding: 20,
+        
     },
     title:{
         fontSize: 20,
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     todayText:{
-        fontSize: 20,
+        fontSize: 25,
         marginTop: 15,
         color: '#52D6FB'
     },

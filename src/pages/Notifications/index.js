@@ -81,12 +81,11 @@ export default function Notifications({navigation}){
                         <Text style={styles.title}>Notificações</Text>
                     </HStack>
                 </View>
-                <View>
+                <View style={{marginTop:'10%'}}>
                     <Text style={styles.todayText}>Recente</Text>
-                    <Text style={styles.newNotifications}>
-                        Você tem <Text style={{color: '#52D6FB', fontWeight: 'bold'}}>{notifications.length}</Text> novas notificações!
-                    </Text> 
+                    
                 </View>
+                
                 <FlatList
                     data={notifications}
                     renderItem={(notification)=> <Notification lastWeek={temp} notification={notification.item}/>}
