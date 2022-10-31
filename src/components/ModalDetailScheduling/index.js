@@ -31,6 +31,14 @@ export default function ModalDetailScheduling({setOpenModal, openModal, details,
 
     const enableButton = EnableConfirmSchedule();
 
+
+    function filterDesc(desc){
+        if(desc.lenght < 27){
+            return desc;
+        }
+        return `${desc.substring(0,40)}...`;
+    }
+
     return(
         <Modal 
             isOpen={openModal} 
@@ -78,7 +86,7 @@ export default function ModalDetailScheduling({setOpenModal, openModal, details,
                     </View>
                     <View marginBottom='2%'>
                         <Text fontSize={20} color='grey'>Link:</Text>
-                        <Text fontSize={15} color='#003459'>https://meet.google.com/yvr-vzww-jpz</Text>
+                        <Text fontSize={15} color='#003459'> {filterDesc('https://meet.google.com/yvr-vzww-jpz')}</Text>
                     </View>
                 </View>
                 <View width='85%' height='20%' alignSelf='center' borderWidth={1} borderColor='grey' borderRadius={5} marginY='5%' padding='3%'>
@@ -93,12 +101,12 @@ export default function ModalDetailScheduling({setOpenModal, openModal, details,
                 </View>
                 <Button.Group width='100%' justifyContent='space-around' alignSelf='center'>
                     <Button 
-                        variant='outline'
-                        borderColor='red'
+                        borderRadius={16}
+                        backgroundColor='red'
                         _text={{
-                            color: 'red'
+                            color: 'white'
                         }}
-                        onPress={HandleUpdateSchedule}
+                        //onPress={HandleUpdateSchedule}
                     >
                         Cancelar
                     </Button>
