@@ -63,7 +63,7 @@ export default function ModalDetailScheduling({setOpenModal, openModal, details,
                         Detalhes do agendamento
                     </Text>
                 </Center>
-                <View width='85%' padding='5%' alignSelf='center' borderWidth={1} borderColor='grey' borderRadius={5} marginTop='5%'>
+                <View width='85%' padding='3%' alignSelf='center' borderWidth={1} borderColor='grey' borderRadius={5} marginTop='5%'>
                     <View marginBottom='2%'>
                         <Text fontSize={20} color='grey'>Solicitante:</Text>
                         <Text fontSize={15}>{details.solicitante.nome_exibicao}</Text>
