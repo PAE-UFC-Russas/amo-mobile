@@ -1,60 +1,75 @@
-import React from 'react';
-import { Image, View, Text, VStack } from 'native-base';
-import { TouchableOpacity, Linking } from 'react-native';
-import { MaterialIcons, EvilIcons } from '@expo/vector-icons'; 
-import styles from './styles';
+import React from "react";
+import { Image, View, Text, VStack } from "native-base";
+import { TouchableOpacity, Linking } from "react-native";
+import { MaterialIcons, EvilIcons } from "@expo/vector-icons";
+import styles from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
-export default function About({navigation}) {
-    return (
-        <>
-            <View backgroundColor='#fff' flexDirection='row' justifyContent='space-between'>
-                <MaterialIcons
-                    onPress={()=>navigation.goBack()}
-                    color='#52D6FB'
-                    size={24}
-                    name='arrow-back-ios'
-                    style={{marginLeft:'5%', marginTop:50,}}
-                />
+export default function About() {
+   const { goBack } = useNavigation();
+   return (
+      <>
+         <View
+            backgroundColor="#fff"
+            flexDirection="row"
+            justifyContent="space-between"
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#52D6FB"
+               size={24}
+               name="arrow-back-ios"
+               style={{ marginLeft: "5%", marginTop: 50 }}
+            />
+         </View>
+         <View style={styles.container} bgColor="#fff">
+            <VStack>
+               <Image
+                  width={400}
+                  height={400}
+                  alt="Ilustração da tela about"
+                  source={require("../../assets/About_img.png")}
+               />
+               <View alignItems="center">
+                  <Text padding={2} fontSize={18} fontWeight={500}>
+                     Bem-vindo ao nosso aplicativo de monitoria online! Aqui,
+                     você pode contar com a ajuda dos monitores para tirar suas
+                     dúvidas e aprimorar seu aprendizado. Estamos prontos para
+                     ajudá-lo a entender e dominar qualquer assunto. Nosso
+                     aplicativo é fácil de usar e acessível a todos.
+                  </Text>
+               </View>
+            </VStack>
+            <View width="100%" alignItems="center">
+               <TouchableOpacity
+                  onPress={() =>
+                     Linking.openURL("https://github.com/PAE-UFC-Russas")
+                  }
+                  style={styles.Button}
+               >
+                  <Text
+                     color={"#fff"}
+                     justifyContent="center"
+                     fontWeight="bold"
+                  >
+                     GitHub
+                  </Text>
+                  <EvilIcons
+                     color="#fff"
+                     size={30}
+                     name="external-link"
+                     style={{ marginLeft: 10 }}
+                  />
+               </TouchableOpacity>
+               <Image
+                  width={30}
+                  height={60}
+                  alt="Identidade Visual UFC"
+                  source={require("../../assets/ufc.png")}
+                  marginTop={5}
+               />
             </View>
-            <View
-                style={styles.container}
-                bgColor='#fff'
-            >   
-                <VStack>
-                    <Image
-                        width={400} 
-                        height={400}
-                        alt='Ilustração da tela about'
-                        source={require('../../assets/About_img.png')}
-                    />
-                    <View width='90%'>
-                        <Text fontSize={18} textAlign='center' fontWeight={500} marginLeft={10}>
-                            Aplicativo para auxiliar as monitorias, onde seria possível marcar monitoria, ver hórarios, visualizar conteúdo postados e solucionar dúvidas dos alunos da UFC - Campus Russas.
-                        </Text>
-                    </View>
-                </VStack>
-                <View width='100%' alignItems='center'>
-                    <TouchableOpacity
-                        onPress={()=> Linking.openURL('https://github.com/PAE-UFC-Russas')} 
-                        style={styles.Button}
-                    >
-                        <Text color={'#fff'} justifyContent='center' fontWeight='bold'>GitHub</Text>
-                        <EvilIcons
-                            color='#fff'
-                            size={30}
-                            name='external-link'
-                            style={{marginLeft:10}}  
-                        />
-                    </TouchableOpacity>
-                    <Image
-                        width={30} 
-                        height={60}
-                        alt='Identidade Visual UFC'
-                        source={require('../../assets/ufc.png')}
-                        marginTop={5}
-                    />
-                </View>
-            </View>
-        </>
-    );
+         </View>
+      </>
+   );
 }
