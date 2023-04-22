@@ -3,16 +3,14 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        paddingTop: 40,
         padding: 20,
         
     },
     title:{
-        fontSize: 20,
+        fontSize: 24,
         color: '#52D6FB',
         fontFamily: 'Roboto',
-        textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     textoNotificacao: {
         fontSize:30,

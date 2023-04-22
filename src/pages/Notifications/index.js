@@ -71,7 +71,12 @@ export default function Notifications({navigation}){
         <>
             <View style={styles.container}>
                 <View>
-                    <HStack justifyContent='space-between' width='2/3'>
+                    <HStack 
+                        justifyContent='space-between' 
+                        width='2/3'
+                        safeArea
+                        alignItems='center'
+                    >
                         <MaterialIcons
                             onPress={()=>navigation.goBack()}
                             color='#52D6FB'
@@ -90,6 +95,7 @@ export default function Notifications({navigation}){
                     data={notifications}
                     renderItem={(notification)=> <Notification lastWeek={temp} notification={notification.item}/>}
                     keyExtractor={notification => notification.id}
+                    showsVerticalScrollIndicator={false}
                 />
             </View>
             

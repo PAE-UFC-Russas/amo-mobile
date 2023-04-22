@@ -9,9 +9,9 @@ export default function Comments({comment, MarkResponse, correctResponse, enable
     return(
         <ScrollView
             backgroundColor='#DCDCDC'
-            padding={3} 
+            padding='2%' 
             margin={2}
-            borderRadius='15px'
+            borderRadius={10}
             borderWidth={1}
             borderColor={correctResponse === comment.id?'green':'grey'}
         >
@@ -26,7 +26,7 @@ export default function Comments({comment, MarkResponse, correctResponse, enable
                 <Text marginLeft={3} fontSize={18} fontWeight='bold'>{comment.autor.perfil.nome_exibicao}</Text>
             </View>
             <Text fontSize={15}>{comment.resposta}</Text>
-            <View flexDirection='row' marginTop={5} justifyContent='space-between'>
+            <View flexDirection='row' marginTop='5%' justifyContent='space-between'>
                 <HStack space={2}>
                     <AntDesign
                         size={20}

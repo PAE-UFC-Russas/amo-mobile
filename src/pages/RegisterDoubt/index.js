@@ -67,9 +67,13 @@ export default function RegisterDoubt({navigation, route}) {
     }
     
     return (
-        <Box height='full' padding='5' width='full' justifyContent='space-between'>
+        <View flex={1} padding={20} justifyContent='space-between'>
             <View>
-                <HStack justifyContent='space-between' width='64' marginTop='5'>
+                <HStack 
+                    justifyContent='space-between' 
+                    width='2/3' 
+                    safeArea
+                >
                     <MaterialIcons
                         onPress={OnDelete}
                         color='#52D6FB'
@@ -78,12 +82,14 @@ export default function RegisterDoubt({navigation, route}) {
                     />
                     <Text style={styles.title}>Cadastrar dúvida</Text>
                 </HStack>
-                <HStack>
+                <HStack
+                    marginTop={10} alignItems='center'
+                >
                     <Avatar 
                         marginLeft={30}
                         marginRight={3}
                         bg='tertiaryBlue' 
-                        size='md' 
+                        size='lg' 
                         source={{
                             uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
                         }}
@@ -92,7 +98,7 @@ export default function RegisterDoubt({navigation, route}) {
                         placeholder='Privacidade do Autor' 
                         height={38}
                         width={190}
-                        borderRadius={20} 
+                        borderRadius={10} 
                         borderColor='#52D6FB'
                         placeholderTextColor='#52D6FB'
                         color='#52D6FB'
@@ -101,12 +107,12 @@ export default function RegisterDoubt({navigation, route}) {
                         <Select.Item label='Somente para monitores' value='monitores'/>
                     </Select>
                 </HStack>
-                <View style={{width:'100%'}}>
+                <View>
                     <Input 
                         size='md'
                         borderColor='#52D6FB'
-                        borderRadius={20} 
-                        marginTop={2} 
+                        borderRadius={10} 
+                        marginTop={5}
                         width='90%'
                         color='#52D6FB' 
                         marginLeft={5}  
@@ -122,11 +128,11 @@ export default function RegisterDoubt({navigation, route}) {
                         borderColor='#52D6FB' 
                         color='#52D6FB' 
                         maxLength={500} 
-                        borderRadius={20} 
+                        borderRadius={10} 
                         marginLeft={5} 
                         width='90%' 
+                        h={150}
                         marginTop={2} 
-                        height={50} 
                         placeholderTextColor='#52D6FB' 
                         onChangeText={(text)=> setQuestion({...question, descricao:text})} 
                         placeholder='Insira um descrição'
@@ -173,6 +179,6 @@ export default function RegisterDoubt({navigation, route}) {
             {
                 openModal && <OnDeleteModal setOpenModal={setOpenModal} openModal={openModal} navigation={navigation} />
             }
-        </Box>
+        </View>
     );
 }

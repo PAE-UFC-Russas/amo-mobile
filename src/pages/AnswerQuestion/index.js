@@ -147,7 +147,11 @@ export default function AnswerQuestion({navigation, route}) {
     return ( 
         
         <View style={styles.container}>
-           <HStack marginLeft={5}>
+           <HStack  
+                safeArea
+                alignItems='center'
+                marginBottom='5%'
+            >
                 <MaterialIcons
                     onPress={()=> navigation.goBack()}
                     color='#52D6FB'
@@ -160,11 +164,11 @@ export default function AnswerQuestion({navigation, route}) {
                 <HStack>
                     <Avatar 
                         bg='tertiaryBlue' 
-                        size='md' 
+                        size='lg' 
                         source={{
                             uri: !doubt.autor.perfil.avatar?null:doubt.autor.perfil.avatar
                         }}
-                        marginLeft={5}
+                        
                     />
                     <View>
                         <Text 
@@ -181,7 +185,7 @@ export default function AnswerQuestion({navigation, route}) {
                         </Text>
                     </View>
                 </HStack>
-                <View marginBottom={3} marginLeft={5}>
+                <View marginBottom={3}>
                     <Text fontSize={15} fontWeight='bold'>{doubt.titulo}</Text>
                     <View>
                         <Text style={styles.textDoubt}>{doubt.descricao}</Text>
@@ -190,8 +194,7 @@ export default function AnswerQuestion({navigation, route}) {
                 </View>
                 <HStack marginBottom={2} justifyContent={'space-between'}>
                     <Input 
-                        marginLeft={3}
-                        width='70%'
+                        width='80%'
                         placeholder='Comentar'    
                         onChangeText={(text)=> setMyResponse({...myResponse, response: text})}
                     />
@@ -206,7 +209,8 @@ export default function AnswerQuestion({navigation, route}) {
                     data={responses.results}
                     renderItem={(comment)=> <Comments comment={comment.item} correctResponse={doubt.resposta_correta} MarkResponse={MarkResponse} enableMark={markEnable}/>}
                     keyExtractor={comment => comment.id}
-                    ListFooterComponent={responses.next&&<ButtonGetNextValues label='respostas' onPress={GetResponses}/>}
+                    ListFooterComponent={responses.next&&<ButtonGetNextValues label='respostas' onPress={GetResponses}
+                    />}
                 />
                 }       
             </View>
