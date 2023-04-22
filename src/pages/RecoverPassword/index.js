@@ -41,7 +41,7 @@ export default function RecoverPassword({navigation}) {
       />
       <Center width='5/6'>
         <AuthHeader>
-            Esqueceu sua senha?
+          Esqueceu sua senha?
         </AuthHeader>
         <VStack width='full' space={3}>
           <DefaultFormInput 

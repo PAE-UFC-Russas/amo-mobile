@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://amo-mvp.herokuapp.com',
+    baseURL: 'http://174.129.219.95:8000',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
