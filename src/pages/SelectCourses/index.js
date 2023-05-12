@@ -1,65 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { VStack, Center, Button, Spinner } from 'native-base';
-import AuthHeader from '../../components/AuthHeader';
-import { GetLoginToken } from '../../util/StorageLogin';
-import api from '../../services/api';
-import styles from './styles';
+import React, { useEffect, useState } from "react";
+import { VStack, Center, Button, Spinner } from "native-base";
+import AuthHeader from "../../components/AuthHeader";
+import { GetLoginToken } from "../../util/StorageLogin";
+import api from "../../services/api";
+import styles from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
-export default function SelectCourses({navigation}) {
-    const [courses, setCourses] = useState([]);
-    const [ loading, setLoading ] = useState(true);
-    useEffect(()=>{
-        async function GetCourses(){
-            try{
-                setLoading(true)
-                const response = await api.get('/cursos/?page=1', {
-                    headers: {
-                        'Authorization': 'Token ' + await GetLoginToken()
-                    }
-                });
-                setLoading(false)
-                setCourses(response.data.results);
-            }catch(error){
-                console.log(error.response.data)
-            }
-        }
-        GetCourses();
-    }, [])
+export default function SelectCourses() {
+   const { navigate } = useNavigation();
+   const [courses, setCourses] = useState([]);
+   const [loading, setLoading] = useState(true);
 
-    return (
-        <Center
-            style={styles.container}
-            bgColor='#fff'
+   useEffect(() => {
+      async function GetCourses() {
+         try {
+            setLoading(true);
+            const response = await api.get("/cursos/?page=1", {
+               headers: {
+                  Authorization: "Token " + (await GetLoginToken()),
+               },
+            });
+            setLoading(false);
+            setCourses(response.data.results);
+         } catch (error) {
+            console.log(error.response.data);
+         }
+      }
+      GetCourses();
+   }, []);
 
-        >
-            <AuthHeader>
-                Selecione o curso
-            </AuthHeader>
-            <VStack space='3' alignItems={'center'} width={'100%'}>
-                {loading?(
-                    <Spinner marginTop='auto' marginBottom='auto' size='lg'/>
-                )
-                :
-                courses.map((item, index)=>{
-                    return (
-                        <Button
-                            key={index}
-                            textAlign={'center'}
-                            bgColor='tertiaryBlue' 
-                            borderRadius='2xl' 
-                            width={'80%'} 
-                            height={60}
-                            onPress={()=>navigation.navigate('SelectSubjects', item.id)} 
-                            _text={{
-                                fontWeight: 800,
-                                color: '#fff',
-                            }}
-                        >
-                            {item.nome}
-                        </Button>
-                    )
-                })}
-            </VStack>
-        </Center>
-    );
+   return (
+      <Center style={styles.container} bgColor="#fff">
+         <AuthHeader>Selecione o curso</AuthHeader>
+         <VStack space="3" alignItems={"center"} width={"100%"}>
+            {loading ? (
+               <Spinner marginTop="auto" marginBottom="auto" size="lg" />
+            ) : (
+               courses.map((item, index) => {
+                  return (
+                     <Button
+                        key={index}
+                        textAlign={"center"}
+                        bgColor="tertiaryBlue"
+                        borderRadius="2xl"
+                        width={"80%"}
+                        height={60}
+                        onPress={() => navigate("SelectSubjects", item.id)}
+                        _text={{
+                           fontWeight: 800,
+                           color: "#fff",
+                        }}
+                     >
+                        {item.nome}
+                     </Button>
+                  );
+               })
+            )}
+         </VStack>
+      </Center>
+   );
 }
