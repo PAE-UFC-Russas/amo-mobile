@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Center, FormControl, Input, HStack, Text } from "native-base";
 import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
@@ -10,7 +10,27 @@ export default function CheckCode({ route }) {
    const { navigate } = useNavigation();
    const [error, setError] = useState();
    const [code, setCode] = useState(["", "", "", "", "", ""]);
+   const [timeToken, setTimeToken] = useState(10)
+   const [resendToken, setResendToken] = useState(false)
    const { Active } = useAuth();
+
+   useEffect(() => {
+      if(resendToken){
+         const myInterval = setInterval(() => {
+            setTimeToken(prevState => {
+               if(prevState > 0){
+                  return prevState - 1
+               }else{
+                  clearInterval(myInterval);
+                  setResendToken(false)
+                  return 60
+               }
+            })
+         }, 1000);
+         
+         return () => clearInterval(myInterval);
+      }
+   }, [resendToken]);
 
    const HandleChangeCode = (text, pos) => {
       let tempCode = code;
@@ -76,8 +96,9 @@ export default function CheckCode({ route }) {
                   {error}
                </FormControl.ErrorMessage>
             </FormControl>
+            <Text color="tertiaryBlue" onPress={()=>setResendToken(true)}>{resendToken?`Aguarde ${timeToken} segundos para receber o código novamente.`:"Receber um novo código"}</Text>
          </Center>
-         <DefaultBlueButton onPress={CheckinputCode}>
+         <DefaultBlueButton disabled={resendToken} onPress={CheckinputCode}>
             Verificar código
          </DefaultBlueButton>
       </Center>
