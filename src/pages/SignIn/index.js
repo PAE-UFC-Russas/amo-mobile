@@ -7,7 +7,10 @@ import DefaultFormInput from "../../components/DefaultFormInput";
 import styles from "./styles";
 import { ActivityIndicator } from "react-native";
 
-export default function SignIn({ navigation }) {
+import { useNavigation } from "@react-navigation/native";
+
+export default function SignIn() {
+   const { navigate } = useNavigation();
    const [loading, setLoading] = useState(false);
    const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
    const [userLogin, setUserLogin] = useState({
@@ -32,10 +35,10 @@ export default function SignIn({ navigation }) {
 
          if (!connected) {
             if (connected === null) {
-               navigation.navigate("StudentProfile");
+               navigate("StudentProfile");
             }
          } else {
-            navigation.navigate("SelectCourses");
+            navigate("SelectCourses");
          }
       }
       VerifyLogin();
@@ -48,30 +51,37 @@ export default function SignIn({ navigation }) {
          errosPassword: null,
       };
 
-      if (userLogin.email.length < 10 && !validator.isEmail(userLogin.email))
+      if (userLogin.email.length < 10 && !validator.isEmail(userLogin.email)) {
+         setLoading(false);
          erros.errosEmail = "E-mail inválido!";
-      if (userLogin.password.length < 8)
+      }
+      if (userLogin.password.length < 8) {
+         setLoading(false);
          erros.errosPassword = "A senha precisa conter 8 caracteres!";
+      }
 
       if (!erros.errosEmail && !erros.errosPassword) {
          const response = await Login(userLogin);
          if (response) {
             if (response.non_field_errors) {
+               setLoading(false);
                setInputErros({ errosEmail: "Email ou senha incorretos" });
                return;
             }
             if (response.username) {
+               setLoading(false);
                setInputErros({ errosEmail: "Email inválido" });
                return;
             }
             if (response.password) {
+               setLoading(false);
                setInputErros({ errosPassword: "Senha inválida" });
                return;
             }
          }
-         navigation.navigate("SelectCourses");
-         setLoading(false);
+         navigate("SelectCourses");
       }
+      setLoading(false);
       setInputErros(erros);
    };
 
@@ -131,7 +141,7 @@ export default function SignIn({ navigation }) {
                      <Button
                         variant="ghost"
                         key="forget"
-                        onPress={() => navigation.navigate("RecoverPassword")}
+                        onPress={() => navigate("RecoverPassword")}
                         _text={{
                            color: "#fff",
                            fontWeight: 200,
@@ -142,7 +152,7 @@ export default function SignIn({ navigation }) {
                      <Button
                         variant="ghost"
                         key="SignUp"
-                        onPress={() => navigation.navigate("SignUp")}
+                        onPress={() => navigate("SignUp")}
                         _text={{
                            color: "#fff",
                            fontWeight: 800,
@@ -181,7 +191,7 @@ export default function SignIn({ navigation }) {
                      }}
                      variant="unstyled"
                      onPress={() => {
-                        navigation.navigate("About");
+                        navigate("About");
                      }}
                   >
                      Sobre o aplicativo
