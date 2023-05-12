@@ -7,10 +7,12 @@ import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import DefaultFormInput from "../../components/DefaultFormInput";
 import styles from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 import { ActivityIndicator } from "react-native";
 
-export default function Register({ navigation }) {
+export default function Register() {
+   const { goBack, navigate } = useNavigation();
    const [loading, setLoading] = useState(false);
    const [newUser, setNewUser] = useState({
       email: "",
@@ -51,14 +53,14 @@ export default function Register({ navigation }) {
          setLoading(true);
          Register(newUser);
          setLoading(false);
-         navigation.navigate("CheckCode", { register: true });
+         navigate("CheckCode", { register: true });
       }
    };
 
    return (
       <Center style={styles.container} bgColor="#fff">
          <MaterialIcons
-            onPress={() => navigation.goBack()}
+            onPress={() => goBack()}
             color="#52D6FB"
             size={24}
             style={styles.backButton}
