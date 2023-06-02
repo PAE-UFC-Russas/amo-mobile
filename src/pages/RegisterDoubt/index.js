@@ -6,6 +6,7 @@ import {
    Button,
    Text,
    Select,
+   Icon,
    Input,
    HStack,
    TextArea,
@@ -87,7 +88,9 @@ export default function RegisterDoubt({ route }) {
          <View>
             <HStack justifyContent="space-between" width="2/3" safeArea>
                <MaterialIcons
-                  onPress={OnDelete}
+                  onPress={()=>{
+                     goBack()
+                  }}
                   color="#52D6FB"
                   size={24}
                   name="arrow-back-ios"
@@ -110,10 +113,11 @@ export default function RegisterDoubt({ route }) {
                   width={190}
                   borderRadius={10}
                   borderColor="#52D6FB"
-                  placeholderTextColor="#52D6FB"
+                  placeholderTextColor="red"
                   color="#52D6FB"
+                  _dropdownIcon={<Icon name="arrow-down" type="Entypo" style={{ color: '#52D6FB' }} />} 
                >
-                  <Select.Item label="Público" value="publico" />
+                  <Select.Item  label="Público" value="publico" />
                   <Select.Item
                      label="Somente para monitores"
                      value="monitores"

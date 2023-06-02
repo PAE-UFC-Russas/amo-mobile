@@ -21,7 +21,7 @@ export default function Comments({comment, MarkResponse, correctResponse, enable
                     size='md' 
                     source={{
                         uri: !comment.autor.perfil.avatar?null:comment.autor.perfil.avatar
-                    }}
+                }}
                 />
                 <Text marginLeft={3} fontSize={18} fontWeight='bold'>{comment.autor.perfil.nome_exibicao}</Text>
             </View>

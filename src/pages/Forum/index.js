@@ -184,7 +184,7 @@ export default function Forum({ navigation, route }) {
          />
          <DefaultStagger>
             <IconButton
-               variant="solid"
+               va riant="solid"
                borderRadius="full"
                bgColor="teal.400"
                marginY={2}

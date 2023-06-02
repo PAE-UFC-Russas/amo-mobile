@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
         fontFamily:'Roboto',
         textAlign:'center',
         fontWeight:'bold',
-        marginBottom: 25
+        marginBottom: 25,
+        paddingLeft: '35%'
     },
     descriptionTitle:{
         fontSize:11, 
@@ -47,8 +48,8 @@ const styles = StyleSheet.create({
         color:'#52D6FB',
         backgroundColor:'#52D6FB',
         borderColor:'#52D6FB',
-        
-    }
+    },
+    
 });
 
 export default styles;

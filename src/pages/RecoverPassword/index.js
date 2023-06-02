@@ -9,6 +9,7 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
 export default function RecoverPassword() {
+   const [cor, setCor] = useState('tertiaryBlue')
    const { navigate, goBack } = useNavigation();
    const [email, setEmail] = useState("");
    const [inputErros, setInputErros] = useState({
@@ -21,11 +22,14 @@ export default function RecoverPassword() {
       };
 
       if (email.length < 10 && !validator.isEmail(email))
+         setCor('red')
          erros.errosEmail = "E-mail inválido!";
 
       setInputErros(erros);
       if (!erros.errosEmail) navigate("CheckCode", { register: false });
       return null;
+
+      
    };
 
    return (
@@ -44,7 +48,7 @@ export default function RecoverPassword() {
                   placeholder="Email"
                   value={email}
                   setValue={(text) => setEmail(text)}
-                  color="tertiaryBlue"
+                  color={cor}
                   error={inputErros.errosEmail}
                />
             </VStack>

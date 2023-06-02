@@ -33,15 +33,16 @@ export default function SignIn() {
       async function VerifyLogin() {
          const connected = await IsConnected();
 
+         
          if (!connected) {
             if (connected === null) {
                navigate("StudentProfile");
             }
          } else {
-            navigate("SelectCourses");
+               navigate("SelectCourses");
+               }
          }
-      }
-      VerifyLogin();
+         VerifyLogin();
    }, []);
 
    const InputValidation = async () => {
