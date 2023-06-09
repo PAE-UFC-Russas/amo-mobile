@@ -53,7 +53,7 @@ export default function Register() {
          setLoading(true);
          Register(newUser);
          setLoading(false);
-         navigate("CheckCode", { register: true });
+         navigate("StudentProfile", { register: true });
       }
    };
 
