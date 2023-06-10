@@ -66,7 +66,7 @@ export default function TabNavigation({navigation, route}){
                     headerTitle: () => <Text fontWeight='bold' fontSize='md' color='tertiaryBlue'>Agendamento</Text>,
                 }} 
             />
-            <Tab.Screen name='Notificação' component={Notifications}/>
+            {/* <Tab.Screen name='Notificação' component={Notifications}/> */}
             <Tab.Screen name='Profile' component={Profile} options={{tabBarLabel: 'Perfil'}}/>
         </Tab.Navigator>
     )

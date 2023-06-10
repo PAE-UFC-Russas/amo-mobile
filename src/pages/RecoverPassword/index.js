@@ -33,13 +33,14 @@ export default function RecoverPassword() {
    };
 
    return (
-      <Center style={styles.container} bgColor="#fff">
+      <Center style={styles.container} bgColor="#fff" safeArea>
          <MaterialIcons
             onPress={() => goBack()}
             color="#52D6FB"
             size={24}
             style={styles.backButton}
             name="arrow-back-ios"
+            
          />
          <Center width="5/6">
             <AuthHeader>Esqueceu sua senha?</AuthHeader>

@@ -113,7 +113,7 @@ export default function RegisterDoubt({ route }) {
                   width={190}
                   borderRadius={10}
                   borderColor="#52D6FB"
-                  placeholderTextColor="red"
+                  placeholderTextColor="#52D6FB"
                   color="#52D6FB"
                   _dropdownIcon={<Icon name="arrow-down" type="Entypo" style={{ color: '#52D6FB' }} />} 
                >

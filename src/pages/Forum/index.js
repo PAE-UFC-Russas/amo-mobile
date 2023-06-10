@@ -184,7 +184,17 @@ export default function Forum({ navigation, route }) {
          />
          <DefaultStagger>
             <IconButton
-               va riant="solid"
+               style={{
+                  shadowColor: '#000',
+                  shadowOffset: {
+                  width: 10,
+                  height: 10,
+                  },
+                  shadowOpacity: 4,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+               }}
+               variant="solid"
                borderRadius="full"
                bgColor="teal.400"
                marginY={2}

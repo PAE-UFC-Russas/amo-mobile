@@ -58,7 +58,7 @@ export default function Register() {
    };
 
    return (
-      <Center style={styles.container} bgColor="#fff">
+      <Center style={styles.container} bgColor="#fff" safeArea>
          <MaterialIcons
             onPress={() => goBack()}
             color="#52D6FB"

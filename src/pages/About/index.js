@@ -13,6 +13,7 @@ export default function About() {
             backgroundColor="#fff"
             flexDirection="row"
             justifyContent="space-between"
+            
          >
             <MaterialIcons
                onPress={() => goBack()}
@@ -26,7 +27,7 @@ export default function About() {
             <VStack>
                <Image
                   width={400}
-                  height={400}
+                  height={350}
                   alt="Ilustração da tela about"
                   source={require("../../assets/About_img.png")}
                />
@@ -36,7 +37,7 @@ export default function About() {
                      você pode contar com a ajuda dos monitores para tirar suas
                      dúvidas e aprimorar seu aprendizado. Estamos prontos para
                      ajudá-lo a entender e dominar qualquer assunto. Nosso
-                     aplicativo é fácil de usar e acessível a todos.
+                     aplicativo é fácil de usar e muito intuitivo.
                   </Text>
                </View>
             </VStack>
