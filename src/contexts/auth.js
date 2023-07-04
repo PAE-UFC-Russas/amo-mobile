@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }){
                     'Authorization': 'Token ' + token
                 }
             });
-
+            console.log(response.data)
             return response.data
         }catch(error){
             console.log(error.response.data)
@@ -68,7 +68,8 @@ export default function AuthContextProvider({ children }){
                     'data_nascimento': userData.birthDate.toISOString().split('T')[0],
                     'matricula': userData.registration,
                     'entrada': userData.entryYear,
-                    'curso': userData.course.id
+                    'curso': userData.course.id,
+                    'foto':  userData.foto
                 }
             },{
                 headers: {

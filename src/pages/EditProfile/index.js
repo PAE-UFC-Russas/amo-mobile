@@ -24,6 +24,16 @@ import { useNavigation } from "@react-navigation/native";
 export default function EditProfile() {
    const { goBack } = useNavigation();
    const toast = useToast();
+   const [courses, setCourses] = useState([]);
+   const [years, setYears] = useState([]);
+   const { user, IsConnected } = useAuth();
+   const [profile, setProfile] = useState({
+      nome_exibicao: user.perfil.nome_exibicao,
+      entrada: user.perfil.entrada,
+      curso: user.perfil.curso,
+      foto: user.perfil.foto
+   });
+
    const GetYearsPerSemester = () => {
       let tempYears = [];
       for (let i = 0; i < years.length; i++) {
@@ -32,18 +42,10 @@ export default function EditProfile() {
       }
       return tempYears;
    };
-   const [courses, setCourses] = useState([]);
-   const [years, setYears] = useState([]);
-   const { user, IsConnected } = useAuth();
-   const [profile, setProfile] = useState({
-      nome_exibicao: user.perfil.nome_exibicao,
-      entrada: user.perfil.entrada,
-      curso: user.perfil.curso,
-   });
 
    const GetImage = async () => {
       const avatar = await PickImage();
-      setProfile({ ...profile, avatar: avatar });
+      setProfile({ ...profile, foto: avatar });
    };
 
    const Save = async () => {
