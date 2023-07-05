@@ -42,8 +42,8 @@ export default function EditProfile() {
    });
 
    const GetImage = async () => {
-      const avatar = await PickImage();
-      setProfile({ ...profile, avatar: avatar });
+      const foto = await PickImage();
+      setProfile({ ...profile, foto: foto });
    };
 
    const Save = async () => {
