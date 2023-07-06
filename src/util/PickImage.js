@@ -9,7 +9,7 @@ export default async function PickImage() {
     });
 
     if(!result.canceled)
-        return result.assets
+        return result.assets[0].uri
     else
         return null
 }

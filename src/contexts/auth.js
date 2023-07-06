@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }){
                     'Authorization': 'Token ' + token
                 }
             });
-            console.log(response.data)
+            console.log(response.data, "aq")
             return response.data
         }catch(error){
             console.log(error.response.data)
@@ -62,15 +62,13 @@ export default function AuthContextProvider({ children }){
     async function CompleteRegister(userData){
         try{
             const response = await api.patch(`/usuario/eu/`, {
-                'perfil': {
-                    'nome_completo': userData.name,
-                    'nome_exibicao': userData.nickName,
-                    'data_nascimento': userData.birthDate.toISOString().split('T')[0],
-                    'matricula': userData.registration,
-                    'entrada': userData.entryYear,
-                    'curso': userData.course.id,
-                    'foto':  userData.foto
-                }
+                'nome_completo': userData.name,
+                'nome_exibicao': userData.nickName,
+                'data_nascimento': userData.birthDate.toISOString().split('T')[0],
+                'matricula': userData.registration,
+                'entrada': userData.entryYear,
+                'curso': userData.course.id,
+                'foto':  userData.foto
             },{
                 headers: {
                     'Authorization': 'Token ' + await GetLoginToken()

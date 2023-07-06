@@ -21,8 +21,8 @@ export default function AddPhoto() {
          quality: 1,
       });
 
-      if (!result.cancelled) {
-         setImage(result.uri);
+      if (!result.canceled) {
+         setImage(result.assets[0].uri);
       }
    };
 
