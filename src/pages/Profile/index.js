@@ -8,11 +8,12 @@ import { useNavigation } from "@react-navigation/native";
 export default function Profile() {
    const { navigate } = useNavigation();
    const { user } = useAuth();
-   const [profile, setProfile] = useState({
+   const profile = {
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
       curso: user.perfil.curso,
-   });
+      foto: user.perfil.foto
+   };
 
    return (
       <ScrollView>
@@ -31,9 +32,13 @@ export default function Profile() {
                   bg="tertiaryBlue"
                   margin={5}
                   size="xl"
-                  source={{
-                     uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
+                  source={
+                     !profile.foto?{
+                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                     }:{
+                        uri: profile.foto 
+                     }
+               }
                />
             </TouchableOpacity>
          </Center>

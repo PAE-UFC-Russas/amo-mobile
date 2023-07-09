@@ -8,8 +8,8 @@ export default async function PickImage() {
         quality: 1
     });
 
-    if(!result.cancelled)
-        return result.uri
+    if(!result.canceled)
+        return result.assets[0].uri
     else
         return null
 }
@@ -17,7 +17,7 @@ export default async function PickImage() {
 export async function LaunchCamera(){
     const cam = await ImagePicker.launchCameraAsync();
     
-    if(cam.cancelled){
+    if(cam.canceled){
         return null;
     }else{
         return cam;

@@ -57,7 +57,6 @@ export default function StudentProfile() {
                },
             });
             const listCourses = response.data.results;
-
             setCourses(listCourses);
          } catch (error) {
             console.log(error.response.data);
@@ -95,8 +94,10 @@ export default function StudentProfile() {
          responseErros: null,
       };
 
-      if (personalData.name.length < 3) erros.errosName = "Nome inválido!";
-      if (!personalData.nickName) erros.errosNickname = "Matricula inválida!";
+      if (personalData.name.length < 3)
+         erros.errosName = "Nome inválido!";
+      if (!personalData.nickName) 
+         erros.errosNickname = "Matricula inválida!";
       if (!personalData.entryYear)
          erros.errosEntryear = "Ano de entrada não pode está vazio!";
       if (!personalData.course.id)
@@ -105,7 +106,6 @@ export default function StudentProfile() {
          erros.errosBirthDate = "A data de nascimento não pode está vazia!";
 
       setInputErros(erros);
-
       if (
          !erros.errosUser &&
          !erros.errosName &&
@@ -121,6 +121,7 @@ export default function StudentProfile() {
             setInputErros({ ...erros, responseErros: response });
          }
       }
+      console.log(erros)
       return null;
    };
 

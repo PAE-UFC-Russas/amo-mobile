@@ -11,6 +11,7 @@ import {
    ScrollView,
 } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import PickImage from "../../util/PickImage";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { useAuth } from "../../contexts/auth";
@@ -19,11 +20,19 @@ import DefaultSelect from "../../components/DefaultSelect";
 import api from "../../services/api";
 import styles from "./styles";
 
-import { useNavigation } from "@react-navigation/native";
-
 export default function EditProfile() {
    const { goBack } = useNavigation();
    const toast = useToast();
+   const [courses, setCourses] = useState([]);
+   const [years, setYears] = useState([]);
+   const { user, IsConnected } = useAuth();
+   const [profile, setProfile] = useState({
+      nome_exibicao: user.perfil.nome_exibicao,
+      entrada: user.perfil.entrada,
+      curso: user.perfil.curso,
+      foto: user.perfil.foto,
+   });
+
    const GetYearsPerSemester = () => {
       let tempYears = [];
       for (let i = 0; i < years.length; i++) {
@@ -32,18 +41,10 @@ export default function EditProfile() {
       }
       return tempYears;
    };
-   const [courses, setCourses] = useState([]);
-   const [years, setYears] = useState([]);
-   const { user, IsConnected } = useAuth();
-   const [profile, setProfile] = useState({
-      nome_exibicao: user.perfil.nome_exibicao,
-      entrada: user.perfil.entrada,
-      curso: user.perfil.curso,
-   });
 
    const GetImage = async () => {
-      const foto = await PickImage();
-      setProfile({ ...profile, foto: foto });
+      const avatar = await PickImage();
+      setProfile({ ...profile, avatar: avatar });
    };
 
    const Save = async () => {
@@ -57,7 +58,7 @@ export default function EditProfile() {
             await api.patch(
                "/usuario/eu/",
                {
-                  perfil: profile,
+                  profile,
                },
                {
                   headers: {
@@ -123,9 +124,15 @@ export default function EditProfile() {
                      bg="tertiaryBlue"
                      margin={5}
                      size="xl"
-                     source={{
-                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                     }}
+                     source={
+                        !profile.foto
+                           ? {
+                                uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                             }
+                           : {
+                                uri: profile.foto,
+                             }
+                     }
                   />
                   <View style={styles.avatarBadge}>
                      <FontAwesome5 color="#fff" size={16} name="pen" />
