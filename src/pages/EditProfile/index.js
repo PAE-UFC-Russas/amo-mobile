@@ -55,7 +55,7 @@ export default function EditProfile() {
          });
       } else {
          try {
-            await api.patch(
+            await api.post(
                "/usuario/eu/",
                {
                   profile
