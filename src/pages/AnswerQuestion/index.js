@@ -202,7 +202,9 @@ export default function AnswerQuestion({ route }) {
                         : doubt.autor.perfil.avatar,
                   }}
                />
-               <View>
+               <View
+                  style={{ justifyContent: "center", alignItems: "flex-start" }}
+               >
                   <Text
                      style={{
                         fontSize: 20,
@@ -215,7 +217,11 @@ export default function AnswerQuestion({ route }) {
                   <Text marginLeft={"5%"}>{doubt.autor.cargos[0]}</Text>
                </View>
             </HStack>
-            <View marginBottom={3}>
+            <View
+               marginBottom={3}
+               marginTop={3}
+               style={{ justifyContent: "space-between" }}
+            >
                <Text fontSize={15} fontWeight="bold">
                   {doubt.titulo}
                </Text>
@@ -234,10 +240,10 @@ export default function AnswerQuestion({ route }) {
                      setMyResponse({ ...myResponse, response: text })
                   }
                />
-               <IconButton
+               {/* <IconButton
                   onPress={GetImage}
                   icon={<FontAwesome name="photo" size={24} color="#52D6FB" />}
-               />
+               /> */}
                <IconButton
                   onPress={PostResponse}
                   icon={<MaterialIcons name="send" size={24} color="#52D6FB" />}
@@ -247,7 +253,7 @@ export default function AnswerQuestion({ route }) {
                <Spinner marginTop="auto" marginBottom="auto" size="lg" />
             ) : (
                <FlatList
-                  style={{ height: "75%" }}
+                  style={{ height: "65%" }}
                   data={responses.results}
                   renderItem={(comment) => (
                      <Comments
