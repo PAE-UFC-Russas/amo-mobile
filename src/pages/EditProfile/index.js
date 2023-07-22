@@ -30,7 +30,7 @@ export default function EditProfile() {
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
       curso: user.perfil.curso,
-      foto: user.perfil.foto
+      foto: user.perfil.foto,
    });
 
    const GetYearsPerSemester = () => {
@@ -55,19 +55,21 @@ export default function EditProfile() {
          });
       } else {
          const formData = new FormData();
-         if(profile.foto.indexOf("onrender") == -1){
+         if (profile.foto.indexOf("onrender") == -1) {
             formData.append("foto", {
-               uri: Platform.OS === 'ios' ? profile.foto.replace('file://', ''):profile.foto,
-               name: profile.nome_exibicao+profile.curso+'foto.jpg', 
-               fileName: 'foto',
-               type: 'image/jpeg'
-               }
-            );
+               uri:
+                  Platform.OS === "ios"
+                     ? profile.foto.replace("file://", "")
+                     : profile.foto,
+               name: profile.nome_exibicao + profile.curso + "foto.jpg",
+               fileName: "foto",
+               type: "image/jpeg",
+            });
          }
 
-         formData.append("nome_exibicao", profile.nome_exibicao)
-         formData.append("curso", profile.curso)
-         formData.append("entrada", profile.entrada)
+         formData.append("nome_exibicao", profile.nome_exibicao);
+         formData.append("curso", profile.curso);
+         formData.append("entrada", profile.entrada);
 
          try {
             await fetch("https://amo-backend.onrender.com/usuario/eu/", {
@@ -77,7 +79,7 @@ export default function EditProfile() {
                   "Content-Type": "multipart/form-data",
                },
                body: formData,
-            })
+            });
 
             goBack();
             toast.show({
@@ -137,11 +139,13 @@ export default function EditProfile() {
                      margin={5}
                      size="xl"
                      source={
-                        !profile.foto?{
-                           uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                        }:{
-                           uri: `https://${user.perfil.foto}`,
-                        }
+                        !profile.foto
+                           ? {
+                                uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                             }
+                           : {
+                                uri: `https://${user.perfil.foto}`,
+                             }
                      }
                   />
                   <View style={styles.avatarBadge}>
