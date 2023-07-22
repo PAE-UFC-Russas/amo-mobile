@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Keyboard, TouchableOpacity, Text } from "react-native";
 import { Center, VStack } from "native-base";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../contexts/auth";
 import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
@@ -11,7 +12,6 @@ import DefaultSelect from "../../components/DefaultSelect";
 import styles from "./styles";
 import api from "../../services/api";
 import { GetLoginToken } from "../../util/StorageLogin";
-import { useNavigation } from "@react-navigation/native";
 
 export default function StudentProfile() {
    const { navigate } = useNavigation();
@@ -57,6 +57,7 @@ export default function StudentProfile() {
                },
             });
             const listCourses = response.data.results;
+
             setCourses(listCourses);
          } catch (error) {
             console.log(error.response.data);

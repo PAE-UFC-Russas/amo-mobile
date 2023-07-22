@@ -55,13 +55,16 @@ export default function EditProfile() {
          });
       } else {
          const formData = new FormData();
-         formData.append("foto", {
+         if(profile.foto.indexOf("onrender") == -1){
+            formData.append("foto", {
                uri: Platform.OS === 'ios' ? profile.foto.replace('file://', ''):profile.foto,
                name: profile.nome_exibicao+profile.curso+'foto.jpg', 
                fileName: 'foto',
                type: 'image/jpeg'
-            }
-         );
+               }
+            );
+         }
+
          formData.append("nome_exibicao", profile.nome_exibicao)
          formData.append("curso", profile.curso)
          formData.append("entrada", profile.entrada)
@@ -137,7 +140,7 @@ export default function EditProfile() {
                         !profile.foto?{
                            uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                         }:{
-                           uri: profile.foto 
+                           uri: `https://${user.perfil.foto}`,
                         }
                      }
                   />

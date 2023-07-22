@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { Button, Center, Image, Text } from "native-base";
+import { Platform } from "react-native";
+import { Button, Center, Image, Text, useToast } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
+import { GetLoginToken } from "../../util/StorageLogin";
 import AuthHeader from "../../components/AuthHeader";
+import { useAuth } from "../../contexts/auth";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import styles from "./styles";
-
-import { useNavigation } from "@react-navigation/native";
 
 export default function AddPhoto() {
    const { navigate } = useNavigation();
    const [image, setImage] = useState(null);
    const [imageError, setImageError] = useState(null);
+   const { user } = useAuth();
+   const toast = useToast();
 
    const PickImage = async () => {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -26,13 +30,39 @@ export default function AddPhoto() {
       }
    };
 
-   const validation = () => {
+   const validation = async () => {
       if (!image) {
          setImageError(
             "Insira uma imagem de perfil para concluir o cadastro ou pule está etapa!"
          );
       } else {
-         navigate("RegistrationComplete");
+         const formData = new FormData();
+         formData.append("foto", {
+            uri: Platform.OS === 'ios' ? image.replace('file://', ''):image,
+            name: user.perfil.nome_exibicao+user.perfil.curso+'foto.jpg', 
+            fileName: 'foto',
+            type: 'image/jpeg'
+            }
+         );
+
+         try {
+            await fetch("https://amo-backend.onrender.com/usuario/eu/", {
+               method: "PATCH",
+               headers: {
+                  Authorization: "Token " + (await GetLoginToken()),
+                  "Content-Type": "multipart/form-data",
+               },
+               body: formData,
+            })
+
+            navigate("RegistrationComplete");
+         } catch (error) {
+            toast.show({
+               title: "Erro, verifique sua internet!",
+               placement: "bottom",
+            });
+            console.log(error);
+         }
       }
    };
 
