@@ -12,7 +12,7 @@ export default function Profile() {
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
       curso: user.perfil.curso,
-      foto: user.perfil.foto
+      foto: user.perfil.foto,
    };
 
    return (
@@ -33,12 +33,14 @@ export default function Profile() {
                   margin={5}
                   size="xl"
                   source={
-                     !profile.foto?{
-                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                     }:{
-                        uri: profile.foto 
-                     }
-               }
+                     !profile.foto
+                        ? {
+                             uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                          }
+                        : {
+                             uri: `https://${user.perfil.foto}`,
+                          }
+                  }
                />
             </TouchableOpacity>
          </Center>
