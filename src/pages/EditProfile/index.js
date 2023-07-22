@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Platform } from "react-native";
 import {
    Center,
    Text,
@@ -25,7 +25,7 @@ export default function EditProfile() {
    const toast = useToast();
    const [courses, setCourses] = useState([]);
    const [years, setYears] = useState([]);
-   const { user, IsConnected } = useAuth();
+   const { user } = useAuth();
    const [profile, setProfile] = useState({
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
@@ -54,19 +54,28 @@ export default function EditProfile() {
             placement: "bottom",
          });
       } else {
+         const formData = new FormData();
+         formData.append("foto", {
+               uri: Platform.OS === 'ios' ? profile.foto.replace('file://', ''):profile.foto,
+               name: profile.nome_exibicao+profile.curso+'foto.jpg', 
+               fileName: 'foto',
+               type: 'image/jpeg'
+            }
+         );
+         formData.append("nome_exibicao", profile.nome_exibicao)
+         formData.append("curso", profile.curso)
+         formData.append("entrada", profile.entrada)
+
          try {
-            await api.post(
-               "/usuario/eu/",
-               {
-                  profile
+            await fetch("https://amo-backend.onrender.com/usuario/eu/", {
+               method: "PATCH",
+               headers: {
+                  Authorization: "Token " + (await GetLoginToken()),
+                  "Content-Type": "multipart/form-data",
                },
-               {
-                  headers: {
-                     Authorization: "Token " + (await GetLoginToken()),
-                  },
-               }
-            );
-            IsConnected();
+               body: formData,
+            })
+
             goBack();
             toast.show({
                title: "Dados cadastrados com sucesso!",
@@ -77,7 +86,7 @@ export default function EditProfile() {
                title: "Erro, verifique sua internet!",
                placement: "bottom",
             });
-            console.log(error.response.data);
+            console.log(error);
          }
       }
    };
