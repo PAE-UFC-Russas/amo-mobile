@@ -197,9 +197,9 @@ export default function AnswerQuestion({ route }) {
                   bg="tertiaryBlue"
                   size="lg"
                   source={{
-                     uri: !doubt.autor.perfil.avatar
-                        ? null
-                        : doubt.autor.perfil.avatar,
+                     uri: !doubt.autor.perfil.foto
+                        ? "https://i.ibb.co/4f1jsPx/Splash-1.png"
+                        : doubt.autor.perfil.foto,
                   }}
                />
                <View
