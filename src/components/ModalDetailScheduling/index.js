@@ -9,7 +9,7 @@ export default function ModalDetailScheduling({
    openModal,
    details,
    subjects,
-   EditSchedule
+   EditSchedule,
 }) {
    const { user } = useAuth();
    const HandleOnClose = () => {
@@ -141,29 +141,31 @@ export default function ModalDetailScheduling({
                   <Text fontSize={15}>{FormateTime(details.data)}</Text>
                </View>
             </View>
-            <Button.Group
-               width="100%"
-               justifyContent="space-around"
-               alignSelf="center"
-            >
-               <Button
-                  borderRadius={16}
-                  backgroundColor="red"
-                  _text={{
-                     color: "white",
-                  }}
-                  onPress={HandleOnClose}
+            {EnableConfirmSchedule() && (
+               <Button.Group
+                  width="100%"
+                  justifyContent="space-around"
+                  alignSelf="center"
                >
-                  Cancelar
-               </Button>
-               <Button
-                  borderRadius={16}
-                  backgroundColor="#024284"
-                  onPress={EditSchedule}
-               >
-                  Confirmar
-               </Button>
-            </Button.Group>
+                  <Button
+                     borderRadius={16}
+                     backgroundColor="red"
+                     _text={{
+                        color: "white",
+                     }}
+                     onPress={HandleOnClose}
+                  >
+                     Cancelar
+                  </Button>
+                  <Button
+                     borderRadius={16}
+                     backgroundColor="#024284"
+                     onPress={EditSchedule}
+                  >
+                     Confirmar
+                  </Button>
+               </Button.Group>
+            )}
          </Modal.Content>
       </Modal>
    );
