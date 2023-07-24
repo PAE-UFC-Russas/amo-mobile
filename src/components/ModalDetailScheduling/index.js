@@ -9,6 +9,7 @@ export default function ModalDetailScheduling({
    openModal,
    details,
    subjects,
+   EditSchedule
 }) {
    const { user } = useAuth();
    const HandleOnClose = () => {
@@ -37,10 +38,6 @@ export default function ModalDetailScheduling({
          return false;
       }
    };
-
-   const HandlePostNewSchedule = (action) => {};
-
-   const enableButton = EnableConfirmSchedule();
 
    function filterDesc(desc) {
       if (desc.lenght < 27) {
@@ -162,7 +159,7 @@ export default function ModalDetailScheduling({
                <Button
                   borderRadius={16}
                   backgroundColor="#024284"
-                  //   onPress={HandlePostNewSchedule}
+                  onPress={EditSchedule}
                >
                   Confirmar
                </Button>

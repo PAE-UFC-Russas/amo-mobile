@@ -145,7 +145,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                         onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
                     >
                         <Select.Item label='Presencial' value='presencial'/>
-                        <Select.Item label='Online' value='online'/>
+                        <Select.Item label='Remoto' value='virtual'/>
                     </Select>
                     <Button 
                         width='80%'

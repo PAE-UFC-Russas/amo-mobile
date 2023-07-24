@@ -74,6 +74,28 @@ export default function Schedule() {
       }
    }
 
+   async function EditSchedule() {
+      try {
+         await api.patch(
+            `/agendamentos/${newSchedule.id}`,
+            {
+               status: "confirmado"
+            },
+            {
+               headers: {
+                  Authorization: "Token " + (await GetLoginToken()),
+               },
+            }
+         );
+         setOpenDetailModal(false)
+         GetSchedules();
+         return true;
+      } catch (error) {
+         console.log(error.response);
+         return false;
+      }
+   }
+
    async function PostNewSchedule() {
       try {
          await api.post(
@@ -161,6 +183,7 @@ export default function Schedule() {
                      details={newSchedule}
                      openModal={openDetailModal}
                      setOpenModal={setOpenDetailModal}
+                     EditSchedule={EditSchedule}
                   />
                )}
                <ModalAddScheduling
