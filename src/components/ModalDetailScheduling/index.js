@@ -21,6 +21,9 @@ export default function ModalDetailScheduling({
    })[0];
 
    const EnableConfirmSchedule = () => {
+      if(details.status === "confirmado")
+         return false
+
       const isMonitor = subject.monitores.find(
          (obj) => obj.id == user.perfil.id
       )
@@ -47,17 +50,15 @@ export default function ModalDetailScheduling({
    }
 
    return (
-      <Modal isOpen={openModal} onClose={HandleOnClose} marginTop="5%" flex={1}>
+      <Modal isOpen={openModal} onClose={HandleOnClose} marginTop="5%">
          <Modal.Content
-            padding="1"
             bgColor="#fff"
-            width="80%"
-            height="90%"
+            width="90%"
             borderRadius={15}
+            padding="5%"
          >
             <Center>
                <Text
-                  paddingTop={"4%"}
                   fontSize={17}
                   fontWeight="bold"
                   color="black"
@@ -66,13 +67,13 @@ export default function ModalDetailScheduling({
                </Text>
             </Center>
             <View
-               width="85%"
+               width="100%"
                padding="3%"
                alignSelf="center"
                borderWidth={1}
                borderColor="grey"
                borderRadius={5}
-               marginTop="5%"
+
             >
                <View marginBottom="2%">
                   <Text fontSize={20} color="grey">
@@ -119,8 +120,7 @@ export default function ModalDetailScheduling({
                </View>
             </View>
             <View
-               width="85%"
-               height="20%"
+               width="100%"
                alignSelf="center"
                borderWidth={1}
                borderColor="grey"
@@ -134,38 +134,41 @@ export default function ModalDetailScheduling({
                   </Text>
                   <Text fontSize={15}>{DateISOToFormated(details.data)}</Text>
                </View>
-               <View marginBottom="2%">
+               <View>
                   <Text fontSize={20} color="grey">
                      Inicio:
                   </Text>
                   <Text fontSize={15}>{FormateTime(details.data)}</Text>
                </View>
             </View>
-            {EnableConfirmSchedule() && (
-               <Button.Group
-                  width="100%"
-                  justifyContent="space-around"
-                  alignSelf="center"
-               >
+            <Button.Group
+               width="100%"
+               justifyContent="space-around"
+               alignSelf="center"
+            >
+               {
+                  details.status !== "cancelado" && 
                   <Button
                      borderRadius={16}
                      backgroundColor="red"
                      _text={{
                         color: "white",
                      }}
-                     onPress={HandleOnClose}
+                     onPress={()=>EditSchedule("cancelado")}
                   >
                      Cancelar
                   </Button>
+               }
+            {EnableConfirmSchedule() && (
                   <Button
                      borderRadius={16}
                      backgroundColor="#024284"
-                     onPress={EditSchedule}
+                     onPress={()=>EditSchedule("confirmado")}
                   >
                      Confirmar
                   </Button>
-               </Button.Group>
             )}
+            </Button.Group>
          </Modal.Content>
       </Modal>
    );

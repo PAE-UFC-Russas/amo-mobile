@@ -36,12 +36,11 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
         <Modal 
             isOpen={openModal} 
             onClose={HandleOnClose} 
-            marginTop='5%'
         >
             <Modal.Content 
                 padding='1' 
                 bgColor='#fff'
-                width='80%'
+                width='90%'
                 height='75%'
                 borderRadius={15}
             >
@@ -55,7 +54,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                     </Text>
                 </Center>
                 <VStack 
-                    height='90%'
+                    height='100%'
                     paddingHorizontal= '5%'
                     paddingVertical='3%'
                     space={2}

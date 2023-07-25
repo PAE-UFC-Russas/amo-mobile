@@ -74,12 +74,12 @@ export default function Schedule() {
       }
    }
 
-   async function EditSchedule() {
+   async function EditSchedule(type) {
       try {
          await api.patch(
-            `/agendamentos/${newSchedule.id}`,
+            `/agendamentos/${newSchedule.id}/`,
             {
-               status: "confirmado"
+               status: type
             },
             {
                headers: {

@@ -5,9 +5,10 @@ import FormateTime from '../../util/FormateTime';
 import styles from './styles';
 
 export default function ScheduleBox({setOpenDetailModal, setNewSchedule, Schedule}) {
+
   const ColorOfSchedule = () => {
     if(Schedule.status == 'confirmado'){
-      return 'gree'
+      return 'green'
     }else if(Schedule.status == 'aguardando'){
       return 'yellow'
     }else{
@@ -24,7 +25,7 @@ export default function ScheduleBox({setOpenDetailModal, setNewSchedule, Schedul
       >
         <Popover.Content accessibilityLabel='Status of scheduling'>
           <Popover.Body>
-            O agendamento está {Schedule.status}
+            O agendamento foi {Schedule.status}
           </Popover.Body>
         </Popover.Content>
       </Popover>
