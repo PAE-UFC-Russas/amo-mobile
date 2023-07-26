@@ -48,6 +48,7 @@ export default function EditProfile() {
    };
 
    const Save = async () => {
+      console.log(profile);
       if (!profile.nome_exibicao || !profile.curso || !profile.entrada) {
          toast.show({
             title: "Não deixe nenhum campo em branco!",
@@ -55,22 +56,29 @@ export default function EditProfile() {
          });
       } else {
          const formData = new FormData();
-         if (profile.foto.indexOf("onrender") == -1) {
-            formData.append("foto", {
-               uri:
-                  Platform.OS === "ios"
-                     ? profile.foto.replace("file://", "")
-                     : profile.foto,
-               name: profile.nome_exibicao + profile.curso + "foto.jpg",
-               fileName: "foto",
-               type: "image/jpeg",
-            });
+         if (profile.foto != null) {
+            if (profile.foto.indexOf("onrender") == -1) {
+               formData.append("foto", {
+                  uri:
+                     Platform.OS === "ios"
+                        ? profile.foto.replace("file://", "")
+                        : profile.foto,
+                  name: profile.nome_exibicao + profile.curso + "foto.jpg",
+                  fileName:
+                     profile.perfil.nome_exibicao +
+                     profile.perfil.curso +
+                     "foto.jpg",
+                  type: "image/jpeg",
+               });
+            }
          }
 
-         formData.append("nome_exibicao", profile.nome_exibicao);
+         formData.append(
+            "nome_exibicao",
+            !profile.nome_exibicao ? user.nome_exibicao : profile.nome_exibicao
+         );
          formData.append("curso", profile.curso);
          formData.append("entrada", profile.entrada);
-
          try {
             await fetch("https://amo-backend.onrender.com/usuario/eu/", {
                method: "PATCH",

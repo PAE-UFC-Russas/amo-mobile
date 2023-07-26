@@ -38,12 +38,12 @@ export default function AddPhoto() {
       } else {
          const formData = new FormData();
          formData.append("foto", {
-            uri: Platform.OS === 'ios' ? image.replace('file://', ''):image,
-            name: user.perfil.nome_exibicao+user.perfil.curso+'foto.jpg', 
-            fileName: 'foto',
-            type: 'image/jpeg'
-            }
-         );
+            uri: Platform.OS === "ios" ? image.replace("file://", "") : image,
+            name: user.perfil.nome_exibicao + user.perfil.curso + "foto.jpg",
+            fileName:
+               user.perfil.nome_exibicao + user.perfil.curso + "foto.jpg",
+            type: "image/jpeg",
+         });
 
          try {
             await fetch("https://amo-backend.onrender.com/usuario/eu/", {
@@ -53,7 +53,7 @@ export default function AddPhoto() {
                   "Content-Type": "multipart/form-data",
                },
                body: formData,
-            })
+            });
 
             navigate("RegistrationComplete");
          } catch (error) {
