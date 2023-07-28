@@ -30,7 +30,7 @@ export default function EditProfile() {
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
       curso: user.perfil.curso,
-      foto: user.perfil.foto,
+      foto: ""
    });
 
    const GetYearsPerSemester = () => {
@@ -48,7 +48,6 @@ export default function EditProfile() {
    };
 
    const Save = async () => {
-      console.log(profile);
       if (!profile.nome_exibicao || !profile.curso || !profile.entrada) {
          toast.show({
             title: "Não deixe nenhum campo em branco!",
@@ -56,6 +55,7 @@ export default function EditProfile() {
          });
       } else {
          const formData = new FormData();
+
          if (profile.foto != null) {
             if (profile.foto.indexOf("onrender") == -1) {
                formData.append("foto", {
@@ -65,8 +65,8 @@ export default function EditProfile() {
                         : profile.foto,
                   name: profile.nome_exibicao + profile.curso + "foto.jpg",
                   fileName:
-                     profile.perfil.nome_exibicao +
-                     profile.perfil.curso +
+                     profile.nome_exibicao +
+                     profile.curso +
                      "foto.jpg",
                   type: "image/jpeg",
                });
@@ -79,6 +79,7 @@ export default function EditProfile() {
          );
          formData.append("curso", profile.curso);
          formData.append("entrada", profile.entrada);
+
          try {
             await fetch("https://amo-backend.onrender.com/usuario/eu/", {
                method: "PATCH",
@@ -149,10 +150,10 @@ export default function EditProfile() {
                      source={
                         !profile.foto
                            ? {
-                                uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                                uri: user.perfil.foto.length > 0?`https://${user.perfil.foto}`:"https://i.ibb.co/4f1jsPx/Splash-1.png",
                              }
                            : {
-                                uri: `https://${user.perfil.foto}`,
+                                uri: profile.foto
                              }
                      }
                   />
