@@ -29,7 +29,7 @@ export default function EditProfile() {
    const [profile, setProfile] = useState({
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
-      curso: 0,
+      curso: -1,
       foto: ""
    });
 
@@ -48,7 +48,7 @@ export default function EditProfile() {
    };
 
    const Save = async () => {
-      if (!profile.nome_exibicao || !profile.curso || !profile.entrada) {
+      if (!profile.nome_exibicao || profile.curso === -1 || !profile.entrada) {
          toast.show({
             title: "Não deixe nenhum campo em branco!",
             placement: "bottom",
