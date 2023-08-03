@@ -35,7 +35,7 @@ export default function Profile() {
                   source={
                      !profile.foto
                         ? {
-                             uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                              uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
                           }
                         : {
                              uri: `https://${user.perfil.foto}`,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, Platform } from "react-native";
+import { TouchableOpacity, Platform, Image } from "react-native";
 import {
    Center,
    Text,
@@ -25,11 +25,11 @@ export default function EditProfile() {
    const toast = useToast();
    const [courses, setCourses] = useState([]);
    const [years, setYears] = useState([]);
-   const { user } = useAuth();
+   const { user, EditUser } = useAuth();
    const [profile, setProfile] = useState({
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
-      curso: user.perfil.curso,
+      curso: 0,
       foto: ""
    });
 
@@ -58,21 +58,20 @@ export default function EditProfile() {
 
          if (profile.foto != null) {
             if (profile.foto.indexOf("onrender") == -1) {
+               const randomNumberForPhoto = Math.floor(Math.random() * (1000000 - 1) + 1)
                formData.append("foto", {
                   uri:
                      Platform.OS === "ios"
                         ? profile.foto.replace("file://", "")
                         : profile.foto,
-                  name: profile.nome_exibicao + profile.curso + "foto.jpg",
+                  name: profile.nome_exibicao + randomNumberForPhoto + "foto.jpg",
                   fileName:
-                     profile.nome_exibicao +
-                     profile.curso +
+                     profile.nome_exibicao + randomNumberForPhoto +
                      "foto.jpg",
                   type: "image/jpeg",
                });
             }
          }
-
          formData.append(
             "nome_exibicao",
             !profile.nome_exibicao ? user.nome_exibicao : profile.nome_exibicao
@@ -81,7 +80,7 @@ export default function EditProfile() {
          formData.append("entrada", profile.entrada);
 
          try {
-            await fetch("https://amo-backend.onrender.com/usuario/eu/", {
+            const response = await fetch("https://amo-backend.onrender.com/usuario/eu/", {
                method: "PATCH",
                headers: {
                   Authorization: "Token " + (await GetLoginToken()),
@@ -89,7 +88,8 @@ export default function EditProfile() {
                },
                body: formData,
             });
-
+            const newEditedUser = await response.json()
+            EditUser(newEditedUser)
             goBack();
             toast.show({
                title: "Dados cadastrados com sucesso!",
@@ -142,21 +142,20 @@ export default function EditProfile() {
             </Text>
             <Center justifyContent={"center"} alignItems={"center"}>
                <TouchableOpacity onPress={() => GetImage()}>
-                  <Avatar
-                     alignSelf="center"
-                     bg="tertiaryBlue"
-                     margin={5}
-                     size="xl"
-                     source={
-                        !profile.foto
-                           ? {
-                                uri: user.perfil.foto.length > 0?`https://${user.perfil.foto}`:"https://i.ibb.co/4f1jsPx/Splash-1.png",
-                             }
-                           : {
-                                uri: profile.foto
-                             }
-                     }
-                  />
+                  {
+                     profile.foto ? 
+                        <Image source={{ uri: profile.foto }} style={{ width: 100, height: 100, margin: 5, borderRadius: 100 }} />
+                     :
+                        <Avatar
+                           alignSelf="center"
+                           bg="tertiaryBlue"
+                           margin={5}
+                           size="xl"
+                           source={{
+                              uri: user.perfil.foto.length > 0?`https://${user.perfil.foto}`:"https://i.ibb.co/4f1jsPx/Splash-1.png",
+                           }}
+                        />
+                  }
                   <View style={styles.avatarBadge}>
                      <FontAwesome5 color="#fff" size={16} name="pen" />
                   </View>

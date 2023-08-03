@@ -22,6 +22,10 @@ export default function AuthContextProvider({ children }){
         }
     }
 
+    function EditUser(user){
+        setUser(user)
+    }
+
     async function Login(user){
         try{
             const response = await api.post('/usuario/login/', {
@@ -127,7 +131,7 @@ export default function AuthContextProvider({ children }){
     }
 
     return (
-        <AuthContext.Provider value={{user, Logout, Login, Register, CompleteRegister, Active, IsConnected}}>
+        <AuthContext.Provider value={{user, Logout, Login, Register, CompleteRegister, Active, IsConnected, EditUser}}>
             {children}
         </AuthContext.Provider>
     );
