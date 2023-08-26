@@ -57,6 +57,7 @@ export default function AuthContextProvider({ children }){
             setUser({...userData});
             
             await StoreLoginToken(token);
+            return null
         }catch(error){
             console.log(error.response);
             return error.response.data

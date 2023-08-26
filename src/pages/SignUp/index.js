@@ -54,11 +54,10 @@ export default function Register() {
          const response = Register(newUser);
          if(!response){
             navigate("StudentProfile", { register: true });
-         }
-
-         setInputErros({...inputErros, errosEmail: "Endereço de email já está em uso!"})
-         setLoading(false);
-         
+         }else{
+            setInputErros({...inputErros, errosEmail: "Endereço de email já está em uso!"})
+            setLoading(false);
+         } 
       }
    };
 
