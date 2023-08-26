@@ -198,7 +198,7 @@ export default function StudentProfile() {
                      fontSize: 12,
                   }}
                >
-                  {personalData.birthDate.getFullYear() === 2022
+                  {personalData.birthDate.getFullYear() === new Date().getFullYear()
                      ? "Data de nascimento"
                      : DateToString()}
                </Text>

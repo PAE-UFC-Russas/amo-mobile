@@ -6,7 +6,6 @@ import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import { GetLoginToken } from "../../util/StorageLogin";
 import AuthHeader from "../../components/AuthHeader";
-import { useAuth } from "../../contexts/auth";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import styles from "./styles";
 
@@ -14,7 +13,6 @@ export default function AddPhoto() {
    const { navigate } = useNavigation();
    const [image, setImage] = useState(null);
    const [imageError, setImageError] = useState(null);
-   const { user } = useAuth();
    const toast = useToast();
 
    const PickImage = async () => {
@@ -37,11 +35,17 @@ export default function AddPhoto() {
          );
       } else {
          const formData = new FormData();
+         const randomNumberForPhoto = Math.floor(Math.random() * (1000000 - 1) + 1)
+
          formData.append("foto", {
-            uri: Platform.OS === "ios" ? image.replace("file://", "") : image,
-            name: user.perfil.nome_exibicao + user.perfil.curso + "foto.jpg",
+            uri:
+               Platform.OS === "ios"
+                  ? image.replace("file://", "")
+                  : image,
+            name: image.substring(10,20) + randomNumberForPhoto + "foto.jpg",
             fileName:
-               user.perfil.nome_exibicao + user.perfil.curso + "foto.jpg",
+               image.substring(10,20) + randomNumberForPhoto +
+               "foto.jpg",
             type: "image/jpeg",
          });
 
