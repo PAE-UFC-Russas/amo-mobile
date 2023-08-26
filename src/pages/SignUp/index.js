@@ -26,7 +26,7 @@ export default function Register() {
    });
    const { Register } = useAuth();
 
-   const InputValidation = () => {
+   function InputValidation(){
       let erros = {
          errosEmail: null,
          errosPassword: null,
@@ -51,9 +51,14 @@ export default function Register() {
          !erros.errosConfirmPassword
       ) {
          setLoading(true);
-         Register(newUser);
+         const response = Register(newUser);
+         if(!response){
+            navigate("StudentProfile", { register: true });
+         }
+
+         setInputErros({...inputErros, errosEmail: "Endereço de email já está em uso!"})
          setLoading(false);
-         navigate("StudentProfile", { register: true });
+         
       }
    };
 
