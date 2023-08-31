@@ -6,6 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import { GetLoginToken } from "../../util/StorageLogin";
 import AuthHeader from "../../components/AuthHeader";
+import { ActivityIndicator } from "react-native";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import styles from "./styles";
 
@@ -14,6 +15,8 @@ export default function AddPhoto() {
    const [image, setImage] = useState(null);
    const [imageError, setImageError] = useState(null);
    const toast = useToast();
+
+   const [loading, setLoading] = useState(false);
 
    const PickImage = async () => {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -29,27 +32,28 @@ export default function AddPhoto() {
    };
 
    const validation = async () => {
+      setLoading(true);
       if (!image) {
          setImageError(
             "Insira uma imagem de perfil para concluir o cadastro ou pule está etapa!"
          );
+         setLoading(false);
       } else {
          const formData = new FormData();
-         const randomNumberForPhoto = Math.floor(Math.random() * (1000000 - 1) + 1)
+         const randomNumberForPhoto = Math.floor(
+            Math.random() * (1000000 - 1) + 1
+         );
 
          formData.append("foto", {
-            uri:
-               Platform.OS === "ios"
-                  ? image.replace("file://", "")
-                  : image,
-            name: image.substring(10,20) + randomNumberForPhoto + "foto.jpg",
+            uri: Platform.OS === "ios" ? image.replace("file://", "") : image,
+            name: image.substring(10, 20) + randomNumberForPhoto + "foto.jpg",
             fileName:
-               image.substring(10,20) + randomNumberForPhoto +
-               "foto.jpg",
+               image.substring(10, 20) + randomNumberForPhoto + "foto.jpg",
             type: "image/jpeg",
          });
 
          try {
+            setLoading(true);
             await fetch("https://amo-backend.onrender.com/usuario/eu/", {
                method: "PATCH",
                headers: {
@@ -60,12 +64,14 @@ export default function AddPhoto() {
             });
 
             navigate("RegistrationComplete");
+            setLoading(false);
          } catch (error) {
             toast.show({
                title: "Erro, verifique sua internet!",
                placement: "bottom",
             });
             console.log(error);
+            setLoading(false);
          }
       }
    };
@@ -107,7 +113,7 @@ export default function AddPhoto() {
                Pular
             </Button>
             <DefaultBlueButton onPress={validation}>
-               Concluir cadastro
+               {loading ? <ActivityIndicator /> : "Concluir cadastro"}
             </DefaultBlueButton>
             {imageError && (
                <Text style={{ color: "#f00", fontSize: 12 }}>{imageError}</Text>
