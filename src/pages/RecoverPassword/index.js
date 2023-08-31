@@ -83,12 +83,27 @@ export default function RecoverPassword() {
                   justifyContent: "center",
                   alignItems: "center",
                   height: "50%",
+                  alignItems: "center",
                }}
             >
-               <Text style={{ color: "#52D6FB", fontSize: 20 }}>
-                  Mande um email para a gente!
+               <Text
+                  style={{
+                     color: "#52D6FB",
+                     fontSize: 20,
+                     textAlign: "center",
+                  }}
+               >
+                  Clique no botão abaixo para receber {"\n"}
+                  <Text
+                     style={{
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                     }}
+                  >
+                     instruções e redefinir senha!
+                  </Text>
                </Text>
-               <Text style={{ color: "#52D6FB", fontSize: 20, marginTop: 10 }}>
+               <Text style={{ color: "#52D6FB", fontSize: 20, marginTop: 18 }}>
                   paeufcrussas@gmail.com
                </Text>
             </View>
