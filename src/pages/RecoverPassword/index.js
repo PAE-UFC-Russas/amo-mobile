@@ -6,8 +6,8 @@ import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import DefaultFormInput from "../../components/DefaultFormInput";
 import styles from "./styles";
-import { Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import SendEmailRefactorPassword from "../../util/SendEmailRefactorPassword";
 
 export default function RecoverPassword() {
    const [cor, setCor] = useState("tertiaryBlue");
@@ -28,34 +28,6 @@ export default function RecoverPassword() {
       setInputErros(erros);
       if (!erros.errosEmail) navigate("CheckCode", { register: false });
       return null;
-   };
-
-   const enviarEmail = () => {
-      // Endereço de e-mail para onde o e-mail será enviado
-      const destinatario = "paeufcrussas@gmail.com";
-
-      // Assunto do e-mail (opcional)
-      const assunto = "Redefinição de senha";
-
-      // Corpo do e-mail (opcional)
-      const corpoEmail = "Olá, gostaria de redefinir minha senha.";
-
-      // Crie a URL de e-mail usando o padrão 'mailto:'
-      const url = `mailto:${destinatario}?subject=${assunto}&body=${corpoEmail}`;
-
-      // Verifique se o Linking é suportado no dispositivo
-      Linking.canOpenURL(url)
-         .then((supported) => {
-            if (!supported) {
-               console.log("Não é possível enviar e-mails neste dispositivo.");
-            } else {
-               // Abra o cliente de e-mail padrão
-               return Linking.openURL(url);
-            }
-         })
-         .catch((err) =>
-            console.error("Erro ao abrir o cliente de e-mail:", err)
-         );
    };
 
    return (
@@ -99,7 +71,7 @@ export default function RecoverPassword() {
                </Text>
             </View>
          </Center>
-         <DefaultBlueButton onPress={enviarEmail}>
+         <DefaultBlueButton onPress={SendEmailRefactorPassword}>
             Mandar email
          </DefaultBlueButton>
       </Center>
