@@ -95,10 +95,8 @@ export default function StudentProfile() {
          responseErros: null,
       };
 
-      if (personalData.name.length < 3)
-         erros.errosName = "Nome inválido!";
-      if (!personalData.nickName) 
-         erros.errosNickname = "Matricula inválida!";
+      if (personalData.name.length < 3) erros.errosName = "Nome inválido!";
+      if (!personalData.nickName) erros.errosNickname = "Matricula inválida!";
       if (!personalData.entryYear)
          erros.errosEntryear = "Ano de entrada não pode está vazio!";
       if (!personalData.course.id)
@@ -122,7 +120,7 @@ export default function StudentProfile() {
             setInputErros({ ...erros, responseErros: response });
          }
       }
-      console.log(erros)
+      console.log(erros);
       return null;
    };
 
@@ -198,8 +196,9 @@ export default function StudentProfile() {
                      fontSize: 12,
                   }}
                >
-                  {personalData.birthDate.getFullYear() === new Date().getFullYear()
-                     ? "Data de nascimento"
+                  {personalData.birthDate.getFullYear() ===
+                  new Date().getFullYear()
+                     ? DateToString()
                      : DateToString()}
                </Text>
             </TouchableOpacity>
