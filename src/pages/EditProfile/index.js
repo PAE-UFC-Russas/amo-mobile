@@ -9,6 +9,7 @@ import {
    Button,
    useToast,
    ScrollView,
+   HStack
 } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -132,14 +133,10 @@ export default function EditProfile() {
    return (
       <View style={styles.container}>
          <ScrollView>
-            <Text
-               marginTop={7}
-               alignSelf="center"
-               fontSize={25}
-               color={"#52D6FB"}
-            >
-               Editar Perfil
-            </Text>
+         <HStack justifyContent="space-between" alignSelf={'center'} safeArea>
+               
+            <Text alignSelf="center" fontSize={25} color={"#52D6FB"} > Editar Perfil </Text>
+         </HStack>
             <Center justifyContent={"center"} alignItems={"center"}>
                <TouchableOpacity onPress={() => GetImage()}>
                   {
