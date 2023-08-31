@@ -26,40 +26,54 @@ export default function Register() {
    });
    const { Register } = useAuth();
 
-   function InputValidation(){
+   async function InputValidation() {
+      setInputErros({
+         errosEmail: null,
+         errosPassword: null,
+         errosConfirmPassword: null,
+      });
       let erros = {
          errosEmail: null,
          errosPassword: null,
          errosConfirmPassword: null,
       };
-
-      if (newUser.email.length < 10 && !validator.isEmail(newUser.email))
-         erros.errosEmail = "E-mail inválido!";
-      if (newUser.password.length < 8)
-         erros.errosPassword = "A senha precisa conter 8 caracteres!";
-      else if (!newUser.password.match(/[a-zA-Z]/g))
-         erros.errosPassword = "A senha precisa conter pelo menos uma letra!";
-      else if (!newUser.password.match(/\d/g))
-         erros.errosPassword = "A senha precisa conter pelo menos um número!";
-      if (newUser.password !== newUser.confirmPassword)
-         erros.errosConfirmPassword = "As senhas devem ser iguais!";
-
-      setInputErros(erros);
-      if (
-         !erros.errosEmail &&
-         !erros.errosPassword &&
-         !erros.errosConfirmPassword
-      ) {
-         setLoading(true);
-         const response = Register(newUser);
-         if(!response){
-            navigate("StudentProfile", { register: true });
-         }else{
-            setInputErros({...inputErros, errosEmail: "Endereço de email já está em uso!"})
+      try {
+         if (newUser.email.length < 10 && !validator.isEmail(newUser.email))
+            erros.errosEmail = "E-mail inválido!";
+         if (newUser.password.length < 8)
+            erros.errosPassword = "A senha precisa conter 8 caracteres!";
+         else if (!newUser.password.match(/[a-zA-Z]/g))
+            erros.errosPassword =
+               "A senha precisa conter pelo menos uma letra!";
+         else if (!newUser.password.match(/\d/g))
+            erros.errosPassword =
+               "A senha precisa conter pelo menos um número!";
+         if (newUser.password !== newUser.confirmPassword)
+            erros.errosConfirmPassword = "As senhas devem ser iguais!";
+         setInputErros(erros);
+         if (
+            !erros.errosEmail &&
+            !erros.errosPassword &&
+            !erros.errosConfirmPassword
+         ) {
+            setLoading(true);
+            const response = await Register(newUser);
+            console.log(response);
+            if (response === null) {
+               navigate("StudentProfile", { register: true });
+            } else {
+               setInputErros({
+                  ...inputErros,
+                  errosEmail: "Endereço de email já está em uso!",
+               });
+            }
             setLoading(false);
-         } 
+         }
+      } catch (error) {
+         console.log(error);
+      } finally {
       }
-   };
+   }
 
    return (
       <Center style={styles.container} bgColor="#fff" safeArea>
