@@ -35,7 +35,7 @@ export default function AddPhoto() {
       setLoading(true);
       if (!image) {
          setImageError(
-            "Insira uma imagem de perfil para concluir o cadastro ou pule está etapa!"
+            "Insira uma imagem de perfil para concluir o cadastro ou pule esta etapa!"
          );
          setLoading(false);
       } else {

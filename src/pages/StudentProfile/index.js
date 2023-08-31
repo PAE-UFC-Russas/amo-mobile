@@ -96,7 +96,7 @@ export default function StudentProfile() {
       };
 
       if (personalData.name.length < 3) erros.errosName = "Nome inválido!";
-      if (!personalData.nickName) erros.errosNickname = "Matricula inválida!";
+      if (!personalData.nickName) erros.errosNickname = "Matrícula inválida!";
       if (!personalData.entryYear)
          erros.errosEntryear = "Ano de entrada não pode está vazio!";
       if (!personalData.course.id)

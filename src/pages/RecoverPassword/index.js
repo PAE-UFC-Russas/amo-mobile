@@ -69,15 +69,6 @@ export default function RecoverPassword() {
          />
          <Center width="5/6">
             <AuthHeader>Esqueceu sua senha?</AuthHeader>
-            {/* <VStack width="full" space={3}>
-               <DefaultFormInput
-                  placeholder="Email"
-                  value={email}
-                  setValue={(text) => setEmail(text)}
-                  color={cor}
-                  error={inputErros.errosEmail}
-               />
-            </VStack> */}
             <View
                style={{
                   justifyContent: "center",

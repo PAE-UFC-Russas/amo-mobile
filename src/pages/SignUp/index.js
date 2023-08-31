@@ -41,7 +41,8 @@ export default function Register() {
          if (newUser.email.length < 10 && !validator.isEmail(newUser.email))
             erros.errosEmail = "E-mail inválido!";
          if (newUser.password.length < 8)
-            erros.errosPassword = "A senha precisa conter 8 caracteres!";
+            erros.errosPassword =
+               "A senha precisa conter no minimo 8 caracteres!";
          else if (!newUser.password.match(/[a-zA-Z]/g))
             erros.errosPassword =
                "A senha precisa conter pelo menos uma letra!";
