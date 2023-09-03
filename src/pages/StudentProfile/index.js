@@ -13,8 +13,13 @@ import styles from "./styles";
 import api from "../../services/api";
 import { GetLoginToken } from "../../util/StorageLogin";
 
+import { ActivityIndicator } from "react-native";
+
 export default function StudentProfile() {
    const { navigate } = useNavigation();
+
+   const [loading, setLoading] = useState(false);
+
    const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
    const [showDate, setShowDate] = useState(false);
    const [courses, setCourses] = useState([]);
@@ -86,6 +91,7 @@ export default function StudentProfile() {
    };
 
    const InputValidation = async () => {
+      setLoading(true);
       let erros = {
          errosName: null,
          errosNickname: null,
@@ -95,14 +101,29 @@ export default function StudentProfile() {
          responseErros: null,
       };
 
-      if (personalData.name.length < 3) erros.errosName = "Nome inválido!";
-      if (!personalData.nickName) erros.errosNickname = "Matrícula inválida!";
-      if (!personalData.entryYear)
+      setLoading(true);
+      if (personalData.name.length < 3) {
+         erros.errosName = "Nome inválido!";
+         setLoading(false);
+      }
+
+      if (!personalData.nickName) {
+         erros.errosNickname = "Matrícula inválida!";
+         setLoading(false);
+      }
+      if (!personalData.entryYear) {
          erros.errosEntryear = "Ano de entrada não pode está vazio!";
-      if (!personalData.course.id)
+         setLoading(false);
+      }
+      if (!personalData.course.id) {
          erros.errosCourse = "Curso não pode está vazio!";
-      if (personalData.birthDate.getFullYear() === new Date())
+         setLoading(false);
+      }
+
+      if (personalData.birthDate.getFullYear() === new Date()) {
          erros.errosBirthDate = "A data de nascimento não pode está vazia!";
+         setLoading(false);
+      }
 
       setInputErros(erros);
       if (
@@ -121,6 +142,7 @@ export default function StudentProfile() {
          }
       }
       console.log(erros);
+      setLoading(false);
       return null;
    };
 
@@ -220,11 +242,10 @@ export default function StudentProfile() {
                </Text>
             )}
          </VStack>
-         {!keyboardIsOpen && (
-            <DefaultBlueButton onPress={InputValidation}>
-               Próximo
-            </DefaultBlueButton>
-         )}
+
+         <DefaultBlueButton onPress={InputValidation}>
+            {loading ? <ActivityIndicator /> : "Próximo"}
+         </DefaultBlueButton>
       </Center>
    );
 }
