@@ -10,7 +10,6 @@ import ConfirmQuestDelete from "../../components/ConfirmQuestDelete";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 
 export default function Forum({ navigation, route }) {
    const [filters, setFilters] = useState({
