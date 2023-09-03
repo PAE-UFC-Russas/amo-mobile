@@ -76,7 +76,7 @@ export default function ForumQuest(
                            />
                         }
                      />
-                     <Text marginLeft={3}>2</Text>
+                     <Text marginLeft={3}>{quest.quantidade_comentarios}</Text>
                      <IconButton
                         onPress={() =>
                            navigation.navigate("AnswerQuestion", quest)
