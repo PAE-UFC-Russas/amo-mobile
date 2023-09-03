@@ -1,35 +1,26 @@
 import React, { useState } from "react";
-import { Center, VStack, Text, View } from "native-base";
+import { Center, Text, View } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
-import validator from "validator";
+
 import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
-import DefaultFormInput from "../../components/DefaultFormInput";
+
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import SendEmailRefactorPassword from "../../util/SendEmailRefactorPassword";
 
 export default function RecoverPassword() {
-   const [cor, setCor] = useState("tertiaryBlue");
    const { navigate, goBack } = useNavigation();
-   const [email, setEmail] = useState("");
    const [inputErros, setInputErros] = useState({
       errosEmail: null,
    });
 
-   const InputValidation = () => {
-      let erros = {
-         errosEmail: null,
-      };
-
-      if (email.length < 10 && !validator.isEmail(email)) setCor("red");
-      erros.errosEmail = "E-mail inválido!";
-
-      setInputErros(erros);
-      if (!erros.errosEmail) navigate("CheckCode", { register: false });
-      return null;
+   const handleRecoverPassword = () => {
+      const response = SendEmailRefactorPassword();
+      if (typeof response === "string") {
+         setInputErros({ errosEmail: response });
+      }
    };
-
    return (
       <Center style={styles.container} bgColor="#fff" safeArea>
          <MaterialIcons
@@ -71,7 +62,10 @@ export default function RecoverPassword() {
                </Text>
             </View>
          </Center>
-         <DefaultBlueButton onPress={SendEmailRefactorPassword}>
+         <Text style={{ color: "#52D6FB", fontSize: 20, marginTop: 18 }}>
+            {inputErros.errosEmail}
+         </Text>
+         <DefaultBlueButton onPress={handleRecoverPassword}>
             Mandar email
          </DefaultBlueButton>
       </Center>
