@@ -12,6 +12,7 @@ export default function ForumQuest(
    DeleteLike,
    setConfirmDeleteQuest
 ) {
+
    return (
       <Box marginTop="3" width="5/6" justifyContent="space-between">
          <HStack space="2">
@@ -19,9 +20,9 @@ export default function ForumQuest(
                bg="tertiaryBlue"
                size="md"
                source={{
-                  uri: !quest.autor.perfil.avatar
+                  uri: !quest.autor.perfil.foto
                      ? null
-                     : quest.autor.perfil.avatar,
+                     : quest.autor.perfil.foto,
                }}
             />
             <View style={{ width: "100%" }}>
@@ -92,7 +93,6 @@ export default function ForumQuest(
                   </Box>
                   <Text fontSize="xs" fontWeight="thin">
                      {DateISOToFormated(quest.data)}
-                     {console.log(quest)}
                   </Text>
                </HStack>
             </View>
