@@ -92,6 +92,7 @@ export default function ForumQuest(
                   </Box>
                   <Text fontSize="xs" fontWeight="thin">
                      {DateISOToFormated(quest.data)}
+                     {console.log(quest)}
                   </Text>
                </HStack>
             </View>
