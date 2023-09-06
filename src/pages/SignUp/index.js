@@ -59,7 +59,7 @@ export default function Register() {
          ) {
             setLoading(true);
             const response = await Register(newUser);
-            console.log(response);
+
             if (response === null) {
                navigate("StudentProfile", { register: true });
             } else {
