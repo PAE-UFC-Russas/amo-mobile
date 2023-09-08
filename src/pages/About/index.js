@@ -13,7 +13,6 @@ export default function About() {
             backgroundColor="#fff"
             flexDirection="row"
             justifyContent="space-between"
-            
          >
             <MaterialIcons
                onPress={() => goBack()}
@@ -67,7 +66,8 @@ export default function About() {
                   height={60}
                   alt="Identidade Visual UFC"
                   source={require("../../assets/ufc.png")}
-                  marginTop={5}
+                  marginTop={2}
+                  marginBottom={5}
                />
             </View>
          </View>
