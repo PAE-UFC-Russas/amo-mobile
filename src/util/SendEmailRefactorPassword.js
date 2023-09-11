@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Linking } from "react-native";
 
 export default function SendEmailRefactorPassword() {
