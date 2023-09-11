@@ -91,11 +91,13 @@ export default function EditProfile() {
             });
             const newEditedUser = await response.json()
             EditUser(newEditedUser)
-            goBack();
+
             toast.show({
                title: "Dados cadastrados com sucesso!",
                placement: "bottom",
             });
+
+            goBack();
          } catch (error) {
             toast.show({
                title: "Erro, verifique sua internet!",
