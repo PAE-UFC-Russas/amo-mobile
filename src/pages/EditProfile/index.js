@@ -208,7 +208,8 @@ export default function EditProfile() {
                   backgroundColor="white"
                   style={{ color: "black", backgroundColor: "white" }}
                   items={courses}
-                  value={courses.filter((e) => e.id == profile.curso)[0].nome}
+                  value={typeof profile.curso !== "string"?courses.filter((e) => e.id == profile.curso)[0].nome:profile.curso}
+                  placeholder={typeof profile.curso === "string"?profile.curso:null}
                   setValue={(itemValue) =>
                      setProfile({
                         ...profile,
@@ -217,7 +218,6 @@ export default function EditProfile() {
                   }
                   color="#52D6FB"
                />
-
                <Text marginTop={5} fontSize={15}>
                   Entrada
                </Text>
