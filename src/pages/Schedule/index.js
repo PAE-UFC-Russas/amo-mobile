@@ -54,7 +54,7 @@ export default function Schedule() {
       } else if (filters.all) {
          url = "/agendamentos/?pages=1";
       } else if (filters.confimed) {
-         url += "&status=confirmado&status=aguardando";
+         url += "&status=confirmado";
       } else if (filters.closed) {
          url += "&status=cancelado";
       }
@@ -79,7 +79,7 @@ export default function Schedule() {
          await api.patch(
             `/agendamentos/${newSchedule.id}/`,
             {
-               status: type
+               status: type,
             },
             {
                headers: {
@@ -87,7 +87,7 @@ export default function Schedule() {
                },
             }
          );
-         setOpenDetailModal(false)
+         setOpenDetailModal(false);
          GetSchedules();
          return true;
       } catch (error) {
@@ -118,9 +118,6 @@ export default function Schedule() {
    }
 
    useEffect(() => {
-      if (schedules.length < 1) {
-         GetSubjects();
-      }
       GetSchedules();
    }, [filters]);
 
@@ -138,13 +135,17 @@ export default function Schedule() {
                   borderWidth={1}
                   backgroundColor="white"
                   style={{ color: "black", backgroundColor: "white" }}
-                  placeholder="Selecione a monitoria"
                   items={subjects}
                   setValue={(itemValue) =>
                      setFilters({ ...filters, subject: itemValue })
                   }
+                  placeholder={newSchedule.disciplina}
                   color="#52D6FB"
                />
+               {console.log(filters.subject)}
+
+               {console.log(schedules)}
+
                <FlatList
                   data={schedules.results}
                   contentContainerStyle={{ padding: 10 }}
@@ -160,10 +161,10 @@ export default function Schedule() {
                <DefaultStagger>
                   <IconButton
                      style={{
-                        shadowColor: '#000',
+                        shadowColor: "#000",
                         shadowOffset: {
-                        width: 10,
-                        height: 10,
+                           width: 10,
+                           height: 10,
                         },
                         shadowOpacity: 4,
                         shadowRadius: 3.84,
