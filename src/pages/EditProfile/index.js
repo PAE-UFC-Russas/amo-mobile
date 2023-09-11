@@ -9,7 +9,7 @@ import {
    Button,
    useToast,
    ScrollView,
-   HStack
+   HStack,
 } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -30,8 +30,8 @@ export default function EditProfile() {
    const [profile, setProfile] = useState({
       nome_exibicao: user.perfil.nome_exibicao,
       entrada: user.perfil.entrada,
-      curso: -1,
-      foto: ""
+      curso: user.perfil.curso,
+      foto: "",
    });
 
    const GetYearsPerSemester = () => {
@@ -59,16 +59,18 @@ export default function EditProfile() {
 
          if (profile.foto != null) {
             if (profile.foto.indexOf("onrender") == -1) {
-               const randomNumberForPhoto = Math.floor(Math.random() * (1000000 - 1) + 1)
+               const randomNumberForPhoto = Math.floor(
+                  Math.random() * (1000000 - 1) + 1
+               );
                formData.append("foto", {
                   uri:
                      Platform.OS === "ios"
                         ? profile.foto.replace("file://", "")
                         : profile.foto,
-                  name: profile.nome_exibicao + randomNumberForPhoto + "foto.jpg",
+                  name:
+                     profile.nome_exibicao + randomNumberForPhoto + "foto.jpg",
                   fileName:
-                     profile.nome_exibicao + randomNumberForPhoto +
-                     "foto.jpg",
+                     profile.nome_exibicao + randomNumberForPhoto + "foto.jpg",
                   type: "image/jpeg",
                });
             }
@@ -81,16 +83,19 @@ export default function EditProfile() {
          formData.append("entrada", profile.entrada);
 
          try {
-            const response = await fetch("https://amo-backend.onrender.com/usuario/eu/", {
-               method: "PATCH",
-               headers: {
-                  Authorization: "Token " + (await GetLoginToken()),
-                  "Content-Type": "multipart/form-data",
-               },
-               body: formData,
-            });
-            const newEditedUser = await response.json()
-            EditUser(newEditedUser)
+            const response = await fetch(
+               "https://amo-backend.onrender.com/usuario/eu/",
+               {
+                  method: "PATCH",
+                  headers: {
+                     Authorization: "Token " + (await GetLoginToken()),
+                     "Content-Type": "multipart/form-data",
+                  },
+                  body: formData,
+               }
+            );
+            const newEditedUser = await response.json();
+            EditUser(newEditedUser);
 
             toast.show({
                title: "Dados cadastrados com sucesso!",
@@ -135,26 +140,42 @@ export default function EditProfile() {
    return (
       <View style={styles.container}>
          <ScrollView>
-         <HStack justifyContent="space-between" alignSelf={'center'} safeArea>
-               
-            <Text alignSelf="center" fontSize={25} color={"#52D6FB"} > Editar Perfil </Text>
-         </HStack>
+            <HStack
+               justifyContent="space-between"
+               alignSelf={"center"}
+               safeArea
+            >
+               <Text alignSelf="center" fontSize={25} color={"#52D6FB"}>
+                  {" "}
+                  Editar Perfil{" "}
+               </Text>
+            </HStack>
             <Center justifyContent={"center"} alignItems={"center"}>
                <TouchableOpacity onPress={() => GetImage()}>
-                  {
-                     profile.foto ? 
-                        <Image source={{ uri: profile.foto }} style={{ width: 100, height: 100, margin: 5, borderRadius: 100 }} />
-                     :
-                        <Avatar
-                           alignSelf="center"
-                           bg="tertiaryBlue"
-                           margin={5}
-                           size="xl"
-                           source={{
-                              uri: user.perfil.foto.length > 0?`https://${user.perfil.foto}`:"https://i.ibb.co/4f1jsPx/Splash-1.png",
-                           }}
-                        />
-                  }
+                  {profile.foto ? (
+                     <Image
+                        source={{ uri: profile.foto }}
+                        style={{
+                           width: 100,
+                           height: 100,
+                           margin: 5,
+                           borderRadius: 100,
+                        }}
+                     />
+                  ) : (
+                     <Avatar
+                        alignSelf="center"
+                        bg="tertiaryBlue"
+                        margin={5}
+                        size="xl"
+                        source={{
+                           uri:
+                              user.perfil.foto.length > 0
+                                 ? `https://${user.perfil.foto}`
+                                 : "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                        }}
+                     />
+                  )}
                   <View style={styles.avatarBadge}>
                      <FontAwesome5 color="#fff" size={16} name="pen" />
                   </View>
@@ -178,6 +199,7 @@ export default function EditProfile() {
                   borderRadius={15}
                   backgroundColor="#fff"
                />
+
                <Text marginTop={5} fontSize={15}>
                   Curso
                </Text>
@@ -185,8 +207,8 @@ export default function EditProfile() {
                   borderWidth={1}
                   backgroundColor="white"
                   style={{ color: "black", backgroundColor: "white" }}
-                  placeholder="Escolha seu curso"
                   items={courses}
+                  value={courses.filter((e) => e.id == profile.curso)[0].nome}
                   setValue={(itemValue) =>
                      setProfile({
                         ...profile,
