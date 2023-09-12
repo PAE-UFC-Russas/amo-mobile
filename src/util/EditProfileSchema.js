@@ -1,14 +1,11 @@
-import { useToast } from "native-base";
-import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "../contexts/auth";
+import { GetLoginToken } from "./StorageLogin";
+import api from "../services/api";
 
 export async function EditProfilePerFormData(profile){
-    const toast = useToast();
-    const { goBack } = useNavigation();
-    const { EditUser } = useAuth();
-
     const formData = new FormData();
     const randomNumberForPhoto = Math.floor(Math.random() * (1000000 - 1) + 1)
+    const token = await GetLoginToken()
+
     formData.append("foto", {
         uri:
             Platform.OS === "ios"
@@ -31,56 +28,36 @@ export async function EditProfilePerFormData(profile){
         const response = await fetch("https://amo-backend.onrender.com/usuario/eu/", {
            method: "PATCH",
            headers: {
-              Authorization: "Token " + (await GetLoginToken()),
+              Authorization: "Token " + token,
               "Content-Type": "multipart/form-data",
            },
            body: formData,
         });
         const newEditedUser = await response.json()
-        EditUser(newEditedUser)
-
-        toast.show({
-           title: "Dados cadastrados com sucesso!",
-           placement: "bottom",
-        });
-
-        goBack();
+        return {success: true, user: newEditedUser}
     } catch (error) {
-        toast.show({
-            title: "Erro, verifique sua internet!",
-            placement: "bottom",
-        });
         console.log(error);
+        return {success: false, user: null}
     }
 }
 
 export async function EditProfilePerApi(profile){
-    const toast = useToast();
-    const { goBack } = useNavigation();
-
     try {
-        const response = await fetch("https://amo-backend.onrender.com/usuario/eu/", {
-           method: "PATCH",
-           headers: {
-              Authorization: "Token " + (await GetLoginToken()),
-              "Content-Type": "multipart/form-data",
-           },
-           body: formData,
-        });
-        const newEditedUser = await response.json()
-        EditUser(newEditedUser)
-
-        toast.show({
-           title: "Dados cadastrados com sucesso!",
-           placement: "bottom",
-        });
-
-        goBack();
+        const response = await api.patch(
+            `/usuario/eu/`, {
+                nome_exibicao: profile.nome_exibicao,
+                entrada: profile.entrada,
+                curso: profile.curso,
+            },
+            {
+                headers: {
+                    Authorization: "Token " + (await GetLoginToken()),
+                },
+            }
+        );
+        return {success: true, user: response.data};
     } catch (error) {
-        toast.show({
-            title: "Erro, verifique sua internet!",
-            placement: "bottom",
-        });
-        console.log(error);
+        console.log(error.response);
+        return {success: false, user: null};
     }
 }
