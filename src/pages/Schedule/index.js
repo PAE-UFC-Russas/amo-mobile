@@ -118,12 +118,12 @@ export default function Schedule() {
    }
 
    useEffect(() => {
-      if(subjects.length < 1){
-         GetSubjects()
+      if (subjects.length < 1) {
+         GetSubjects();
       }
       GetSchedules();
    }, [filters]);
-   
+
    return (
       <Center style={styles.container} bgColor="#fff">
          <SchedulingFilter filters={filters} setFilters={setFilters} />
@@ -139,10 +139,10 @@ export default function Schedule() {
                   backgroundColor="white"
                   style={{ color: "black", backgroundColor: "white" }}
                   items={subjects}
+                  placeholder="Selecione a disciplina"
                   setValue={(itemValue) =>
                      setFilters({ ...filters, subject: itemValue })
                   }
-                  placeholder={subjects.filter((item) => item.id == filters.subject)[0].nome}
                   color="#52D6FB"
                />
                <FlatList
