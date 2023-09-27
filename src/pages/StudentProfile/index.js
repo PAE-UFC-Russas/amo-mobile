@@ -94,24 +94,28 @@ export default function StudentProfile() {
       setLoading(true);
       let erros = {
          errosName: null,
-         errosNickname: null,
+         errosNickName: null,
          errosEntryear: null,
          errosCourse: null,
          errosBirthDate: null,
          responseErros: null,
+         errosRegistration: null,
       };
 
       setLoading(true);
-      if (personalData.name.length < 3) {
+      if (personalData.name.trim().length < 3) {
          erros.errosName = "Nome inválido!";
          setLoading(false);
       }
-
-      if (!personalData.nickName) {
-         erros.errosNickname = "Matrícula inválida!";
+      if (!personalData.registration.trim()) {
+         erros.errosRegistration = "Matrícula inválida!";
          setLoading(false);
       }
-      if (!personalData.entryYear) {
+      if (!personalData.nickName.trim()) {
+         erros.errosNickName = "Nome de exibição inválido!";
+         setLoading(false);
+      }
+      if (!personalData.entryYear.trim()) {
          erros.errosEntryear = "Ano de entrada não pode está vazio!";
          setLoading(false);
       }
@@ -129,10 +133,11 @@ export default function StudentProfile() {
       if (
          !erros.errosUser &&
          !erros.errosName &&
-         !erros.errosNickname &&
+         !erros.errosNickName &&
          !erros.errosEntryear &&
          !erros.errosCourse &&
-         !erros.errosBirthDate
+         !erros.errosBirthDate &&
+         !erros.errosRegistration
       ) {
          const response = await CompleteRegister(personalData);
          if (response === personalData.nome_exibicao) {

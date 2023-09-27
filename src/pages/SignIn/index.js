@@ -24,26 +24,25 @@ export default function SignIn() {
    });
    const { IsConnected, Login } = useAuth();
 
-   useEffect(() => {
-      setUserLogin({
-         email: "",
-         password: "",
-         signed: false,
-      });
-      async function VerifyLogin() {
-         const connected = await IsConnected();
+   // useEffect(() => {
+   //    setUserLogin({
+   //       email: "",
+   //       password: "",
+   //       signed: false,
+   //    });
+   //    async function VerifyLogin() {
+   //       const connected = await IsConnected();
 
-         
-         if (!connected) {
-            if (connected === null) {
-               navigate("StudentProfile");
-            }
-         } else {
-               navigate("SelectCourses");
-               }
-         }
-         VerifyLogin();
-   }, []);
+   //       if (!connected) {
+   //          if (connected === null) {
+   //             navigate("StudentProfile");
+   //          }
+   //       } else {
+   //             navigate("SelectCourses");
+   //             }
+   //       }
+   //       VerifyLogin();
+   // }, []);
 
    const InputValidation = async () => {
       setLoading(true);
