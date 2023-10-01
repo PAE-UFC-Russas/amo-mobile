@@ -35,6 +35,8 @@ export default function AnswerQuestion({ route }) {
    const { user } = useAuth();
    const toast = useToast();
 
+   const [EntradaVazia, setEntradaVazia] = useState(true);
+
    const GetImage = async () => {
       const content = await PickImage();
       setMyResponse({ ...myResponse, content: content });
@@ -54,6 +56,8 @@ export default function AnswerQuestion({ route }) {
                },
             }
          );
+         setMyResponse({ ...myResponse, response: "" });
+         setEntradaVazia(true);
 
          toast.show({
             title: "Resposta publicada com sucesso!",
@@ -235,15 +239,13 @@ export default function AnswerQuestion({ route }) {
             <HStack marginBottom={2} justifyContent={"space-between"}>
                <Input
                   width="80%"
-                  placeholder="Comentar"
-                  onChangeText={(text) =>
-                     setMyResponse({ ...myResponse, response: text })
-                  }
+                  placeholder={EntradaVazia ? "Comentar" : ""}
+                  onChangeText={(text) => {
+                     setMyResponse({ ...myResponse, response: text });
+                     setEntradaVazia(text === "");
+                  }}
                />
-               {/* <IconButton
-                  onPress={GetImage}
-                  icon={<FontAwesome name="photo" size={24} color="#52D6FB" />}
-               /> */}
+
                <IconButton
                   onPress={PostResponse}
                   icon={<MaterialIcons name="send" size={24} color="#52D6FB" />}
@@ -253,8 +255,9 @@ export default function AnswerQuestion({ route }) {
                <Spinner marginTop="auto" marginBottom="auto" size="lg" />
             ) : (
                <FlatList
-                  style={{ height: "65%" }}
+                  style={{ height: "58%" }}
                   data={responses.results}
+                  keyExtractor={(comment) => comment.id}
                   renderItem={(comment) => (
                      <Comments
                         comment={comment.item}
@@ -263,7 +266,6 @@ export default function AnswerQuestion({ route }) {
                         enableMark={markEnable}
                      />
                   )}
-                  keyExtractor={(comment) => comment.id}
                   ListFooterComponent={
                      responses.next && (
                         <ButtonGetNextValues

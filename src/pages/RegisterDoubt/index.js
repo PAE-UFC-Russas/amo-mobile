@@ -189,23 +189,15 @@ export default function RegisterDoubt({ route }) {
                />
             )}
          </View>
-         <HStack width="full" justifyContent="space-between">
-            <HStack space={2}>
-               <MaterialIcons
-                  color="#52D6FB"
-                  size={32}
-                  name="drive-folder-upload"
-                  onPress={() => GetImage("lib")}
-               />
-               <MaterialIcons
-                  color="#52D6FB"
-                  size={32}
-                  name="add-photo-alternate"
-                  onPress={() => GetImage("cam")}
-               />
-            </HStack>
+         <HStack width="full">
             <Button
-               style={{ width: "30%", borderRadius: 30 }}
+               style={{
+                  width: "30%",
+                  borderRadius: 30,
+                  position: "absolute",
+                  end: 0,
+                  bottom: 5,
+               }}
                onPress={PostQuestion}
             >
                Publicar

@@ -19,6 +19,7 @@ export default function Comments({
          borderRadius={10}
          borderWidth={1}
          borderColor={correctResponse === comment.id ? "green" : "grey"}
+         marginBottom={3}
       >
          <View style={{ flexDirection: "row" }}>
             <Avatar
