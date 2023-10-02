@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import {
    Avatar,
-   Box,
    Button,
    Text,
    Select,
@@ -10,41 +9,25 @@ import {
    Input,
    HStack,
    TextArea,
-   Image,
    useToast,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
-import PickImage, { LaunchCamera } from "../../util/PickImage";
 import OnDeleteModal from "../../components/OnDeleteModal";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../contexts/auth";
 
 export default function RegisterDoubt({ route }) {
    const { user } = useAuth();
-   const { navigate, goBack } = useNavigation();
+   const { goBack } = useNavigation();
    const [openModal, setOpenModal] = useState(false);
    const [question, setQuestion] = useState({
       titulo: "",
       descricao: "",
    });
-   const [image, setImage] = useState(null);
    const toast = useToast();
-
-   const GetImage = async (type) => {
-      const img = type === "cam" ? await LaunchCamera() : await PickImage();
-      setImage(img);
-   };
-
-   const OnDelete = () => {
-      if (question.titulo.length > 0 || question.descricao.length > 0) {
-         setOpenModal(true);
-      } else {
-         goBack();
-      }
-   };
 
    const PostQuestion = async () => {
       if (question.titulo.length > 0 && question.descricao.length > 0) {
@@ -177,17 +160,6 @@ export default function RegisterDoubt({ route }) {
                   A descrição deve conter 500 caracteres
                </Text>
             </View>
-            {image && (
-               <Image
-                  borderRadius={5}
-                  width={400}
-                  height={300}
-                  alt="Conteúdo da dúvida"
-                  source={{
-                     uri: image,
-                  }}
-               />
-            )}
          </View>
          <HStack width="full">
             <Button

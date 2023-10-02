@@ -10,37 +10,26 @@ import {
    IconButton,
    Spinner,
 } from "native-base";
-import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import DateISOToFormated from "../../util/DateISOToFormated";
 import Comments from "../../components/Comments";
 import ButtonGetNextValues from "../../components/ButtonGetNextValues";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { useAuth } from "../../contexts/auth";
 import api from "../../services/api";
-import PickImage from "../../util/PickImage";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 
 export default function AnswerQuestion({ route }) {
    const { goBack } = useNavigation();
    const [loading, setLoading] = useState(true);
    const [responses, setResponses] = useState([]);
-   const [myResponse, setMyResponse] = useState({
-      content: null,
-      response: "",
-   });
+   const [myResponse, setMyResponse] = useState("");
    const [doubt, setDoubt] = useState(route.params);
    const [markEnable, setMarkEnable] = useState(false);
    const [page, setPage] = useState(1);
    const { user } = useAuth();
    const toast = useToast();
-
-   const [EntradaVazia, setEntradaVazia] = useState(true);
-
-   const GetImage = async () => {
-      const content = await PickImage();
-      setMyResponse({ ...myResponse, content: content });
-   };
 
    const PostResponse = async () => {
       try {
@@ -48,7 +37,7 @@ export default function AnswerQuestion({ route }) {
             "/respostas/",
             {
                duvida: doubt.id,
-               resposta: myResponse.response,
+               resposta: myResponse
             },
             {
                headers: {
@@ -56,18 +45,18 @@ export default function AnswerQuestion({ route }) {
                },
             }
          );
-         setMyResponse({ ...myResponse, response: "" });
-         setEntradaVazia(true);
 
+         //setResponses([...responses, {autor: user, duvida: doubt.id, id: responses.results[responses.results.length-1].id+1, resposta: myResponse, data: new Date().toISOString()}])
+         GetResponses()
          toast.show({
             title: "Resposta publicada com sucesso!",
             placement: "bottom",
          });
 
-         GetResponses();
       } catch (error) {
          console.log(error.response.data);
       }
+      setMyResponse("");
    };
 
    const GetResponses = async (next) => {
@@ -181,12 +170,15 @@ export default function AnswerQuestion({ route }) {
       };
 
       EnableMark();
-      GetResponses();
+      
+      if(responses.length < 1){
+         GetResponses();
+      }
    }, []);
 
    return (
       <View style={styles.container}>
-         <HStack safeArea alignItems="center" marginBottom="5%">
+         <HStack safeArea alignItems="center" >
             <MaterialIcons
                onPress={() => goBack()}
                color="#52D6FB"
@@ -195,7 +187,7 @@ export default function AnswerQuestion({ route }) {
             />
             <Text style={styles.title}>Responder dúvida</Text>
          </HStack>
-         <View marginTop={5}>
+         <View>
             <HStack>
                <Avatar
                   bg="tertiaryBlue"
@@ -239,13 +231,10 @@ export default function AnswerQuestion({ route }) {
             <HStack marginBottom={2} justifyContent={"space-between"}>
                <Input
                   width="80%"
-                  placeholder={EntradaVazia ? "Comentar" : ""}
-                  onChangeText={(text) => {
-                     setMyResponse({ ...myResponse, response: text });
-                     setEntradaVazia(text === "");
-                  }}
+                  placeholder="Comentar"
+                  value={myResponse}
+                  onChangeText={text => setMyResponse(text)}
                />
-
                <IconButton
                   onPress={PostResponse}
                   icon={<MaterialIcons name="send" size={24} color="#52D6FB" />}
