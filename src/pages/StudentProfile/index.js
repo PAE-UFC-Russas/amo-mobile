@@ -107,7 +107,11 @@ export default function StudentProfile() {
          erros.errosName = "Nome inválido!";
          setLoading(false);
       }
-      if (!personalData.registration.trim()) {
+      if (
+         !/^[0-9]+$/.test(personalData.registration.trim()) ||
+         personalData.registration.length < 6 ||
+         personalData.registration.length > 7
+      ) {
          erros.errosRegistration = "Matrícula inválida!";
          setLoading(false);
       }
@@ -161,9 +165,9 @@ export default function StudentProfile() {
    return (
       <Center style={styles.container} bgColor="#fff">
          {!keyboardIsOpen && <AuthHeader>Estamos quase lá</AuthHeader>}
-         <VStack width="5/6" space={3}>
+         <VStack width="5/6" space={2} marginBottom={2}>
+            <Text style={{ color: "#52D6FB" }}>Nome completo</Text>
             <DefaultFormInput
-               placeholder="Nome completo"
                value={personalData.name}
                setValue={(text) =>
                   setPersonalData({ ...personalData, name: text })
@@ -171,9 +175,9 @@ export default function StudentProfile() {
                color="tertiaryBlue"
                error={inputErros.errosName}
             />
+            <Text style={{ color: "#52D6FB" }}>Nome de exibição</Text>
             <DefaultFormInput
                maxLength={64}
-               placeholder="Nome de exibição"
                value={personalData.nickName}
                setValue={(text) =>
                   setPersonalData({ ...personalData, nickName: text })
@@ -181,8 +185,8 @@ export default function StudentProfile() {
                color="tertiaryBlue"
                error={inputErros.errosNickName}
             />
+            <Text style={{ color: "#52D6FB" }}>Matricula</Text>
             <DefaultFormInput
-               placeholder="Matrícula"
                value={personalData.registration}
                setValue={(text) =>
                   setPersonalData({ ...personalData, registration: text })
@@ -191,8 +195,8 @@ export default function StudentProfile() {
                color="tertiaryBlue"
                error={inputErros.errosRegistration}
             />
+            <Text style={{ color: "#52D6FB" }}>Ano de entrada</Text>
             <DefaultSelect
-               placeholder="Ano de entrada"
                items={GetYearsPerSemester()}
                value={personalData.entryYear}
                setValue={(itemValue) =>
@@ -201,8 +205,8 @@ export default function StudentProfile() {
                color="tertiaryBlue"
                error={inputErros.errosEntryear}
             />
+            <Text style={{ color: "#52D6FB" }}>Escolha seu curso</Text>
             <SelectForProfilePage
-               placeholder="Escolha seu curso"
                items={courses}
                setValue={(itemValue) =>
                   setPersonalData({
@@ -213,6 +217,7 @@ export default function StudentProfile() {
                color="tertiaryBlue"
                error={inputErros.errosCourse}
             />
+            <Text style={{ color: "#52D6FB" }}>Data de nascimento</Text>
             <TouchableOpacity
                style={styles.dateTimeButton}
                onPress={() => setShowDate(true)}
