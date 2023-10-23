@@ -29,7 +29,7 @@ export default function Schedule() {
       all: false,
       opens: false,
       closed: false,
-      subject: null,
+      subject: {id: null, name: "Selecione a disciplina"}
    });
 
    async function GetSubjects() {
@@ -49,8 +49,8 @@ export default function Schedule() {
    async function GetSchedules() {
       let url = "/agendamentos/?pages=1";
 
-      if (filters.subject !== null) {
-         url += `&disciplina=${filters.subject}`;
+      if (filters.subject.id !== null) {
+         url += `&disciplina=${filters.subject.id}`;
       } else if (filters.all) {
          url = "/agendamentos/?pages=1";
       } else if (filters.confimed) {
@@ -124,8 +124,6 @@ export default function Schedule() {
       GetSchedules();
    }, [filters]);
 
-   console.log(subjects.filter((item) => item.id === filters.subject).nome);
-
    return (
       <Center style={styles.container} bgColor="#fff">
          <SchedulingFilter filters={filters} setFilters={setFilters} />
@@ -141,12 +139,9 @@ export default function Schedule() {
                   backgroundColor="white"
                   style={{ color: "black", backgroundColor: "white" }}
                   items={subjects}
-                  value={
-                     subjects.filter((item) => item.id === filters.subject).nome
-                  }
-                  placeholder="Selecionar disciplina"
+                  placeholder={filters.subject.name}
                   setValue={(itemValue) =>
-                     setFilters({ ...filters, subject: itemValue })
+                     setFilters({ ...filters, subject: {id: itemValue.substring(0,itemValue.indexOf(",")), name: itemValue.substring(itemValue.indexOf(",")+1,itemValue.length)}})
                   }
                   color="#52D6FB"
                />

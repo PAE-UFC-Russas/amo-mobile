@@ -186,9 +186,6 @@ export default function EditProfile() {
                      backgroundColor="white"
                      style={{ color: "black", backgroundColor: "white" }}
                      items={courses}
-                     value={
-                        courses.filter((e) => e.id === profile.curso)[0].nome
-                     }
                      placeholder={
                         courses.filter((e) => e.id === profile.curso)[0].nome
                      }
