@@ -46,7 +46,6 @@ export default function AnswerQuestion({ route }) {
             }
          );
 
-         //setResponses([...responses, {autor: user, duvida: doubt.id, id: responses.results[responses.results.length-1].id+1, resposta: myResponse, data: new Date().toISOString()}])
          GetResponses()
          toast.show({
             title: "Resposta publicada com sucesso!",

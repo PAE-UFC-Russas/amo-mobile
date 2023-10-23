@@ -82,45 +82,6 @@ export default function RegisterDoubt({ route }) {
                />
                <Text style={styles.title}>Cadastrar dúvida</Text>
             </HStack>
-            <HStack marginTop={10} alignItems="center">
-               <Avatar
-                  marginLeft={30}
-                  marginRight={3}
-                  bg="tertiaryBlue"
-                  size="lg"
-                  source={
-                     !user.perfil.foto
-                        ? {
-                             uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
-                          }
-                        : {
-                             uri: `https://${user.perfil.foto}`,
-                          }
-                  }
-               />
-               <Select
-                  placeholder="Privacidade do Autor"
-                  height={38}
-                  width={190}
-                  borderRadius={10}
-                  borderColor="#52D6FB"
-                  placeholderTextColor="#52D6FB"
-                  color="#52D6FB"
-                  _dropdownIcon={
-                     <Icon
-                        name="arrow-down"
-                        type="Entypo"
-                        style={{ color: "#52D6FB" }}
-                     />
-                  }
-               >
-                  <Select.Item label="Público" value="publico" />
-                  <Select.Item
-                     label="Somente para monitores"
-                     value="monitores"
-                  />
-               </Select>
-            </HStack>
             <View>
                <Input
                   size="md"
