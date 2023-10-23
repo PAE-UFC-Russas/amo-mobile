@@ -10,9 +10,9 @@ export default function ForumQuest(
    navigation,
    PostLike,
    DeleteLike,
-   setConfirmDeleteQuest
+   setConfirmDeleteQuest,
+   monitores
 ) {
-
    return (
       <Box marginTop="3" width="5/6" justifyContent="space-between">
          <HStack space="2">
@@ -34,7 +34,16 @@ export default function ForumQuest(
                         <Text fontWeight="extrabold">
                            {quest.autor.perfil.nome_exibicao}
                         </Text>
-                        <Text fontWeight="light">{quest.autor.cargos[0]}</Text>
+                        <Text fontWeight="light"> 
+                           {
+                              monitores.find(
+                                 (obj) => obj.id == quest.autor.id
+                              )
+                                 ? "Monitor"
+                                 : "Aluno"
+                           }
+                                                      
+                        </Text>
                      </View>
                      <ForumQuestionMenu
                         id={quest.id}

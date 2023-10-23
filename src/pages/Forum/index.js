@@ -164,7 +164,8 @@ export default function Forum({ navigation, route }) {
                      navigation,
                      PostLike,
                      DeleteLike,
-                     setConfirmDeleteQuest
+                     setConfirmDeleteQuest,
+                     route.params.monitores
                   )
                }
                keyExtractor={(quest) => quest.id}
