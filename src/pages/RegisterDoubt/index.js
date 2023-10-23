@@ -118,7 +118,7 @@ export default function RegisterDoubt({ route }) {
                   placeholder="Insira um descrição"
                />
                <Text style={styles.description}>
-                  A descrição deve conter 500 caracteres
+                  A descrição deve conter até 500 caracteres
                </Text>
             </View>
          </View>

@@ -32,12 +32,13 @@ export default function AnswerQuestion({ route }) {
    const toast = useToast();
 
    const PostResponse = async () => {
+      setMyResponse("");
       try {
          await api.post(
             "/respostas/",
             {
                duvida: doubt.id,
-               resposta: myResponse
+               resposta: myResponse,
             },
             {
                headers: {
@@ -46,16 +47,14 @@ export default function AnswerQuestion({ route }) {
             }
          );
 
-         GetResponses()
+         GetResponses();
          toast.show({
             title: "Resposta publicada com sucesso!",
             placement: "bottom",
          });
-
       } catch (error) {
          console.log(error.response.data);
       }
-      setMyResponse("");
    };
 
    const GetResponses = async (next) => {
@@ -169,15 +168,15 @@ export default function AnswerQuestion({ route }) {
       };
 
       EnableMark();
-      
-      if(responses.length < 1){
+
+      if (responses.length < 1) {
          GetResponses();
       }
    }, []);
 
    return (
       <View style={styles.container}>
-         <HStack safeArea alignItems="center" >
+         <HStack safeArea alignItems="center">
             <MaterialIcons
                onPress={() => goBack()}
                color="#52D6FB"
@@ -232,7 +231,7 @@ export default function AnswerQuestion({ route }) {
                   width="80%"
                   placeholder="Comentar"
                   value={myResponse}
-                  onChangeText={text => setMyResponse(text)}
+                  onChangeText={(text) => setMyResponse(text)}
                />
                <IconButton
                   onPress={PostResponse}

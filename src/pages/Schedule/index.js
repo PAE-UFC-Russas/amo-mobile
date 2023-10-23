@@ -124,6 +124,8 @@ export default function Schedule() {
       GetSchedules();
    }, [filters]);
 
+   console.log(subjects.filter((item) => item.id === filters.subject).nome);
+
    return (
       <Center style={styles.container} bgColor="#fff">
          <SchedulingFilter filters={filters} setFilters={setFilters} />
@@ -139,7 +141,10 @@ export default function Schedule() {
                   backgroundColor="white"
                   style={{ color: "black", backgroundColor: "white" }}
                   items={subjects}
-                  placeholder="Selecione a disciplina"
+                  value={
+                     subjects.filter((item) => item.id === filters.subject).nome
+                  }
+                  placeholder="Selecionar disciplina"
                   setValue={(itemValue) =>
                      setFilters({ ...filters, subject: itemValue })
                   }
