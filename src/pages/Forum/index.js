@@ -39,6 +39,7 @@ export default function Forum({ navigation, route }) {
             }&disciplina_id=${route.params.id}`;
             setPage(page + 1);
          }
+
          if (filters.recent) {
             url += "&ordering=-data";
          } else if (filters.late) {
@@ -47,6 +48,8 @@ export default function Forum({ navigation, route }) {
             url += "&ordering=-votos";
          } else if (filters.lessLiked) {
             url += "&ordering=votos";
+         }else if(filters.text.length > 0){
+            url += `&search=${filters.text}`;
          }
 
          const response = await api.get(url, {
