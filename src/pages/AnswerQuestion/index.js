@@ -185,7 +185,7 @@ export default function AnswerQuestion({ route }) {
             />
             <Text style={styles.title}>Responder dúvida</Text>
          </HStack>
-         <View marginTop={5}>
+         <View marginTop={5} flex={1}>
             <HStack>
                <Avatar
                   bg="tertiaryBlue"
