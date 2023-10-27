@@ -243,7 +243,7 @@ export default function AnswerQuestion({ route }) {
                <Spinner marginTop="auto" marginBottom="auto" size="lg" />
             ) : (
                <FlatList
-                  style={{ height: "58%" }}
+                  style={{ height: "47%" }}
                   data={responses.results}
                   keyExtractor={(comment) => comment.id}
                   renderItem={(comment) => (
