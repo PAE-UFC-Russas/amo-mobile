@@ -149,7 +149,7 @@ export default function EditProfile() {
                            source={{
                               uri:
                                  user.perfil.foto.length > 0
-                                    ? `https://${user.perfil.foto}`
+                                    ? user.perfil.foto
                                     : "https://i.ibb.co/4f1jsPx/Splash-1.png",
                            }}
                         />

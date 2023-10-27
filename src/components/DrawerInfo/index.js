@@ -27,7 +27,7 @@ export default function DrawerInfo(props) {
                           uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
                        }
                      : {
-                          uri: `https://${user.perfil.foto}`,
+                          uri: user.perfil.foto
                        }
                }
                marginBottom={15}
