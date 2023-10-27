@@ -14,7 +14,7 @@ export default function Profile() {
       curso: user.perfil.curso,
       foto: user.perfil.foto,
    };
-
+   console.log(user)
    return (
       <ScrollView>
          <Text
