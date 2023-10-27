@@ -7,7 +7,6 @@ import SelectForSubjects from '../SelectForSubjects';
 
 export default function ModalAddScheduling({setOpenModal, openModal, PostNewSchedule, setNewSchedule, newSchedule, subjects}){
     const [ showDate, setShowDate ] = useState({active: false, type: 'date'});
-    const [ errors, setErros ] = useState(null);
     const toast = useToast();
 
     const HandleOnClose = () =>{
@@ -96,7 +95,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                         style={{color:'black', backgroundColor:'white', borderColor: 'grey'}}
                         placeholder='Selecione a disciplina' 
                         items={subjects}
-                        setValue={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue})} 
+                        setValue={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue[0]})} 
                     />
                     <Text paddingRight='5%'>
                         Data:
