@@ -51,7 +51,7 @@ export default function ForumQuest(
                         setConfirmDeleteQuest={setConfirmDeleteQuest}
                      />
                   </HStack>
-                  <Text fontWeight="semibold">{quest.titulo}</Text>
+                  <Text fontWeight="semibold" numberOfLines={2}>{quest.titulo}</Text>
                   <Text fontWeight="light">{quest.descricao}</Text>
                </TouchableOpacity>
                {!!quest.content && (
