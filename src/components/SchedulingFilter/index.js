@@ -19,17 +19,6 @@ export default function SchedulingFilter({ setFilters, filters }){
         <View height='20' width='100%' justifyContent='space-around'>
             <View flexDirection='row' justifyContent='space-evenly'>
                 <Button 
-                    borderRadius='20' 
-                    width='24%'
-                    borderColor='#52D6FB'
-                    _text={{
-                        color: filters.mine?'#fff':'#52D6FB'
-                    }}
-                    variant={filters.mine?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('mine')}>
-                        Meus 
-                </Button>
-                <Button 
                     width='24%'
                     borderRadius='full'
                     borderColor='#52D6FB' 

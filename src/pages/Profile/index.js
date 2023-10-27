@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Center, Text, View, Avatar, Button, ScrollView } from "native-base";
 import { useAuth } from "../../contexts/auth";
@@ -14,7 +14,7 @@ export default function Profile() {
       curso: user.perfil.curso,
       foto: user.perfil.foto,
    };
-   console.log(user)
+
    return (
       <ScrollView>
          <Text
