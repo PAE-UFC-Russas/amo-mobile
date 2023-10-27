@@ -89,6 +89,7 @@ export default function RegisterDoubt({ route }) {
                   borderRadius={10}
                   marginTop={5}
                   width="90%"
+                  maxLength={150}
                   color="#52D6FB"
                   marginLeft={5}
                   placeholderTextColor="#52D6FB"

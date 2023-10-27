@@ -185,7 +185,7 @@ export default function AnswerQuestion({ route }) {
             />
             <Text style={styles.title}>Responder dúvida</Text>
          </HStack>
-         <View>
+         <View marginTop={5}>
             <HStack>
                <Avatar
                   bg="tertiaryBlue"
@@ -229,6 +229,7 @@ export default function AnswerQuestion({ route }) {
             <HStack marginBottom={2} justifyContent={"space-between"}>
                <Input
                   width="80%"
+                  maxLength={500}
                   placeholder="Comentar"
                   value={myResponse}
                   onChangeText={(text) => setMyResponse(text)}
