@@ -7,16 +7,17 @@ import DefaultBlueButton from "../../components/DefaultBlueButton";
 
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import SendEmailRefactorPassword from "../../util/SendEmail";
 
-export default function RecoverPassword() {
+import { SendEmailSignUpTeacher } from "../../util/SendEmail";
+
+export default function SignUpTeacher() {
    const { navigate, goBack } = useNavigation();
    const [inputErros, setInputErros] = useState({
       errosEmail: null,
    });
 
    const handleRecoverPassword = () => {
-      const response = SendEmailRefactorPassword();
+      const response = SendEmailSignUpTeacher();
       if (typeof response === "string") {
          setInputErros({ errosEmail: response });
       }
@@ -31,7 +32,7 @@ export default function RecoverPassword() {
             name="arrow-back-ios"
          />
          <Center width="5/6">
-            <AuthHeader>Esqueceu sua senha?</AuthHeader>
+            <AuthHeader>Cadastro do Professor</AuthHeader>
             <View
                style={{
                   justifyContent: "center",
@@ -47,15 +48,7 @@ export default function RecoverPassword() {
                      textAlign: "center",
                   }}
                >
-                  Clique no botão abaixo para receber {"\n"}
-                  <Text
-                     style={{
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                     }}
-                  >
-                     instruções e redefinir senha!
-                  </Text>
+                  Envie um email indicando o SIAPE e seu nome {"\n"}
                </Text>
                <Text style={{ color: "#52D6FB", fontSize: 20, marginTop: 18 }}>
                   paeufcrussas@gmail.com

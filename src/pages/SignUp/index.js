@@ -9,7 +9,7 @@ import DefaultFormInput from "../../components/DefaultFormInput";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 
 export default function Register() {
    const { goBack, navigate } = useNavigation();
@@ -121,9 +121,19 @@ export default function Register() {
                </Text>
             </VStack>
          </Center>
-         <DefaultBlueButton loading={loading} onPress={InputValidation}>
-            {loading ? <ActivityIndicator /> : "Avançar"}
-         </DefaultBlueButton>
+         <VStack alignItems={"center"}>
+            <TouchableOpacity
+               style={{ marginBottom: 16 }}
+               onPress={() => navigate("SignUpTeacher")}
+            >
+               <Text style={{ textDecorationLine: "underline" }}>
+                  Cadastre-se como Professor
+               </Text>
+            </TouchableOpacity>
+            <DefaultBlueButton loading={loading} onPress={InputValidation}>
+               {loading ? <ActivityIndicator /> : "Avançar"}
+            </DefaultBlueButton>
+         </VStack>
       </Center>
    );
 }
