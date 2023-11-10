@@ -7,7 +7,7 @@ import DefaultBlueButton from "../../components/DefaultBlueButton";
 
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import SendEmailRefactorPassword from "../../util/SendEmailRefactorPassword";
+import SendEmailRefactorPassword from "../../util/SendEmail";
 
 export default function RecoverPassword() {
    const { navigate, goBack } = useNavigation();
