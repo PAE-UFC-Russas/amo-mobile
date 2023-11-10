@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Text, Modal, HStack , Input, View, Select, Button, Center, VStack, useToast } from 'native-base';
+import { Text, Modal, HStack , Input, Select, Button, Center, VStack, useToast, TextArea } from 'native-base';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import FormateTime from '../../util/FormateTime';
 import DateISOToFormated from '../../util/DateISOToFormated';
-import SelectForSubjects from '../SelectForSubjects';
 
 export default function ModalAddScheduling({setOpenModal, openModal, PostNewSchedule, setNewSchedule, newSchedule, subjects}){
     const [ showDate, setShowDate ] = useState({active: false, type: 'date'});
@@ -37,10 +36,10 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
             onClose={HandleOnClose} 
         >
             <Modal.Content 
-                padding='1' 
+                paddingY='8' 
+                paddingX='6' 
                 bgColor='#fff'
                 width='90%'
-                height='75%'
                 borderRadius={15}
             >
                 <Center>
@@ -51,110 +50,98 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                     >
                         Solicitar agendamento
                     </Text>
-                </Center>
-                <VStack 
-                    height='100%'
-                    paddingHorizontal= '5%'
-                    paddingVertical='3%'
-                    space={2}
-                >
-                    <Text>
-                        Assunto:
-                    </Text>
-                    <Input
-                        borderColor='grey' 
-                        borderRadius={6}
-                        maxLength={64}
-                        width='100%' 
-                        placeholderTextColor='grey' 
-                        placeholder='Digitar assunto aqui'
-                        onChangeText={text => {setNewSchedule({...newSchedule, assunto: text})}}
-                    />
-                    <Text>
-                        Descrição:
-                    </Text>
-                    <Input
-                        borderColor='grey' 
-                        borderRadius={6} 
-                        maxLength={96}
-                        width='100%' 
-                        height='15%'
-                        placeholderTextColor='grey' 
-                        placeholder='Digite a descrição'
-                        onChangeText={text => {setNewSchedule({...newSchedule, descricao: text})}}
-                    />
-                    <Text>
-                        Disciplina:
-                    </Text>
-                    <SelectForSubjects
-                        alignItems='center'
-                        justfyContent='center'
-                        width='100%'
-                        borderWidth={1}
-                        backgroundColor='white' 
-                        style={{color:'black', backgroundColor:'white', borderColor: 'grey'}}
-                        placeholder='Selecione a disciplina' 
-                        items={subjects}
-                        setValue={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue[0]})} 
-                    />
-                    <Text paddingRight='5%'>
-                        Data:
-                    </Text>
-                    <Button
-                        paddingTop='4%'
-                        fontSize={10}
-                        borderColor='grey' 
-                        borderRadius={6} 
-                        variant='outline'
-                        width='40%'
-                        _text={{
-                            color:'black'
-                        }}
-                        onPress={()=>setShowDate({type: 'date', active: true})}
-                    >
-                        {DateISOToFormated(newSchedule.data)}
-                    </Button>
-                    <Text marginRight='3%'>
-                        Horario:
-                    </Text>
-                    <Button
-                        paddingTop='4%'
-                        fontSize={10}
-                        borderColor='grey' 
-                        borderRadius={6} 
-                        variant='outline'
-                        width='25%'
-                        _text={{
-                            color:'black'
-                        }}
-                        onPress={()=>setShowDate({type: 'time', active: true})}
-                    >
-                        {FormateTime(newSchedule.data)}
-                    </Button>
-                    <Text>
-                        Tipo:
-                    </Text>
-                    <Select 
-                        placeholder='Tipo' 
-                        height={8}
-                        width='50%'
-                        borderRadius={6} 
-                        borderColor='grey'
-                        onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
-                    >
-                        <Select.Item label='Presencial' value='presencial'/>
-                        <Select.Item label='Remoto' value='virtual'/>
-                    </Select>
-                    <Button 
-                        width='80%'
-                        borderRadius={16}
-                        alignSelf='center' 
-                        onPress={HandlePostNewSchedule}
-                        backgroundColor='#024284'
-                    >
-                        Solicitar agendamento
-                    </Button>
-                    {
+                    <VStack>
+                        <Text marginTop='4'>
+                            Assunto
+                        </Text>
+                        <Input
+                            borderRadius={10}
+                            maxLength={64}
+                            width='100%' 
+                            placeholderTextColor='grey' 
+                            placeholder='Digitar assunto aqui'
+                            onChangeText={text => {setNewSchedule({...newSchedule, assunto: text})}}
+                        />
+                        <Text marginTop='2'>
+                            Descrição
+                        </Text>
+                        <TextArea
+                            borderRadius={10} 
+                            maxLength={96}
+                            width='100%' 
+                            placeholderTextColor='grey' 
+                            placeholder='Digite a descrição'
+                            onChangeText={text => {setNewSchedule({...newSchedule, descricao: text})}}
+                        />
+                        <Text marginTop='2'>
+                            Disciplina:
+                        </Text>
+                        <Select 
+                            placeholder='Selecione a disciplina' 
+                            width='100%'
+                            borderRadius={10} 
+                            onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
+                        >
+                            {subjects.map((item, index)=>{
+                                return <Select.Item key={index} label={`${item.nome}`} value={`${item.id},${item.nome}`}/>
+                            })}
+                        </Select>
+                        <HStack justifyContent='space-between' alignItems='center' marginTop='2'>
+                            <VStack width='45%'>
+                                <Text>
+                                    Data
+                                </Text>
+                                <Button
+                                    fontSize={10}
+                                    borderRadius={10} 
+                                    variant='outline'
+                                    width='100%'
+                                    _text={{
+                                        color:'black'
+                                    }}
+                                    onPress={()=>setShowDate({type: 'date', active: true})}
+                                >
+                                    {DateISOToFormated(newSchedule.data)}
+                                </Button>
+                            </VStack>
+                            <VStack width='45%'>
+                                <Text>
+                                    Horario
+                                </Text>
+                                <Button
+                                    fontSize={10}
+                                    borderRadius={10} 
+                                    variant='outline'
+                                    width='100%'
+                                    _text={{
+                                        color:'black'
+                                    }}
+                                    onPress={()=>setShowDate({type: 'time', active: true})}
+                                >
+                                    {FormateTime(newSchedule.data)}
+                                </Button>
+                            </VStack>
+                        </HStack>
+                        <Text marginTop='2'>
+                            Tipo:
+                        </Text>
+                        <Select 
+                            placeholder='Tipo' 
+                            width='100%'
+                            borderRadius={10} 
+                            onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
+                        >
+                            <Select.Item label='Presencial' value='presencial'/>
+                            <Select.Item label='Remoto' value='virtual'/>
+                        </Select>
+                        <Button
+                            marginTop={8}
+                            bgColor="#307DF1"
+                            onPress={HandlePostNewSchedule}
+                        >
+                            Solicitar
+                        </Button>
+                        {
                             showDate.active&&
                                 <RNDateTimePicker 
                                     mode={showDate.type}
@@ -164,7 +151,8 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                                     onChange={(event, date) => {setShowDate({...showDate, active: false});setNewSchedule({...newSchedule, data: date})}}
                                 />
                         }
-                </VStack>
+                    </VStack>
+                </Center>
             </Modal.Content>
         </Modal>
     )

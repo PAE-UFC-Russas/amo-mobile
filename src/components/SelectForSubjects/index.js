@@ -2,19 +2,19 @@ import { FormControl, Select } from 'native-base';
 
 export default function SelectForSubjects({placeholder, setValue, color, backgroundColor, error, items, width, justfyContent, alignItems}){
     return (
-        <FormControl isInvalid={error?true:false}>
+        <FormControl width='full' isInvalid={error?true:false}>
             <Select 
                 alignItems={alignItems}
                 justifyContent={justfyContent}
-                width={width}
                 accessibilityLabel={placeholder}
+                width={width}
                 minWidth='5/6'
                 placeholder={placeholder}
                 placeholderTextColor={color}
                 borderColor={color}
                 color={color}
                 backgroundColor={backgroundColor}
-                borderRadius={15}
+                borderRadius={10}
                 _selectedItem={{
                     bg: color
                 }}

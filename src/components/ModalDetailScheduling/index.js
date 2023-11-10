@@ -162,7 +162,7 @@ export default function ModalDetailScheduling({
             {EnableConfirmSchedule() && (
                   <Button
                      borderRadius={16}
-                     backgroundColor="#024284"
+                     backgroundColor="#307DF1"
                      onPress={()=>EditSchedule("confirmado")}
                   >
                      Confirmar

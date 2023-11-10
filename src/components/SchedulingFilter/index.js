@@ -16,7 +16,7 @@ export default function SchedulingFilter({ setFilters, filters }){
     }
 
     return(
-        <View height='20' width='100%' justifyContent='space-around'>
+        <View height='10%' width='100%' justifyContent='space-around'>
             <View flexDirection='row' justifyContent='space-evenly'>
                 <Button 
                     width='24%'
