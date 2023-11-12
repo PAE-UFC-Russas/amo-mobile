@@ -147,7 +147,7 @@ export default function SignIn() {
                            fontWeight: 200,
                         }}
                      >
-                        Esqueci minha senha
+                        Criar nova senha
                      </Button>
                      <Button
                         variant="ghost"
