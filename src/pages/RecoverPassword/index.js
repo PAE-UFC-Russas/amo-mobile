@@ -34,7 +34,7 @@ export default function RecoverPassword() {
             senhaDados.novaSenha.length === 0 ||
             senhaDados.confirmarSenha.length === 0
          ) {
-            console.log("Existem campos em branco!");
+            setStatusSenha("Existem campos em branco!");
          } else {
             const response = await api.post(
                "/usuario/eu/mudar/",
@@ -50,9 +50,7 @@ export default function RecoverPassword() {
                }
             );
 
-            console.log(response.data);
             if (response.data.erro === "senha atual incorreta") {
-               console.log("entrou no loop de erro");
                setStatusSenha("senha atual incorreta!");
                setLoading(false);
             } else if (
@@ -60,7 +58,6 @@ export default function RecoverPassword() {
             ) {
                setLoading(false);
                setStatusSenha("senha alterada com sucesso!");
-               console.log("senha alterada com sucesso!");
             } else if (response.data.erro === "senhas não coincidem") {
                setLoading(false);
                setStatusSenha("senhas não coincidem!");
