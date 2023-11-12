@@ -86,6 +86,10 @@ export default function RecoverPassword() {
                   setSenhaDados({ ...senhaDados, confirmarSenha: text })
                }
             ></DefaultFormInput>
+            <Text color={"grey"} fontSize={12.5}>
+               A senha precisa ter no mínimo 8 caracteres, contendo letras e
+               números, sem espaçamento. Ex: 12zay78d
+            </Text>
          </Center>
          <Text style={{ color: "#52D6FB", fontSize: 20, marginTop: 18 }}>
             {inputErros.errosEmail}
