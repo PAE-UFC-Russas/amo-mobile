@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Center, Text, View } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import { ActivityIndicator } from "react-native";
 import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import SendEmailRefactorPassword from "../../util/SendEmail";
 import DefaultFormInput from "../../components/DefaultFormInput";
+import api from "../../services/api";
+import { GetLoginToken } from "../../util/StorageLogin";
 
 export default function RecoverPassword() {
    const { navigate, goBack } = useNavigation();
+   const [loading, setLoading] = useState(false);
    const [inputErros, setInputErros] = useState({
       errosEmail: null,
    });
@@ -22,25 +24,51 @@ export default function RecoverPassword() {
       confirmarSenha: "",
    });
 
-   const handleRecoverPassword = () => {
-      const response = SendEmailRefactorPassword();
-      if (typeof response === "string") {
-         setInputErros({ errosEmail: response });
-      }
-   };
+   const [statusSenha, setStatusSenha] = useState("");
 
-   const handleCriateNewPassword = () => {
-      if (
-         senhaDados.senhaAtual.length === 0 ||
-         senhaDados.novaSenha.length == 0 ||
-         senhaDados.confirmarSenha.length === 0
-      ) {
-         console.log("Existem campos em branco!");
-      }
-      if (senhaDados.novaSenha != senhaDados.confirmarSenha) {
-         console.log("As senhas devem ser iguais!");
-      } else {
-         console.log("As senhas estao prontas para serem mudadas!");
+   const handleCriateNewPassword = async () => {
+      setLoading(true);
+      try {
+         if (
+            senhaDados.senhaAtual.length === 0 ||
+            senhaDados.novaSenha.length === 0 ||
+            senhaDados.confirmarSenha.length === 0
+         ) {
+            console.log("Existem campos em branco!");
+         } else {
+            const response = await api.post(
+               "/usuario/eu/mudar/",
+               {
+                  senha_velha: senhaDados.senhaAtual,
+                  senha_nova: senhaDados.novaSenha,
+                  confirma: senhaDados.confirmarSenha,
+               },
+               {
+                  headers: {
+                     Authorization: "Token " + (await GetLoginToken()),
+                  },
+               }
+            );
+
+            console.log(response.data);
+            if (response.data.erro === "senha atual incorreta") {
+               console.log("entrou no loop de erro");
+               setStatusSenha("senha atual incorreta!");
+               setLoading(false);
+            } else if (
+               response.data.sucesso === "senha alterada com sucesso!"
+            ) {
+               setLoading(false);
+               setStatusSenha("senha alterada com sucesso!");
+               console.log("senha alterada com sucesso!");
+            } else if (response.data.erro === "senhas não coincidem") {
+               setLoading(false);
+               setStatusSenha("senhas não coincidem!");
+            }
+         }
+      } catch (error) {
+         console.error("Erro ao mudar a senha:", error);
+         setLoading(false);
       }
    };
 
@@ -86,16 +114,15 @@ export default function RecoverPassword() {
                   setSenhaDados({ ...senhaDados, confirmarSenha: text })
                }
             ></DefaultFormInput>
+            <Text style={{ color: "#52D6FB" }}>{statusSenha}</Text>
             <Text color={"grey"} fontSize={12.5}>
                A senha precisa ter no mínimo 8 caracteres, contendo letras e
                números, sem espaçamento. Ex: 12zay78d
             </Text>
          </Center>
-         <Text style={{ color: "#52D6FB", fontSize: 20, marginTop: 18 }}>
-            {inputErros.errosEmail}
-         </Text>
+
          <DefaultBlueButton onPress={handleCriateNewPassword}>
-            Salvar
+            {loading ? <ActivityIndicator /> : "Salvar"}
          </DefaultBlueButton>
       </Center>
    );
