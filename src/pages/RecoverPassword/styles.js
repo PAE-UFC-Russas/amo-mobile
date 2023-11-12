@@ -7,13 +7,13 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "space-between",
       paddingBottom: 50,
-      marginTop: 15,
    },
    backButton: {
       position: "absolute",
       top: 50,
       left: 35,
       zIndex: 1,
+      marginTop: 5,
    },
 });
 
