@@ -212,9 +212,7 @@ export default function AnswerQuestion({ route }) {
                </View>
             </HStack>
             <View
-               marginBottom={3}
-               marginTop={3}
-               style={{ justifyContent: "space-between" }}
+               marginY={2}
             >
                <Text fontSize={15} fontWeight="bold">
                   {doubt.titulo}
@@ -226,9 +224,9 @@ export default function AnswerQuestion({ route }) {
                   </Text>
                </View>
             </View>
-            <HStack marginBottom={2} justifyContent={"space-between"}>
+            <HStack marginBottom={2}>
                <Input
-                  width="80%"
+                  width="95%"
                   maxLength={500}
                   placeholder="Comentar"
                   value={myResponse}

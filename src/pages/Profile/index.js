@@ -1,9 +1,9 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Center, Text, View, Avatar, Button, ScrollView } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../contexts/auth";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 
 export default function Profile() {
    const { navigate } = useNavigation();
@@ -16,33 +16,31 @@ export default function Profile() {
    };
 
    return (
-      <ScrollView>
-         <Text
-            marginTop={10}
-            alignSelf="center"
-            fontSize={25}
-            color={"#52D6FB"}
-         >
-            Perfil
-         </Text>
+      <View style={{justifyContent: 'space-between'}}>
          <Center>
-            <TouchableOpacity>
-               <Avatar
-                  alignSelf="center"
-                  bg="tertiaryBlue"
-                  margin={5}
-                  size="xl"
-                  source={
-                     !profile.foto
-                        ? {
-                              uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
-                          }
-                        : {
-                             uri: user.perfil.foto
-                          }
-                  }
-               />
-            </TouchableOpacity>
+            <Text
+               marginTop={10}
+               alignSelf="center"
+               fontSize={25}
+               color={"#52D6FB"}
+            >
+               Perfil
+            </Text>
+            <Avatar
+               alignSelf="center"
+               bg="tertiaryBlue"
+               margin={5}
+               size="xl"
+               source={
+                  !profile.foto
+                     ? {
+                           uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                        }
+                     : {
+                           uri: user.perfil.foto
+                        }
+               }
+            />
          </Center>
          <View style={styles.edgeProfile}>
             <View
@@ -83,7 +81,20 @@ export default function Profile() {
             >
                Editar
             </Button>
+            <Button
+               variant="unstyled"
+               onPress={() => navigate("RecoverPassword")}
+               _text={{
+                  color: "#000",
+                  fontWeight: 300,
+                  textDecorationLine: "underline",
+                  textDecorationStyle: "solid",
+                  textDecorationColor: "#fff",
+               }}
+            >
+               Criar nova senha
+            </Button>
          </View>
-      </ScrollView>
+      </View>
    );
 }

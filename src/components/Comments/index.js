@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Avatar, Text, View, ScrollView, HStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import DateISOToFormated from "../../util/DateISOToFormated";
@@ -9,7 +9,6 @@ export default function Comments({
    correctResponse,
    enableMark,
 }) {
-   const [clickHearto, setClickHearto] = useState(false);
 
    return (
       <ScrollView
@@ -42,12 +41,6 @@ export default function Comments({
             justifyContent="space-between"
          >
             <HStack space={2}>
-               <AntDesign
-                  size={20}
-                  name="heart"
-                  color={clickHearto ? "red" : "grey"}
-                  onPress={() => setClickHearto(!clickHearto)}
-               />
                {enableMark && (
                   <AntDesign
                      name="checkcircle"

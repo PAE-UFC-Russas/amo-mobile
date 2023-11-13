@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, Text, View } from "native-base";
+import { Center, Text, useToast } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator } from "react-native";
 import AuthHeader from "../../components/AuthHeader";
@@ -12,18 +12,14 @@ import api from "../../services/api";
 import { GetLoginToken } from "../../util/StorageLogin";
 
 export default function RecoverPassword() {
-   const { navigate, goBack } = useNavigation();
+   const { goBack } = useNavigation();
+   const toast = useToast();
    const [loading, setLoading] = useState(false);
-   const [inputErros, setInputErros] = useState({
-      errosEmail: null,
-   });
-
    const [senhaDados, setSenhaDados] = useState({
       senhaAtual: "",
       novaSenha: "",
       confirmarSenha: "",
    });
-
    const [statusSenha, setStatusSenha] = useState("");
 
    const handleCriateNewPassword = async () => {
@@ -35,6 +31,7 @@ export default function RecoverPassword() {
             senhaDados.confirmarSenha.length === 0
          ) {
             setStatusSenha("Existem campos em branco!");
+            setLoading(false)
          } else {
             const response = await api.post(
                "/usuario/eu/mudar/",
@@ -50,21 +47,17 @@ export default function RecoverPassword() {
                }
             );
 
-            if (response.data.erro === "senha atual incorreta") {
-               setStatusSenha("senha atual incorreta!");
-               setLoading(false);
-            } else if (
-               response.data.sucesso === "senha alterada com sucesso!"
-            ) {
-               setLoading(false);
-               setStatusSenha("senha alterada com sucesso!");
-            } else if (response.data.erro === "senhas não coincidem") {
-               setLoading(false);
-               setStatusSenha("senhas não coincidem!");
-            }
+            if (response.data.sucesso.length > 0) {
+               toast.show({
+                  title: "Senha alterada com sucesso!",
+                  placement: "bottom",
+               });
+               goBack()
+            } 
          }
       } catch (error) {
-         console.error("Erro ao mudar a senha:", error);
+         console.error(error.response.data.erro);
+         setStatusSenha(error.response.data.erro);
          setLoading(false);
       }
    };
@@ -89,8 +82,7 @@ export default function RecoverPassword() {
                setValue={(text) =>
                   setSenhaDados({ ...senhaDados, senhaAtual: text })
                }
-            ></DefaultFormInput>
-
+            />
             <DefaultFormInput
                width="100%"
                height="100%"
@@ -100,7 +92,7 @@ export default function RecoverPassword() {
                setValue={(text) =>
                   setSenhaDados({ ...senhaDados, novaSenha: text })
                }
-            ></DefaultFormInput>
+            />
             <DefaultFormInput
                width="100%"
                height="100%"
@@ -110,15 +102,14 @@ export default function RecoverPassword() {
                setValue={(text) =>
                   setSenhaDados({ ...senhaDados, confirmarSenha: text })
                }
-            ></DefaultFormInput>
-            <Text style={{ color: "#52D6FB" }}>{statusSenha}</Text>
-            <Text color={"grey"} fontSize={12.5}>
+            />
+            <Text style={{ color: "red" }}>{statusSenha}</Text>
+            <Text fontWeight={200}>
                A senha precisa ter no mínimo 8 caracteres, contendo letras e
                números, sem espaçamento. Ex: 12zay78d
             </Text>
          </Center>
-
-         <DefaultBlueButton onPress={handleCriateNewPassword}>
+         <DefaultBlueButton onPress={handleCriateNewPassword} disabled={loading}>
             {loading ? <ActivityIndicator /> : "Salvar"}
          </DefaultBlueButton>
       </Center>

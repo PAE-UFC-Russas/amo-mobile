@@ -31,7 +31,7 @@ export default function About() {
                   source={require("../../assets/About_img.png")}
                />
                <View alignItems="center">
-                  <Text padding={2} fontSize={18} fontWeight={500}>
+                  <Text marginX={8}>
                      Bem-vindo ao nosso aplicativo de monitoria online! Aqui,
                      você pode contar com a ajuda dos monitores para tirar suas
                      dúvidas e aprimorar seu aprendizado. Estamos prontos para

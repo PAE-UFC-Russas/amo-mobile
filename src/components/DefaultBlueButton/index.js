@@ -1,6 +1,6 @@
 import { Button } from "native-base";
 
-export default function DefaultBlueButton({ onPress, children, loading }) {
+export default function DefaultBlueButton({ onPress, children, loading, disabled}) {
    return (
       <Button
          disabled={loading}
@@ -10,6 +10,7 @@ export default function DefaultBlueButton({ onPress, children, loading }) {
          width={80}
          height={60}
          onPress={onPress}
+         isDisabled={disabled}
          _text={{
             fontWeight: 800,
             color: "#fff",

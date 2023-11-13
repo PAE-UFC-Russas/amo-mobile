@@ -61,7 +61,7 @@ export default function Schedule() {
       if (filters.closed) {
          url += "&status=cancelado";
       }
-      console.log(url, filters)
+
       try {
          setLoading(true);
          const response = await api.get(url, {

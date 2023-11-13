@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import {
-   Avatar,
    Button,
    Text,
-   Select,
-   Icon,
    Input,
    HStack,
    TextArea,
@@ -17,10 +14,8 @@ import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import OnDeleteModal from "../../components/OnDeleteModal";
 import styles from "./styles";
-import { useAuth } from "../../contexts/auth";
 
 export default function RegisterDoubt({ route }) {
-   const { user } = useAuth();
    const { goBack } = useNavigation();
    const [openModal, setOpenModal] = useState(false);
    const [question, setQuestion] = useState({

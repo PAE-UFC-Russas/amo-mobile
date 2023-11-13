@@ -12,7 +12,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
             timer = setTimeout(()=>{
                 timer = null;
                 func.apply(context, args)
-            }, 3000)
+            }, 2000)
         }
     }
 
@@ -20,7 +20,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
         setFilters({...filters, text: text});
     }
 
-    const handler = useCallback(debounce(handleChange, 3000), []);
+    const handler = useCallback(debounce(handleChange, 2000), []);
 
     const handleChangeFilters = (type) => {
         if(type === 'mostLiked'){
@@ -56,7 +56,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
             <ScrollView 
                 horizontal={true} 
                 showsHorizontalScrollIndicator={false} 
-                contentContainerStyle={{ flexGrow: 1 }}
+
             >
                 <Button 
                     borderRadius='full' 

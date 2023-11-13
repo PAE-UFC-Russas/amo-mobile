@@ -137,18 +137,6 @@ export default function SignIn() {
             </VStack>
             <VStack space={3} alignItems="center">
                {!keyboardIsOpen && (
-                  <>
-                     <Button
-                        variant="ghost"
-                        key="forget"
-                        onPress={() => navigate("RecoverPassword")}
-                        _text={{
-                           color: "#fff",
-                           fontWeight: 200,
-                        }}
-                     >
-                        Criar nova senha
-                     </Button>
                      <Button
                         variant="ghost"
                         key="SignUp"
@@ -160,7 +148,6 @@ export default function SignIn() {
                      >
                         Cadastre-se
                      </Button>
-                  </>
                )}
                <Button
                   disabled={loading}
