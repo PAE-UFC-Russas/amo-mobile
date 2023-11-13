@@ -38,7 +38,7 @@ export default function SchedulingFilter({ setFilters, filters }){
                     }}
                     variant={filters.opens?'solid':'outline'} 
                     onPress={()=>handleChangeFilters('opens')}>
-                        Abertos
+                        Confirmados
                 </Button>
                 <Button 
                     borderRadius='full' 

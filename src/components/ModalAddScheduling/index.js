@@ -80,7 +80,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                             placeholder='Selecione a disciplina' 
                             width='100%'
                             borderRadius={10} 
-                            onValueChange={itemValue => setNewSchedule({...newSchedule, tipo: itemValue})} 
+                            onValueChange={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue[0]})} 
                         >
                             {subjects.map((item, index)=>{
                                 return <Select.Item key={index} label={`${item.nome}`} value={`${item.id},${item.nome}`}/>

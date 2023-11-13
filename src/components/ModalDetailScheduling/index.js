@@ -109,15 +109,19 @@ export default function ModalDetailScheduling({
                   </Text>
                   <Text fontSize={15}>{details.tipo}</Text>
                </View>
-               <View marginBottom="2%">
-                  <Text fontSize={20} color="grey">
-                     Link:
-                  </Text>
-                  <Text fontSize={15} color="#003459">
-                     {" "}
-                     {filterDesc("https://meet.google.com/yvr-vzww-jpz")}
-                  </Text>
-               </View>
+               {
+
+                  !details.tipo.startsWith('presencial') && 
+                  <View marginBottom="2%">
+                     <Text fontSize={20} color="grey">
+                        Link:
+                     </Text>
+                     <Text fontSize={15} color="#003459">
+                        {" "}
+                        {filterDesc("https://meet.google.com/yvr-vzww-jpz")}
+                     </Text>
+                  </View>
+               }
             </View>
             <View
                width="100%"

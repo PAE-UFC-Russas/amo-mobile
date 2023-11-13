@@ -51,14 +51,17 @@ export default function Schedule() {
 
       if (filters.subject.id !== null) {
          url += `&disciplina=${filters.subject.id}`;
-      } else if (filters.all) {
+      }
+      if (filters.all) {
          url = "/agendamentos/?pages=1";
-      } else if (filters.confimed) {
+      }
+      if (filters.opens) {
          url += "&status=confirmado";
-      } else if (filters.closed) {
+      } 
+      if (filters.closed) {
          url += "&status=cancelado";
       }
-
+      console.log(url, filters)
       try {
          setLoading(true);
          const response = await api.get(url, {
