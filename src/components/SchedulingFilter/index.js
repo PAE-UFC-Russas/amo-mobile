@@ -16,10 +16,10 @@ export default function SchedulingFilter({ setFilters, filters }){
     }
 
     return(
-        <View height='10%' width='100%' justifyContent='space-around'>
+        <View width='100%' justifyContent='space-around' marginBottom={4}>
             <View flexDirection='row' justifyContent='space-evenly'>
                 <Button 
-                    width='24%'
+                    width='30%'
                     borderRadius='full'
                     borderColor='#52D6FB' 
                     _text={{
@@ -30,8 +30,8 @@ export default function SchedulingFilter({ setFilters, filters }){
                         Todos
                 </Button>
                 <Button 
+                    width='30%'
                     borderRadius='full' 
-                    width='24%'
                     borderColor='#52D6FB' 
                     _text={{
                         color: filters.opens?'#fff':'#52D6FB'
@@ -41,8 +41,8 @@ export default function SchedulingFilter({ setFilters, filters }){
                         Confirmados
                 </Button>
                 <Button 
+                    width='30%'
                     borderRadius='full' 
-                    width='25%'
                     borderColor='#52D6FB'
                     _text={{
                         color: filters.closed?'#fff':'#52D6FB'

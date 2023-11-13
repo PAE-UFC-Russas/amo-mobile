@@ -145,7 +145,7 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                             showDate.active&&
                                 <RNDateTimePicker 
                                     mode={showDate.type}
-                                    value={new Date()}
+                                    value={typeof newSchedule.data === "object"?newSchedule.data:new Date()}
                                     minimumDate={new Date()}
                                     onTouchCancel={()=>setShowDate({...showDate, active: false})}
                                     onChange={(event, date) => {setShowDate({...showDate, active: false});setNewSchedule({...newSchedule, data: date})}}
