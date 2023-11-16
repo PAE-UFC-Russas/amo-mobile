@@ -8,6 +8,7 @@ import styles from "./styles";
 import { ActivityIndicator } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import { GetLoginToken } from "../../util/StorageLogin";
 
 export default function SignIn() {
    const { navigate } = useNavigation();
@@ -38,11 +39,26 @@ export default function SignIn() {
    //             navigate("StudentProfile");
    //          }
    //       } else {
-   //             navigate("SelectCourses");
-   //             }
+   //          navigate("SelectCourses");
    //       }
-   //       VerifyLogin();
+   //    }
+   //    VerifyLogin();
    // }, []);
+   useEffect(() => {
+      setUserLogin({
+         email: "",
+         password: "",
+         signed: false,
+      });
+      async function VerifyLogin() {
+         const connected = await IsConnected();
+
+         if (connected === true) {
+            navigate("SelectCourses");
+         }
+      }
+      VerifyLogin();
+   }, []);
 
    const InputValidation = async () => {
       setLoading(true);
@@ -137,17 +153,17 @@ export default function SignIn() {
             </VStack>
             <VStack space={3} alignItems="center">
                {!keyboardIsOpen && (
-                     <Button
-                        variant="ghost"
-                        key="SignUp"
-                        onPress={() => navigate("SignUp")}
-                        _text={{
-                           color: "#fff",
-                           fontWeight: 800,
-                        }}
-                     >
-                        Cadastre-se
-                     </Button>
+                  <Button
+                     variant="ghost"
+                     key="SignUp"
+                     onPress={() => navigate("SignUp")}
+                     _text={{
+                        color: "#fff",
+                        fontWeight: 800,
+                     }}
+                  >
+                     Cadastre-se
+                  </Button>
                )}
                <Button
                   disabled={loading}

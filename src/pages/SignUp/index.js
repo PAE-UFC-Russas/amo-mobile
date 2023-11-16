@@ -32,17 +32,19 @@ export default function Register() {
          errosPassword: null,
          errosConfirmPassword: null,
       });
+
       let erros = {
          errosEmail: null,
          errosPassword: null,
          errosConfirmPassword: null,
       };
+
       try {
          if (newUser.email.length < 10 && !validator.isEmail(newUser.email))
             erros.errosEmail = "E-mail inválido!";
          if (newUser.password.length < 8)
             erros.errosPassword =
-               "A senha precisa conter no minimo 8 caracteres!";
+               "A senha precisa conter no mínimo 8 caracteres!";
          else if (!newUser.password.match(/[a-zA-Z]/g))
             erros.errosPassword =
                "A senha precisa conter pelo menos uma letra!";
@@ -51,28 +53,36 @@ export default function Register() {
                "A senha precisa conter pelo menos um número!";
          if (newUser.password !== newUser.confirmPassword)
             erros.errosConfirmPassword = "As senhas devem ser iguais!";
+
          setInputErros(erros);
+
          if (
             !erros.errosEmail &&
             !erros.errosPassword &&
             !erros.errosConfirmPassword
          ) {
             setLoading(true);
-            const response = await Register(newUser);
 
-            if (response === null) {
-               navigate("StudentProfile", { register: true });
-            } else {
-               setInputErros({
-                  ...inputErros,
-                  errosEmail: "Endereço de email já está em uso!",
-               });
+            try {
+               const response = await Register(newUser);
+
+               if (response === null) {
+                  // A navegação para 'StudentProfile' só ocorre se o cadastro for bem-sucedido
+                  navigate("StudentProfile", { register: true });
+               } else {
+                  setInputErros({
+                     ...inputErros,
+                     errosEmail: "Endereço de email já está em uso!",
+                  });
+               }
+            } catch (error) {
+               console.error("Erro ao realizar o cadastro:", error);
+            } finally {
+               setLoading(false);
             }
-            setLoading(false);
          }
       } catch (error) {
-         console.log(error);
-      } finally {
+         console.error(error);
       }
    }
 
@@ -86,7 +96,7 @@ export default function Register() {
             name="arrow-back-ios"
          />
          <Center width="5/6">
-            <AuthHeader>Cadastra-se</AuthHeader>
+            <AuthHeader>Cadastre-se</AuthHeader>
             <VStack width="full" space={3}>
                <DefaultFormInput
                   placeholder="Email"
