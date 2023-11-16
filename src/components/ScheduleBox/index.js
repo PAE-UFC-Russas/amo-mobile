@@ -1,49 +1,48 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { Popover, Button } from "native-base";
 import DateISOToFormated from '../../util/DateISOToFormated';
-import FormateTime from '../../util/FormateTime';
 import styles from './styles';
+import FormateTime from '../../util/FormateTime';
 
 export default function ScheduleBox({setOpenDetailModal, setNewSchedule, Schedule}) {
+  const status = Schedule.status[0].toUpperCase() + Schedule.status.substring(1,Schedule.status.length)
+  const type = Schedule.tipo[0].toUpperCase() + Schedule.tipo.substring(1,Schedule.tipo.length)
 
   const ColorOfSchedule = () => {
     if(Schedule.status == 'confirmado'){
-      return 'green'
+      return '#03CD23'
     }else if(Schedule.status == 'aguardando'){
-      return 'yellow'
+      return '#FFD749'
     }else{
-      return 'red'
+      return '#FF5B5B'
     }
   }
 
-  const SchedulePopover = () => {
-    return (
-      <Popover
-        trigger={triggerProps => {
-          return <Button {...triggerProps} style={{...styles.status, backgroundColor: ColorOfSchedule()}}/>
-        }}
-      >
-        <Popover.Content accessibilityLabel='Status of scheduling'>
-          <Popover.Body>
-            O agendamento foi {Schedule.status}
-          </Popover.Body>
-        </Popover.Content>
-      </Popover>
-    )
+  const CutString = (text, len) => {
+    if(text.length > len){
+      return text.slice(0, len) + '...';
+    }
+
+    return text
   }
-          
 
   return (
     <View style={styles.container}>
-      <SchedulePopover/>
+      <View style={{...styles.status, backgroundColor: ColorOfSchedule()}}/>
       <TouchableOpacity onPress={()=>{setOpenDetailModal(true);setNewSchedule(Schedule)}} style={styles.box}>
-        <View style={{maxWidth: '80%'}}>
-          <Text style={{fontSize:18}}>{Schedule.assunto}</Text>
-          <Text>{Schedule.descricao}</Text>
+        <View style={styles.infoArea}>
+          <Text style={{color: ColorOfSchedule()}}>{status}</Text>
+          <View style={{marginTop: '4%'}}>
+            <Text style={{fontSize:18}}>{CutString(Schedule.assunto, 18)}</Text>
+            <Text>{CutString(Schedule.descricao, 25)}</Text>
+          </View>
         </View>
-        <View>
-          <Text style={styles.hourText}>{FormateTime(Schedule.data)}</Text>
-          <Text>{DateISOToFormated(Schedule.data)}</Text>
+        <View style={{...styles.infoArea, justifyContent: 'center'}}>
+          <View style={{justifyContent: 'flex-end', height: '50%'}}>
+            <Text style={styles.typeText}>{type}</Text>
+          </View>
+          <View style={{justifyContent: 'flex-end', height: '40%'}}>
+            <Text>{DateISOToFormated(Schedule.data)} as {FormateTime(Schedule.data)}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     </View>
