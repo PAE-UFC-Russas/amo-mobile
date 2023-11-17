@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/auth";
 
 export default function ForumQuestionMenu({
    setConfirmDeleteQuest,
+   setReportQuest,
    author,
    id,
 }) {
@@ -40,7 +41,9 @@ export default function ForumQuestionMenu({
                <Text>Deletar pergunta</Text>
             </Menu.Item>
          )}
-         <Menu.Item>
+         <Menu.Item
+            onPress={() => setReportQuest({ open: true, id: id })}
+         >
             <Text>Denunciar pergunta</Text>
          </Menu.Item>
       </Menu>

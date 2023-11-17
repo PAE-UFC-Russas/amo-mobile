@@ -10,6 +10,7 @@ import ConfirmQuestDelete from "../../components/ConfirmQuestDelete";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
+import ReportQuest from "../../components/ReportQuest";
 
 export default function Forum({ navigation, route }) {
    const [filters, setFilters] = useState({
@@ -22,6 +23,12 @@ export default function Forum({ navigation, route }) {
    const [confirmDeleteQuest, setConfirmDeleteQuest] = useState({
       open: false,
       id: null,
+   });
+   const [reportQuestion, setReportQuestion] = useState({
+      open: false,
+      id: null,
+      reason: '',
+      description: ''
    });
    const [page, setPage] = useState(1);
    const [displayValue, setDisplayValue] = useState("");
@@ -165,6 +172,7 @@ export default function Forum({ navigation, route }) {
                      PostLike,
                      DeleteLike,
                      setConfirmDeleteQuest,
+                     setReportQuestion,
                      route.params.monitores
                   )
                }
@@ -184,6 +192,10 @@ export default function Forum({ navigation, route }) {
             confirmDeleteQuest={confirmDeleteQuest}
             setOpen={setConfirmDeleteQuest}
             DeleteQuestion={DeleteQuestion}
+         />
+         <ReportQuest
+            setReportQuestion={setReportQuestion}
+            reportQuestion={reportQuestion}
          />
          <DefaultStagger>
             <IconButton

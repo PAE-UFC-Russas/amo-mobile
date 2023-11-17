@@ -11,6 +11,7 @@ export default function ForumQuest(
    PostLike,
    DeleteLike,
    setConfirmDeleteQuest,
+   setReportQuest,
    monitores
 ) {
    return (
@@ -49,6 +50,7 @@ export default function ForumQuest(
                         id={quest.id}
                         author={quest.autor.id}
                         setConfirmDeleteQuest={setConfirmDeleteQuest}
+                        setReportQuest={setReportQuest}
                      />
                   </HStack>
                   <Text fontWeight="semibold" numberOfLines={2}>{quest.titulo}</Text>
