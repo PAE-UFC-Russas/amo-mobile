@@ -2,15 +2,13 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
    container: {
-      height: 100,
       flexDirection: "row",
       alignItems: "center",
-      width: "95%",
-      backgroundColor: "whitesmoke",
-      borderRadius: 15,
-      padding: 25,
-      marginTop: "3%",
       justifyContent: "center",
+      height: 100,
+      backgroundColor: "#fff",
+      borderRadius: 15,
+      marginTop: "3%",
       shadowColor: "#000",
       shadowOffset: {
          width: 0,
@@ -22,25 +20,29 @@ const styles = StyleSheet.create({
       elevation: 5,
    },
    box: {
-      marginRight: 20,
-      marginLeft: 20,
-      marginTop: 5,
       width: "100%",
-      height: 100,
+      height: "100%",
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
+      padding: 8
+   },
+   infoArea: {
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      height: "100%",
    },
    status: {
-      width: 10,
-      height: 10,
-      borderRadius: 100,
-      marginLeft: 20,
+      width: "3%",
+      height: "100%",
+      backgroundColor:"#FFD749",
+      borderTopLeftRadius: 15,
+      borderBottomLeftRadius: 15
    },
-   hourText: {
-      fontSize: 20,
+   typeText: {
+      fontSize: 16,
       fontWeight: "bold",
-      textAlign: "center",
-   },
+      textAlign: "center"
+   }
 });
 export default styles;

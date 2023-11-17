@@ -150,7 +150,7 @@ export default function Schedule() {
                />
                <FlatList
                   data={schedules.results}
-                  contentContainerStyle={{ padding: 10 }}
+                  contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 15 }}
                   renderItem={(item, index) => (
                      <ScheduleBox
                         Schedule={item.item}
