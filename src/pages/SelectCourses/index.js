@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { VStack, Center, Button, Spinner } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import AuthHeader from "../../components/AuthHeader";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 
 export default function SelectCourses() {
    const { navigate } = useNavigation();

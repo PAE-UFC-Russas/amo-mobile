@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Button, Center, VStack, Input, Spinner } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import AuthHeader from "../../components/AuthHeader";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
 
-export default function SelectSubjects({ navigation }) {
+export default function SelectSubjects( {route} ) {
    const [loading, setLoading] = useState(true);
    const [subjects, setSubjects] = useState([]);
    const [filterMonitoria, setFilterMonitoria] = useState("");
+   const { navigate } = useNavigation();
 
    useEffect(() => {
       async function GetSubjects() {
          try {
             setLoading(true);
             const response = await api.get(
-               `/disciplinas/?pages=1&search=${filterMonitoria}`,
+               `/disciplinas/?pages=1&search=${filterMonitoria}&cursos=${route.params}`,
                {
                   headers: {
                      Authorization: "Token " + (await GetLoginToken()),
                   },
                }
             );
+
             setLoading(false);
             setSubjects(response.data.results);
          } catch (error) {
@@ -66,7 +69,7 @@ export default function SelectSubjects({ navigation }) {
                         borderRadius="2xl"
                         width={"80%"}
                         height={60}
-                        onPress={() => navigation.navigate("ForumDrawer", item)}
+                        onPress={() => navigate("ForumDrawer", item)}
                         _text={{
                            fontWeight: 800,
                            color: "#fff",
