@@ -39,6 +39,13 @@ export default function AuthContextProvider({ children }) {
          const token = response.data.token;
          const userData = await GetUser(token);
 
+         if (
+            userData.perfil.curso === null ||
+            userData.perfil.entrada === null ||
+            userData.perfil.nome_completo.length < 1
+         ) {
+            return { erro: "usuario incompleto!" };
+         }
          setUser({ ...userData });
 
          await StoreLoginToken(token);
