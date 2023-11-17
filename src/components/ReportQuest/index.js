@@ -1,6 +1,6 @@
 import { AlertDialog, Button, Text, TextArea, Select } from "native-base";
 
-export default function ReportQuest({reportQuestion, setReportQuestion}){
+export default function ReportQuest({reportQuestion, setReportQuestion, handleReportQuestion}){
     const reasons = ['Ameaças', 'Xingamentos', 'Bullying', 'Mensagem imprópria']
 
     return(
@@ -39,7 +39,7 @@ export default function ReportQuest({reportQuestion, setReportQuestion}){
                         <Button variant='unstyled' colorScheme='coolGray' onPress={()=>setReportQuestion({...reportQuestion, open: false})}>
                             Cancelar
                         </Button>
-                        <Button colorScheme='danger'>
+                        <Button colorScheme='danger' onPress={() => handleReportQuestion()}>
                             Denunciar
                         </Button>
                     </Button.Group>

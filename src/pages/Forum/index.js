@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
-import { Center, IconButton, Spinner } from "native-base";
+import { Center, IconButton, Spinner, useToast } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import ForumSearch from "../../components/ForumSearch";
 import ForumQuest from "../../components/ForumQuest";
@@ -34,6 +34,7 @@ export default function Forum({ navigation, route }) {
    const [displayValue, setDisplayValue] = useState("");
    const [data, setData] = useState([]);
    const [loading, setLoading] = useState(true);
+   const toast = useToast();
 
    const GetQuestions = async (next) => {
       try {
@@ -86,6 +87,23 @@ export default function Forum({ navigation, route }) {
          });
          setConfirmDeleteQuest({ open: false, id: null });
          GetQuestions();
+      } catch (error) {
+         console.log(error.response);
+      }
+   };
+
+   const handleReportQuestion = async () => {
+      try {
+         // await api.delete(`/duvidas/${confirmDeleteQuest.id}/`, {
+         //    headers: {
+         //       Authorization: "Token " + (await GetLoginToken()),
+         //    },
+         // });
+         setReportQuestion({ open: false, id: null });
+         toast.show({
+            title: "Dúvida reportada com sucesso!",
+            placement: "bottom",
+         });
       } catch (error) {
          console.log(error.response);
       }
@@ -196,6 +214,7 @@ export default function Forum({ navigation, route }) {
          <ReportQuest
             setReportQuestion={setReportQuestion}
             reportQuestion={reportQuestion}
+            handleReportQuestion={handleReportQuestion}
          />
          <DefaultStagger>
             <IconButton
