@@ -24,25 +24,25 @@ export default function SignIn() {
    });
    const { IsConnected, Login } = useAuth();
 
-   // useEffect(() => {
-   //    setUserLogin({
-   //       email: "",
-   //       password: "",
-   //       signed: false,
-   //    });
-   //    async function VerifyLogin() {
-   //       const connected = await IsConnected();
+   useEffect(() => {
+      setUserLogin({
+         email: "",
+         password: "",
+         signed: false,
+      });
+      async function VerifyLogin() {
+         const connected = await IsConnected();
 
-   //       if (!connected) {
-   //          if (connected === null) {
-   //             navigate("StudentProfile");
-   //          }
-   //       } else {
-   //             navigate("SelectCourses");
-   //             }
-   //       }
-   //       VerifyLogin();
-   // }, []);
+         if (!connected) {
+            if (connected === null) {
+               navigate("StudentProfile");
+            }
+         } else {
+            navigate("SelectCourses");
+         }
+      }
+      VerifyLogin();
+   }, []);
 
    const InputValidation = async () => {
       setLoading(true);
@@ -62,7 +62,11 @@ export default function SignIn() {
 
       if (!erros.errosEmail && !erros.errosPassword) {
          const response = await Login(userLogin);
+
          if (response) {
+            if (response.erro) {
+               navigate("StudentProfile");
+            }
             if (response.non_field_errors) {
                setLoading(false);
                setInputErros({ errosEmail: "Email ou senha incorretos" });
@@ -137,17 +141,17 @@ export default function SignIn() {
             </VStack>
             <VStack space={3} alignItems="center">
                {!keyboardIsOpen && (
-                     <Button
-                        variant="ghost"
-                        key="SignUp"
-                        onPress={() => navigate("SignUp")}
-                        _text={{
-                           color: "#fff",
-                           fontWeight: 800,
-                        }}
-                     >
-                        Cadastre-se
-                     </Button>
+                  <Button
+                     variant="ghost"
+                     key="SignUp"
+                     onPress={() => navigate("SignUp")}
+                     _text={{
+                        color: "#fff",
+                        fontWeight: 800,
+                     }}
+                  >
+                     Cadastre-se
+                  </Button>
                )}
                <Button
                   disabled={loading}
