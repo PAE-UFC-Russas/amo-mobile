@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View, Text, VStack } from "native-base";
+import { Image, View, Text, Center } from "native-base";
 import { TouchableOpacity, Linking } from "react-native";
 import { MaterialIcons, EvilIcons } from "@expo/vector-icons";
 import styles from "./styles";
@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function About() {
    const { goBack } = useNavigation();
+   
    return (
       <>
          <View
@@ -23,23 +24,28 @@ export default function About() {
             />
          </View>
          <View style={styles.container} bgColor="#fff">
-            <VStack>
+            <Center>
                <Image
-                  width={400}
-                  height={350}
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+               <Image
+                  height={300}
                   alt="Ilustração da tela about"
-                  source={require("../../assets/About_img.png")}
+                  source={require("../../assets/about.png")}
                />
                <View alignItems="center">
-                  <Text marginX={8}>
+                  <Text marginX={6} textAlign="center">
                      Bem-vindo ao nosso aplicativo de monitoria online! Aqui,
                      você pode contar com a ajuda dos monitores para tirar suas
+                     
                      dúvidas e aprimorar seu aprendizado. Estamos prontos para
                      ajudá-lo a entender e dominar qualquer assunto. Nosso
                      aplicativo é fácil de usar e muito intuitivo.
                   </Text>
                </View>
-            </VStack>
+            </Center>
             <View width="100%" alignItems="center">
                <TouchableOpacity
                   onPress={() =>
