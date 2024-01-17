@@ -47,27 +47,26 @@ export default function Schedule() {
    }
 
    async function GetSchedules() {
-      let url = "/agendamentos/?pages=1";
+      let params = {}
 
       if (filters.subject.id !== null) {
-         url += `&disciplina=${filters.subject.id}`;
+         params = {"disciplina": filters.subject.id}
       }
-      if (filters.all) {
-         url = "/agendamentos/?pages=1";
-      }
-      if (filters.opens) {
-         url += "&status=confirmado";
-      } 
-      if (filters.closed) {
-         url += "&status=cancelado";
+      if (!filters.all) {
+         if (filters.opens) {
+            params = {...params, "status": "confirmado"}
+         } else if (filters.closed) {
+            params = {...params, "status": "cancelado"}
+         }
       }
 
       try {
          setLoading(true);
-         const response = await api.get(url, {
+         const response = await api.get("/agendamentos", {
             headers: {
                Authorization: "Token " + (await GetLoginToken()),
             },
+            params
          });
 
          setSchedules(response.data);
