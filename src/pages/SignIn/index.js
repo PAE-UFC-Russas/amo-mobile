@@ -6,7 +6,6 @@ import { useAuth } from "../../contexts/auth";
 import DefaultFormInput from "../../components/DefaultFormInput";
 import styles from "./styles";
 import { ActivityIndicator } from "react-native";
-
 import { useNavigation } from "@react-navigation/native";
 
 export default function SignIn() {
@@ -15,8 +14,7 @@ export default function SignIn() {
    const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
    const [userLogin, setUserLogin] = useState({
       email: "",
-      password: "",
-      signed: false,
+      password: ""
    });
    const [inputErros, setInputErros] = useState({
       errosEmail: null,
@@ -28,9 +26,10 @@ export default function SignIn() {
       setUserLogin({
          email: "",
          password: "",
-         signed: false,
       });
+
       async function VerifyLogin() {
+         setLoading(true);
          const connected = await IsConnected();
 
          if (!connected) {
@@ -40,7 +39,9 @@ export default function SignIn() {
          } else {
             navigate("SelectCourses");
          }
+         setLoading(false)
       }
+
       VerifyLogin();
    }, []);
 
