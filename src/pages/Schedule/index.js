@@ -68,7 +68,7 @@ export default function Schedule() {
             },
             params
          });
-
+         
          setSchedules(response.data);
          setLoading(false);
       } catch (error) {

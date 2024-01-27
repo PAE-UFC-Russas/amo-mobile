@@ -22,6 +22,7 @@ export default function SignUpTeacher() {
          setInputErros({ errosEmail: response });
       }
    };
+   
    return (
       <Center style={styles.container} bgColor="#fff" safeArea>
          <MaterialIcons

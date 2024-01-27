@@ -36,10 +36,10 @@ export default function SignIn() {
             if (connected === null) {
                navigate("StudentProfile");
             }
+            setLoading(false)
          } else {
             navigate("SelectCourses");
          }
-         setLoading(false)
       }
 
       VerifyLogin();

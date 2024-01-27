@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Text, Modal, View, Center } from "native-base";
+import { OpenBrowser } from "../../util/SendEmail";
 import { useAuth } from "../../contexts/auth";
 import FormateTime from "../../util/FormateTime";
 import DateISOToFormated from "../../util/DateISOToFormated";
@@ -116,10 +117,9 @@ export default function ModalDetailScheduling({
                      <Text fontSize={20} color="grey">
                         Link:
                      </Text>
-                     <Text fontSize={15} color="#003459">
-                        {" "}
-                        {filterDesc("https://meet.google.com/yvr-vzww-jpz")}
-                     </Text>
+                     <Button fontSize={15} color="#003459" variant="link" onPress={()=>OpenBrowser(details.link_zoom)}>
+                        {filterDesc(details.link_zoom)}
+                     </Button>
                   </View>
                }
             </View>
