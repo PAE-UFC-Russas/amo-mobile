@@ -32,7 +32,8 @@
           "cameraPermission": "Permitir que o aplicativo AMO acesse sua camera.",
           "microphonePermission": false
         }
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "eas": {
