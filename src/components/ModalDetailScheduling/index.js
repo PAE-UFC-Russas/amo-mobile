@@ -47,16 +47,16 @@ export default function ModalDetailScheduling({
       if (desc.lenght < 27) {
          return desc;
       }
-      return `${desc.substring(0, 20)}...`;
+      return `${desc.substring(0, 65)}...`;
    }
 
    return (
-      <Modal isOpen={openModal} onClose={HandleOnClose} marginTop="5%">
+      <Modal isOpen={openModal} onClose={HandleOnClose}>
          <Modal.Content
             bgColor="#fff"
             width="90%"
-            borderRadius={15}
-            padding="5%"
+            borderRadius={14}
+            padding="4%"
          >
             <Center>
                <Text
@@ -73,8 +73,7 @@ export default function ModalDetailScheduling({
                alignSelf="center"
                borderWidth={1}
                borderColor="grey"
-               borderRadius={5}
-
+               borderRadius={4}
             >
                <View marginBottom="2%">
                   <Text fontSize={20} color="grey">
@@ -117,21 +116,13 @@ export default function ModalDetailScheduling({
                      <Text fontSize={20} color="grey">
                         Link:
                      </Text>
-                     <Button fontSize={15} color="#003459" variant="link" onPress={()=>OpenBrowser(details.link_zoom)}>
-                        {filterDesc(details.link_zoom)}
+                     <Button color="#003459" padding={0} justifyContent='flex-start' variant="link" onPress={()=>OpenBrowser(details.link_zoom)}>
+                        <Text fontSize={15}>
+                           {filterDesc(details.link_zoom)}
+                        </Text>
                      </Button>
                   </View>
                }
-            </View>
-            <View
-               width="100%"
-               alignSelf="center"
-               borderWidth={1}
-               borderColor="grey"
-               borderRadius={5}
-               marginY="5%"
-               padding="3%"
-            >
                <View marginBottom="2%">
                   <Text fontSize={20} color="grey">
                      Data:
@@ -149,6 +140,7 @@ export default function ModalDetailScheduling({
                width="100%"
                justifyContent="space-around"
                alignSelf="center"
+               marginTop={2}
             >
                {
                   details.status !== "cancelado" && 
