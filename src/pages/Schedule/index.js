@@ -79,7 +79,7 @@ export default function Schedule() {
   async function EditSchedule(type) {
     try {
       await api.patch(
-        `/agendamentos/${newSchedule.id}`,
+        `/agendamentos/${newSchedule.id}/`,
         {
           status: type,
         },
@@ -89,6 +89,7 @@ export default function Schedule() {
           },
         }
       );
+
       setOpenDetailModal(false);
       GetSchedules();
       return true;
