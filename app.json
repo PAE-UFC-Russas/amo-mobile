@@ -22,7 +22,7 @@
         "foregroundImage": "./src/assets/adaptive_icon.png",
         "backgroundColor": "#52D6FB"
       },
-      "package": "com.heronn.ambientedemonitoriaonline"
+      "package": "com.pae.ambientedemonitoriaonline"
     },
     "plugins": [
       [
