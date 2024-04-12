@@ -25,11 +25,32 @@ export default function AnswerQuestion({ route }) {
    const [loading, setLoading] = useState(true);
    const [responses, setResponses] = useState([]);
    const [myResponse, setMyResponse] = useState("");
+   const [office, setOffice] = useState("");
    const [doubt, setDoubt] = useState(route.params);
    const [markEnable, setMarkEnable] = useState(false);
    const [page, setPage] = useState(1);
    const { user } = useAuth();
    const toast = useToast();
+
+   function getCurrentOffice(monitores, professores) {
+      const isMonitor = monitores.find(
+         (obj) => obj.id == doubt.autor.id
+      )
+         ? true
+         : false;
+      const isProfessor = professores.find(
+         (obj) => obj.id == doubt.autor.id
+      )
+         ? true
+         : false;
+      if(isMonitor){
+         setOffice("Monitor")
+      }else if(isProfessor){
+         setOffice("Professor")
+      }else{
+         setOffice("Aluno")
+      }
+    }
 
    const PostResponse = async () => {
       setMyResponse("");
@@ -144,6 +165,8 @@ export default function AnswerQuestion({ route }) {
                }
             );
 
+            getCurrentOffice(response.data.monitores, response.data.professores)
+
             const isMonitor = response.data.monitores.find(
                (obj) => obj.id == user.perfil.id
             )
@@ -186,81 +209,84 @@ export default function AnswerQuestion({ route }) {
             <Text style={styles.title}>Responder dúvida</Text>
          </HStack>
          <View marginTop={5} flex={1}>
-            <HStack>
-               <Avatar
-                  bg="tertiaryBlue"
-                  size="lg"
-                  source={{
-                     uri: !doubt.autor.perfil.foto
-                        ? "https://i.ibb.co/4f1jsPx/Splash-1.png"
-                        : doubt.autor.perfil.foto,
-                  }}
-               />
-               <View
-                  style={{ justifyContent: "center", alignItems: "flex-start" }}
-               >
-                  <Text
-                     style={{
-                        fontSize: 20,
-                        marginLeft: "3%",
-                        fontWeight: "bold",
-                     }}
-                  >
-                     {doubt.autor.perfil.nome_exibicao}
-                  </Text>
-                  <Text marginLeft={"5%"}>{doubt.autor.cargos[0]}</Text>
-               </View>
-            </HStack>
-            <View
-               marginY={2}
-            >
-               <Text fontSize={15} fontWeight="bold">
-                  {doubt.titulo}
-               </Text>
-               <View>
-                  <Text style={styles.textDoubt}>{doubt.descricao}</Text>
-                  <Text style={styles.textDate}>
-                     {DateISOToFormated(doubt.data)}
-                  </Text>
-               </View>
-            </View>
-            <HStack marginBottom={2}>
-               <Input
-                  width="95%"
-                  maxLength={500}
-                  placeholder="Comentar"
-                  value={myResponse}
-                  onChangeText={(text) => setMyResponse(text)}
-               />
-               <IconButton
-                  onPress={PostResponse}
-                  icon={<MaterialIcons name="send" size={24} color="#52D6FB" />}
-               />
-            </HStack>
+
             {loading ? (
                <Spinner marginTop="auto" marginBottom="auto" size="lg" />
             ) : (
-               <FlatList
-                  style={{ height: "68%" }}
-                  data={responses.results}
-                  keyExtractor={(comment) => comment.id}
-                  renderItem={(comment) => (
-                     <Comments
-                        comment={comment.item}
-                        correctResponse={doubt.resposta_correta}
-                        MarkResponse={MarkResponse}
-                        enableMark={markEnable}
+               <>
+                  <HStack>
+                     <Avatar
+                        bg="tertiaryBlue"
+                        size="lg"
+                        source={{
+                           uri: !doubt.autor.perfil.foto
+                              ? "https://i.ibb.co/4f1jsPx/Splash-1.png"
+                              : doubt.autor.perfil.foto,
+                        }}
                      />
-                  )}
-                  ListFooterComponent={
-                     responses.next && (
-                        <ButtonGetNextValues
-                           label="respostas"
-                           onPress={GetResponses}
+                     <View
+                        style={{ justifyContent: "center", alignItems: "flex-start" }}
+                     >
+                        <Text
+                           style={{
+                              fontSize: 20,
+                              marginLeft: "3%",
+                              fontWeight: "bold",
+                           }}
+                        >
+                           {doubt.autor.perfil.nome_exibicao}
+                        </Text>
+                        <Text marginLeft={"5%"}>{office}</Text>
+                     </View>
+                  </HStack>
+                  <View
+                     marginY={2}
+                  >
+                     <Text fontSize={15} fontWeight="bold">
+                        {doubt.titulo}
+                     </Text>
+                     <View>
+                        <Text style={styles.textDoubt}>{doubt.descricao}</Text>
+                        <Text style={styles.textDate}>
+                           {DateISOToFormated(doubt.data)}
+                        </Text>
+                     </View>
+                  </View>
+                  <HStack marginBottom={2}>
+                     <Input
+                        width="95%"
+                        maxLength={500}
+                        placeholder="Comentar"
+                        value={myResponse}
+                        onChangeText={(text) => setMyResponse(text)}
+                     />
+                     <IconButton
+                        onPress={PostResponse}
+                        icon={<MaterialIcons name="send" size={24} color="#52D6FB" />}
+                     />
+                  </HStack>
+                  <FlatList
+                     style={{ height: "68%" }}
+                     data={responses.results}
+                     keyExtractor={(comment) => comment.id}
+                     renderItem={(comment) => (
+                        <Comments
+                           comment={comment.item}
+                           correctResponse={doubt.resposta_correta}
+                           MarkResponse={MarkResponse}
+                           enableMark={markEnable}
                         />
-                     )
-                  }
-               />
+                     )}
+                     ListFooterComponent={
+                        responses.next && (
+                           <ButtonGetNextValues
+                              label="respostas"
+                              onPress={GetResponses}
+                           />
+                        )
+                     }
+                  />
+               </>
             )}
          </View>
       </View>
