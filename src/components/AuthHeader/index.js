@@ -3,7 +3,7 @@ import { Center, Text } from "native-base";
 
 export default function AuthHeader(props) {
    return (
-      <Center marginTop={5} marginBottom="9">
+      <Center marginTop={4} marginBottom="6">
          <Image
             alt="Logo AMO"
             source={require("../../assets/logo_lightblue.png")}

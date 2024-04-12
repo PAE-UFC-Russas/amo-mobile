@@ -2,7 +2,7 @@ import { FormControl, Select } from 'native-base';
 
 export default function DefaultSelect({placeholder, value, setValue, color, backgroundColor, error, items}){
     return (
-        <FormControl isInvalid={error?true:false}>
+        <FormControl isInvalid={error?true:false} isReadOnly>
             <Select 
                 selectedValue={value} 
                 accessibilityLabel={placeholder}

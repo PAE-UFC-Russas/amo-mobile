@@ -33,7 +33,7 @@ export default function StudentProfile() {
          id: null,
          nome: "",
       },
-      birthDate: new Date(),
+      birthDate: new Date(2008,0,1),
    });
    const [inputErros, setInputErros] = useState({
       errosNickName: null,
@@ -238,7 +238,8 @@ export default function StudentProfile() {
                <RNDateTimePicker
                   mode="date"
                   value={personalData.birthDate}
-                  minimumDate={new Date(1940, 0, 1)}
+                  minimumDate={new Date(1960, 0, 1)}
+                  maximumDate={new Date(2008, 0, 1)}
                   onTouchCancel={() => setShowDate(false)}
                   onChange={(event, date) => {
                      setShowDate(false);
