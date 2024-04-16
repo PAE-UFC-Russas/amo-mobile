@@ -9,7 +9,7 @@ export default function AuthHeader(props) {
             source={require("../../assets/logo_lightblue.png")}
             style={{ width: 60, height: 60 }}
          />
-         <Text fontWeight="bold" color="tertiaryBlue" fontSize="md">
+         <Text fontWeight="bold" color="#024284" fontSize="md">
             {props.children}
          </Text>
       </Center>
