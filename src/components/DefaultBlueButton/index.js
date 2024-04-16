@@ -1,11 +1,17 @@
 import { Button } from "native-base";
 
-export default function DefaultBlueButton({ onPress, children, loading, disabled}) {
+export default function DefaultBlueButton({
+   onPress,
+   children,
+   loading,
+   disabled,
+   bgColor,
+}) {
    return (
       <Button
          disabled={loading}
          alignItems={"center"}
-         bgColor="defaultBlue"
+         bgColor={bgColor ? bgColor : "defaultBlue"}
          borderRadius="2xl"
          width={80}
          height={60}

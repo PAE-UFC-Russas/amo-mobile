@@ -19,7 +19,7 @@ export default function DefaultFormInput({
       return (
          <MaterialIcons
             onPress={() => setHiddenPassword(!hiddenPassword)}
-            color={color === "tertiaryBlue" ? "#52D6FB" : "#fff"}
+            color={color === "#024284" ? "#024284" : "#fff"}
             size={24}
             style={{ marginRight: 10 }}
             name={hiddenPassword ? "visibility" : "visibility-off"}

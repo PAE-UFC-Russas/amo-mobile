@@ -86,13 +86,13 @@ export default function Register() {
             name="arrow-back-ios"
          />
          <Center width="5/6">
-            <AuthHeader>Cadastra-se</AuthHeader>
+            <AuthHeader>Cadastre-se</AuthHeader>
             <VStack width="full" space={3}>
                <DefaultFormInput
                   placeholder="Email"
                   value={newUser.email}
                   setValue={(text) => setNewUser({ ...newUser, email: text })}
-                  color="tertiaryBlue"
+                  color="#024284"
                   error={inputErros.errosEmail}
                />
                <DefaultFormInput
@@ -102,13 +102,13 @@ export default function Register() {
                   setValue={(text) =>
                      setNewUser({ ...newUser, password: text })
                   }
-                  color="tertiaryBlue"
+                  color="#024284"
                   error={inputErros.errosPassword}
                />
                <DefaultFormInput
                   type="password"
                   placeholder="Cofirmar senha"
-                  color="tertiaryBlue"
+                  color="#024284"
                   value={newUser.confirmPassword}
                   setValue={(text) =>
                      setNewUser({ ...newUser, confirmPassword: text })
@@ -122,17 +122,21 @@ export default function Register() {
             </VStack>
          </Center>
          <VStack alignItems={"center"}>
+            <DefaultBlueButton
+               bgColor={"#52D6FB"}
+               loading={loading}
+               onPress={InputValidation}
+            >
+               {loading ? <ActivityIndicator /> : "Avançar"}
+            </DefaultBlueButton>
             <TouchableOpacity
                style={{ marginBottom: 16 }}
                onPress={() => navigate("SignUpTeacher")}
             >
-               <Text style={{ textDecorationLine: "underline" }}>
+               <Text style={{ textDecorationLine: "underline", marginTop: 20 }}>
                   Cadastre-se como Professor
                </Text>
             </TouchableOpacity>
-            <DefaultBlueButton loading={loading} onPress={InputValidation}>
-               {loading ? <ActivityIndicator /> : "Avançar"}
-            </DefaultBlueButton>
          </VStack>
       </Center>
    );

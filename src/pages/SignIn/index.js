@@ -106,11 +106,7 @@ export default function SignIn() {
             },
          }}
       >
-         <Image
-            source={require("../../assets/logo_name.png")}
-            width={500}
-            height={500}
-         />
+         <Image source={require("../../assets/logo_name.png")} />
          <Flex
             direction="column"
             width="5/6"
@@ -159,6 +155,8 @@ export default function SignIn() {
                </Button>
                {!keyboardIsOpen && (
                   <Button
+                     alignItems={"center"}
+                     justifyContent={"center"}
                      variant="ghost"
                      key="SignUp"
                      onPress={() => navigate("SignUp")}
@@ -169,6 +167,8 @@ export default function SignIn() {
                         textDecorationLine: "underline",
                         textDecorationStyle: "solid",
                         textDecorationColor: "#fff",
+                        justifyContent: "center",
+                        alignItems: "center",
                      }}
                   >
                      NÃO POSSUO CADASTRO
