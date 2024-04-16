@@ -9,17 +9,13 @@ export default function ModalDetailScheduling({
    setOpenModal,
    openModal,
    details,
-   subjects,
+   subject,
    EditSchedule,
 }) {
    const { user } = useAuth();
    const HandleOnClose = () => {
       setOpenModal(false);
    };
-
-   const subject = subjects.filter((item) => {
-      return item.id == details.disciplina;
-   })[0];
 
    const EnableConfirmSchedule = () => {
       if(details.status === "confirmado")

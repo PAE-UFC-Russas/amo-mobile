@@ -4,7 +4,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import FormateTime from '../../util/FormateTime';
 import DateISOToFormated from '../../util/DateISOToFormated';
 
-export default function ModalAddScheduling({setOpenModal, openModal, PostNewSchedule, setNewSchedule, newSchedule, subjects}){
+export default function ModalAddScheduling({setOpenModal, openModal, PostNewSchedule, setNewSchedule, newSchedule}){
     const [ showDate, setShowDate ] = useState({active: false, type: 'date'});
     const toast = useToast();
 
@@ -73,19 +73,6 @@ export default function ModalAddScheduling({setOpenModal, openModal, PostNewSche
                             placeholder='Digite a descrição'
                             onChangeText={text => {setNewSchedule({...newSchedule, descricao: text})}}
                         />
-                        <Text marginTop='2'>
-                            Disciplina:
-                        </Text>
-                        <Select 
-                            placeholder='Selecione a disciplina' 
-                            width='100%'
-                            borderRadius={10} 
-                            onValueChange={itemValue => setNewSchedule({...newSchedule, disciplina: itemValue[0]})} 
-                        >
-                            {subjects.map((item, index)=>{
-                                return <Select.Item key={index} label={`${item.nome}`} value={`${item.id},${item.nome}`}/>
-                            })}
-                        </Select>
                         <HStack justifyContent='space-between' alignItems='center' marginTop='2'>
                             <VStack width='45%'>
                                 <Text>
