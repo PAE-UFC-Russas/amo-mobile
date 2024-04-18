@@ -34,9 +34,10 @@ export default function AddPhoto() {
    const validation = async () => {
       setLoading(true);
       if (!image) {
-         setImageError(
-            "Insira uma imagem de perfil para concluir o cadastro ou pule esta etapa!"
-         );
+         toast.show({
+            title: "Insira uma imagem de perfil ou pule esta etapa!",
+            placement: "top",
+         });
          setLoading(false);
       } else {
          const formData = new FormData();
@@ -112,12 +113,9 @@ export default function AddPhoto() {
             >
                Pular
             </Button>
-            <DefaultBlueButton onPress={validation}>
+            <DefaultBlueButton bgColor={"#2599BA"} onPress={validation}>
                {loading ? <ActivityIndicator /> : "Concluir cadastro"}
             </DefaultBlueButton>
-            {imageError && (
-               <Text style={{ color: "#f00", fontSize: 12 }}>{imageError}</Text>
-            )}
          </Center>
       </Center>
    );
