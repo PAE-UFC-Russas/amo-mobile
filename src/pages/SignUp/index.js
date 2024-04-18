@@ -27,6 +27,7 @@ export default function Register() {
    const { Register } = useAuth();
 
    async function InputValidation() {
+      setLoading(true);
       setInputErros({
          errosEmail: null,
          errosPassword: null,
@@ -70,6 +71,7 @@ export default function Register() {
             }
             setLoading(false);
          }
+         setLoading(false);
       } catch (error) {
          console.log(error);
       } finally {

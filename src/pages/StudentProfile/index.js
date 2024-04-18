@@ -15,6 +15,7 @@ import api from "../../services/api";
 import { GetLoginToken } from "../../util/StorageLogin";
 
 import { ActivityIndicator } from "react-native";
+import { SafeAreaView } from "react-native-web";
 
 export default function StudentProfile() {
    const { goBack, navigate } = useNavigation();
