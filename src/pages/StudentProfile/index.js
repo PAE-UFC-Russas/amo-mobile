@@ -17,7 +17,7 @@ import { GetLoginToken } from "../../util/StorageLogin";
 import { ActivityIndicator } from "react-native";
 
 export default function StudentProfile() {
-   const { navigate } = useNavigation();
+   const { goBack, navigate } = useNavigation();
 
    const [loading, setLoading] = useState(false);
 

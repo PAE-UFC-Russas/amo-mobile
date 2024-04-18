@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, Text, View } from "native-base";
+import { Center, Text, View, Image } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import AuthHeader from "../../components/AuthHeader";
@@ -22,37 +22,67 @@ export default function SignUpTeacher() {
          setInputErros({ errosEmail: response });
       }
    };
-   
+
    return (
       <Center style={styles.container} bgColor="#fff" safeArea>
-         <MaterialIcons
-            onPress={() => goBack()}
-            color="#52D6FB"
-            size={24}
-            style={styles.backButton}
-            name="arrow-back-ios"
-         />
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#52D6FB"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Image
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+            </Center>
+         </View>
          <Center width="5/6">
-            <AuthHeader>Cadastro do Professor</AuthHeader>
+            <Text
+               marginBottom={20}
+               fontWeight="bold"
+               color="#024284"
+               fontSize="lg"
+            >
+               Cadastro do Professor
+            </Text>
             <View
                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
                   height: "50%",
-                  alignItems: "center",
+                  alignItems: "flex-start",
                }}
             >
                <Text
                   style={{
                      color: "#52D6FB",
-                     fontSize: 20,
+                     fontSize: 16,
                      textAlign: "center",
                   }}
                >
-                  Envie um email indicando o SIAPE e seu nome {"\n"}
+                  Olá Docente, bem vindo(a) ao AMO!
                </Text>
-               <Text style={{ color: "#52D6FB", fontSize: 20, marginTop: 18 }}>
-                  paeufcrussas@gmail.com
+               <Text style={{ color: "#52D6FB", fontSize: 16, marginTop: 18 }}>
+                  Para dar continuidade ao cadastro, envie um email para o
+                  endereço paeufcrussas@gmail.com com as seguintes informações:
+               </Text>
+               <Text style={{ color: "#52D6FB", fontSize: 16, marginTop: 18 }}>
+                  NOME
+               </Text>
+               <Text style={{ color: "#52D6FB", fontSize: 16, marginTop: 18 }}>
+                  SIAPE
                </Text>
             </View>
          </Center>
