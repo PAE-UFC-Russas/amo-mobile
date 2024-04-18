@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
       color: "#fff",
       alignItems: "center",
       justifyContent: "space-around",
-      paddingTop: 50,
+
       paddingBottom: 50,
    },
    textInfo: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
    },
    backButton: {
       position: "absolute",
-      top: 70,
+      top: 18,
       left: 35,
       zIndex: 1,
    },

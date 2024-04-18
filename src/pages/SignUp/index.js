@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, VStack, Text } from "native-base";
+import { Center, VStack, Text, View, Image } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import validator from "validator";
 import { useAuth } from "../../contexts/auth";
@@ -77,16 +77,39 @@ export default function Register() {
    }
 
    return (
-      <Center style={styles.container} bgColor="#fff" safeArea>
-         <MaterialIcons
-            onPress={() => goBack()}
-            color="#52D6FB"
-            size={24}
-            style={styles.backButton}
-            name="arrow-back-ios"
-         />
+      <View style={styles.container} bgColor="#fff" safeArea>
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#52D6FB"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Image
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+            </Center>
+         </View>
          <Center width="5/6">
-            <AuthHeader>Cadastre-se</AuthHeader>
+            <Text
+               marginBottom={5}
+               fontWeight="bold"
+               color="#024284"
+               fontSize="md"
+            >
+               Cadastre-se
+            </Text>
             <VStack width="full" space={3}>
                <DefaultFormInput
                   placeholder="Email"
@@ -133,11 +156,17 @@ export default function Register() {
                style={{ marginBottom: 16 }}
                onPress={() => navigate("SignUpTeacher")}
             >
-               <Text style={{ textDecorationLine: "underline", marginTop: 20 }}>
-                  Cadastre-se como Professor
+               <Text
+                  style={{
+                     textDecorationLine: "underline",
+                     marginTop: 50,
+                     color: "#024284",
+                  }}
+               >
+                  CADASTRE-SE COMO PROFESSOR
                </Text>
             </TouchableOpacity>
          </VStack>
-      </Center>
+      </View>
    );
 }
