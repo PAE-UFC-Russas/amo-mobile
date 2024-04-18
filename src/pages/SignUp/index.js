@@ -159,7 +159,7 @@ export default function Register() {
                <Text
                   style={{
                      textDecorationLine: "underline",
-                     marginTop: 50,
+                     marginTop: 30,
                      color: "#024284",
                   }}
                >

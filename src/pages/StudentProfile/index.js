@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Keyboard, TouchableOpacity, Text } from "react-native";
-import { Center, VStack } from "native-base";
+import { Keyboard, TouchableOpacity, Image } from "react-native";
+import { Center, VStack, View, Text, ScrollView } from "native-base";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../contexts/auth";
@@ -10,6 +10,7 @@ import DefaultFormInput from "../../components/DefaultFormInput";
 import SelectForProfilePage from "../../components/SelectForProfilePage";
 import DefaultSelect from "../../components/DefaultSelect";
 import styles from "./styles";
+import { MaterialIcons } from "@expo/vector-icons";
 import api from "../../services/api";
 import { GetLoginToken } from "../../util/StorageLogin";
 
@@ -33,7 +34,7 @@ export default function StudentProfile() {
          id: null,
          nome: "",
       },
-      birthDate: new Date(2008,0,1),
+      birthDate: new Date(2008, 0, 1),
    });
    const [inputErros, setInputErros] = useState({
       errosNickName: null,
@@ -163,50 +164,96 @@ export default function StudentProfile() {
    });
 
    return (
-      <Center style={styles.container} bgColor="#fff">
-         {!keyboardIsOpen && <AuthHeader>Estamos quase lá</AuthHeader>}
-         <VStack width="5/6" space={2} marginBottom={2}>
-            <Text style={{ color: "#52D6FB" }}>Nome completo</Text>
+      <View style={styles.container} bgColor="#fff">
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#52D6FB"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Image
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+            </Center>
+         </View>
+         {!keyboardIsOpen && (
+            <Text
+               marginBottom={5}
+               fontWeight="bold"
+               color="#024284"
+               fontSize="lg"
+            >
+               Estamos quase lá
+            </Text>
+         )}
+
+         <VStack width="5/6" space={5} marginBottom={2}>
             <DefaultFormInput
                value={personalData.name}
+               placeholder={"Nome de usuario"}
+               color={"#024284"}
+               borderColor={"#024284"}
                setValue={(text) =>
-                  setPersonalData({ ...personalData, name: text })
+                  setPersonalData({
+                     ...personalData,
+                     name: text,
+                  })
                }
-               color="tertiaryBlue"
                error={inputErros.errosName}
             />
-            <Text style={{ color: "#52D6FB" }}>Nome de exibição</Text>
             <DefaultFormInput
                maxLength={64}
                value={personalData.nickName}
+               placeholder={"Nome completo"}
+               color={"#024284"}
+               borderColor={"#024284"}
                setValue={(text) =>
                   setPersonalData({ ...personalData, nickName: text })
                }
-               color="tertiaryBlue"
                error={inputErros.errosNickName}
             />
-            <Text style={{ color: "#52D6FB" }}>Matricula</Text>
+
             <DefaultFormInput
                value={personalData.registration}
+               placeholder={"Matricula"}
+               color={"#024284"}
+               borderColor={"#024284"}
                setValue={(text) =>
                   setPersonalData({ ...personalData, registration: text })
                }
                maxLength={6}
-               color="tertiaryBlue"
                error={inputErros.errosRegistration}
             />
-            <Text style={{ color: "#52D6FB" }}>Ano de entrada</Text>
+
             <DefaultSelect
                items={GetYearsPerSemester()}
+               placeholder={"Ano de entrada"}
+               color={"#024284"}
+               borderColor={"#024284"}
                value={personalData.entryYear}
                setValue={(itemValue) =>
                   setPersonalData({ ...personalData, entryYear: itemValue })
                }
-               color="tertiaryBlue"
                error={inputErros.errosEntryear}
             />
-            <Text style={{ color: "#52D6FB" }}>Escolha seu curso</Text>
+
             <SelectForProfilePage
+               placeholder={"Selecionar curso"}
+               color={"#024284"}
+               borderColor={"#024284"}
+               borderWidth={3}
                items={courses}
                setValue={(itemValue) =>
                   setPersonalData({
@@ -214,17 +261,16 @@ export default function StudentProfile() {
                      course: courses.filter((e) => e.id == itemValue)[0],
                   })
                }
-               color="tertiaryBlue"
                error={inputErros.errosCourse}
             />
-            <Text style={{ color: "#52D6FB" }}>Data de nascimento</Text>
+
             <TouchableOpacity
                style={styles.dateTimeButton}
                onPress={() => setShowDate(true)}
             >
                <Text
                   style={{
-                     color: !inputErros.errosBirthDate ? "#52D6FB" : "#f00",
+                     color: !inputErros.errosBirthDate ? "#024284" : "#f00",
                      fontSize: 12,
                   }}
                >
@@ -254,9 +300,9 @@ export default function StudentProfile() {
             )}
          </VStack>
 
-         <DefaultBlueButton onPress={InputValidation}>
-            {loading ? <ActivityIndicator /> : "Próximo"}
+         <DefaultBlueButton bgColor={"#2599BA"} onPress={InputValidation}>
+            {loading ? <ActivityIndicator /> : "Avançar"}
          </DefaultBlueButton>
-      </Center>
+      </View>
    );
 }
