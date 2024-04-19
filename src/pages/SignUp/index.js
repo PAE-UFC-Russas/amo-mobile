@@ -143,7 +143,7 @@ export default function Register() {
                />
                <Text style={styles.textInfo}>
                   A senha precisa ter no mínimo 8 caracteres, contendo letras e
-                  números sem espaçamento. Ex: 12zay78d
+                  números sem espaçamento. Ex: 12cay78d
                </Text>
             </VStack>
          </Center>
