@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { VStack, Center, Button, Spinner } from "native-base";
+import {
+   VStack,
+   Center,
+   Button,
+   Spinner,
+   View,
+   Image,
+   Text,
+} from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import AuthHeader from "../../components/AuthHeader";
 import { GetLoginToken } from "../../util/StorageLogin";
+import { MaterialIcons } from "@expo/vector-icons";
 import api from "../../services/api";
 import styles from "./styles";
 
 export default function SelectCourses() {
-   const { navigate } = useNavigation();
+   const { navigate, goBack } = useNavigation();
    const [courses, setCourses] = useState([]);
    const [loading, setLoading] = useState(true);
 
@@ -30,8 +39,40 @@ export default function SelectCourses() {
    }, []);
 
    return (
-      <Center style={styles.container} bgColor="#fff">
-         <AuthHeader>Selecione o curso</AuthHeader>
+      <View style={styles.container} bgColor="#fff" safeArea>
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#52D6FB"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Image
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+            </Center>
+         </View>
+
+         <Text
+            marginTop={30}
+            marginBottom={10}
+            fontWeight="bold"
+            color="#024284"
+            fontSize="md"
+         >
+            Selecione o curso que a monitoria pertence:
+         </Text>
          <VStack space="3" alignItems={"center"} width={"100%"}>
             {loading ? (
                <Spinner marginTop="auto" marginBottom="auto" size="lg" />
@@ -41,7 +82,7 @@ export default function SelectCourses() {
                      <Button
                         key={index}
                         textAlign={"center"}
-                        bgColor="tertiaryBlue"
+                        bgColor="#0092BB"
                         borderRadius="2xl"
                         width={"80%"}
                         height={60}
@@ -57,6 +98,6 @@ export default function SelectCourses() {
                })
             )}
          </VStack>
-      </Center>
+      </View>
    );
 }
