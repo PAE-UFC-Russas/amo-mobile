@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Platform } from "react-native";
-import { Button, Center, Image, Text, useToast } from "native-base";
+import { Button, Center, Image, Text, useToast, View } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
@@ -11,7 +11,7 @@ import DefaultBlueButton from "../../components/DefaultBlueButton";
 import styles from "./styles";
 
 export default function AddPhoto() {
-   const { navigate } = useNavigation();
+   const { navigate, goBack } = useNavigation();
    const [image, setImage] = useState(null);
    const [imageError, setImageError] = useState(null);
    const toast = useToast();
@@ -79,8 +79,34 @@ export default function AddPhoto() {
 
    return (
       <Center style={styles.container} bgColor="#fff">
-         <Center width="5/6">
-            <AuthHeader>Selecione uma foto se quiser!</AuthHeader>
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#52D6FB"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Image
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+            </Center>
+         </View>
+         <View style={{ marginBottom: 30 }}>
+            <Text fontWeight="bold" color="#024284" fontSize="lg">
+               Selecione uma foto se quiser!
+            </Text>
+
             <Button bgColor="#fff" onPress={PickImage}>
                <MaterialIcons
                   style={styles.camIcon}
@@ -100,23 +126,25 @@ export default function AddPhoto() {
                   alt="Foto de perfil"
                />
             </Button>
-         </Center>
-         <Center>
-            <Button
-               variant="ghost"
-               key="register"
-               onPress={() => navigate("RegistrationComplete")}
-               _text={{
-                  color: "defaultBlue",
-                  fontWeight: 800,
-               }}
-            >
-               Pular
-            </Button>
-            <DefaultBlueButton bgColor={"#2599BA"} onPress={validation}>
-               {loading ? <ActivityIndicator /> : "Concluir cadastro"}
-            </DefaultBlueButton>
-         </Center>
+         </View>
+         <View style={{ marginBottom: 50 }}>
+            <Center>
+               <Button
+                  variant="ghost"
+                  key="register"
+                  onPress={() => navigate("RegistrationComplete")}
+                  _text={{
+                     color: "defaultBlue",
+                     fontWeight: 800,
+                  }}
+               >
+                  Pular
+               </Button>
+               <DefaultBlueButton bgColor={"#2599BA"} onPress={validation}>
+                  {loading ? <ActivityIndicator /> : "Concluir cadastro"}
+               </DefaultBlueButton>
+            </Center>
+         </View>
       </Center>
    );
 }
