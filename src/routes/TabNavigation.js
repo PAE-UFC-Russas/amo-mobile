@@ -67,6 +67,7 @@ export default function TabNavigation({ navigation, route }) {
       <Tab.Screen
         name="Agendar"
         component={Schedule}
+        initialParams={route.params}
         options={{
           headerShown: true,
           headerTitleAlign: "center",
