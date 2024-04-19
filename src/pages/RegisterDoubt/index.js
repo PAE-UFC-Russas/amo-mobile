@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import {
-   Button,
-   Text,
-   Input,
-   HStack,
-   TextArea,
-   useToast,
-} from "native-base";
+import { Button, Text, Input, HStack, TextArea, useToast } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { GetLoginToken } from "../../util/StorageLogin";
@@ -16,7 +9,7 @@ import OnDeleteModal from "../../components/OnDeleteModal";
 import styles from "./styles";
 
 export default function RegisterDoubt({ route }) {
-   const { goBack } = useNavigation();
+   const { goBack, navigation } = useNavigation();
    const [openModal, setOpenModal] = useState(false);
    const [question, setQuestion] = useState({
       titulo: "",
@@ -77,17 +70,24 @@ export default function RegisterDoubt({ route }) {
                />
                <Text style={styles.title}>Cadastrar dúvida</Text>
             </HStack>
-            <View>
+            <View
+               style={{
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                  height: "80%",
+               }}
+            >
                <Input
+                  borderWidth={3}
                   size="md"
-                  borderColor="#52D6FB"
+                  borderColor="#024284"
                   borderRadius={10}
                   marginTop={5}
                   width="90%"
                   maxLength={150}
-                  color="#52D6FB"
+                  color="#024284"
                   marginLeft={5}
-                  placeholderTextColor="#52D6FB"
+                  placeholderTextColor="#024284"
                   onChangeText={(text) =>
                      setQuestion({ ...question, titulo: text })
                   }
@@ -98,16 +98,17 @@ export default function RegisterDoubt({ route }) {
                   grau
                </Text>
                <TextArea
+                  borderWidth={3}
                   size="md"
-                  borderColor="#52D6FB"
-                  color="#52D6FB"
+                  borderColor="#024284"
+                  color="#024284"
                   maxLength={500}
                   borderRadius={10}
                   marginLeft={5}
                   width="90%"
-                  h={150}
-                  marginTop={2}
-                  placeholderTextColor="#52D6FB"
+                  h={200}
+                  marginTop={7}
+                  placeholderTextColor="#024284"
                   onChangeText={(text) =>
                      setQuestion({ ...question, descricao: text })
                   }
@@ -125,7 +126,7 @@ export default function RegisterDoubt({ route }) {
                   borderRadius: 30,
                   position: "absolute",
                   end: 0,
-                  bottom: 5,
+                  bottom: 30,
                }}
                onPress={PostQuestion}
             >
