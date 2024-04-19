@@ -86,9 +86,9 @@ export default function ForumQuest(
                 }
                 icon={
                   <AntDesign
-                    color={quest.votou ? "#f00" : "#808080"}
+                    color={quest.votou > 0 ? "#024284" : "#808080"}
                     size={20}
-                    name={quest.votou > 0 ? "heart" : "hearto"}
+                    name={quest.votou > 0 ? "like1" : "like2"}
                   />
                 }
               />
