@@ -75,6 +75,7 @@ export default function Register() {
       } catch (error) {
          console.log(error);
       } finally {
+         setLoading(false);
       }
    }
 
@@ -148,7 +149,8 @@ export default function Register() {
          </Center>
          <VStack alignItems={"center"}>
             <DefaultBlueButton
-               bgColor={"#52D6FB"}
+               color={"#024284"}
+               bgColor={"#2599BA"}
                loading={loading}
                onPress={InputValidation}
             >
