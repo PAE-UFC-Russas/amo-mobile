@@ -53,7 +53,7 @@ export default function AnswerQuestion({ route }) {
       setMyResponse("");
       if (myResponse === "") {
          toast.show({
-            title: "Campo responder não pode estar vazio!",
+            title: "Campo responder não pode estar vazio",
             placement: "bottom",
          });
       }
