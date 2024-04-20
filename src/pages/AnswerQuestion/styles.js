@@ -4,23 +4,26 @@ const styles = StyleSheet.create({
    container: {
       padding: 20,
       flex: 1,
+      justifyContent: "space-around",
    },
    title: {
       fontSize: 20,
-      color: "#52D6FB",
+      color: "#024284",
       fontFamily: "Roboto",
       textAlign: "center",
       marginLeft: "20%",
       fontWeight: "bold",
    },
    textDoubt: {
-      fontSize: 15,
-      marginTop: 5,
+      fontSize: 16,
+      marginTop: 10,
+      marginBottom: 23,
    },
    textDate: {
-      fontWeight: "bold",
       alignSelf: "flex-end",
       marginRight: 15,
+      color: "#002B57",
+      fontWeight: 500,
    },
 });
 

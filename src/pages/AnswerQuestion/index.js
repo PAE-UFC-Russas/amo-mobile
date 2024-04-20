@@ -8,6 +8,7 @@ import {
    View,
    useToast,
    IconButton,
+   InputGroup,
    Spinner,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -33,27 +34,29 @@ export default function AnswerQuestion({ route }) {
    const toast = useToast();
 
    function getCurrentOffice(monitores, professores) {
-      const isMonitor = monitores.find(
-         (obj) => obj.id == doubt.autor.id
-      )
+      const isMonitor = monitores.find((obj) => obj.id == doubt.autor.id)
          ? true
          : false;
-      const isProfessor = professores.find(
-         (obj) => obj.id == doubt.autor.id
-      )
+      const isProfessor = professores.find((obj) => obj.id == doubt.autor.id)
          ? true
          : false;
-      if(isMonitor){
-         setOffice("Monitor")
-      }else if(isProfessor){
-         setOffice("Professor")
-      }else{
-         setOffice("Aluno")
+      if (isMonitor) {
+         setOffice("Monitor");
+      } else if (isProfessor) {
+         setOffice("Professor");
+      } else {
+         setOffice("Aluno");
       }
-    }
+   }
 
    const PostResponse = async () => {
       setMyResponse("");
+      if (myResponse === "") {
+         toast.show({
+            title: "Campo responder não pode estar vazio!",
+            placement: "bottom",
+         });
+      }
       try {
          await api.post(
             "/respostas/",
@@ -165,7 +168,10 @@ export default function AnswerQuestion({ route }) {
                }
             );
 
-            getCurrentOffice(response.data.monitores, response.data.professores)
+            getCurrentOffice(
+               response.data.monitores,
+               response.data.professores
+            );
 
             const isMonitor = response.data.monitores.find(
                (obj) => obj.id == user.perfil.id
@@ -202,69 +208,112 @@ export default function AnswerQuestion({ route }) {
          <HStack safeArea alignItems="center">
             <MaterialIcons
                onPress={() => goBack()}
-               color="#52D6FB"
+               color="#024284"
                size={24}
                name="arrow-back-ios"
             />
             <Text style={styles.title}>Responder dúvida</Text>
          </HStack>
-         <View marginTop={5} flex={1}>
-
+         <View marginTop={60} flex={1}>
             {loading ? (
                <Spinner marginTop="auto" marginBottom="auto" size="lg" />
             ) : (
                <>
-                  <HStack>
-                     <Avatar
-                        bg="tertiaryBlue"
-                        size="lg"
-                        source={{
-                           uri: !doubt.autor.perfil.foto
-                              ? "https://i.ibb.co/4f1jsPx/Splash-1.png"
-                              : doubt.autor.perfil.foto,
-                        }}
-                     />
-                     <View
-                        style={{ justifyContent: "center", alignItems: "flex-start" }}
-                     >
-                        <Text
-                           style={{
-                              fontSize: 20,
-                              marginLeft: "3%",
-                              fontWeight: "bold",
-                           }}
-                        >
-                           {doubt.autor.perfil.nome_exibicao}
-                        </Text>
-                        <Text marginLeft={"5%"}>{office}</Text>
-                     </View>
-                  </HStack>
                   <View
-                     marginY={2}
+                     flexDirection={"row"}
+                     width={"100%"}
+                     justifyContent={"space-between"}
                   >
-                     <Text fontSize={15} fontWeight="bold">
-                        {doubt.titulo}
-                     </Text>
-                     <View>
-                        <Text style={styles.textDoubt}>{doubt.descricao}</Text>
+                     <View
+                        flexDirection={"row"}
+                        alignItems={"center"}
+                        justifyContent={"center"}
+                     >
+                        <View
+                           style={{
+                              borderBottomWidth: 2,
+                              borderBottomColor: "#34689C",
+                              width: 200,
+                              position: "absolute",
+                              bottom: 15,
+                           }}
+                        />
+                        <Avatar
+                           bg="tertiaryBlue"
+                           size="lg"
+                           source={{
+                              uri: !doubt.autor.perfil.foto
+                                 ? "https://i.ibb.co/4f1jsPx/Splash-1.png"
+                                 : doubt.autor.perfil.foto,
+                           }}
+                        />
+                        <View flexDirection={"row"} alignItems={"center"}>
+                           <Text
+                              style={{
+                                 fontSize: 16,
+                                 marginLeft: 5,
+                                 color: "#024284",
+                                 fontWeight: "600",
+                              }}
+                           >
+                              {doubt.autor.perfil.nome_exibicao}
+                           </Text>
+                           <MaterialIcons
+                              color="#024284"
+                              size={14}
+                              name="school"
+                              marginLeft={3}
+                           />
+                        </View>
+                     </View>
+                     <View alignItems={"center"} justifyContent={"center"}>
                         <Text style={styles.textDate}>
                            {DateISOToFormated(doubt.data)}
                         </Text>
                      </View>
                   </View>
-                  <HStack marginBottom={2}>
-                     <Input
-                        width="95%"
-                        maxLength={500}
-                        placeholder="Comentar"
-                        value={myResponse}
-                        onChangeText={(text) => setMyResponse(text)}
-                     />
-                     <IconButton
-                        onPress={PostResponse}
-                        icon={<MaterialIcons name="send" size={24} color="#52D6FB" />}
-                     />
-                  </HStack>
+                  {/* <Text color={"#002B57"} marginLeft={"5%"}>
+                           {office}
+                        </Text> */}
+
+                  <View marginTop={8}>
+                     <Text fontSize={16} fontWeight="bold">
+                        {doubt.titulo}
+                     </Text>
+                     <View>
+                        <Text style={styles.textDoubt}>{doubt.descricao}</Text>
+                     </View>
+                  </View>
+
+                  <View>
+                     <InputGroup
+                        width="100%"
+                        borderColor="#34689C"
+                        borderWidth={2}
+                        borderRadius={10}
+                     >
+                        <Input
+                           variant={"outline"}
+                           borderRadius={10}
+                           width={"85%"}
+                           borderWidth={0}
+                           color={"#524F4F"}
+                           placeholder="Comentar"
+                           value={myResponse}
+                           onChangeText={(text) => setMyResponse(text)}
+                        />
+                        <IconButton
+                           icon={
+                              <MaterialIcons
+                                 name="send"
+                                 size={24}
+                                 color="#34689C"
+                              />
+                           }
+                           onPress={PostResponse}
+                        />
+                     </InputGroup>
+                  </View>
                   <FlatList
                      style={{ height: "68%" }}
                      data={responses.results}
