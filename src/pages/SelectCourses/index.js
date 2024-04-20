@@ -71,7 +71,7 @@ export default function SelectCourses() {
             color="#024284"
             fontSize="md"
          >
-            Selecione o curso que a monitoria pertence:
+            Selecione o curso que a monitoria pertence
          </Text>
          <VStack space="3" alignItems={"center"} width={"100%"}>
             {loading ? (

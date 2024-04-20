@@ -78,7 +78,7 @@ export default function SelectSubjects({ route }) {
             color="#024284"
             fontSize="md"
          >
-            Selecione o curso que a monitoria pertence:
+            Selecione a monitoria
          </Text>
          <Input
             placeholder="Pesquisar monitorias..."
