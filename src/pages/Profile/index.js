@@ -7,162 +7,158 @@ import { MaterialIcons } from "@expo/vector-icons";
 import styles from "./styles";
 
 export default function Profile() {
-   const { navigate, goBack } = useNavigation();
-   const { user } = useAuth();
-   const profile = {
-      nome_exibicao: user.perfil.nome_exibicao,
-      entrada: user.perfil.entrada,
-      curso: user.perfil.curso,
-      foto: user.perfil.foto,
-      matricula: user.perfil.matricula,
-      cargos: user.perfil.cargos,
-   };
-   console.log(user);
+  const { navigate, goBack } = useNavigation();
+  const { user } = useAuth();
+  const profile = {
+    nome_exibicao: user.perfil.nome_exibicao,
+    entrada: user.perfil.entrada,
+    curso: user.perfil.curso,
+    foto: user.perfil.foto,
+    matricula: user.perfil.matricula,
+    cargos: user.perfil.cargos,
+  };
 
-   return (
-      <View style={styles.container}>
-         <View
-            style={{
-               width: "100%",
-               flexDirection: "row",
-               justifyContent: "space-around",
-               alignItems: "center",
-            }}
-         >
-            <MaterialIcons
-               onPress={() => goBack()}
-               color="#024284"
-               size={24}
-               style={styles.backButton}
-               name="arrow-back-ios"
-            />
-            <Center>
-               <Text
-                  marginTop={30}
-                  marginBottom={10}
-                  fontWeight="bold"
-                  color="#024284"
-                  fontSize="lg"
-               >
-                  Perfil
-               </Text>
-            </Center>
-         </View>
-
-         <Avatar
-            alignSelf="center"
-            bg="tertiaryBlue"
-            margin={5}
-            size="xl"
-            source={
-               !profile.foto
-                  ? {
-                       uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
-                    }
-                  : {
-                       uri: user.perfil.foto,
-                    }
-            }
-         />
-
-         <View style={styles.edgeProfile}>
-            <View
-               style={{
-                  width: 120,
-                  backgroundColor: "#52D6FB",
-                  height: 30,
-                  borderTopRightRadius: 10,
-                  borderBottomRightRadius: 10,
-                  marginTop: 15,
-                  alignItems: "center",
-                  justifyContent: "center",
-               }}
-            >
-               <Text
-                  style={{
-                     color: "#002B57",
-                     fontWeight: "bold",
-                     fontSize: 16,
-                  }}
-               >
-                  {profile.cargos}
-               </Text>
-            </View>
-            <View style={{ padding: 10 }}>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Monitoria:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>
-                        {profile.nome_exibicao}
-                     </Text>
-                  </View>
-               </View>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Nome de exibição:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>
-                        {profile.nome_exibicao}
-                     </Text>
-                  </View>
-               </View>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Curso:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>{profile.curso}</Text>
-                  </View>
-               </View>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Entrada:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>{profile.entrada}</Text>
-                  </View>
-               </View>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Matricula:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>{profile.matricula}</Text>
-                  </View>
-               </View>
-            </View>
-         </View>
-
-         <Button
-            marginTop={10}
-            justifyContent={"center"}
-            alignItems={"center"}
-            bgColor="#2599BA"
-            borderRadius={10}
-            width="50%"
-            _text={{
-               fontWeight: "bold",
-            }}
-            onPress={() => navigate("EditProfile")}
-         >
-            Editar dados
-         </Button>
-         <Button
-            variant="unstyled"
-            onPress={() => navigate("RecoverPassword")}
-            _text={{
-               color: "#000",
-               fontWeight: 300,
-               textDecorationLine: "underline",
-               textDecorationStyle: "solid",
-               textDecorationColor: "#fff",
-            }}
-         >
-            Criar nova senha
-         </Button>
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <MaterialIcons
+          onPress={() => goBack()}
+          color="#024284"
+          size={24}
+          style={styles.backButton}
+          name="arrow-back-ios"
+        />
+        <Center>
+          <Text
+            marginTop={30}
+            marginBottom={10}
+            fontWeight="bold"
+            color="#024284"
+            fontSize="lg"
+          >
+            Perfil
+          </Text>
+        </Center>
       </View>
-   );
+
+      <Avatar
+        alignSelf="center"
+        bg="tertiaryBlue"
+        margin={5}
+        size="xl"
+        source={
+          !profile.foto
+            ? {
+                uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
+              }
+            : {
+                uri: user.perfil.foto,
+              }
+        }
+      />
+
+      <View style={styles.edgeProfile}>
+        <View
+          style={{
+            width: 120,
+            backgroundColor: "#52D6FB",
+            height: 30,
+            borderTopRightRadius: 10,
+            borderBottomRightRadius: 10,
+            marginTop: 15,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "#002B57",
+              fontWeight: "bold",
+              fontSize: 16,
+            }}
+          >
+            {profile.cargos[0].charAt(0).toUpperCase() +
+              profile.cargos[0].slice(1)}
+          </Text>
+        </View>
+        <View style={{ padding: 10 }}>
+          <View>
+            <Text marginTop={1} fontSize={18}>
+              Monitoria:
+            </Text>
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 15 }}>{profile.nome_exibicao}</Text>
+            </View>
+          </View>
+          <View>
+            <Text marginTop={1} fontSize={18}>
+              Nome de exibição:
+            </Text>
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 15 }}>{profile.nome_exibicao}</Text>
+            </View>
+          </View>
+          <View>
+            <Text marginTop={1} fontSize={18}>
+              Curso:
+            </Text>
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 15 }}>{profile.curso}</Text>
+            </View>
+          </View>
+          <View>
+            <Text marginTop={1} fontSize={18}>
+              Entrada:
+            </Text>
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 15 }}>{profile.entrada}</Text>
+            </View>
+          </View>
+          <View>
+            <Text marginTop={1} fontSize={18}>
+              Matricula:
+            </Text>
+            <View style={{ padding: 5 }}>
+              <Text style={{ fontSize: 15 }}>{profile.matricula}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <Button
+        marginTop={10}
+        justifyContent={"center"}
+        alignItems={"center"}
+        bgColor="#2599BA"
+        borderRadius={10}
+        width="50%"
+        _text={{
+          fontWeight: "bold",
+        }}
+        onPress={() => navigate("EditProfile")}
+      >
+        Editar dados
+      </Button>
+      <Button
+        variant="unstyled"
+        onPress={() => navigate("RecoverPassword")}
+        _text={{
+          color: "#000",
+          fontWeight: 300,
+          textDecorationLine: "underline",
+          textDecorationStyle: "solid",
+          textDecorationColor: "#fff",
+        }}
+      >
+        Criar nova senha
+      </Button>
+    </View>
+  );
 }
