@@ -28,7 +28,7 @@ export default function DefaultSelect({
                fontSize: "3xl",
             }}
             onValueChange={setValue}
-            borderWidth={3}
+            borderWidth={1}
          >
             {items.map((item, index) => {
                return (
