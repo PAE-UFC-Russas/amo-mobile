@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, Text, useToast } from "native-base";
+import { Center, Text, useToast, View, Image } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator } from "react-native";
 import AuthHeader from "../../components/AuthHeader";
@@ -30,8 +30,11 @@ export default function RecoverPassword() {
             senhaDados.novaSenha.length === 0 ||
             senhaDados.confirmarSenha.length === 0
          ) {
-            setStatusSenha("Existem campos em branco!");
-            setLoading(false)
+            toast.show({
+               title: "Existem campos em branco!",
+               placement: "bottom",
+            });
+            setLoading(false);
          } else {
             const response = await api.post(
                "/usuario/eu/mudar/",
@@ -52,31 +55,58 @@ export default function RecoverPassword() {
                   title: "Senha alterada com sucesso!",
                   placement: "bottom",
                });
-               goBack()
-            } 
+               goBack();
+            }
          }
       } catch (error) {
-         console.error(error.response.data.erro);
          setStatusSenha(error.response.data.erro);
+         toast.show({
+            title: `${error.response.data.erro}`,
+            placement: "bottom",
+         });
          setLoading(false);
       }
    };
 
    return (
       <Center style={styles.container} bgColor="#fff" safeArea>
-         <MaterialIcons
-            onPress={() => goBack()}
-            color="#52D6FB"
-            size={24}
-            style={styles.backButton}
-            name="arrow-back-ios"
-         />
-         <AuthHeader>Crie uma nova senha</AuthHeader>
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#52D6FB"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Image
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+            </Center>
+         </View>
+
          <Center width="5/6" gap={4}>
+            <Text
+               marginBottom={10}
+               fontWeight="bold"
+               color="#024284"
+               fontSize="md"
+            >
+               Crie uma nova senha
+            </Text>
             <DefaultFormInput
                width="100%"
                height="100%"
-               color={"#52D6FB"}
+               color={"#024284"}
                placeholder={"Senha atual"}
                value={senhaDados.senhaAtual}
                setValue={(text) =>
@@ -86,7 +116,7 @@ export default function RecoverPassword() {
             <DefaultFormInput
                width="100%"
                height="100%"
-               color={"#52D6FB"}
+               color={"#024284"}
                placeholder={"Nova senha"}
                value={senhaDados.novaSenha}
                setValue={(text) =>
@@ -96,20 +126,24 @@ export default function RecoverPassword() {
             <DefaultFormInput
                width="100%"
                height="100%"
-               color={"#52D6FB"}
+               color={"#024284"}
                placeholder={"Confirmar senha"}
                value={senhaDados.confirmarSenha}
                setValue={(text) =>
                   setSenhaDados({ ...senhaDados, confirmarSenha: text })
                }
             />
-            <Text style={{ color: "red" }}>{statusSenha}</Text>
+
             <Text fontWeight={200}>
                A senha precisa ter no mínimo 8 caracteres, contendo letras e
                números, sem espaçamento. Ex: 12zay78d
             </Text>
          </Center>
-         <DefaultBlueButton onPress={handleCriateNewPassword} disabled={loading}>
+         <DefaultBlueButton
+            bgColor={"#2599BA"}
+            onPress={handleCriateNewPassword}
+            disabled={loading}
+         >
             {loading ? <ActivityIndicator /> : "Salvar"}
          </DefaultBlueButton>
       </Center>
