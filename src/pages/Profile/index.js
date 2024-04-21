@@ -10,14 +10,28 @@ export default function Profile() {
   const { navigate, goBack } = useNavigation();
   const { user } = useAuth();
   const { subject } = useSubject();
+
   const profile = {
     nome_exibicao: user.perfil.nome_exibicao,
     entrada: user.perfil.entrada,
     curso: user.perfil.curso,
     foto: user.perfil.foto,
     matricula: user.perfil.matricula,
-    cargos: user.perfil.cargos,
   };
+
+  function getCurrentOffice() {
+    const isMonitor = subject.monitores.find((obj) => obj.id == user.perfil.id)
+      ? true
+      : false;
+    const isProfessor = subject.professores.find(
+      (obj) => obj.id == user.perfil.id
+    )
+      ? true
+      : false;
+    if (isMonitor) return "Monitor";
+    if (isProfessor) return "Professor";
+    return "Aluno";
+  }
 
   return (
     <View style={styles.container}>
@@ -85,8 +99,7 @@ export default function Profile() {
               fontSize: 16,
             }}
           >
-            {profile.cargos[0].charAt(0).toUpperCase() +
-              profile.cargos[0].slice(1)}
+            {getCurrentOffice()}
           </Text>
         </View>
         <View style={{ padding: 10 }}>
@@ -95,9 +108,7 @@ export default function Profile() {
               Monitoria:
             </Text>
             <View style={{ padding: 5 }}>
-              <Text style={{ fontSize: 15 }}>
-                {/* {profile.nome_exibicao} */}
-              </Text>
+              <Text style={{ fontSize: 15 }}>{subject.nome}</Text>
             </View>
           </View>
           <View>
