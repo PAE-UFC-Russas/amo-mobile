@@ -239,6 +239,7 @@ export default function StudentProfile() {
             />
 
             <DefaultSelect
+               borderWidth={3}
                items={GetYearsPerSemester()}
                placeholder={"Ano de entrada"}
                color={"#024284"}

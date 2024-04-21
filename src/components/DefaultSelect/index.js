@@ -8,6 +8,7 @@ export default function DefaultSelect({
    backgroundColor,
    error,
    items,
+   borderWidth,
 }) {
    return (
       <FormControl isInvalid={error ? true : false} isReadOnly>
@@ -28,7 +29,7 @@ export default function DefaultSelect({
                fontSize: "3xl",
             }}
             onValueChange={setValue}
-            borderWidth={1}
+            borderWidth={borderWidth ? borderWidth : 1}
          >
             {items.map((item, index) => {
                return (
