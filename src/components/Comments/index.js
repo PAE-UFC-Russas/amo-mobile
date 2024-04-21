@@ -73,9 +73,7 @@ export default function Comments({
 
   return (
     <ScrollView
-      backgroundColor={
-        isMonitor || isProfessor === comment.id ? "#C1F1C6" : "#E5EBF2"
-      }
+      backgroundColor={isMonitor || isProfessor ? "#C1F1C6" : "#E5EBF2"}
       padding="3%"
       margin={2}
       borderRadius={10}
