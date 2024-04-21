@@ -14,6 +14,7 @@ import {
 } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
 import PickImage from "../../util/PickImage";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { useAuth } from "../../contexts/auth";
@@ -116,6 +117,49 @@ export default function EditProfile() {
 
    return (
       <View style={styles.container}>
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#024284"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Text
+                  marginTop={30}
+                  marginBottom={10}
+                  fontWeight="bold"
+                  color="#024284"
+                  fontSize="lg"
+               >
+                  Perfil
+               </Text>
+            </Center>
+         </View>
+
+         <Avatar
+            alignSelf="center"
+            bg="tertiaryBlue"
+            margin={5}
+            size="xl"
+            source={
+               !profile.foto
+                  ? {
+                       uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                    }
+                  : {
+                       uri: user.perfil.foto,
+                    }
+            }
+         />
          {courses.length > 0 ? (
             <ScrollView>
                <HStack
@@ -124,8 +168,7 @@ export default function EditProfile() {
                   safeArea
                >
                   <Text alignSelf="center" fontSize={25} color={"#52D6FB"}>
-                     {" "}
-                     Editar Perfil{" "}
+                     Editar Perfil
                   </Text>
                </HStack>
                <Center justifyContent={"center"} alignItems={"center"}>
