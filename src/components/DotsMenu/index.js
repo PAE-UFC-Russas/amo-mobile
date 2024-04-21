@@ -1,5 +1,6 @@
 import { IconButton, Menu, Text } from "native-base";
 import { Entypo } from "@expo/vector-icons";
+import { useSubject } from "../../contexts/subject";
 import { useAuth } from "../../contexts/auth";
 
 export default function DotsMenu({
@@ -9,11 +10,19 @@ export default function DotsMenu({
   id,
 }) {
   const { user } = useAuth();
+  const { subject } = useSubject();
+
+  const isMonitor = subject.monitores.find((obj) => obj.id == user.perfil.id)
+    ? true
+    : false;
+  const isProfessor = subject.professores.find(
+    (obj) => obj.id == user.perfil.id
+  )
+    ? true
+    : false;
+
   const privileges =
-    user.perfil.id === author ||
-    user.perfil.cargos.find((item) => item != "aluno")
-      ? true
-      : false;
+    user.perfil.id === author || isMonitor || isProfessor ? true : false;
 
   return (
     <Menu

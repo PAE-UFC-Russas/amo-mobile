@@ -5,7 +5,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import { GetLoginToken } from "../../util/StorageLogin";
-import AuthHeader from "../../components/AuthHeader";
 import { ActivityIndicator } from "react-native";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import styles from "./styles";
@@ -13,7 +12,6 @@ import styles from "./styles";
 export default function AddPhoto() {
    const { navigate, goBack } = useNavigation();
    const [image, setImage] = useState(null);
-   const [imageError, setImageError] = useState(null);
    const toast = useToast();
 
    const [loading, setLoading] = useState(false);
