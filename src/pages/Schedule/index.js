@@ -52,7 +52,6 @@ export default function Schedule() {
         },
         params,
       });
-      console.log(response.data, params);
       setSchedules(response.data);
       setLoading(false);
     } catch (error) {
@@ -119,7 +118,7 @@ export default function Schedule() {
             data={schedules.results}
             contentContainerStyle={{
               paddingVertical: 5,
-              paddingHorizontal: 15,
+              paddingHorizontal: 30,
             }}
             renderItem={(item, index) => (
               <ScheduleBox
