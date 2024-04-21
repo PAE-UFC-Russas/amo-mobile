@@ -14,6 +14,7 @@ import {
 } from "native-base";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
 import PickImage from "../../util/PickImage";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { useAuth } from "../../contexts/auth";
@@ -37,7 +38,10 @@ export default function EditProfile() {
       entrada: user.perfil.entrada,
       curso: user.perfil.curso,
       foto: null,
+      matricula: user.perfil.matricula,
+      cargos: user.perfil.cargos,
    });
+
    const [enviar, setEnviar] = useState(false);
 
    const GetYearsPerSemester = () => {
@@ -116,104 +120,155 @@ export default function EditProfile() {
 
    return (
       <View style={styles.container}>
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+               marginTop: 20,
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#024284"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Text
+                  marginTop={30}
+                  marginBottom={10}
+                  fontWeight="bold"
+                  color="#024284"
+                  fontSize="lg"
+               >
+                  Editar perfil
+               </Text>
+            </Center>
+         </View>
+
+         <Center>
+            <TouchableOpacity onPress={() => GetImage()}>
+               {profile.foto ? (
+                  <Image
+                     source={{ uri: profile.foto }}
+                     style={{
+                        width: 100,
+                        height: 100,
+                        margin: 5,
+                        borderRadius: 100,
+                     }}
+                  />
+               ) : (
+                  <Avatar
+                     alignSelf="center"
+                     bg="tertiaryBlue"
+                     margin={5}
+                     size="xl"
+                     source={{
+                        uri:
+                           user.perfil.foto.length > 0
+                              ? user.perfil.foto
+                              : "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                     }}
+                  />
+               )}
+               <View style={styles.avatarBadge}>
+                  <FontAwesome5 color="#fff" size={16} name="pen" />
+               </View>
+            </TouchableOpacity>
+         </Center>
+         <View style={styles.edgeProfile}>
+            <View
+               style={{
+                  width: 120,
+                  backgroundColor: "#52D6FB",
+                  height: 30,
+                  borderTopRightRadius: 10,
+                  borderBottomRightRadius: 10,
+                  marginTop: 15,
+                  alignItems: "center",
+                  justifyContent: "center",
+               }}
+            >
+               <Text
+                  style={{
+                     color: "#002B57",
+                     fontWeight: "bold",
+                     fontSize: 16,
+                  }}
+               >
+                  {profile.cargos[0].charAt(0).toUpperCase() +
+                     profile.cargos[0].slice(1)}
+               </Text>
+            </View>
+            <View style={{ padding: 10 }} marginBottom={20}>
+               <View>
+                  <Text marginTop={1} fontSize={18}>
+                     Nome de exibição:
+                  </Text>
+                  <View style={{ padding: 5 }}>
+                     <Input
+                        borderColor={"#99B3CD"}
+                        placeholder="Digite seu nome de exibição"
+                        fontSize={15}
+                        onChangeText={(text) =>
+                           setProfile({ ...profile, nome_exibicao: text })
+                        }
+                        value={profile.nome_exibicao}
+                        variant="outline"
+                        borderRadius={15}
+                        color={"#99B3CD"}
+                     />
+                  </View>
+               </View>
+               <View>
+                  <Text marginTop={1} fontSize={18}>
+                     Curso:
+                  </Text>
+                  <View style={{ padding: 5 }}>
+                     <SelectForProfilePage
+                        borderWidth={1}
+                        borderColor={"#99B3CD"}
+                        items={courses}
+                        placeholder={
+                           courses.filter((e) => e.id === profile.curso)[0].nome
+                        }
+                        setValue={(itemValue) =>
+                           setProfile({
+                              ...profile,
+                              curso: courses.filter((e) => e.id == itemValue)[0]
+                                 .id,
+                           })
+                        }
+                        color={"#99B3CD"}
+                     />
+                  </View>
+               </View>
+               <View>
+                  <Text marginTop={1} fontSize={18}>
+                     Entrada:
+                  </Text>
+                  <View style={{ padding: 5 }}>
+                     <DefaultSelect
+                        borderColor={"#99B3CD"}
+                        borderWidth={1}
+                        placeholder="Ano de entrada"
+                        items={GetYearsPerSemester()}
+                        value={profile.entrada}
+                        setValue={(itemValue) =>
+                           setProfile({ ...profile, entrada: itemValue })
+                        }
+                        color="#99B3CD"
+                     />
+                  </View>
+               </View>
+            </View>
+         </View>
          {courses.length > 0 ? (
             <ScrollView>
-               <HStack
-                  justifyContent="space-between"
-                  alignSelf={"center"}
-                  safeArea
-               >
-                  <Text alignSelf="center" fontSize={25} color={"#52D6FB"}>
-                     {" "}
-                     Editar Perfil{" "}
-                  </Text>
-               </HStack>
-               <Center justifyContent={"center"} alignItems={"center"}>
-                  <TouchableOpacity onPress={() => GetImage()}>
-                     {profile.foto ? (
-                        <Image
-                           source={{ uri: profile.foto }}
-                           style={{
-                              width: 100,
-                              height: 100,
-                              margin: 5,
-                              borderRadius: 100,
-                           }}
-                        />
-                     ) : (
-                        <Avatar
-                           alignSelf="center"
-                           bg="tertiaryBlue"
-                           margin={5}
-                           size="xl"
-                           source={{
-                              uri:
-                                 user.perfil.foto.length > 0
-                                    ? user.perfil.foto
-                                    : "https://i.ibb.co/4f1jsPx/Splash-1.png",
-                           }}
-                        />
-                     )}
-                     <View style={styles.avatarBadge}>
-                        <FontAwesome5 color="#fff" size={16} name="pen" />
-                     </View>
-                  </TouchableOpacity>
-               </Center>
-               <View>
-                  <Text marginTop={2} fontSize={15}>
-                     Nome de exibição
-                  </Text>
-                  <Input
-                     color={"#52D6FB"}
-                     borderWidth={1}
-                     borderColor={"#52D6FB"}
-                     placeholder="Digite seu nome de exibição"
-                     fontSize={15}
-                     onChangeText={(text) =>
-                        setProfile({ ...profile, nome_exibicao: text })
-                     }
-                     value={profile.nome_exibicao}
-                     variant="outline"
-                     borderRadius={15}
-                     backgroundColor="#fff"
-                  />
-
-                  <Text marginTop={5} fontSize={15}>
-                     Curso
-                  </Text>
-                  <SelectForProfilePage
-                     borderWidth={1}
-                     backgroundColor="white"
-                     style={{ color: "black", backgroundColor: "white" }}
-                     items={courses}
-                     placeholder={
-                        courses.filter((e) => e.id === profile.curso)[0].nome
-                     }
-                     setValue={(itemValue) =>
-                        setProfile({
-                           ...profile,
-                           curso: courses.filter((e) => e.id == itemValue)[0]
-                              .id,
-                        })
-                     }
-                     color="#52D6FB"
-                  />
-                  <Text marginTop={5} fontSize={15}>
-                     Entrada
-                  </Text>
-                  <DefaultSelect
-                     borderWidth={1}
-                     style={{ color: "white", backgroundColor: "white" }}
-                     backgroundColor="white"
-                     placeholder="Ano de entrada"
-                     items={GetYearsPerSemester()}
-                     value={profile.entrada}
-                     setValue={(itemValue) =>
-                        setProfile({ ...profile, entrada: itemValue })
-                     }
-                     color="#52D6FB"
-                  />
-               </View>
                <View style={styles.buttons}>
                   <Button
                      borderWidth={2}
@@ -222,14 +277,14 @@ export default function EditProfile() {
                      borderRadius={10}
                      width={100}
                      _text={{
-                        color: "#4B4A4A",
+                        color: "#2599BA",
                      }}
                      onPress={() => goBack()}
                   >
                      Cancelar
                   </Button>
                   <Button
-                     bgColor="#52D6FB"
+                     bgColor="#2599BA"
                      borderRadius={10}
                      width={100}
                      onPress={Save}

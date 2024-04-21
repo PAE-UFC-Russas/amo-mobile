@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
       height: "100%",
       alignItems: "center",
       justifyContent: "center",
-      alignSelf: "center",
    },
    addButton: {
       bottom: 25,
@@ -27,10 +26,27 @@ const styles = StyleSheet.create({
       bottom: 12,
    },
    buttons: {
+      width: "100%",
       flexDirection: "row",
       justifyContent: "space-around",
       alignItems: "center",
       marginTop: "20%",
+   },
+   backButton: {
+      position: "absolute",
+      top: 30,
+      left: 35,
+      zIndex: 1,
+   },
+   edgeProfile: {
+      borderWidth: 1,
+      borderColor: "#333333",
+      justifyContent: "space-between",
+      borderRadius: 20,
+      height: "49%",
+      width: "85%",
+      marginTop: 10,
+      backgroundColor: "#E5EBF2",
    },
 });
 
