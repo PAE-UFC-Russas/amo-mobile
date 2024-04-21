@@ -6,7 +6,7 @@ import ForumSearch from "../../components/ForumSearch";
 import ForumQuest from "../../components/ForumQuest";
 import ButtonGetNextValues from "../../components/ButtonGetNextValues";
 import DefaultStagger from "../../components/DefaultStagger";
-import ConfirmQuestDelete from "../../components/ConfirmQuestDelete";
+import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
@@ -27,8 +27,8 @@ export default function Forum({ navigation, route }) {
    const [reportQuestion, setReportQuestion] = useState({
       open: false,
       id: null,
-      reason: '',
-      description: ''
+      reason: "",
+      description: "",
    });
    const [page, setPage] = useState(1);
    const [displayValue, setDisplayValue] = useState("");
@@ -56,7 +56,7 @@ export default function Forum({ navigation, route }) {
             url += "&ordering=-votos";
          } else if (filters.lessLiked) {
             url += "&ordering=votos";
-         }else if(filters.text.length > 0){
+         } else if (filters.text.length > 0) {
             url += `&search=${filters.text}`;
          }
 
@@ -206,7 +206,7 @@ export default function Forum({ navigation, route }) {
                }
             />
          )}
-         <ConfirmQuestDelete
+         <ConfirmDeleteModal
             confirmDeleteQuest={confirmDeleteQuest}
             setOpen={setConfirmDeleteQuest}
             DeleteQuestion={DeleteQuestion}
@@ -219,10 +219,10 @@ export default function Forum({ navigation, route }) {
          <DefaultStagger>
             <IconButton
                style={{
-                  shadowColor: '#000',
+                  shadowColor: "#000",
                   shadowOffset: {
-                  width: 10,
-                  height: 10,
+                     width: 10,
+                     height: 10,
                   },
                   shadowOpacity: 4,
                   shadowRadius: 3.84,
