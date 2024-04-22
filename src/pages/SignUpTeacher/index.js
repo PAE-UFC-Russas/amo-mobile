@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Center, Text, View, Image } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 
 import styles from "./styles";
