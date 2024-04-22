@@ -18,6 +18,7 @@ import Comments from "../../components/Comments";
 import ButtonGetNextValues from "../../components/ButtonGetNextValues";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { useAuth } from "../../contexts/auth";
+import { useSubject } from "../../contexts/subject";
 import api from "../../services/api";
 import styles from "./styles";
 
@@ -26,10 +27,10 @@ export default function AnswerQuestion({ route }) {
   const [loading, setLoading] = useState(true);
   const [responses, setResponses] = useState([]);
   const [myResponse, setMyResponse] = useState("");
-  const [subject, setSubject] = useState(null);
   const [doubt, setDoubt] = useState(route.params);
   const [markEnable, setMarkEnable] = useState(false);
   const [page, setPage] = useState(1);
+  const { subject } = useSubject();
   const { user } = useAuth();
   const toast = useToast();
 
@@ -147,38 +148,26 @@ export default function AnswerQuestion({ route }) {
   };
 
   useEffect(() => {
-    const EnableMark = async () => {
-      try {
-        const response = await api.get(`/disciplinas/${doubt.disciplina}/`, {
-          headers: {
-            Authorization: "Token " + (await GetLoginToken()),
-          },
-        });
+    function EnableMark() {
+      const isMonitor = subject.monitores.find(
+        (obj) => obj.id == user.perfil.id
+      )
+        ? true
+        : false;
+      const isProfessor = subject.professores.find(
+        (obj) => obj.id == user.perfil.id
+      )
+        ? true
+        : false;
 
-        setSubject(response.data);
-
-        const isMonitor = response.data.monitores.find(
-          (obj) => obj.id == user.perfil.id
-        )
-          ? true
-          : false;
-        const isProfessor = response.data.professores.find(
-          (obj) => obj.id == user.perfil.id
-        )
-          ? true
-          : false;
-
-        if (isMonitor || isProfessor) {
-          setMarkEnable(true);
-        } else if (user.perfil.id === doubt.autor.id) {
-          setMarkEnable(true);
-        } else {
-          setMarkEnable(false);
-        }
-      } catch (error) {
-        console.log(error.response.data);
+      if (isMonitor || isProfessor) {
+        setMarkEnable(true);
+      } else if (user.perfil.id === doubt.autor.id) {
+        setMarkEnable(true);
+      } else {
+        setMarkEnable(false);
       }
-    };
+    }
 
     EnableMark();
 

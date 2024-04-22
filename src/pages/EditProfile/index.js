@@ -26,10 +26,9 @@ import {
    EditProfilePerApi,
    EditProfilePerFormData,
 } from "../../util/EditProfileSchema";
+import { useSubject } from "../../contexts/subject";
 
 export default function EditProfile() {
-   const { goBack } = useNavigation();
-   const toast = useToast();
    const [courses, setCourses] = useState([]);
    const [years, setYears] = useState([]);
    const { user, EditUser } = useAuth();
@@ -41,8 +40,10 @@ export default function EditProfile() {
       matricula: user.perfil.matricula,
       cargos: user.perfil.cargos,
    });
-
    const [enviar, setEnviar] = useState(false);
+   const { goBack } = useNavigation();
+   const toast = useToast();
+   const { course } = useSubject();
 
    const GetYearsPerSemester = () => {
       let tempYears = [];
@@ -126,7 +127,7 @@ export default function EditProfile() {
                flexDirection: "row",
                justifyContent: "space-around",
                alignItems: "center",
-               marginTop: 20,
+               marginTop: 25,
             }}
          >
             <MaterialIcons
@@ -233,9 +234,7 @@ export default function EditProfile() {
                         borderWidth={1}
                         borderColor={"#99B3CD"}
                         items={courses}
-                        placeholder={
-                           courses.filter((e) => e.id === profile.curso)[0].nome
-                        }
+                        placeholder={course.nome}
                         setValue={(itemValue) =>
                            setProfile({
                               ...profile,
@@ -268,7 +267,7 @@ export default function EditProfile() {
             </View>
          </View>
          {courses.length > 0 ? (
-            <ScrollView>
+            <>
                <View style={styles.buttons}>
                   <Button
                      borderWidth={2}
@@ -301,7 +300,7 @@ export default function EditProfile() {
                >
                   {enviar && <Spinner accessibilityLabel="Carregando cursos" />}
                </View>
-            </ScrollView>
+            </>
          ) : (
             <Spinner accessibilityLabel="Carregando cursos" />
          )}

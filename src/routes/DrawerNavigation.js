@@ -5,23 +5,14 @@ import TabNavigation from "./TabNavigation";
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigation({ route }) {
-
+export default function DrawerNavigation() {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => (
-        <DrawerInfo
-          monitoria={route.params.nome}
-          curso={route.params.cursos[0].nome}
-          monitores={route.params.monitores}
-          {...props}
-        />
-      )}
+      drawerContent={(props) => <DrawerInfo {...props} />}
       screenOptions={{ headerShown: false }}
     >
       <Drawer.Screen
         name="Tabforum"
-        initialParams={route.params}
         component={TabNavigation}
         options={{
           drawerLabel: "Forum",

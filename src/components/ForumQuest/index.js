@@ -6,13 +6,13 @@ import DotsMenu from "../DotsMenu";
 import DateISOToFormated from "../../util/DateISOToFormated";
 
 export default function ForumQuest(
-   quest,
-   navigation,
-   PostLike,
-   DeleteLike,
-   setConfirmDeleteQuest,
-   setReportQuest,
-   monitores
+  quest,
+  handleNavigation,
+  PostLike,
+  DeleteLike,
+  setConfirmDeleteQuest,
+  setReportQuest,
+  monitores
 ) {
    function getCurrentCargo() {
       if (
@@ -28,7 +28,8 @@ export default function ForumQuest(
             return "";
          }
       }
-   }
+    }
+  
 
    return (
       <View style={styles.boxWithShadow}>

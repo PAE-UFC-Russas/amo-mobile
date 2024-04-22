@@ -6,9 +6,13 @@ import {
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { useAuth } from "../../contexts/auth";
+import { useSubject } from "../../contexts/subject";
+import { useNavigation } from "@react-navigation/native";
 
 export default function DrawerInfo(props) {
   const { Logout, user } = useAuth();
+  const { subject, course } = useSubject();
+  const navigation = useNavigation();
 
   const HandleLogout = () => {
     Logout();
@@ -36,20 +40,23 @@ export default function DrawerInfo(props) {
           {user.perfil.nome_exibicao}
         </Text>
         <Text fontSize="sm" fontWeight="light">
-          {props.monitores.filter(monitor => monitor.id === user.id).length > 0?"Monitor":"Aluno"}
+          {subject.monitores.filter((monitor) => monitor.id === user.id)
+            .length > 0
+            ? "Monitor"
+            : "Aluno"}
         </Text>
         <Text fontSize="sm" fontWeight="light">
-          {props.curso}
+          {course.nome}
         </Text>
         <Text fontSize="sm" fontWeight="light">
-          {props.monitoria}
+          {subject.monitoria}
         </Text>
       </Center>
       <DrawerItemList {...props} />
       <Button
         alignSelf="flex-start"
         variant="link"
-        onPress={() => props.navigation.navigate("SelectSubjects")}
+        onPress={() => navigation.navigate("SelectSubjects")}
       >
         <HStack space={8} alignItems="center">
           <AntDesign name="book" size={28} color="grey" />

@@ -9,8 +9,10 @@ import ScheduleBox from "../../components/ScheduleBox";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
+import { useSubject } from "../../contexts/subject";
 
-export default function Schedule({ route }	) {
+export default function Schedule() {
+  const { subject } = useSubject();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -20,19 +22,19 @@ export default function Schedule({ route }	) {
     data: new Date(),
     assunto: "",
     descricao: "",
-    disciplina: route.params.id
+    disciplina: subject.id,
   });
   const [filters, setFilters] = useState({
     mine: false,
     all: false,
     opens: false,
-    closed: false
+    closed: false,
   });
 
   async function GetSchedules() {
     let params = {};
 
-    params = { disciplina: route.params.id };
+    params = { disciplina: subject.id };
 
     if (!filters.all) {
       if (filters.opens) {
@@ -50,7 +52,6 @@ export default function Schedule({ route }	) {
         },
         params,
       });
-
       setSchedules(response.data);
       setLoading(false);
     } catch (error) {
@@ -84,7 +85,7 @@ export default function Schedule({ route }	) {
   async function PostNewSchedule() {
     try {
       await api.post(
-        `/agendamentos/`,
+        "/agendamentos/",
         {
           ...newSchedule,
         },
@@ -117,7 +118,7 @@ export default function Schedule({ route }	) {
             data={schedules.results}
             contentContainerStyle={{
               paddingVertical: 5,
-              paddingHorizontal: 15,
+              paddingHorizontal: 30,
             }}
             renderItem={(item, index) => (
               <ScheduleBox
@@ -150,7 +151,7 @@ export default function Schedule({ route }	) {
           </DefaultStagger>
           {openDetailModal && (
             <ModalDetailScheduling
-              subject={route.params}
+              subject={subject}
               details={newSchedule}
               openModal={openDetailModal}
               setOpenModal={setOpenDetailModal}
