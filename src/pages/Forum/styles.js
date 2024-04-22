@@ -7,11 +7,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingTop: 5
     },
     flatListContainer: {
-        width: '90%',
-        marginTop: 5
+        width: '100%',
+        marginTop: "5%",
     }
 });
 

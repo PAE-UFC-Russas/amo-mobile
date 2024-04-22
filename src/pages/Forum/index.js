@@ -182,6 +182,7 @@ export default function Forum({ navigation, route }) {
             <Spinner marginTop="auto" marginBottom="auto" size="lg" />
          ) : (
             <FlatList
+               showsVerticalScrollIndicator={false}
                data={data.results}
                renderItem={(quest) =>
                   ForumQuest(
@@ -193,6 +194,7 @@ export default function Forum({ navigation, route }) {
                      setReportQuestion,
                      route.params.monitores
                   )
+               
                }
                keyExtractor={(quest) => quest.id}
                style={styles.flatListContainer}
