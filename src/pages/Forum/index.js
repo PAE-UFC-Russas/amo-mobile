@@ -86,80 +86,6 @@ export default function Forum() {
     }
   };
 
-<<<<<<< HEAD
-   return (
-      <Center style={styles.container}>
-         <ForumSearch
-            displayValue={displayValue}
-            setDisplayValue={setDisplayValue}
-            filters={filters}
-            setFilters={setFilters}
-         />
-         {loading || !(displayValue === filters.text) ? (
-            <Spinner marginTop="auto" marginBottom="auto" size="lg" />
-         ) : (
-            <FlatList
-               showsVerticalScrollIndicator={false}
-               data={data.results}
-               renderItem={(quest) =>
-                  ForumQuest(
-                     quest.item,
-                     navigation,
-                     PostLike,
-                     DeleteLike,
-                     setConfirmDeleteQuest,
-                     setReportQuestion,
-                     route.params.monitores
-                  )
-               
-               }
-               keyExtractor={(quest) => quest.id}
-               style={styles.flatListContainer}
-               ListFooterComponent={
-                  data.next && (
-                     <ButtonGetNextValues
-                        label="perguntas"
-                        onPress={GetQuestions}
-                     />
-                  )
-               }
-            />
-         )}
-         <ConfirmDeleteModal
-            confirmDeleteQuest={confirmDeleteQuest}
-            setOpen={setConfirmDeleteQuest}
-            DeleteQuestion={DeleteQuestion}
-         />
-         <ReportQuest
-            setReportQuestion={setReportQuestion}
-            reportQuestion={reportQuestion}
-            handleReportQuestion={handleReportQuestion}
-         />
-         <DefaultStagger>
-            <IconButton
-               style={{
-                  shadowColor: "#000",
-                  shadowOffset: {
-                     width: 10,
-                     height: 10,
-                  },
-                  shadowOpacity: 4,
-                  shadowRadius: 3.84,
-                  elevation: 5,
-               }}
-               variant="solid"
-               borderRadius="full"
-               bgColor="teal.400"
-               marginY={2}
-               icon={<MaterialIcons color="#fff" size={24} name="add" />}
-               onPress={() =>
-                  navigation.navigate("RegisterDoubt", route.params)
-               }
-            />
-         </DefaultStagger>
-      </Center>
-   );
-=======
   const DeleteQuestion = async () => {
     try {
       await api.delete(`/duvidas/${confirmDeleteQuest.id}/`, {
@@ -317,5 +243,4 @@ export default function Forum() {
       </DefaultStagger>
     </Center>
   );
->>>>>>> d53e439ebd00d2944bfacda2740dc9d71ef3cdf9
 }
