@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
    container: {
-      padding: 100,
+      padding: 20,
       flex: 1,
       justifyContent: "space-around",
    },
