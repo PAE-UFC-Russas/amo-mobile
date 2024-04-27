@@ -10,6 +10,7 @@ import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
 import { useSubject } from "../../contexts/subject";
+import ConfirmCancelModal from "../../components/ConfirmDeleteModal";
 
 export default function Schedule() {
   const { subject } = useSubject();
@@ -24,9 +25,15 @@ export default function Schedule() {
     descricao: "",
     disciplina: subject.id,
   });
+
+  const [confirmCancelQuest, setConfirmCancelQuest] = useState({
+    open: false,
+    id: null,
+  })
+
   const [filters, setFilters] = useState({
     mine: false,
-    all: false,
+    all: true,
     opens: false,
     closed: false,
   });
@@ -52,6 +59,8 @@ export default function Schedule() {
         },
         params,
       });
+      console.log("Token " + (await GetLoginToken()))
+
       setSchedules(response.data);
       setLoading(false);
     } catch (error) {
@@ -156,6 +165,7 @@ export default function Schedule() {
               openModal={openDetailModal}
               setOpenModal={setOpenDetailModal}
               EditSchedule={EditSchedule}
+              setConfirmCancelQuest={setConfirmCancelQuest}
             />
           )}
           <ModalAddScheduling
@@ -164,6 +174,13 @@ export default function Schedule() {
             setNewSchedule={setNewSchedule}
             openModal={openAddModal}
             setOpenModal={setOpenAddModal}
+          />
+          <ConfirmCancelModal
+            confirmDeleteQuest={confirmCancelQuest}
+            setOpen={setConfirmCancelQuest}
+            DeleteQuestion={()=>{
+              EditSchedule("cancelado")
+            }}
           />
         </>
       )}
