@@ -1,5 +1,5 @@
 import { TouchableOpacity, View, StyleSheet } from "react-native";
-import { Avatar, Box, HStack, IconButton, Text, VStack } from "native-base";
+import { Avatar, HStack, IconButton, Text } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import ImageModal from "react-native-image-modal";
 import DotsMenu from "../DotsMenu";
@@ -14,6 +14,8 @@ export default function ForumQuest(
   setReportQuest,
   monitores
 ) {
+
+
    function getCurrentCargo() {
       if (
          quest.autor.cargos.filter(
@@ -64,15 +66,19 @@ export default function ForumQuest(
          </HStack>
 
          <View style={styles.AnswerContainer}>
-            <Text fontWeight="semibold" numberOfLines={2}>
-               {quest.titulo}
-            </Text>
+            <TouchableOpacity
+                  onPress={() => handleNavigation("AnswerQuestion", quest)}
+            >
+               <Text fontWeight="semibold" numberOfLines={2}>
+                  {quest.titulo}
+               </Text>
 
-            <View style={styles.line}/>     
+               <View style={styles.line}/>     
 
-            <Text fontWeight="light">
-               {quest.descricao}
-            </Text>
+               <Text fontWeight="light">
+                  {quest.descricao}
+               </Text>
+            </TouchableOpacity>
          </View>
          {!!quest.content && (
                <ImageModal
