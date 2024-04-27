@@ -11,12 +11,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import api from "../../services/api";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { ActivityIndicator } from "react-native";
+import { useAuth } from "../../contexts/auth";
 
 export default function StudentProfile() {
   const { goBack, navigate } = useNavigation();
 
   const [loading, setLoading] = useState(false);
-
   const [keyboardIsOpen, setKeyboardIsOpen] = useState(false);
   const [courses, setCourses] = useState([]);
   const [years, setYears] = useState([]);
@@ -38,6 +38,7 @@ export default function StudentProfile() {
     errosCourse: null,
     responseErros: null,
   });
+  const { CompleteRegister } = useAuth();
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
@@ -113,13 +114,15 @@ export default function StudentProfile() {
       !erros.errosCourse &&
       !erros.errosRegistration
     ) {
+      const response = await CompleteRegister(personalData);
+
       if (response === personalData.nome_exibicao) {
         return navigate("AddPhoto");
       } else {
         setInputErros({ ...erros, responseErros: response });
       }
     }
-    console.log(erros);
+
     setLoading(false);
     return null;
   };

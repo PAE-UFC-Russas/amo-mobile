@@ -38,17 +38,17 @@ export default function AuthContextProvider({ children }) {
       });
       const token = response.data.token;
       const userData = await GetUser(token);
+      setUser({ ...userData });
+
+      await StoreLoginToken(token);
 
       if (
         userData.perfil.curso === null ||
         userData.perfil.entrada === null ||
         userData.perfil.nome_completo.length < 1
       ) {
-        return { erro: "usuario incompleto!", token };
+        return { erro: "usuario incompleto!" };
       }
-      setUser({ ...userData });
-
-      await StoreLoginToken(token);
 
       return undefined;
     } catch (error) {
@@ -79,7 +79,7 @@ export default function AuthContextProvider({ children }) {
         {
           nome_completo: userData.name,
           nome_exibicao: userData.nickName,
-          data_nascimento: userData.birthDate.toISOString().split("T")[0],
+          data_nascimento: new Date().toISOString().split("T")[0],
           matricula: userData.registration,
           entrada: userData.entryYear,
           curso: userData.course.id,
@@ -94,7 +94,7 @@ export default function AuthContextProvider({ children }) {
 
       return response.data.nome_exibicao;
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       return error.response.data;
     }
   }
@@ -106,9 +106,8 @@ export default function AuthContextProvider({ children }) {
       });
       const userData = await GetUser(response.data.auth_token);
 
-      setUser({ ...userData });
-
       await StoreLoginToken(response.data.auth_token);
+      setUser({ ...userData });
 
       return true;
     } catch (error) {

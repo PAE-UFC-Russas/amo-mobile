@@ -67,6 +67,7 @@ export default function SignIn() {
       if (response) {
         if (response.erro) {
           navigate("StudentProfile");
+          return;
         }
         if (response.non_field_errors) {
           setLoading(false);
