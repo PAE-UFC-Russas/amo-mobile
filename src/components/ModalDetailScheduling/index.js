@@ -175,7 +175,7 @@ export default function ModalDetailScheduling({
                      _text={{
                         color: "white",
                      }}
-                     onPress={() => EditSchedule("cancelado")}
+                     onPress={() => setConfirmCancelQuest({open:true, id: details.id})}
                   >
                      Recusar
                   </Button>
