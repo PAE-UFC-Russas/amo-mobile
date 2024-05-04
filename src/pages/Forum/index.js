@@ -22,7 +22,7 @@ export default function Forum() {
     lessLiked: false,
     text: "",
   });
-  const [confirmDeleteQuest, setConfirmDeleteQuest] = useState({
+  const [confirmDeleteQuest, setConfirmDelete] = useState({
     open: false,
     id: null,
   });
@@ -93,7 +93,7 @@ export default function Forum() {
           Authorization: "Token " + (await GetLoginToken()),
         },
       });
-      setConfirmDeleteQuest({ open: false, id: null });
+      setConfirmDelete({ open: false, id: null });
       GetQuestions();
     } catch (error) {
       console.log(error.response);
@@ -197,7 +197,7 @@ export default function Forum() {
               handleNavigation,
               PostLike,
               DeleteLike,
-              setConfirmDeleteQuest,
+              setConfirmDelete,
               setReportQuestion,
               subject.monitores
             )
@@ -213,7 +213,7 @@ export default function Forum() {
       )}
       <ConfirmDeleteModal
         confirmDeleteQuest={confirmDeleteQuest}
-        setOpen={setConfirmDeleteQuest}
+        setOpen={setConfirmDelete}
         DeleteQuestion={DeleteQuestion}
       />
       <ReportQuest

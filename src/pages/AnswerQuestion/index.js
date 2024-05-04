@@ -14,6 +14,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import DateISOToFormated from "../../util/DateISOToFormated";
+import { HasBadWords } from "../../util/HasBadWords";
 import Comments from "../../components/Comments";
 import ButtonGetNextValues from "../../components/ButtonGetNextValues";
 import { GetLoginToken } from "../../util/StorageLogin";
@@ -35,13 +36,21 @@ export default function AnswerQuestion({ route }) {
   const toast = useToast();
 
   const PostResponse = async () => {
-    setMyResponse("");
     if (myResponse === "") {
       toast.show({
         title: "Campo responder não pode estar vazio",
         placement: "bottom",
       });
     }
+
+    if (HasBadWords(myResponse)) {
+      toast.show({
+        title: "Palavras ofensivas não são permitidas!",
+        placement: "bottom",
+      });
+      return;
+    }
+
     try {
       await api.post(
         "/respostas/",
@@ -64,6 +73,7 @@ export default function AnswerQuestion({ route }) {
     } catch (error) {
       console.log(error.response.data);
     }
+    setMyResponse("");
   };
 
   const GetResponses = async (next, reset) => {

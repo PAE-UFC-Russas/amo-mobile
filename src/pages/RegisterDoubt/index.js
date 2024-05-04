@@ -3,11 +3,12 @@ import { View } from "react-native";
 import { Button, Text, Input, HStack, TextArea, useToast } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { GetLoginToken } from "../../util/StorageLogin";
-import api from "../../services/api";
-import OnDeleteModal from "../../components/OnDeleteModal";
-import styles from "./styles";
 import { useSubject } from "../../contexts/subject";
+import OnDeleteModal from "../../components/OnDeleteModal";
+import { GetLoginToken } from "../../util/StorageLogin";
+import { HasBadWords } from "../../util/HasBadWords";
+import api from "../../services/api";
+import styles from "./styles";
 
 export default function RegisterDoubt() {
   const { goBack, navigation } = useNavigation();
@@ -22,6 +23,14 @@ export default function RegisterDoubt() {
   const PostQuestion = async () => {
     if (question.titulo.length > 0 && question.descricao.length > 0) {
       try {
+        if (HasBadWords(question.titulo, question.descricao)) {
+          toast.show({
+            title: "Palavras ofensivas não são permitidas!",
+            placement: "bottom",
+          });
+          return;
+        }
+
         await api.post(
           "/duvidas/",
           {
