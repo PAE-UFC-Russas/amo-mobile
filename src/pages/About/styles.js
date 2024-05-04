@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
       marginTop: 30,
       justifyContent: "center",
    },
+   backButton: {
+      position: "absolute",
+      top: 18,
+      left: 35,
+      zIndex: 1,
+   },
 });
 
 export default styles;
