@@ -62,6 +62,7 @@ export default function AuthContextProvider({ children }) {
         email: newUser.email,
         password: newUser.password,
       });
+      setUser({ email: newUser.email, password: newUser.password });
 
       return null;
     } catch (error) {

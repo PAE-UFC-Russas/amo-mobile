@@ -27,13 +27,13 @@ export default function TabNavigation({ navigation, route }) {
 
           return (
             <MaterialIcons
-              color={focused ? "#52D6FB" : "#808080"}
+              color={focused ? "#024284" : "#808080"}
               size={28}
               name={iconName}
             />
           );
         },
-        tabBarActiveTintColor: "#52D6FB",
+        tabBarActiveTintColor: "#024284",
         tabBarInactiveTintColor: "#808080",
         headerShown: false,
       })}
@@ -47,7 +47,7 @@ export default function TabNavigation({ navigation, route }) {
           headerLeft: () => (
             <MaterialIcons
               onPress={() => navigation.openDrawer()}
-              color="#52D6FB"
+              color="#024284"
               size={32}
               name="menu"
               style={{ marginLeft: 10 }}
@@ -55,7 +55,7 @@ export default function TabNavigation({ navigation, route }) {
           ),
           headerTitleAlign: "center",
           headerTitle: () => (
-            <Text fontWeight="bold" fontSize="md" color="tertiaryBlue">
+            <Text fontWeight="bold" fontSize="md" color="#024284">
               Fórum
             </Text>
           ),
@@ -72,7 +72,7 @@ export default function TabNavigation({ navigation, route }) {
           headerShown: true,
           headerTitleAlign: "center",
           headerTitle: () => (
-            <Text fontWeight="bold" fontSize="md" color="tertiaryBlue">
+            <Text fontWeight="bold" fontSize="md" color="#024284">
               Agendamento
             </Text>
           ),

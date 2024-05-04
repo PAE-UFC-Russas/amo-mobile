@@ -11,27 +11,30 @@ export default function CheckCode({ route }) {
   const [error, setError] = useState();
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [timeToken, setTimeToken] = useState(60);
-  const [resendToken, setResendToken] = useState(false);
   const refs = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
-  const { Active } = useAuth();
+  const { Active, Register, user } = useAuth();
 
   useEffect(() => {
-    if (resendToken) {
-      const myInterval = setInterval(() => {
-        setTimeToken((prevState) => {
-          if (prevState > 0) {
-            return prevState - 1;
-          } else {
-            clearInterval(myInterval);
-            setResendToken(false);
-            return 60;
-          }
-        });
-      }, 1000);
+    const timerId = setInterval(() => {
+      setTimeToken((prevTimeToken) =>
+        prevTimeToken > 0 ? prevTimeToken - 1 : 0
+      );
+    }, 1000);
 
-      return () => clearInterval(myInterval);
+    return () => clearInterval(timerId);
+  }, []);
+
+  const resendToken = async () => {
+    if (timeToken === 0) {
+      try {
+        await Register(user);
+      } catch (error) {
+        setError("Erro ao enviar o código, tente novamente mais tarde.");
+      } finally {
+        setTimeToken(60);
+      }
     }
-  }, [resendToken]);
+  };
 
   const HandleChangeCode = (text, pos) => {
     let tempCode = code;
@@ -82,7 +85,7 @@ export default function CheckCode({ route }) {
       <AuthHeader>Inserir código</AuthHeader>
       <Center>
         <Text fontSize="md" textAlign="center" margin="10">
-          Acabamos de enviar um código para seu email.
+          Insira o código que foi enviado para seu email.
         </Text>
         <FormControl isInvalid={!!error}>
           <HStack style={styles.codeInputs} width="full" space={1}>
@@ -110,13 +113,13 @@ export default function CheckCode({ route }) {
             {error}
           </FormControl.ErrorMessage>
         </FormControl>
-        <Text color="tertiaryBlue" onPress={() => setResendToken(true)}>
-          {resendToken
+        <Text color="tertiaryBlue" onPress={() => resendToken()}>
+          {timeToken > 0
             ? `Aguarde ${timeToken} segundos para receber o código novamente.`
             : "Receber um novo código"}
         </Text>
       </Center>
-      <DefaultBlueButton disabled={resendToken} onPress={CheckinputCode}>
+      <DefaultBlueButton onPress={CheckinputCode}>
         Verificar código
       </DefaultBlueButton>
     </Center>

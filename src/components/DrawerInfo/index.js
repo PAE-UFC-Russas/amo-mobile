@@ -66,8 +66,8 @@ export default function DrawerInfo(props) {
       <View style={{ flex: 1 }} />
       <Button alignSelf="flex-start" variant="link" onPress={HandleLogout}>
         <HStack space={3} alignItems="center">
-          <AntDesign name="arrowleft" size={28} color="#52D6FB" />
-          <Text fontWeight="bold" fontSize="md" color="#52D6FB">
+          <AntDesign name="arrowleft" size={28} color="#024284" />
+          <Text fontWeight="bold" fontSize="md" color="#024284">
             SAIR
           </Text>
         </HStack>
