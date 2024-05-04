@@ -17,36 +17,42 @@ import About from "../pages/About";
 import { useAuth } from "../contexts/auth";
 import EditProfile from "../pages/EditProfile";
 import SignUpTeacher from "../pages/SignUpTeacher";
+import InsertEmailToRecoverPassword from "../pages/InsertEmailToRecoverPassword";
+
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
-   const { user } = useAuth();
+  const { user } = useAuth();
 
-   return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-         <Stack.Screen name="SignIn" component={SignIn} />
-         <Stack.Screen name="SignUp" component={SignUp} />
-         <Stack.Screen name="CheckCode" component={CheckCode} />
-         <Stack.Screen name="StudentProfile" component={StudentProfile} />
-         <Stack.Screen name="AddPhoto" component={AddPhoto} />
-         <Stack.Screen name="RecoverPassword" component={RecoverPassword} />
-         <Stack.Screen name="ChangePassword" component={ChangePassword} />
-         <Stack.Screen
-            name="RegistrationComplete"
-            component={RegistrationComplete}
-         />
-         <Stack.Screen name="About" component={About} />
-         <Stack.Screen name="SignUpTeacher" component={SignUpTeacher} />
-         {!!user && (
-            <>
-               <Stack.Screen name="SelectCourses" component={SelectCourses} />
-               <Stack.Screen name="SelectSubjects" component={SelectSubjects} />
-               <Stack.Screen name="RegisterDoubt" component={RegisterDoubt} />
-               <Stack.Screen name="AnswerQuestion" component={AnswerQuestion} />
-               <Stack.Screen name="ForumDrawer" component={DrawerNavigation} />
-               <Stack.Screen name="EditProfile" component={EditProfile} />
-            </>
-         )}
-      </Stack.Navigator>
-   );
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="CheckCode" component={CheckCode} />
+      <Stack.Screen name="StudentProfile" component={StudentProfile} />
+      <Stack.Screen name="AddPhoto" component={AddPhoto} />
+      <Stack.Screen name="RecoverPassword" component={RecoverPassword} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
+      <Stack.Screen
+        name="InsertEmailToRecoverPassword"
+        component={InsertEmailToRecoverPassword}
+      />
+      <Stack.Screen
+        name="RegistrationComplete"
+        component={RegistrationComplete}
+      />
+      <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="SignUpTeacher" component={SignUpTeacher} />
+      {!!user && (
+        <>
+          <Stack.Screen name="SelectCourses" component={SelectCourses} />
+          <Stack.Screen name="SelectSubjects" component={SelectSubjects} />
+          <Stack.Screen name="RegisterDoubt" component={RegisterDoubt} />
+          <Stack.Screen name="AnswerQuestion" component={AnswerQuestion} />
+          <Stack.Screen name="ForumDrawer" component={DrawerNavigation} />
+          <Stack.Screen name="EditProfile" component={EditProfile} />
+        </>
+      )}
+    </Stack.Navigator>
+  );
 }

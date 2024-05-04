@@ -5,6 +5,7 @@ import DefaultBlueButton from "../../components/DefaultBlueButton";
 import { useAuth } from "../../contexts/auth";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
+import api from "../../services/api";
 
 export default function CheckCode({ route }) {
   const { navigate } = useNavigation();
@@ -27,12 +28,28 @@ export default function CheckCode({ route }) {
   const resendToken = async () => {
     if (timeToken === 0) {
       try {
-        await Register(user);
+        if (route.params !== undefined && route.params.register) {
+          await Register(user.email);
+        } else {
+          //await Register(user);
+        }
       } catch (error) {
         setError("Erro ao enviar o código, tente novamente mais tarde.");
       } finally {
         setTimeToken(60);
       }
+    }
+  };
+
+  const TextResendToken = () => {
+    if (route.params !== undefined && route.params.register) {
+      if (timeToken > 0) {
+        return `Aguarde ${timeToken} segundos para receber o código novamente.`;
+      } else {
+        return "Receber um novo código";
+      }
+    } else {
+      return null;
     }
   };
 
@@ -63,8 +80,8 @@ export default function CheckCode({ route }) {
     });
 
     if (inputIsFilled > 0) {
+      const activeToken = code.toString().replace(/,/g, "");
       if (route.params !== undefined && route.params.register) {
-        const activeToken = code.toString().replace(/,/g, "");
         const codeActivationMessage = await Active(activeToken);
 
         if (codeActivationMessage === true) {
@@ -73,7 +90,16 @@ export default function CheckCode({ route }) {
           setError(codeActivationMessage);
         }
       } else {
-        navigate("ChangePassword");
+        try {
+          api.post("/redefinir-senha/", {
+            activeToken,
+            password: "",
+            confirmPassword: "",
+          });
+          navigate("ChangePassword");
+        } catch (error) {
+          setError("Token inválido!");
+        }
       }
     } else {
       setError("O campo do código não pode estar vazio!");
@@ -114,9 +140,7 @@ export default function CheckCode({ route }) {
           </FormControl.ErrorMessage>
         </FormControl>
         <Text color="tertiaryBlue" onPress={() => resendToken()}>
-          {timeToken > 0
-            ? `Aguarde ${timeToken} segundos para receber o código novamente.`
-            : "Receber um novo código"}
+          {TextResendToken()}
         </Text>
       </Center>
       <DefaultBlueButton onPress={CheckinputCode}>

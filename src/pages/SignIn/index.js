@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Keyboard, Image } from "react-native";
+import { Keyboard, Image, TouchableOpacity } from "react-native";
 import { Center, Button, VStack, Flex } from "native-base";
 import validator from "validator";
 import { useAuth } from "../../contexts/auth";
@@ -109,7 +109,7 @@ export default function SignIn() {
     >
       <Image source={require("../../assets/logo_name.png")} />
       <Flex direction="column" width="5/6" height={380} justifyContent="center">
-        <VStack space={7}>
+        <VStack space={4}>
           <DefaultFormInput
             placeholder="Email"
             value={userLogin.email}
@@ -125,6 +125,24 @@ export default function SignIn() {
             color="white"
             error={inputErros.errosPassword}
           />
+          <Button
+            alignItems={"center"}
+            justifyContent={"center"}
+            variant="unstyled"
+            key="RecoverPassword"
+            onPress={() => navigate("InsertEmailToRecoverPassword")}
+            _text={{
+              color: "#fff",
+              fontWeight: 300,
+              textDecorationLine: "underline",
+              textDecorationStyle: "solid",
+              textDecorationColor: "#fff",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Recuperar senha
+          </Button>
         </VStack>
         <VStack width={"100%"} space={3} alignItems="center">
           <Button
