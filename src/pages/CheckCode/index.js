@@ -96,7 +96,7 @@ export default function CheckCode({ route }) {
             password: "",
             confirmPassword: "",
           });
-          navigate("ChangePassword");
+          navigate("ChangePassword", { activeToken });
         } catch (error) {
           setError("Token inválido!");
         }

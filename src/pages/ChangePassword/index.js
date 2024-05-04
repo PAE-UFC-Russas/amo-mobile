@@ -7,7 +7,7 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import api from "../../services/api";
 
-export default function ChangePassword() {
+export default function ChangePassword(route) {
   const { navigate } = useNavigation();
   const [passwords, setNewPasswords] = useState({
     password: "",
@@ -35,6 +35,7 @@ export default function ChangePassword() {
     setInputErros(erros);
     if (!erros.errosPassword && !erros.errosConfirmPassword) {
       try {
+        const activeToken = route.params.activeToken;
         api.post("/redefinir-senha/", {
           activeToken,
           password: passwords.password,
