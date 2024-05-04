@@ -83,7 +83,7 @@ export default function Profile() {
         <View
           style={{
             width: 120,
-            backgroundColor: "#52D6FB",
+            backgroundColor: "#024284",
             height: 30,
             borderTopRightRadius: 10,
             borderBottomRightRadius: 10,

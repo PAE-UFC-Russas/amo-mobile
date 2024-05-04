@@ -146,7 +146,7 @@ export default function StudentProfile() {
       >
         <MaterialIcons
           onPress={() => goBack()}
-          color="#52D6FB"
+          color="#024284"
           size={24}
           style={styles.backButton}
           name="arrow-back-ios"

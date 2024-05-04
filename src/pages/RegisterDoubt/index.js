@@ -75,7 +75,7 @@ export default function RegisterDoubt() {
             onPress={() => {
               goBack();
             }}
-            color="#52D6FB"
+            color="#024284"
             size={24}
             name="arrow-back-ios"
           />
