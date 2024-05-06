@@ -52,7 +52,6 @@ export default function ForumQuest(
                   color={"#002B57"}
                   paddingLeft="2%"
                >
-                  {/* {quest.autor.perfil.nome_exibicao} */}
                   {quest.autor.perfil.nome_exibicao.split(" ")[0]}{" "}
                   {quest.autor.perfil.nome_exibicao.split(" ")[1]}
                </Text>
