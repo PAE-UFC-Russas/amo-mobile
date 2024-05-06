@@ -157,6 +157,14 @@ export default function AnswerQuestion({ route }) {
       }
    };
 
+   function truncateText(text, maxLength) {
+      if (text.length > maxLength) {
+         return text.substring(0, maxLength) + "...";
+      } else {
+         return text;
+      }
+   }
+
    useEffect(() => {
       function EnableMark() {
          const isMonitor = subject.monitores.find(
@@ -239,7 +247,8 @@ export default function AnswerQuestion({ route }) {
                                  fontWeight: "600",
                               }}
                            >
-                              {doubt.autor.perfil.nome_exibicao}
+                              {doubt.autor.perfil.nome_exibicao.split(" ")[0]}{" "}
+                              {doubt.autor.perfil.nome_exibicao.split(" ")[1]}
                            </Text>
                            <MaterialIcons
                               color="#024284"

@@ -22,8 +22,6 @@ const styles = StyleSheet.create({
    textDate: {
       alignSelf: "flex-end",
       marginRight: 15,
-      color: "#002B57",
-      fontWeight: 500,
    },
 });
 
