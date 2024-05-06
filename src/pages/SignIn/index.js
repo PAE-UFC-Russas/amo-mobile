@@ -116,15 +116,13 @@ export default function SignIn() {
          >
             <VStack space={4}>
                <DefaultFormInput
+                  variant={"outline"}
                   placeholder="Email"
                   value={userLogin.email}
                   setValue={(text) =>
                      setUserLogin({ ...userLogin, email: text })
                   }
-                  _text={{
-                     color: "red",
-                  }}
-                  color="white"
+                  color={"white"}
                   error={inputErros.errosEmail}
                />
                <DefaultFormInput

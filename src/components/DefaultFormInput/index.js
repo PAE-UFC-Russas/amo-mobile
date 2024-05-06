@@ -12,6 +12,8 @@ export default function DefaultFormInput({
    helperText,
    type,
    maxLength,
+   colorFocus,
+   bgFocus,
 }) {
    const [hiddenPassword, setHiddenPassword] = useState(true);
 
@@ -19,7 +21,7 @@ export default function DefaultFormInput({
       return (
          <MaterialIcons
             onPress={() => setHiddenPassword(!hiddenPassword)}
-            color={color === "#024284" ? "#024284" : "#024284"}
+            color={color}
             size={24}
             style={{ marginRight: 10 }}
             name={hiddenPassword ? "visibility" : "visibility-off"}
@@ -47,7 +49,6 @@ export default function DefaultFormInput({
                </FormControl.Label>
             )}
             <Input
-               variant="outline"
                placeholder={placeholder}
                placeholderTextColor={color}
                color={color}
@@ -56,7 +57,11 @@ export default function DefaultFormInput({
                value={value}
                maxLength={maxLength}
                onChangeText={setValue}
-               borderWidth={2}
+               borderWidth={3}
+               _focus={{
+                  borderColor: colorFocus ? colorFocus : color,
+                  backgroundColor: bgFocus || `${color}20`,
+               }}
             />
             {error && (
                <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>
@@ -88,6 +93,10 @@ export default function DefaultFormInput({
                borderColor={color}
                borderRadius={15}
                value={value}
+               _focus={{
+                  borderColor: colorFocus ? colorFocus : color,
+                  backgroundColor: bgFocus || `${color}20`,
+               }}
                maxLength={maxLength}
                onChangeText={HandleChangePassword}
                borderWidth={3}
