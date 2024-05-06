@@ -46,7 +46,12 @@ export default function ForumQuest(
                   }}
                />
 
-               <Text color={"#002B57"} paddingLeft="2%">
+               <Text
+                  fontSize={16}
+                  fontWeight={400}
+                  color={"#002B57"}
+                  paddingLeft="2%"
+               >
                   {quest.autor.perfil.nome_exibicao}
                </Text>
                <Text fontWeight="light">{getCurrentCargo()}</Text>
@@ -69,6 +74,7 @@ export default function ForumQuest(
                   fontWeight="semibold"
                   numberOfLines={2}
                   marginBottom={2}
+                  fontSize={14}
                   color={"#002B57"}
                >
                   {quest.titulo}
@@ -76,7 +82,7 @@ export default function ForumQuest(
 
                <View style={styles.line} />
 
-               <Text marginTop={2} color={"#524F4F"}>
+               <Text marginTop={2} fontSize={12} color={"#524F4F"}>
                   {quest.descricao}
                </Text>
             </TouchableOpacity>
