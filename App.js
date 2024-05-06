@@ -9,22 +9,22 @@ import { theme } from "./src/styles/theme";
 import Routes from "./src/routes/routes";
 
 const config = {
-  dependencies: {
-    "linear-gradient": LinearGradient,
-  },
+   dependencies: {
+      "linear-gradient": LinearGradient,
+   },
 };
 
 export default function App() {
-  return (
-    <NativeBaseProvider theme={theme} config={config}>
-      <NavigationContainer>
-        <AuthContext>
-          <SubjectContext>
-            <Routes />
-            <StatusBar style="light" />
-          </SubjectContext>
-        </AuthContext>
-      </NavigationContainer>
-    </NativeBaseProvider>
-  );
+   return (
+      <NativeBaseProvider theme={theme} config={config}>
+         <NavigationContainer>
+            <AuthContext>
+               <SubjectContext>
+                  <Routes />
+                  <StatusBar barStyle="light-content" style="light" />
+               </SubjectContext>
+            </AuthContext>
+         </NavigationContainer>
+      </NativeBaseProvider>
+   );
 }
