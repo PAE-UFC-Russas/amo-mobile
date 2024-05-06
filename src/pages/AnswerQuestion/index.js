@@ -259,7 +259,7 @@ export default function AnswerQuestion({ route }) {
                            {office}
                         </Text> */}
 
-                  <View marginTop={8}>
+                  <View padding={2} marginTop={5}>
                      <Text fontSize={19} fontWeight="bold" marginBottom={4}>
                         {doubt.titulo}
                      </Text>
