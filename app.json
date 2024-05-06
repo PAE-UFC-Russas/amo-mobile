@@ -9,7 +9,7 @@
     "owner": "amo-ufc",
     "splash": {
       "image": "./src/assets/splash.png",
-      "backgroundColor": "#024284"
+      "backgroundColor": "#52D6FB"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
