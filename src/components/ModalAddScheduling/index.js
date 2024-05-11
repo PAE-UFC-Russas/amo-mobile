@@ -34,19 +34,13 @@ export default function ModalAddScheduling({
       const status = await PostNewSchedule();
 
       if (status === 200) {
-        showToast("Sucesso", "Agendamento realizado com sucesso!");
+        showToast("Sucesso", "Agendamento realizado com sucesso!", "success");
         HandleOnClose();
       } else {
         if (status === 409) {
-          toast.show({
-            title: "Já existe um agendamento nesse horário!",
-            placement: "bottom",
-          });
+          showToast("Sucesso", "Agendamento realizado com sucesso!", "warning");
         } else {
-          toast.show({
-            title: "Erro ao realizar agendamento, tente novamente mais tarde!",
-            placement: "bottom",
-          });
+          showToast("Sucesso", "Agendamento realizado com sucesso!", "error");
         }
       }
     }
