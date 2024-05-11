@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, Text, View, ScrollView, HStack, useToast } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import ReportQuest from "../ReportQuest";
 import DotsMenu from "../DotsMenu";
@@ -75,7 +75,7 @@ export default function Comments({
       padding="3%"
       margin={2}
       borderRadius={10}
-      borderWidth={correctResponse === comment.id ? 1 : 0}
+      borderWidth={correctResponse === comment.id ? 4 : 0}
       borderColor={correctResponse === comment.id ? "#C1F1C6" : ""}
     >
       <View
@@ -107,20 +107,30 @@ export default function Comments({
         />
       </View>
       <Text fontSize={15}>{comment.resposta}</Text>
-      <View flexDirection="row" marginTop="5%" justifyContent="space-between">
+      <View
+        flexDirection="row"
+        marginTop="5%"
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <HStack space={2}>
           {enableMark && (
-            <>
-              <AntDesign
-                name="checkcircle"
-                size={20}
-                color={correctResponse === comment.id ? "green" : "grey"}
-                onPress={() => MarkResponse(comment.id)}
-              />
-              <Text>
-                {correctResponse === comment.id && "Confirmado pelo monitor"}
-              </Text>
-            </>
+            <AntDesign
+              name="checkcircle"
+              size={24}
+              color={correctResponse === comment.id ? "#2F80ED" : "#C4C4C4"}
+              onPress={() => MarkResponse(comment.id)}
+            />
+          )}
+          {correctResponse === comment.id && (
+            <HStack
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+            >
+              <Entypo name="dot-single" size={32} color="#199B0E" />
+              <Text color="#199B0E">Confirmado pelo monitor</Text>
+            </HStack>
           )}
         </HStack>
         <Text fontSize="xs" fontWeight="400">

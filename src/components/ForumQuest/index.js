@@ -63,18 +63,20 @@ export default function ForumQuest(
             {quest.autor.perfil.nome_exibicao.split(" ")[1]}
           </Text>
           <Text fontWeight="light">{getCurrentCargo()}</Text>
-          <View style={styles.statsQuestion}>
-            <Text>Respondida</Text>
-          </View>
         </HStack>
-        <View>
+        <HStack>
+          {quest.resposta_correta && (
+            <View style={styles.statsQuestion}>
+              <Text color="#fff">Respondida</Text>
+            </View>
+          )}
           <DotsMenu
             id={quest.id}
             author={quest.autor.id}
             setConfirmDelete={setConfirmDelete}
             setConfirmReport={setReportQuest}
           />
-        </View>
+        </HStack>
       </HStack>
 
       <View style={styles.AnswerContainer}>
@@ -177,9 +179,10 @@ const styles = StyleSheet.create({
   },
   statsQuestion: {
     backgroundColor: "#52D6FB",
-    borderRadius: 10,
+    alignItems: "center",
     justifyContent: "center",
-    marginLeft: "5%",
-    height: 30,
+    paddingHorizontal: 4,
+    maxHeight: 30,
+    borderRadius: 10,
   },
 });
