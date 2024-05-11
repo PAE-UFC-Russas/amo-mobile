@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Button, Text, Input, HStack, TextArea, useToast } from "native-base";
+import {
+  Button,
+  Text,
+  Input,
+  HStack,
+  TextArea,
+  useToast,
+  Spinner,
+} from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useSubject } from "../../contexts/subject";
@@ -17,10 +25,12 @@ export default function RegisterDoubt() {
     titulo: "",
     descricao: "",
   });
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { subject } = useSubject();
 
   const PostQuestion = async () => {
+    setLoading(true);
     if (question.titulo.length > 0 && question.descricao.length > 0) {
       try {
         if (HasBadWords(question.titulo, question.descricao)) {
@@ -49,7 +59,7 @@ export default function RegisterDoubt() {
           title: "Dúvida publicada com sucesso!",
           placement: "bottom",
         });
-
+        setLoading(false);
         goBack();
       } catch (error) {
         console.log(error.response.data);
@@ -137,8 +147,9 @@ export default function RegisterDoubt() {
             bottom: 30,
           }}
           onPress={PostQuestion}
+          disabled={loading}
         >
-          Publicar
+          {loading ? <Spinner size="sm" color="#fff" /> : "Publicar"}
         </Button>
       </HStack>
       {openModal && (

@@ -10,6 +10,7 @@ import api from "../../services/api";
 export default function CheckCode({ route }) {
   const { navigate } = useNavigation();
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [timeToken, setTimeToken] = useState(60);
   const refs = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
@@ -29,7 +30,7 @@ export default function CheckCode({ route }) {
     if (timeToken === 0) {
       try {
         if (route.params !== undefined && route.params.register) {
-          await Register(user.email);
+          await Register({ email: user.email, password: user.password });
         } else {
           //await Register(user);
         }
@@ -74,6 +75,7 @@ export default function CheckCode({ route }) {
   };
 
   const CheckinputCode = async () => {
+    setLoading(true);
     const inputIsFilled = code.reduce((previousValue, currentValue) => {
       if (currentValue === "") return -1;
       return 1;
@@ -104,6 +106,7 @@ export default function CheckCode({ route }) {
     } else {
       setError("O campo do código não pode estar vazio!");
     }
+    setLoading(true);
   };
 
   return (
