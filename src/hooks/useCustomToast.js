@@ -6,8 +6,14 @@ export function useCustomToast() {
 
   return function showToast(title, description, status) {
     toast.show({
-      render: () => (
-        <CustomToast title={title} description={description} status={status} />
+      render: ({ id }) => (
+        <CustomToast
+          id={id}
+          title={title}
+          description={description}
+          status={status}
+          toast={toast}
+        />
       ),
     });
   };

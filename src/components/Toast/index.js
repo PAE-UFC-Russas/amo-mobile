@@ -8,8 +8,7 @@ import {
   CloseIcon,
 } from "native-base";
 
-export function CustomToast({ status, title, description }) {
-  const toast = useToast();
+export function CustomToast({ status, title, description, toast, id }) {
   const variant = "left-accent";
   const isClosable = true;
 
