@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
-import { Center, IconButton, Spinner, useToast } from "native-base";
+import { Center, IconButton, useToast, Skeleton, VStack } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import ForumSearch from "../../components/ForumSearch";
 import ForumQuest from "../../components/ForumQuest";
@@ -187,7 +187,55 @@ export default function Forum() {
             setFilters={setFilters}
          />
          {loading || !(displayValue === filters.text) ? (
-            <Spinner marginTop="auto" marginBottom="auto" size="lg" />
+            <Center mt={5} w="100%">
+               <VStack
+                  w="90%"
+                  maxW="400"
+                  borderWidth="1"
+                  space={8}
+                  overflow="hidden"
+                  rounded="md"
+                  _dark={{
+                     borderColor: "coolGray.500",
+                  }}
+                  _light={{
+                     borderColor: "coolGray.200",
+                  }}
+               >
+                  <Skeleton h="40" />
+                  <Skeleton.Text px="4" />
+                  <Skeleton
+                     px="4"
+                     my="4"
+                     rounded="md"
+                     startColor="primary.100"
+                  />
+               </VStack>
+               <VStack
+                  mt={5}
+                  w="90%"
+                  maxW="400"
+                  borderWidth="1"
+                  space={8}
+                  overflow="hidden"
+                  rounded="md"
+                  _dark={{
+                     borderColor: "coolGray.500",
+                  }}
+                  _light={{
+                     borderColor: "coolGray.200",
+                  }}
+               >
+                  <Skeleton h="40" />
+                  <Skeleton.Text px="4" />
+                  <Skeleton
+                     px="4"
+                     my="4"
+                     rounded="md"
+                     startColor="primary.100"
+                  />
+               </VStack>
+            </Center>
          ) : (
             <FlatList
                data={data.results}
