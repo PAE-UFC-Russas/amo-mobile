@@ -8,12 +8,12 @@ import {
   Button,
   Center,
   VStack,
-  useToast,
   TextArea,
 } from "native-base";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import FormateTime from "../../util/FormateTime";
 import DateISOToFormated from "../../util/DateISOToFormated";
+import { useCustomToast } from "../../hooks/useCustomToast";
 
 export default function ModalAddScheduling({
   setOpenModal,
@@ -23,7 +23,7 @@ export default function ModalAddScheduling({
   newSchedule,
 }) {
   const [showDate, setShowDate] = useState({ active: false, type: "date" });
-  const toast = useToast();
+  const showToast = useCustomToast();
 
   const HandleOnClose = () => {
     setOpenModal(false);
@@ -34,10 +34,7 @@ export default function ModalAddScheduling({
       const status = await PostNewSchedule();
 
       if (status === 200) {
-        toast.show({
-          title: "Agendamento realizado com sucesso!",
-          placement: "bottom",
-        });
+        showToast("Sucesso", "Agendamento realizado com sucesso!");
         HandleOnClose();
       } else {
         if (status === 409) {
