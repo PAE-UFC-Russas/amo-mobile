@@ -19,12 +19,12 @@ export default function ForumQuest(
       quest.autor.cargos.filter((cargo) => cargo.toLowerCase() === "professor")
         .length > 0
     ) {
-      return "";
+      return "🦉";
     } else {
       if (monitores.find((obj) => obj.id == quest.autor.id)) {
-        return "";
+        return "👨‍🏫";
       } else {
-        return "";
+        return "🎓";
       }
     }
   }
@@ -63,6 +63,9 @@ export default function ForumQuest(
             {quest.autor.perfil.nome_exibicao.split(" ")[1]}
           </Text>
           <Text fontWeight="light">{getCurrentCargo()}</Text>
+          <View style={styles.statsQuestion}>
+            <Text>Respondida</Text>
+          </View>
         </HStack>
         <View>
           <DotsMenu
@@ -171,5 +174,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  statsQuestion: {
+    backgroundColor: "#52D6FB",
+    borderRadius: 10,
+    justifyContent: "center",
+    marginLeft: "5%",
+    height: 30,
   },
 });
