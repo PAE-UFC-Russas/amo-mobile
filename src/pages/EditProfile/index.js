@@ -8,8 +8,6 @@ import {
    Input,
    Button,
    useToast,
-   ScrollView,
-   HStack,
    KeyboardAvoidingView,
    Spinner,
 } from "native-base";
@@ -23,6 +21,7 @@ import SelectForProfilePage from "../../components/SelectForProfilePage";
 import DefaultSelect from "../../components/DefaultSelect";
 import api from "../../services/api";
 import styles from "./styles";
+import { useCustomToast } from "../../hooks/useCustomToast";
 import {
    EditProfilePerApi,
    EditProfilePerFormData,
@@ -30,6 +29,7 @@ import {
 import { useSubject } from "../../contexts/subject";
 
 export default function EditProfile() {
+   const showToast = useCustomToast();
    const [courses, setCourses] = useState([]);
    const [years, setYears] = useState([]);
    const { user, EditUser } = useAuth();
@@ -62,10 +62,7 @@ export default function EditProfile() {
 
    const Save = async () => {
       if (!profile.nome_exibicao || profile.curso === -1 || !profile.entrada) {
-         toast.show({
-            title: "Não deixe nenhum campo em branco!",
-            placement: "bottom",
-         });
+         showToast("Atenção", "Existem campos em branco!", "warning");
       } else {
          setEnviar(true);
          const response =
@@ -74,16 +71,10 @@ export default function EditProfile() {
                : await EditProfilePerApi(profile);
          if (response.success) {
             EditUser(response.user);
-            toast.show({
-               title: "Dados cadastrados com sucesso!",
-               placement: "bottom",
-            });
+            showToast("Sucesso", "Dados cadastrados com sucesso!", "success");
             goBack();
          } else {
-            toast.show({
-               title: "Erro, verifique sua internet!",
-               placement: "bottom",
-            });
+            showToast("Erro", "Erro, verifique sua internet!", "error");
          }
       }
       setEnviar(false);
@@ -301,7 +292,7 @@ export default function EditProfile() {
                <View
                   height={10}
                   width={"100%"}
-                  marginTop={10}
+                  marginTop={5}
                   justifyContent={"center"}
                   alignItems={"center"}
                >
