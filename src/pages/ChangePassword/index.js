@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Center, VStack, Text } from "native-base";
+import { Center, VStack, Text, Spinner } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import DefaultFormInput from "../../components/DefaultFormInput";
+import { useCustomToast } from "../../hooks/useCustomToast";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 import api from "../../services/api";
 
 export default function ChangePassword(route) {
@@ -17,8 +18,11 @@ export default function ChangePassword(route) {
     errosPassword: null,
     errosConfirmPassword: null,
   });
+  const [loading, setLoading] = useState(false);
+  const showToast = useCustomToast();
 
   const InputValidation = async () => {
+    setLoading(true);
     let erros = {
       errosPassword: null,
       errosConfirmPassword: null,
@@ -35,21 +39,24 @@ export default function ChangePassword(route) {
     setInputErros(erros);
     if (!erros.errosPassword && !erros.errosConfirmPassword) {
       try {
-        const activeToken = route.params.activeToken;
-        api.post("/redefinir-senha/", {
-          activeToken,
-          password: passwords.password,
-          confirmPassword: passwords.confirmPassword,
+        await api.post("/usuario/redefinir-senha/", {
+          senha: passwords.password,
         });
         navigate("SignIn");
+        showToast(
+          "Sucesso",
+          "Sua senha foi redefinida com sucesso!",
+          "success"
+        );
       } catch (error) {
+        console.log(route.params);
         setInputErros({
           errosPassword: null,
           errosConfirmPassword: "Erro ao alterar a senha, tente novamente!",
         });
       }
     }
-
+    setLoading(false);
     return null;
   };
 
@@ -65,13 +72,13 @@ export default function ChangePassword(route) {
             setValue={(text) =>
               setNewPasswords({ ...passwords, password: text })
             }
-            color="tertiaryBlue"
+            color="#024284"
             error={inputErros.errosPassword}
           />
           <DefaultFormInput
             type="password"
             placeholder="Cofirmar senha"
-            color="tertiaryBlue"
+            color="#024284"
             value={passwords.confirmPassword}
             setValue={(text) =>
               setNewPasswords({ ...passwords, confirmPassword: text })
@@ -84,7 +91,9 @@ export default function ChangePassword(route) {
           </Text>
         </VStack>
       </Center>
-      <DefaultBlueButton onPress={InputValidation}>Salvar</DefaultBlueButton>
+      <DefaultBlueButton onPress={InputValidation}>
+        {loading ? <Spinner size="sm" color="#ffffff" /> : "Salvar"}
+      </DefaultBlueButton>
     </Center>
   );
 }

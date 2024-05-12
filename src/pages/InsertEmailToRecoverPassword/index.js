@@ -23,10 +23,10 @@ export default function InsertEmailToRecoverPassword() {
         setError("E-mail inválido!");
         return;
       }
-      await api.post("/solicitar-redefinicao-senha/", { email });
-      navigate("CheckCode", { register: false });
+      await api.post("/usuario/solicitar-redefinicao-senha/", { email });
+      navigate("CheckCode", { register: false, email });
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ export default function InsertEmailToRecoverPassword() {
         loading={loading}
         onPress={InputValidation}
       >
-        {loading ? <ActivityIndicator /> : "Avançar"}
+        {loading ? <ActivityIndicator color="#fff" /> : "Avançar"}
       </DefaultBlueButton>
     </View>
   );

@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Center, FormControl, Input, HStack, Text } from "native-base";
+import {
+  Center,
+  FormControl,
+  Input,
+  HStack,
+  Text,
+  Spinner,
+  Button,
+} from "native-base";
 import AuthHeader from "../../components/AuthHeader";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
 import { useAuth } from "../../contexts/auth";
@@ -26,15 +34,22 @@ export default function CheckCode({ route }) {
     return () => clearInterval(timerId);
   }, []);
 
+  const sendRecoverPassword = async () => {
+    await api.post("/usuario/solicitar-redefinicao-senha/", {
+      email: route.params.email,
+    });
+  };
+
   const resendToken = async () => {
     if (timeToken === 0) {
       try {
-        if (route.params !== undefined && route.params.register) {
+        if (route?.params !== undefined && route.params.register) {
           await Register({ email: user.email, password: user.password });
-        } else {
-          //await Register(user);
+        } else if (route.params.email) {
+          await sendRecoverPassword();
         }
       } catch (error) {
+        console.log(error);
         setError("Erro ao enviar o código, tente novamente mais tarde.");
       } finally {
         setTimeToken(60);
@@ -43,14 +58,10 @@ export default function CheckCode({ route }) {
   };
 
   const TextResendToken = () => {
-    if (route.params !== undefined && route.params.register) {
-      if (timeToken > 0) {
-        return `Aguarde ${timeToken} segundos para receber o código novamente.`;
-      } else {
-        return "Receber um novo código";
-      }
+    if (timeToken > 0) {
+      return `Aguarde ${timeToken} segundos para receber o código novamente.`;
     } else {
-      return null;
+      return "Receber um novo código";
     }
   };
 
@@ -93,20 +104,19 @@ export default function CheckCode({ route }) {
         }
       } else {
         try {
-          api.post("/redefinir-senha/", {
-            activeToken,
-            password: "",
-            confirmPassword: "",
+          await api.post("/usuario/verificar-token/", {
+            token: activeToken,
           });
-          navigate("ChangePassword", { activeToken });
+          navigate("ChangePassword");
         } catch (error) {
+          console.log(error.response);
           setError("Token inválido!");
         }
       }
     } else {
       setError("O campo do código não pode estar vazio!");
     }
-    setLoading(true);
+    setLoading(false);
   };
 
   return (
@@ -142,12 +152,16 @@ export default function CheckCode({ route }) {
             {error}
           </FormControl.ErrorMessage>
         </FormControl>
-        <Text color="tertiaryBlue" onPress={() => resendToken()}>
+        <Button
+          variant="ghost"
+          color="tertiaryBlue"
+          onPress={() => resendToken()}
+        >
           {TextResendToken()}
-        </Text>
+        </Button>
       </Center>
-      <DefaultBlueButton onPress={CheckinputCode}>
-        Verificar código
+      <DefaultBlueButton disabled={loading} onPress={CheckinputCode}>
+        {loading ? <Spinner size="sm" color="#ffffff" /> : "Enviar"}
       </DefaultBlueButton>
     </Center>
   );
