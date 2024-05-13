@@ -176,7 +176,7 @@ export default function Profile() {
                textDecorationColor: "#fff",
             }}
          >
-            Criar nova senha
+            Alterar senha
          </Button>
       </View>
    );
