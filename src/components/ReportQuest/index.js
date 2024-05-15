@@ -1,7 +1,7 @@
 import { AlertDialog, Button, Text, TextArea, Select } from "native-base";
 
 export default function ReportQuest({reportQuestion, setReportQuestion, handleReportQuestion}){
-    const reasons = ['Ameaças', 'Xingamentos', 'Bullying', 'Mensagem imprópria']
+    const reasons = ['Ameaças', 'Mensagens impróprias', 'Bullying', 'SPAM']
 
     return(
         <AlertDialog isOpen={reportQuestion.open} onClose={()=>setReportQuestion({...reportQuestion, open: false})}>
@@ -27,7 +27,7 @@ export default function ReportQuest({reportQuestion, setReportQuestion, handleRe
                     </Text>
                     <TextArea
                         borderRadius={10} 
-                        maxLength={96}
+                        maxLength={200}
                         width='100%' 
                         placeholderTextColor='grey' 
                         placeholder='Digite a descrição'
