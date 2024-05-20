@@ -53,75 +53,77 @@ export default function ModalDetailScheduling({
             bgColor="#fff"
             width="90%"
             borderRadius={14}
+            justifyContent={"space-between"}
             padding="4%"
          >
             <View
                flexDirection={"row"}
                alignItems={"center"}
-               justifyContent={"space-around"}
+               justifyContent={"space-between"}
             >
                <Text
                   marginLeft={10}
-                  fontSize={17}
+                  fontSize={16}
                   fontWeight="bold"
-                  color="black"
+                  color="#024284"
                >
                   Detalhes do agendamento
                </Text>
 
                <MaterialIcons
-                  color="black"
-                  size={32}
+                  color="#024284"
+                  size={28}
                   name="close"
                   onPress={HandleOnClose}
                   style={{ marginLeft: 10 }}
                />
             </View>
-            <View
-               width="100%"
-               padding="3%"
-               alignSelf="center"
-               borderWidth={1}
-               borderColor="grey"
-               borderRadius={4}
-            >
+            <View marginTop={2} width="100%" padding="3%" borderRadius={4}>
                <View marginBottom="2%">
-                  <Text fontSize={20} color="grey">
+                  <Text fontSize={16} color="#524F4F">
                      Solicitante:
                   </Text>
-                  <Text fontSize={15}>{details.solicitante.nome_exibicao}</Text>
+                  <Text fontWeight={500} fontSize={16}>
+                     {details.solicitante.nome_exibicao}
+                  </Text>
                </View>
                <View marginBottom="2%">
-                  <Text fontSize={20} color="grey">
+                  <Text fontSize={16} color="#524F4F">
                      Monitor:
                   </Text>
-                  <Text fontSize={15}>
+                  <Text fontWeight={500} fontSize={16}>
                      {subject.monitores.map((item) => {
                         return item.nome_exibicao;
                      })}
                   </Text>
                </View>
                <View marginBottom="2%">
-                  <Text fontSize={20} color="grey">
+                  <Text fontSize={16} color="#524F4F">
                      Assunto:
                   </Text>
-                  <Text fontSize={15}>{details.assunto}</Text>
+                  <Text fontWeight={"medium"} fontSize={16}>
+                     {details.assunto}
+                  </Text>
                </View>
                <View marginBottom="2%">
-                  <Text fontSize={20} color="grey">
+                  <Text fontSize={16} color="#524F4F">
                      Disciplina:
                   </Text>
-                  <Text fontSize={15}>{subject.nome}</Text>
+                  <Text fontWeight={"medium"} fontSize={16}>
+                     {subject.nome}
+                  </Text>
                </View>
                <View marginBottom="2%">
-                  <Text fontSize={20} color="grey">
-                     Tipo:
+                  <Text fontSize={16} color="#524F4F">
+                     Modelo de monitoria:
                   </Text>
-                  <Text fontSize={15}>{details.tipo}</Text>
+                  <Text fontWeight={"medium"} fontSize={16}>
+                     {details.tipo}
+                  </Text>
                </View>
                {!details.tipo.startsWith("presencial") && (
                   <View marginBottom="2%">
-                     <Text fontSize={20} color="grey">
+                     <Text fontSize={16} color="#524F4F">
                         Link:
                      </Text>
                      <Button
@@ -131,7 +133,7 @@ export default function ModalDetailScheduling({
                         variant="link"
                         onPress={() => OpenBrowser(details.link_zoom)}
                      >
-                        <Text fontSize={15}>
+                        <Text fontSize={16}>
                            {filterDesc(details.link_zoom)}
                         </Text>
                      </Button>
@@ -144,10 +146,10 @@ export default function ModalDetailScheduling({
                      justifyContent={"center"}
                      flexDirection={"row"}
                   >
-                     <Text fontSize={20} color="grey">
+                     <Text fontSize={16} color="#524F4F">
                         Data:
                      </Text>
-                     <Text fontSize={15}>
+                     <Text fontSize={16}>
                         {DateISOToFormated(details.data)}
                      </Text>
                   </View>
@@ -156,10 +158,12 @@ export default function ModalDetailScheduling({
                      justifyContent={"center"}
                      flexDirection={"row"}
                   >
-                     <Text fontSize={20} color="grey">
+                     <Text fontSize={16} color="#524F4F">
                         Inicio:
                      </Text>
-                     <Text fontSize={15}>{FormateTime(details.data)}</Text>
+                     <Text fontWeight={"medium"} fontSize={15}>
+                        {FormateTime(details.data)}
+                     </Text>
                   </View>
                </View>
             </View>
