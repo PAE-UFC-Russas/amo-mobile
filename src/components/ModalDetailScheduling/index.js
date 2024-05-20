@@ -18,6 +18,7 @@ export default function ModalDetailScheduling({
    const HandleOnClose = () => {
       setOpenModal(false);
    };
+   console.log(details);
 
    const EnableConfirmSchedule = () => {
       if (details.status === "confirmado") return false;
@@ -107,6 +108,14 @@ export default function ModalDetailScheduling({
                </View>
                <View marginBottom="2%">
                   <Text fontSize={16} color="#524F4F">
+                     Descrição:
+                  </Text>
+                  <Text fontWeight={"medium"} fontSize={16}>
+                     {details.descricao}
+                  </Text>
+               </View>
+               <View marginBottom="2%">
+                  <Text fontSize={16} color="#524F4F">
                      Disciplina:
                   </Text>
                   <Text fontWeight={"medium"} fontSize={16}>
@@ -175,10 +184,11 @@ export default function ModalDetailScheduling({
             >
                {details.status !== "cancelado" && (
                   <Button
-                     borderRadius={16}
-                     backgroundColor="red"
+                     borderRadius={12}
+                     backgroundColor="#CC1016"
                      _text={{
                         color: "white",
+                        fontWeight: "bold",
                      }}
                      onPress={() =>
                         setConfirmCancelQuest({ open: true, id: details.id })
@@ -189,8 +199,13 @@ export default function ModalDetailScheduling({
                )}
                {EnableConfirmSchedule() && (
                   <Button
-                     borderRadius={16}
-                     backgroundColor="#307DF1"
+                     borderRadius={12}
+                     fontWeight={"bold"}
+                     _text={{
+                        color: "white",
+                        fontWeight: "bold",
+                     }}
+                     backgroundColor="#2599BA"
                      onPress={() => EditSchedule("confirmado")}
                   >
                      Confirmar
