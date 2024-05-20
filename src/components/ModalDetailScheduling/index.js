@@ -18,7 +18,6 @@ export default function ModalDetailScheduling({
    const HandleOnClose = () => {
       setOpenModal(false);
    };
-   console.log(details);
 
    const EnableConfirmSchedule = () => {
       if (details.status === "confirmado") return false;
