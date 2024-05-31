@@ -136,7 +136,7 @@ export default function Comments({
               textAlign="center"
             >
               <Entypo name="dot-single" size={32} color="#199B0E" />
-              <Text color="#199B0E">Confirmado pelo monitor</Text>
+              <Text color="#199B0E">Resposta verificada</Text>
             </HStack>
           )}
         </HStack>

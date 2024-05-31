@@ -133,7 +133,7 @@ export default function AddPhoto() {
               fontWeight: 800,
             }}
           >
-            Pular
+            Não quero colocar uma foto agora
           </Button>
           <DefaultBlueButton bgColor={"#2599BA"} onPress={validation}>
             {loading ? <ActivityIndicator /> : "Concluir cadastro"}

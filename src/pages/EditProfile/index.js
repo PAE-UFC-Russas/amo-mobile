@@ -176,29 +176,6 @@ export default function EditProfile() {
           </TouchableOpacity>
         </Center>
         <View style={styles.edgeProfile}>
-          <View
-            style={{
-              width: 120,
-              backgroundColor: "#52D6FB",
-              height: 30,
-              borderTopRightRadius: 10,
-              borderBottomRightRadius: 10,
-              marginTop: 15,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                color: "#002B57",
-                fontWeight: "bold",
-                fontSize: 16,
-              }}
-            >
-              {profile.cargos[0].charAt(0).toUpperCase() +
-                profile.cargos[0].slice(1)}
-            </Text>
-          </View>
           <View style={{ padding: 10 }} marginBottom={20}>
             <View>
               <Text marginTop={1} fontSize={18}>
