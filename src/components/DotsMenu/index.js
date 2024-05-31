@@ -39,11 +39,11 @@ export default function DotsMenu({
     >
       {privileges && (
         <Menu.Item onPress={() => setConfirmDelete({ open: true, id: id })}>
-          <Text>Deletar comentário</Text>
+          <Text>Apagar</Text>
         </Menu.Item>
       )}
       <Menu.Item onPress={() => setConfirmReport({ open: true, id: id })}>
-        <Text>Denunciar comentário</Text>
+        <Text>Denunciar</Text>
       </Menu.Item>
     </Menu>
   );

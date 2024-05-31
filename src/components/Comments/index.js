@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Avatar, Text, View, ScrollView, HStack, useToast } from "native-base";
+import { Avatar, Text, View, ScrollView, HStack } from "native-base";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import ReportQuest from "../ReportQuest";
+import { useCustomToast } from "../../hooks/useCustomToast";
 import DotsMenu from "../DotsMenu";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
@@ -24,7 +25,7 @@ export default function Comments({
     id: null,
     open: false,
   });
-  const toast = useToast();
+  const showToast = useCustomToast();
   const isMonitor =
     subject && subject.monitores.some((obj) => obj.id === comment.autor.id);
 
@@ -42,10 +43,7 @@ export default function Comments({
         },
       });
       setConfirmDelete({ open: false, id: null });
-      toast.show({
-        title: "Resposta deletada com sucesso!",
-        placement: "bottom",
-      });
+      showToast("Sucesso", "Resposta apagada com sucesso!", "success");
       GetResponses(1, true);
     } catch (error) {
       console.log(error);
@@ -54,17 +52,26 @@ export default function Comments({
 
   const handleReportQuestion = async () => {
     try {
-      // await api.delete(`/duvidas/${confirmDeleteQuest.id}/`, {
-      //    headers: {
-      //       Authorization: "Token " + (await GetLoginToken()),
-      //    },
-      // });
-      setConfirmReport({ open: false, id: null });
-      toast.show({
-        title: "Dúvida reportada com sucesso!",
-        placement: "bottom",
+      if (!confirmReport.reason) {
+        showToast("Erro", "Selecione um motivo", "warning");
+        return;
+      }
+
+      const report = {
+        reason: confirmReport.reason,
+        descricao: confirmReport.description,
+        duvida: comment.duvida,
+      };
+
+      await api.post(`/respostas/${confirmReport.id}/report/`, report, {
+        headers: {
+          Authorization: "Token " + (await GetLoginToken()),
+        },
       });
+      setConfirmReport({ open: false, id: null });
+      showToast("Sucesso", "Resposta reportada com sucesso!", "success");
     } catch (error) {
+      showToast("Error", "Tente novamente mais tarde", "erro");
       console.log(error.response);
     }
   };

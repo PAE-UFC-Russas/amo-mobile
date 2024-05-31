@@ -12,10 +12,8 @@ export default function ConfirmDeleteModal({
     >
       <AlertDialog.Content>
         <AlertDialog.CloseButton />
-        <AlertDialog.Header>Deletar pergunta</AlertDialog.Header>
-        <AlertDialog.Body>
-          Tem certeza que deseja apagar a pergunta?
-        </AlertDialog.Body>
+        <AlertDialog.Header>Deletar</AlertDialog.Header>
+        <AlertDialog.Body>Tem certeza que deseja apagar?</AlertDialog.Body>
         <AlertDialog.Footer>
           <Button.Group space={2}>
             <Button
