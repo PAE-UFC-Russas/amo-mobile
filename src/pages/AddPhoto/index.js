@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Platform } from "react-native";
-import { Button, Center, Image, Text, useToast, View } from "native-base";
+import { Button, Center, Image, Text, View } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { ActivityIndicator } from "react-native";
 import DefaultBlueButton from "../../components/DefaultBlueButton";
+import { useCustomToast } from "../../hooks/useCustomToast";
 import styles from "./styles";
 
 export default function AddPhoto() {
   const { navigate, goBack } = useNavigation();
+  const showToast = useCustomToast();
   const [image, setImage] = useState(null);
-  const toast = useToast();
-
   const [loading, setLoading] = useState(false);
 
   const PickImage = async () => {
@@ -32,10 +32,11 @@ export default function AddPhoto() {
   const validation = async () => {
     setLoading(true);
     if (!image) {
-      toast.show({
-        title: "Insira uma imagem de perfil ou pule esta etapa!",
-        placement: "top",
-      });
+      showToast(
+        "Aviso",
+        "Insira uma imagem de perfil ou pule esta etapa!",
+        "warning"
+      );
       setLoading(false);
     } else {
       const formData = new FormData();
@@ -64,10 +65,7 @@ export default function AddPhoto() {
         navigate("RegistrationComplete");
         setLoading(false);
       } catch (error) {
-        toast.show({
-          title: "Erro, verifique sua internet!",
-          placement: "bottom",
-        });
+        showToast("Erro", "Erro, verifique sua internet!", "erro");
         console.log(error);
         setLoading(false);
       }

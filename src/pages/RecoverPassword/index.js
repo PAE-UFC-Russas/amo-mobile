@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { Center, Text, useToast, View, Image } from "native-base";
+import { Center, Text, View, Image } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator } from "react-native";
-import AuthHeader from "../../components/AuthHeader";
-import DefaultBlueButton from "../../components/DefaultBlueButton";
-
-import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import DefaultBlueButton from "../../components/DefaultBlueButton";
+import { useCustomToast } from "../../hooks/useCustomToast";
 import DefaultFormInput from "../../components/DefaultFormInput";
 import api from "../../services/api";
 import { GetLoginToken } from "../../util/StorageLogin";
+import styles from "./styles";
 
 export default function RecoverPassword() {
   const { goBack } = useNavigation();
-  const toast = useToast();
+  const showToast = useCustomToast();
   const [loading, setLoading] = useState(false);
   const [senhaDados, setSenhaDados] = useState({
     senhaAtual: "",
@@ -30,10 +29,7 @@ export default function RecoverPassword() {
         senhaDados.novaSenha.length === 0 ||
         senhaDados.confirmarSenha.length === 0
       ) {
-        toast.show({
-          title: "Existem campos em branco!",
-          placement: "bottom",
-        });
+        showToast("Aviso", "Existem campos em branco!", "warning");
         setLoading(false);
       } else {
         const response = await api.post(
@@ -51,10 +47,7 @@ export default function RecoverPassword() {
         );
 
         if (response.data.sucesso.length > 0) {
-          toast.show({
-            title: "Senha alterada com sucesso!",
-            placement: "bottom",
-          });
+          showToast("Successo", "Senha alterada com sucesso!", "success");
           goBack();
         }
       }
