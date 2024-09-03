@@ -3,8 +3,6 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     color: "#fff",
-    backgroundColor: "#fff",
-    width: "100%",
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -34,18 +32,16 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: 30,
     left: 35,
     zIndex: 1,
   },
   edgeProfile: {
-    borderWidth: 1,
-    borderColor: "#333333",
     justifyContent: "space-between",
     borderRadius: 20,
-    width: "85%",
+    maxWidth: "100%",
     marginTop: 10,
     backgroundColor: "#E5EBF2",
+    elevation: 5,
   },
 });
 

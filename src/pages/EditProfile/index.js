@@ -118,10 +118,8 @@ export default function EditProfile() {
         <View
           style={{
             width: "100%",
-            flexDirection: "row",
             justifyContent: "space-around",
             alignItems: "center",
-            marginTop: 25,
           }}
         >
           <MaterialIcons
@@ -133,7 +131,6 @@ export default function EditProfile() {
           />
           <Center>
             <Text
-              marginTop={30}
               marginBottom={10}
               fontWeight="bold"
               color="#024284"
@@ -175,8 +172,9 @@ export default function EditProfile() {
             </View>
           </TouchableOpacity>
         </Center>
+
         <View style={styles.edgeProfile}>
-          <View style={{ padding: 10 }} marginBottom={20}>
+          <View style={{ padding: 20 }}>
             <View>
               <Text marginTop={1} fontSize={18}>
                 Nome de exibição:
@@ -240,8 +238,6 @@ export default function EditProfile() {
         <>
           <View style={styles.buttons}>
             <Button
-              borderWidth={2}
-              borderColor="#024284"
               variant="outline"
               borderRadius={10}
               width={100}
