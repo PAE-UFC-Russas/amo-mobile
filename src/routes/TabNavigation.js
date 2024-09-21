@@ -5,6 +5,7 @@ import Forum from "../pages/Forum";
 import Schedule from "../pages/Schedule";
 import Profile from "../pages/Profile";
 import Notifications from "../pages/Notifications";
+import TimeTable from "../pages/TimeTable";
 
 const Tab = createBottomTabNavigator();
 
@@ -78,7 +79,7 @@ export default function TabNavigation({ navigation, route }) {
                ),
             }}
          />
-         {/* <Tab.Screen name='Notificação' component={Notifications}/> */}
+         {/* <Tab.Screen name="TimeTable" component={TimeTable} /> */}
          <Tab.Screen
             name="Profile"
             component={Profile}
