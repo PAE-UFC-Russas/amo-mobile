@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import api from "../../services/api";
 import { View, Text, HStack, IconButton } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -8,6 +9,10 @@ import DefaultStagger from "../../components/DefaultStagger";
 import styles from "./styles.js";
 
 export default function TimeTable() {
+  const { navigate, goBack } = useNavigation();
+
+  const [showModal, setShowModal] = useState(false);
+
   const buscarDados = async () => {
     const response = await api.get("");
     const data = await response.json();
@@ -32,15 +37,6 @@ export default function TimeTable() {
           name="arrow-back-ios"
         />
         <Text style={styles.title}>Quadro de horarios</Text>
-
-        <MaterialIcons
-          onPress={() => {
-            goBack();
-          }}
-          color="#024284"
-          size={24}
-          name="arrow-back-ios"
-        />
       </HStack>
 
       <View
