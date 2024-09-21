@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import api from "../../services/api";
-import { View, Text, HStack, IconButton } from "native-base";
+import { View, Text, HStack, IconButton, Avatar, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-
+import { useAuth } from "../../contexts/auth";
 import { MaterialIcons } from "@expo/vector-icons";
+import DotsMenu from "../../components/DotsMenu";
 
 import DefaultStagger from "../../components/DefaultStagger";
 import styles from "./styles.js";
 
 export default function TimeTable() {
   const { navigate, goBack } = useNavigation();
+  const { user } = useAuth();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -23,7 +25,7 @@ export default function TimeTable() {
     <View style={styles.container}>
       <HStack
         justifyContent="space-evenly"
-        width="100%"
+        width="80%"
         safeArea
         paddingTop={10}
         alignItems="Center"
@@ -31,6 +33,7 @@ export default function TimeTable() {
         <MaterialIcons
           onPress={() => {
             goBack();
+            console.log("voltou");
           }}
           color="#024284"
           size={24}
@@ -39,18 +42,82 @@ export default function TimeTable() {
         <Text style={styles.title}>Quadro de horarios</Text>
       </HStack>
 
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "flex-start",
-          height: "80%",
-        }}
-      >
-        <Text>
-          O titulo deve conter palavras chaves, ex: equação do segundo grau
-        </Text>
-        <Text>A descrição deve conter até 500 caracteres</Text>
+      <View style={styles.containerImg}>
+        <View>
+          <Avatar
+            zIndex={1}
+            bg="tertiaryBlue"
+            size="lg"
+            source={{
+              uri: null,
+            }}
+          />
+          <View
+            style={{
+              width: 200,
+              borderBottomWidth: 1,
+              borderBottomColor: "#024284",
+              position: "absolute",
+              bottom: 5,
+            }}
+          />
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            padding: 5,
+            alignItems: "center",
+          }}
+        >
+          <View>
+            <Text style={{ fontSize: 18 }}>Tatina Alves</Text>
+            <Text>Professora</Text>
+          </View>
+
+          <View style={{ marginLeft: "50%" }}>
+            <DotsMenu />
+          </View>
+        </View>
       </View>
+
+      <View style={styles.containerData}>
+        <Text style={styles.textTitle}>Aulas:</Text>
+        <Text style={styles.textSimple}>Turma Eng.de Software</Text>
+        <Text style={styles.textSimple}>Unidade I bloco A - Sala 5</Text>
+
+        <HStack style={{ justifyContent: "space-between" }}>
+          <VStack style={{ marginTop: 10 }}>
+            <Text style={styles.textSimple}>Segunda-Feira</Text>
+            <Text style={styles.textSimple}>13:30 as 15:30</Text>
+          </VStack>
+          <VStack style={{ marginTop: 10 }}>
+            <Text style={styles.textSimple}>Segunda-Feira</Text>
+            <Text style={styles.textSimple}>13:30 as 15:30</Text>
+          </VStack>
+        </HStack>
+      </View>
+
+      <View style={styles.containerData}>
+        <Text style={styles.textSimple}>Turma Ciencia da Compotação</Text>
+        <Text style={styles.textSimple}>Unidade II, bloco A - Sala 1</Text>
+
+        <HStack style={{ justifyContent: "space-between" }}>
+          <VStack style={{ marginTop: 10 }}>
+            <Text style={styles.textSimple}>Quinta-Feira</Text>
+            <Text style={styles.textSimple}>13:30 as 17:30</Text>
+          </VStack>
+          <VStack style={{ marginTop: 10 }}>
+            <Text style={styles.textSimple}>Segunda-Feira</Text>
+            <Text style={styles.textSimple}>13:30 as 15:30</Text>
+          </VStack>
+        </HStack>
+        <VStack style={{ marginTop: 15 }}>
+          <Text style={styles.textTitle}>Sala do dicente:</Text>
+          <Text style={styles.textSimple}>Unidade II, bloco 2</Text>
+        </VStack>
+      </View>
+
       <DefaultStagger>
         <IconButton
           style={{

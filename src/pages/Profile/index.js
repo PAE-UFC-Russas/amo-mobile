@@ -10,7 +10,6 @@ export default function Profile() {
   const { navigate, goBack } = useNavigation();
   const { user } = useAuth();
   const { subject } = useSubject();
-  console.log(user);
 
   const profile = {
     nome_exibicao: user.perfil.nome_exibicao,
