@@ -7,32 +7,24 @@ import {
   Select,
   Button,
   Center,
-  Spinner,
   VStack,
 } from "native-base";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import FormateTime from "../../util/FormateTime";
-import { useCustomToast } from "../../hooks/useCustomToast";
 import api from "../../services/api";
 import { useSubject } from "../../contexts/subject";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { ActivityIndicator } from "react-native";
 
-const getEndTime = () => {
-  const date = new Date();
-  date.setHours(date.getHours() + 1);
-  return date;
-};
-
-export default function ModalMonitoringInfo({ setOpenModal, modalInfos }) {
+export default function ModalMonitoringInfo({
+  setOpenModal,
+  modalInfos,
+  info,
+  setInfo,
+  handleSave,
+  handleDelete,
+}) {
   const { subject } = useSubject();
-  const [info, setInfo] = useState({
-    hora_inicio: new Date(),
-    hora_fim: getEndTime(),
-    local: "",
-    dia_semana: "0",
-    monitor: null,
-  });
   const [showDate, setShowDate] = useState({
     active: false,
     type: "date",
@@ -40,75 +32,9 @@ export default function ModalMonitoringInfo({ setOpenModal, modalInfos }) {
   });
   const [monitors, setMonitors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const showToast = useCustomToast();
 
   const HandleOnClose = () => {
     setOpenModal({ open: false, id: null });
-  };
-
-  const handleSave = async () => {
-    setLoading(true);
-    try {
-      const data = {
-        ...info,
-        disciplina: subject.id,
-        hora_inicio: new Date(info.hora_inicio).toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }),
-        hora_fim: new Date(info.hora_fim).toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }),
-        professor: subject.professores[0].id,
-      };
-      if (modalInfos.id) {
-        await api.put(`/monitorias/${modalInfos.id}/`, data, {
-          headers: {
-            Authorization: "Token " + (await GetLoginToken()),
-          },
-        });
-      } else {
-        await api.post("/monitorias/", data, {
-          headers: {
-            Authorization: "Token " + (await GetLoginToken()),
-          },
-        });
-      }
-
-      showToast("Sucesso", "Quadro adicionado com sucesso!", "success");
-      setOpenModal(false);
-    } catch (error) {
-      showToast(
-        "Erro",
-        "Não foi possível adicionar, tente novamente mais tarde!",
-        "error"
-      );
-      console.log("error: ", error, error.response.data);
-    }
-    setLoading(false);
-  };
-
-  const handleDelete = async () => {
-    setLoading(true);
-    try {
-      await api.delete(`/monitorias/${modalInfos.id}/`, {
-        headers: {
-          Authorization: "Token " + (await GetLoginToken()),
-        },
-      });
-      showToast("Sucesso", "Quadro deletado com sucesso!", "success");
-      setOpenModal(false);
-    } catch (error) {
-      showToast(
-        "Erro",
-        "Não foi possível deletar, tente novamente mais tarde!",
-        "error"
-      );
-      console.log("error: ", error, error.response.data);
-    }
   };
 
   const changeTime = (event, date) => {
@@ -255,11 +181,23 @@ export default function ModalMonitoringInfo({ setOpenModal, modalInfos }) {
                   />
                 ))}
               </Select>
-              <Button marginTop={8} bgColor="#307DF1" onPress={handleSave}>
-                Adicionar
+              <Button
+                marginTop={8}
+                bgColor="#307DF1"
+                onPress={() => {
+                  handleSave(modalInfos?.id);
+                }}
+              >
+                {modalInfos.id ? "Atualizar" : "Salvar"}
               </Button>
               {modalInfos.id && (
-                <Button marginTop={2} bgColor="#FF0000" onPress={handleDelete}>
+                <Button
+                  marginTop={2}
+                  bgColor="#FF0000"
+                  onPress={() => {
+                    handleDelete(modalInfos?.id);
+                  }}
+                >
                   Deletar
                 </Button>
               )}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, HStack, IconButton, FlatList } from "native-base";
+import { ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAuth } from "../../contexts/auth";
@@ -8,17 +9,31 @@ import { useSubject } from "../../contexts/subject.js";
 import DefaultStagger from "../../components/DefaultStagger";
 import ModalMonitoringInfo from "../../components/ModalMonitoringInfo/index.js";
 import MonitoringCardInformation from "../../components/MonitoringCardInformation/index.js";
+import { useCustomToast } from "../../hooks/useCustomToast";
 import styles from "./styles.js";
 import api from "../../services/api.js";
-import { ActivityIndicator } from "react-native";
+
+const getEndTime = () => {
+  const date = new Date();
+  date.setHours(date.getHours() + 1);
+  return date;
+};
 
 export default function TimeTable() {
-  const { course } = useSubject();
+  const { course, subject } = useSubject();
   const { goBack } = useNavigation();
   const { user } = useAuth();
+  const showToast = useCustomToast();
   const [monitorings, setMonitorings] = useState([]);
   const [showModal, setShowModal] = useState({ open: false, id: null });
   const [loading, setLoading] = useState(false);
+  const [info, setInfo] = useState({
+    hora_inicio: new Date(),
+    hora_fim: getEndTime(),
+    local: "",
+    dia_semana: "0",
+    monitor: null,
+  });
 
   async function getInformations() {
     try {
@@ -35,11 +50,76 @@ export default function TimeTable() {
     setLoading(false);
   }
 
-  useEffect(() => {
-    if (showModal.id) {
+  const handleSave = async (id = null) => {
+    setLoading(true);
+    try {
+      const data = {
+        ...info,
+        disciplina: subject.id,
+        hora_inicio: new Date(info.hora_inicio).toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        hora_fim: new Date(info.hora_fim).toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        professor: subject.professores[0].id,
+      };
+      if (id) {
+        await api.put(`/monitorias/${id}/`, data, {
+          headers: {
+            Authorization: "Token " + (await GetLoginToken()),
+          },
+        });
+      } else {
+        await api.post("/monitorias/", data, {
+          headers: {
+            Authorization: "Token " + (await GetLoginToken()),
+          },
+        });
+      }
+
+      showToast("Sucesso", "Quadro adicionado com sucesso!", "success");
+      setShowModal({ open: false, id: null });
       getInformations();
+    } catch (error) {
+      showToast(
+        "Erro",
+        "Não foi possível adicionar, tente novamente mais tarde!",
+        "error"
+      );
+      console.log("error: ", error, error?.response?.data);
     }
-  }, [showModal]);
+    setLoading(false);
+  };
+
+  const handleDelete = async (id = null) => {
+    setLoading(true);
+    try {
+      await api.delete(`/monitorias/${id}/`, {
+        headers: {
+          Authorization: "Token " + (await GetLoginToken()),
+        },
+      });
+      showToast("Sucesso", "Quadro deletado com sucesso!", "success");
+      setShowModal({ open: false, id: null });
+      getInformations();
+    } catch (error) {
+      showToast(
+        "Erro",
+        "Não foi possível deletar, tente novamente mais tarde!",
+        "error"
+      );
+      console.log("error: ", error, error.response.data);
+    }
+  };
+
+  useEffect(() => {
+    getInformations();
+  }, []);
 
   if (loading) {
     return <ActivityIndicator size="large" color="#024284" />;
@@ -97,7 +177,14 @@ export default function TimeTable() {
           />
         </DefaultStagger>
       )}
-      <ModalMonitoringInfo modalInfos={showModal} setOpenModal={setShowModal} />
+      <ModalMonitoringInfo
+        modalInfos={showModal}
+        setOpenModal={setShowModal}
+        info={info}
+        setInfo={setInfo}
+        handleDelete={handleDelete}
+        handleSave={handleSave}
+      />
     </View>
   );
 }
