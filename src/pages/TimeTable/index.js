@@ -1,25 +1,37 @@
-import React, { useState } from "react";
-import api from "../../services/api";
-import { View, Text, HStack, IconButton, Avatar, VStack } from "native-base";
+import React, { useEffect, useState } from "react";
+import { View, Text, HStack, IconButton, FlatList } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "../../contexts/auth";
 import { MaterialIcons } from "@expo/vector-icons";
-import DotsMenu from "../../components/DotsMenu";
-
+import { useAuth } from "../../contexts/auth";
+import { GetLoginToken } from "../../util/StorageLogin.js";
 import DefaultStagger from "../../components/DefaultStagger";
+import ModalMonitoringInfo from "../../components/ModalMonitoringInfo/index.js";
+import MonitoringCardInformation from "../../components/MonitoringCardInformation/index.js";
 import styles from "./styles.js";
+import api from "../../services/api.js";
 
 export default function TimeTable() {
-  const { navigate, goBack } = useNavigation();
+  const { goBack } = useNavigation();
   const { user } = useAuth();
-
+  const [monitorings, setMonitorings] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const buscarDados = async () => {
-    const response = await api.get("");
-    const data = await response.json();
-    console.log(data);
-  };
+  async function getInformations() {
+    try {
+      const response = await api.get("/monitorias", {
+        headers: {
+          Authorization: "Token " + (await GetLoginToken()),
+        },
+      });
+      setMonitorings(response.data);
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
+  useEffect(() => {
+    getInformations();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -33,7 +45,6 @@ export default function TimeTable() {
         <MaterialIcons
           onPress={() => {
             goBack();
-            console.log("voltou");
           }}
           color="#024284"
           size={24}
@@ -41,83 +52,12 @@ export default function TimeTable() {
         />
         <Text style={styles.title}>Quadro de horarios</Text>
       </HStack>
-
-      <View style={styles.containerImg}>
-        <View>
-          <Avatar
-            zIndex={1}
-            bg="tertiaryBlue"
-            size="lg"
-            source={{
-              uri: null,
-            }}
-          />
-          <View
-            style={{
-              width: 200,
-              borderBottomWidth: 1,
-              borderBottomColor: "#024284",
-              position: "absolute",
-              bottom: 5,
-            }}
-          />
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            padding: 5,
-            alignItems: "center",
-          }}
-        >
-          <View>
-            <Text style={{ fontSize: 18 }}>Tatina Alves</Text>
-            <Text>Professora</Text>
-          </View>
-
-          <View style={{ marginLeft: "50%" }}>
-            <DotsMenu />
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.containerData}>
-        <Text style={styles.textTitle}>Aulas:</Text>
-        <Text style={styles.textSimple}>Turma Eng.de Software</Text>
-        <Text style={styles.textSimple}>Unidade I bloco A - Sala 5</Text>
-
-        <HStack style={{ justifyContent: "space-between" }}>
-          <VStack style={{ marginTop: 10 }}>
-            <Text style={styles.textSimple}>Segunda-Feira</Text>
-            <Text style={styles.textSimple}>13:30 as 15:30</Text>
-          </VStack>
-          <VStack style={{ marginTop: 10 }}>
-            <Text style={styles.textSimple}>Segunda-Feira</Text>
-            <Text style={styles.textSimple}>13:30 as 15:30</Text>
-          </VStack>
-        </HStack>
-      </View>
-
-      <View style={styles.containerData}>
-        <Text style={styles.textSimple}>Turma Ciencia da Compotação</Text>
-        <Text style={styles.textSimple}>Unidade II, bloco A - Sala 1</Text>
-
-        <HStack style={{ justifyContent: "space-between" }}>
-          <VStack style={{ marginTop: 10 }}>
-            <Text style={styles.textSimple}>Quinta-Feira</Text>
-            <Text style={styles.textSimple}>13:30 as 17:30</Text>
-          </VStack>
-          <VStack style={{ marginTop: 10 }}>
-            <Text style={styles.textSimple}>Segunda-Feira</Text>
-            <Text style={styles.textSimple}>13:30 as 15:30</Text>
-          </VStack>
-        </HStack>
-        <VStack style={{ marginTop: 15 }}>
-          <Text style={styles.textTitle}>Sala do dicente:</Text>
-          <Text style={styles.textSimple}>Unidade II, bloco 2</Text>
-        </VStack>
-      </View>
-
+      <FlatList
+        data={monitorings}
+        renderItem={(monitoring) => (
+          <MonitoringCardInformation monitoring={monitoring} />
+        )}
+      />
       <DefaultStagger>
         <IconButton
           style={{
@@ -137,9 +77,15 @@ export default function TimeTable() {
           icon={
             <MaterialIcons color="#fff" size={33} name="add-circle-outline" />
           }
-          onPress={() => navigate("RegisterDoubt")}
+          onPress={() => setShowModal(true)}
         />
       </DefaultStagger>
+      {showModal && (
+        <ModalMonitoringInfo
+          openModal={showModal}
+          setOpenModal={setShowModal}
+        />
+      )}
     </View>
   );
 }
