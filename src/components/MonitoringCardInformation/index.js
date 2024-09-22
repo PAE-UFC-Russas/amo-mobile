@@ -1,8 +1,41 @@
-import { View, Text, HStack, Avatar, VStack } from "native-base";
-import DotsMenu from "../../components/DotsMenu";
+import { View, Text, HStack, Avatar, VStack, IconButton } from "native-base";
+import { ActivityIndicator } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import styles from "./styles.js";
+import { useEffect, useState } from "react";
+import api from "../../services/api.js";
+import { GetLoginToken } from "../../util/StorageLogin.js";
 
-export default function MonitoringCardInformation({ monitoring }) {
+export default function MonitoringCardInformation({
+  monitoring,
+  setOpenModal,
+}) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const getUser = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/usuario/${monitoring.monitor}`, {
+        headers: {
+          Authorization: "Token " + (await GetLoginToken()),
+        },
+      });
+      setUser(response.data);
+    } catch (error) {
+      console.log("error: ", error, error.response.data);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  if (loading && !user?.perfil?.id) {
+    return <ActivityIndicator size="large" color="#024284" />;
+  }
+
   return (
     <>
       <View style={styles.containerImg}>
@@ -12,7 +45,7 @@ export default function MonitoringCardInformation({ monitoring }) {
             bg="tertiaryBlue"
             size="lg"
             source={{
-              uri: null,
+              uri: user?.perfil?.foto,
             }}
           />
           <View
@@ -29,19 +62,37 @@ export default function MonitoringCardInformation({ monitoring }) {
           style={{
             flexDirection: "row",
             alignItems: "center",
+            justifyContent: "space-between",
+            width: "75%",
           }}
         >
           <View>
-            <Text style={{ fontSize: 18 }}>Tatina Alves</Text>
-            <Text>Professora</Text>
+            <Text style={{ fontSize: 18 }}>{user?.perfil?.nome_exibicao}</Text>
+            <Text>
+              {monitoring.professor === monitoring.monitor
+                ? "Professor"
+                : "Monitor"}
+            </Text>
           </View>
-          <View style={{ marginLeft: "50%" }}>
-            <DotsMenu />
-          </View>
+          <IconButton
+            icon={
+              <MaterialIcons
+                name="mode-edit"
+                size={24}
+                color="white"
+                style={{
+                  backgroundColor: "#024284",
+                  padding: 12,
+                  borderRadius: 50,
+                }}
+              />
+            }
+            onPress={() => setOpenModal({ open: true, id: monitoring.id })}
+          />
         </View>
       </View>
       <View style={styles.containerData}>
-        <Text style={styles.textSimple}>Turma Ciencia da Compotação</Text>
+        <Text style={styles.textSimple}>{monitoring.course.nome}</Text>
         <HStack style={{ justifyContent: "space-between" }}>
           <VStack style={{ marginTop: 10 }}>
             <Text style={styles.textSimple}>

@@ -4,22 +4,25 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAuth } from "../../contexts/auth";
 import { GetLoginToken } from "../../util/StorageLogin.js";
+import { useSubject } from "../../contexts/subject.js";
 import DefaultStagger from "../../components/DefaultStagger";
 import ModalMonitoringInfo from "../../components/ModalMonitoringInfo/index.js";
 import MonitoringCardInformation from "../../components/MonitoringCardInformation/index.js";
 import styles from "./styles.js";
 import api from "../../services/api.js";
-import { useSubject } from "../../contexts/subject.js";
+import { ActivityIndicator } from "react-native";
 
 export default function TimeTable() {
-  const { subject } = useSubject();
+  const { course } = useSubject();
   const { goBack } = useNavigation();
   const { user } = useAuth();
   const [monitorings, setMonitorings] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState({ open: false, id: null });
+  const [loading, setLoading] = useState(false);
 
   async function getInformations() {
     try {
+      setLoading(true);
       const response = await api.get("/monitorias", {
         headers: {
           Authorization: "Token " + (await GetLoginToken()),
@@ -29,11 +32,18 @@ export default function TimeTable() {
     } catch (error) {
       console.log("error: ", error);
     }
+    setLoading(false);
   }
 
   useEffect(() => {
-    getInformations();
-  }, []);
+    if (showModal.id) {
+      getInformations();
+    }
+  }, [showModal]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#024284" />;
+  }
 
   return (
     <View style={styles.container}>
@@ -57,7 +67,10 @@ export default function TimeTable() {
       <FlatList
         data={monitorings}
         renderItem={(monitoring) => (
-          <MonitoringCardInformation monitoring={monitoring.item} />
+          <MonitoringCardInformation
+            monitoring={{ ...monitoring.item, course }}
+            setOpenModal={setShowModal}
+          />
         )}
       />
       {user?.perfil?.cargos?.includes("professor") && (
@@ -80,16 +93,11 @@ export default function TimeTable() {
             icon={
               <MaterialIcons color="#fff" size={33} name="add-circle-outline" />
             }
-            onPress={() => setShowModal(true)}
+            onPress={() => setShowModal({ open: true, id: null })}
           />
         </DefaultStagger>
       )}
-      {showModal && (
-        <ModalMonitoringInfo
-          openModal={showModal}
-          setOpenModal={setShowModal}
-        />
-      )}
+      <ModalMonitoringInfo modalInfos={showModal} setOpenModal={setShowModal} />
     </View>
   );
 }
