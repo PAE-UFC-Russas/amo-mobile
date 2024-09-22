@@ -5,12 +5,16 @@ import styles from "./styles.js";
 import { useEffect, useState } from "react";
 import api from "../../services/api.js";
 import { GetLoginToken } from "../../util/StorageLogin.js";
+import { useSubject } from "../../contexts/subject.js";
+import { useAuth } from "../../contexts/auth.js";
 
 export default function MonitoringCardInformation({
   monitoring,
   setOpenModal,
 }) {
-  const [user, setUser] = useState(null);
+  const { subject } = useSubject();
+  const { user } = useAuth();
+  const [userMonitor, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const getUser = async () => {
@@ -32,9 +36,15 @@ export default function MonitoringCardInformation({
     getUser();
   }, []);
 
-  if (loading && !user?.perfil?.id) {
+  if (loading || !userMonitor?.perfil?.id) {
     return <ActivityIndicator size="large" color="#024284" />;
   }
+
+  const isProfessor = subject.professores.find(
+    (obj) => obj.id == user.perfil.id
+  )
+    ? true
+    : false;
 
   return (
     <>
@@ -45,7 +55,7 @@ export default function MonitoringCardInformation({
             bg="tertiaryBlue"
             size="lg"
             source={{
-              uri: user?.perfil?.foto,
+              uri: userMonitor?.perfil?.foto,
             }}
           />
           <View
@@ -67,28 +77,32 @@ export default function MonitoringCardInformation({
           }}
         >
           <View>
-            <Text style={{ fontSize: 18 }}>{user?.perfil?.nome_exibicao}</Text>
+            <Text style={{ fontSize: 18 }}>
+              {userMonitor?.perfil?.nome_exibicao}
+            </Text>
             <Text>
               {monitoring.professor === monitoring.monitor
                 ? "Professor"
                 : "Monitor"}
             </Text>
           </View>
-          <IconButton
-            icon={
-              <MaterialIcons
-                name="mode-edit"
-                size={24}
-                color="white"
-                style={{
-                  backgroundColor: "#024284",
-                  padding: 12,
-                  borderRadius: 50,
-                }}
-              />
-            }
-            onPress={() => setOpenModal({ open: true, id: monitoring.id })}
-          />
+          {(user?.perfil?.id === monitoring.monitor || isProfessor) && (
+            <IconButton
+              icon={
+                <MaterialIcons
+                  name="mode-edit"
+                  size={24}
+                  color="white"
+                  style={{
+                    backgroundColor: "#024284",
+                    padding: 12,
+                    borderRadius: 50,
+                  }}
+                />
+              }
+              onPress={() => setOpenModal({ open: true, id: monitoring.id })}
+            />
+          )}
         </View>
       </View>
       <View style={styles.containerData}>

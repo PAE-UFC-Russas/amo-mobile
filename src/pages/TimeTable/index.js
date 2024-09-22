@@ -43,7 +43,23 @@ export default function TimeTable() {
           Authorization: "Token " + (await GetLoginToken()),
         },
       });
-      setMonitorings(response.data.results);
+      setInfo({
+        hora_inicio: new Date(),
+        hora_fim: getEndTime(),
+        local: "",
+        dia_semana: "0",
+        monitor: null,
+      });
+      const sortedMonitorings = response.data.results.sort((a, b) => {
+        if (a.professor === a.monitor && b.professor !== b.monitor) {
+          return -1; // a deve vir antes de b
+        } else if (a.professor !== a.monitor && b.professor === b.monitor) {
+          return 1; // b deve vir antes de a
+        } else {
+          return 0; // manter a ordem original
+        }
+      });
+      setMonitorings(sortedMonitorings);
     } catch (error) {
       console.log("error: ", error);
     }
@@ -121,10 +137,6 @@ export default function TimeTable() {
     getInformations();
   }, []);
 
-  if (loading) {
-    return <ActivityIndicator size="large" color="#024284" />;
-  }
-
   return (
     <View style={styles.container}>
       <HStack
@@ -144,47 +156,57 @@ export default function TimeTable() {
         />
         <Text style={styles.title}>Quadro de horarios</Text>
       </HStack>
-      <FlatList
-        data={monitorings}
-        renderItem={(monitoring) => (
-          <MonitoringCardInformation
-            monitoring={{ ...monitoring.item, course }}
+      {loading ? (
+        <ActivityIndicator size="large" color="#024284" />
+      ) : (
+        <>
+          <FlatList
+            data={monitorings}
+            renderItem={(monitoring) => (
+              <MonitoringCardInformation
+                monitoring={{ ...monitoring.item, course }}
+                setOpenModal={setShowModal}
+              />
+            )}
+          />
+          {user?.perfil?.cargos?.includes("professor") && (
+            <DefaultStagger>
+              <IconButton
+                style={{
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 10,
+                    height: 10,
+                  },
+                  shadowOpacity: 4,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                }}
+                variant="solid"
+                borderRadius="full"
+                bgColor="#024284"
+                marginY={12}
+                icon={
+                  <MaterialIcons
+                    color="#fff"
+                    size={33}
+                    name="add-circle-outline"
+                  />
+                }
+                onPress={() => setShowModal({ open: true, id: null })}
+              />
+            </DefaultStagger>
+          )}
+          <ModalMonitoringInfo
+            modalInfos={showModal}
             setOpenModal={setShowModal}
+            info={info}
+            setInfo={setInfo}
+            handleDelete={handleDelete}
+            handleSave={handleSave}
           />
-        )}
-      />
-      {user?.perfil?.cargos?.includes("professor") && (
-        <DefaultStagger>
-          <IconButton
-            style={{
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 10,
-                height: 10,
-              },
-              shadowOpacity: 4,
-              shadowRadius: 3.84,
-              elevation: 5,
-            }}
-            variant="solid"
-            borderRadius="full"
-            bgColor="#024284"
-            marginY={12}
-            icon={
-              <MaterialIcons color="#fff" size={33} name="add-circle-outline" />
-            }
-            onPress={() => setShowModal({ open: true, id: null })}
-          />
-        </DefaultStagger>
+        </>
       )}
-      <ModalMonitoringInfo
-        modalInfos={showModal}
-        setOpenModal={setShowModal}
-        info={info}
-        setInfo={setInfo}
-        handleDelete={handleDelete}
-        handleSave={handleSave}
-      />
     </View>
   );
 }

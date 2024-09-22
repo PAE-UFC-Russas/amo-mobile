@@ -51,7 +51,7 @@ export default function ModalMonitoringInfo({
   };
 
   const getData = async () => {
-    setMonitors(subject.monitores);
+    setMonitors([...subject.monitores, ...subject.professores]);
     if (modalInfos.id) {
       setLoading(true);
       const response = await api.get(`/monitorias/${modalInfos.id}/`, {
@@ -74,7 +74,7 @@ export default function ModalMonitoringInfo({
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [modalInfos.id]);
 
   return (
     <Modal isOpen={modalInfos.open} onClose={HandleOnClose}>
@@ -155,17 +155,16 @@ export default function ModalMonitoringInfo({
                   setInfo({ ...info, dia_semana: itemValue })
                 }
               >
-                <Select.Item label="Domingo" value="0" />
-                <Select.Item label="Segunda-feira" value="1" />
-                <Select.Item label="Terça-feira" value="2" />
-                <Select.Item label="Quarta-feira" value="3" />
-                <Select.Item label="Quinta-feira" value="4" />
-                <Select.Item label="Sexta-feira" value="5" />
-                <Select.Item label="Sábado" value="6" />
+                <Select.Item label="Segunda-feira" value="0" />
+                <Select.Item label="Terça-feira" value="1" />
+                <Select.Item label="Quarta-feira" value="2" />
+                <Select.Item label="Quinta-feira" value="3" />
+                <Select.Item label="Sexta-feira" value="4" />
+                <Select.Item label="Sábado" value="5" />
               </Select>
-              <Text marginTop="2">Monitor:</Text>
+              <Text marginTop="2">Monitor/Professor:</Text>
               <Select
-                placeholder="Monitor"
+                placeholder="Monitor/Professor"
                 width="100%"
                 borderRadius={10}
                 defaultValue={info.monitor}
