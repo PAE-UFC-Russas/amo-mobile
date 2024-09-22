@@ -25,11 +25,9 @@ export default function MonitoringCardInformation({ monitoring }) {
             }}
           />
         </View>
-
         <View
           style={{
             flexDirection: "row",
-            padding: 5,
             alignItems: "center",
           }}
         >
@@ -37,7 +35,6 @@ export default function MonitoringCardInformation({ monitoring }) {
             <Text style={{ fontSize: 18 }}>Tatina Alves</Text>
             <Text>Professora</Text>
           </View>
-
           <View style={{ marginLeft: "50%" }}>
             <DotsMenu />
           </View>
@@ -45,20 +42,20 @@ export default function MonitoringCardInformation({ monitoring }) {
       </View>
       <View style={styles.containerData}>
         <Text style={styles.textSimple}>Turma Ciencia da Compotação</Text>
-        <Text style={styles.textSimple}>Unidade II, bloco A - Sala 1</Text>
         <HStack style={{ justifyContent: "space-between" }}>
           <VStack style={{ marginTop: 10 }}>
-            <Text style={styles.textSimple}>Quinta-Feira</Text>
-            <Text style={styles.textSimple}>13:30 as 17:30</Text>
-          </VStack>
-          <VStack style={{ marginTop: 10 }}>
-            <Text style={styles.textSimple}>Segunda-Feira</Text>
-            <Text style={styles.textSimple}>13:30 as 15:30</Text>
+            <Text style={styles.textSimple}>
+              {monitoring.dia_semana_display}
+            </Text>
+            <Text style={styles.textSimple}>
+              {monitoring.hora_inicio.substring(0, 5)} as{" "}
+              {monitoring.hora_fim.substring(0, 5)}
+            </Text>
           </VStack>
         </HStack>
         <VStack style={{ marginTop: 15 }}>
           <Text style={styles.textTitle}>Local:</Text>
-          <Text style={styles.textSimple}>Unidade II, bloco 2</Text>
+          <Text style={styles.textSimple}>{monitoring.local}</Text>
         </VStack>
       </View>
     </>

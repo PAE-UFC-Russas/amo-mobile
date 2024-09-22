@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     padding: 20,
-    marginTop: 40,
+    marginTop: 20,
     gap: 10,
   },
 
   containerData: {
-    padding: 30,
+    padding: 20,
   },
 
   textSimple: {

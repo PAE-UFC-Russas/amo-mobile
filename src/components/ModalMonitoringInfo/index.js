@@ -17,14 +17,23 @@ import api from "../../services/api";
 import { useSubject } from "../../contexts/subject";
 import { GetLoginToken } from "../../util/StorageLogin";
 
+const getEndTime = () => {
+  const date = new Date();
+  date.setHours(date.getHours() + 1);
+  return date;
+};
+
 export default function ModalMonitoringInfo({ setOpenModal, openModal }) {
   const { subject } = useSubject();
   const [info, setInfo] = useState({
     hora_inicio: new Date(),
-    hora_fim: new Date().setHours(new Date().getHours()),
+    hora_fim: getEndTime(),
+  });
+  const [showDate, setShowDate] = useState({
+    active: false,
+    type: "date",
     start: true,
   });
-  const [showDate, setShowDate] = useState({ active: false, type: "date" });
   const [monitors, setMonitors] = useState([]);
   const [loading, setLoading] = useState(false);
   const showToast = useCustomToast();
@@ -39,20 +48,32 @@ export default function ModalMonitoringInfo({ setOpenModal, openModal }) {
       const data = {
         ...info,
         disciplina: subject.id,
+        hora_inicio: new Date(info.hora_inicio).toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        hora_fim: new Date(info.hora_fim).toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        professor: subject.professores[0].id,
       };
-      await api.post("/monitorias", data, {
+      await api.post("/monitorias/", data, {
         headers: {
           Authorization: "Token " + (await GetLoginToken()),
         },
       });
       showToast("Sucesso", "Quadro adicionado com sucesso!", "success");
+      setOpenModal(false);
     } catch (error) {
       showToast(
         "Erro",
         "Não foi possível adicionar, tente novamente mais tarde!",
         "error"
       );
-      console.log("error: ", error);
+      console.log("error: ", error, error.response.data);
     }
     setLoading(false);
   };
@@ -94,9 +115,9 @@ export default function ModalMonitoringInfo({ setOpenModal, openModal }) {
               maxLength={64}
               width="100%"
               placeholderTextColor="grey"
-              placeholder="Digitar assunto aqui"
+              placeholder="Digitar o local aqui"
               onChangeText={(text) => {
-                setInfo({ ...info, assunto: text });
+                setInfo({ ...info, local: text });
               }}
             />
             <HStack
@@ -145,7 +166,7 @@ export default function ModalMonitoringInfo({ setOpenModal, openModal }) {
               width="100%"
               borderRadius={10}
               onValueChange={(itemValue) =>
-                setInfo({ ...info, tipo: itemValue })
+                setInfo({ ...info, dia_semana: itemValue })
               }
             >
               <Select.Item label="Domingo" value="0" />

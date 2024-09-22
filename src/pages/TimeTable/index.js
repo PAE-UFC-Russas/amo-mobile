@@ -9,8 +9,10 @@ import ModalMonitoringInfo from "../../components/ModalMonitoringInfo/index.js";
 import MonitoringCardInformation from "../../components/MonitoringCardInformation/index.js";
 import styles from "./styles.js";
 import api from "../../services/api.js";
+import { useSubject } from "../../contexts/subject.js";
 
 export default function TimeTable() {
+  const { subject } = useSubject();
   const { goBack } = useNavigation();
   const { user } = useAuth();
   const [monitorings, setMonitorings] = useState([]);
@@ -23,7 +25,7 @@ export default function TimeTable() {
           Authorization: "Token " + (await GetLoginToken()),
         },
       });
-      setMonitorings(response.data);
+      setMonitorings(response.data.results);
     } catch (error) {
       console.log("error: ", error);
     }
@@ -55,31 +57,33 @@ export default function TimeTable() {
       <FlatList
         data={monitorings}
         renderItem={(monitoring) => (
-          <MonitoringCardInformation monitoring={monitoring} />
+          <MonitoringCardInformation monitoring={monitoring.item} />
         )}
       />
-      <DefaultStagger>
-        <IconButton
-          style={{
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 10,
-              height: 10,
-            },
-            shadowOpacity: 4,
-            shadowRadius: 3.84,
-            elevation: 5,
-          }}
-          variant="solid"
-          borderRadius="full"
-          bgColor="#024284"
-          marginY={12}
-          icon={
-            <MaterialIcons color="#fff" size={33} name="add-circle-outline" />
-          }
-          onPress={() => setShowModal(true)}
-        />
-      </DefaultStagger>
+      {user?.perfil?.cargos?.includes("professor") && (
+        <DefaultStagger>
+          <IconButton
+            style={{
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 10,
+                height: 10,
+              },
+              shadowOpacity: 4,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+            variant="solid"
+            borderRadius="full"
+            bgColor="#024284"
+            marginY={12}
+            icon={
+              <MaterialIcons color="#fff" size={33} name="add-circle-outline" />
+            }
+            onPress={() => setShowModal(true)}
+          />
+        </DefaultStagger>
+      )}
       {showModal && (
         <ModalMonitoringInfo
           openModal={showModal}
