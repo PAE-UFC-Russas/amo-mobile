@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
-  Button,
-  Center,
-  VStack,
-  Input,
-  Spinner,
-  View,
-  Image,
-  Text,
+   Button,
+   Center,
+   VStack,
+   Input,
+   Spinner,
+   View,
+   Image,
+   Text,
+   FlatList,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -17,118 +18,124 @@ import styles from "./styles";
 import { useSubject } from "../../contexts/subject";
 
 export default function SelectSubjects() {
-  const [loading, setLoading] = useState(true);
-  const [subjects, setSubjects] = useState([]);
-  const [filterMonitoria, setFilterMonitoria] = useState("");
-  const { navigate, goBack } = useNavigation();
-  const { EditSubject, course } = useSubject();
+   const [loading, setLoading] = useState(true);
+   const [subjects, setSubjects] = useState([]);
+   const [filterMonitoria, setFilterMonitoria] = useState("");
+   const { navigate, goBack } = useNavigation();
+   const { EditSubject, course } = useSubject();
 
-  function handleNavigate(item) {
-    navigate("ForumDrawer");
-    EditSubject(item);
-  }
+   function handleNavigate(item) {
+      navigate("ForumDrawer");
+      EditSubject(item);
+   }
 
-  useEffect(() => {
-    async function GetSubjects() {
+   const fetchSubjects = useCallback(async () => {
       try {
-        setLoading(true);
-        const response = await api.get(
-          `/disciplinas/?pages=1&search=${filterMonitoria}&cursos=${course.id}`,
-          {
-            headers: {
-              Authorization: "Token " + (await GetLoginToken()),
-            },
-          }
-        );
+         setLoading(true);
+         const response = await api.get(
+            `/disciplinas/?pages=1&search=${filterMonitoria}&cursos=${course.id}`,
+            {
+               headers: {
+                  Authorization: "Token " + (await GetLoginToken()),
+               },
+            }
+         );
 
-        setLoading(false);
-        setSubjects(response.data.results);
+         setLoading(false);
+         setSubjects(response.data.results);
       } catch (error) {
-        console.log(error.response.data);
+         console.log(error.response.data);
       }
-    }
+   }, [filterMonitoria, course.id]);
 
-    GetSubjects();
-  }, [filterMonitoria]);
+   useEffect(() => {
+      const delayDebounceFn = setTimeout(() => {
+         fetchSubjects();
+      }, 500);
 
-  return (
-    <Center style={styles.container} bgColor="#fff">
-      <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
-        <MaterialIcons
-          onPress={() => goBack()}
-          color="#024284"
-          size={24}
-          style={styles.backButton}
-          name="arrow-back-ios"
-        />
-        <Center>
-          <Image
-            alt="Logo AMO"
-            source={require("../../assets/logo_lightblue.png")}
-            style={{ width: 60, height: 60 }}
-          />
-        </Center>
-      </View>
+      return () => clearTimeout(delayDebounceFn);
+   }, [filterMonitoria, fetchSubjects]);
 
-      <Text
-        marginTop={30}
-        marginBottom={7}
-        fontWeight="bold"
-        color="#024284"
-        fontSize="md"
-      >
-        Selecione a monitoria
-      </Text>
-      <Input
-        placeholder="Pesquisar monitorias..."
-        value={filterMonitoria}
-        onChangeText={(text) => setFilterMonitoria(text)}
-        width="5/6"
-        borderRadius="full"
-        borderColor="#024284"
-        color="#024284"
-        marginBottom="2"
-        borderWidth={2}
-        InputLeftElement={
-          <MaterialIcons
+   return (
+      <Center style={styles.container} bgColor="#fff">
+         <View
+            style={{
+               width: "100%",
+               flexDirection: "row",
+               justifyContent: "space-around",
+               alignItems: "center",
+            }}
+         >
+            <MaterialIcons
+               onPress={() => goBack()}
+               color="#024284"
+               size={24}
+               style={styles.backButton}
+               name="arrow-back-ios"
+            />
+            <Center>
+               <Image
+                  alt="Logo AMO"
+                  source={require("../../assets/logo_lightblue.png")}
+                  style={{ width: 60, height: 60 }}
+               />
+            </Center>
+         </View>
+
+         <Text
+            marginTop={30}
+            marginBottom={7}
+            fontWeight="bold"
             color="#024284"
-            size={32}
-            name="search"
-            style={{ marginHorizontal: 10 }}
-          />
-        }
-      />
-      <VStack space="3" width="100%" alignItems="center" marginTop="2%">
-        {loading ? (
-          <Spinner marginTop="auto" marginBottom="auto" size="lg" />
-        ) : (
-          subjects.map((item, index) => {
-            return (
-              <Button
-                key={index}
-                bgColor="#0092BB"
-                borderRadius="2xl"
-                width={"80%"}
-                height={60}
-                onPress={() => handleNavigate(item)}
-                _text={{
-                  fontWeight: 800,
-                  color: "#fff",
-                }}
-              >
-                {item.nome}
-              </Button>
-            );
-          })
-        )}
-      </VStack>
-    </Center>
-  );
+            fontSize="md"
+         >
+            Selecione a monitoria
+         </Text>
+         <Input
+            placeholder="Pesquisar monitorias..."
+            value={filterMonitoria}
+            onChangeText={(text) => setFilterMonitoria(text)}
+            width="5/6"
+            borderRadius="full"
+            borderColor="#024284"
+            color="#024284"
+            marginBottom="2"
+            borderWidth={2}
+            InputLeftElement={
+               <MaterialIcons
+                  color="#024284"
+                  size={32}
+                  name="search"
+                  style={{ marginHorizontal: 10 }}
+               />
+            }
+         />
+         <VStack space="3" width="100%" alignItems="center" marginTop="2%">
+            {loading ? (
+               <Spinner marginTop="auto" marginBottom="auto" size="lg" />
+            ) : (
+               <FlatList
+                  data={subjects}
+                  renderItem={({ item }) => (
+                     <Button
+                        bgColor="#0092BB"
+                        borderRadius="2xl"
+                        width={"80%"}
+                        height={60}
+                        onPress={() => handleNavigate(item)}
+                        _text={{
+                           fontWeight: 800,
+                           color: "#fff",
+                        }}
+                     >
+                        {item.nome}
+                     </Button>
+                  )}
+                  keyExtractor={(item, index) => index.toString()}
+                  contentContainerStyle={{ alignItems: "center" }}
+               />
+            )}
+         </VStack>
+      </Center>
+   );
 }
