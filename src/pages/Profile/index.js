@@ -19,15 +19,16 @@ export default function Profile() {
     matricula: user.perfil.matricula,
   };
 
-  function getCurrentOffice() {
-    const isMonitor = subject.monitores.find((obj) => obj.id == user.perfil.id)
-      ? true
-      : false;
-    const isProfessor = subject.professores.find(
-      (obj) => obj.id == user.perfil.id
-    )
-      ? true
-      : false;
+  function getCurrentOffice(subject, user) {
+    if (!subject || !user || !user.perfil) {
+      return "Aluno";
+    }
+
+    const isMonitor =
+      subject.monitores?.some((obj) => obj.id === user.perfil.id) || false;
+    const isProfessor =
+      subject.professores?.some((obj) => obj.id === user.perfil.id) || false;
+
     if (isMonitor) return "Monitor";
     if (isProfessor) return "Professor";
     return "Aluno";
