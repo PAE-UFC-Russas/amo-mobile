@@ -84,8 +84,9 @@ export default function SelectCourses() {
             {loading ? (
                <Spinner marginTop="auto" marginBottom="auto" size="lg" />
             ) : (
-               courses.map((item, index) => {
-                  return (
+               courses
+                  .sort((a, b) => a.nome.localeCompare(b.nome))
+                  .map((item, index) => (
                      <Button
                         key={index}
                         textAlign={"center"}
@@ -101,8 +102,7 @@ export default function SelectCourses() {
                      >
                         {item.nome}
                      </Button>
-                  );
-               })
+                  ))
             )}
          </VStack>
       </View>
