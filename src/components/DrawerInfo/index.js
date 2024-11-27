@@ -24,15 +24,10 @@ export default function DrawerInfo(props) {
    function getCurrentCargo() {
       if (user.perfil.cargos.includes("professor")) {
          return "Professor 🦉";
+      } else if (user.perfil.cargos.includes("monitor")) {
+         return "Monitor 👨‍🏫";
       } else {
-         if (
-            subject.monitores.filter((monitor) => monitor.id === user.id)
-               .length > 0
-         ) {
-            return "Monitor 👨‍🏫";
-         } else {
-            return "Aluno 🎓";
-         }
+         return "Aluno 🎓";
       }
    }
 
