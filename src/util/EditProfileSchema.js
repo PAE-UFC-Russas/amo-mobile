@@ -41,8 +41,8 @@ export async function EditProfilePerFormData(profile) {
             "Content-Type": "multipart/form-data",
          },
       });
-      const newEditedUser = await response.json();
-      return { success: true, user: newEditedUser };
+
+      return { success: true, response: response };
    } catch (error) {
       console.log(error);
       return { success: false, user: null };
