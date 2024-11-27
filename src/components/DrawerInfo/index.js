@@ -19,8 +19,6 @@ export default function DrawerInfo(props) {
       props.navigation.navigate("SignIn");
    };
 
-   console.log("userDrawer: ", user);
-
    function getCurrentCargo() {
       if (user.perfil.cargos.includes("professor")) {
          return "Professor 🦉";
