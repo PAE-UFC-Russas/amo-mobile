@@ -18,7 +18,7 @@ export default function Profile() {
       foto: user.perfil.foto,
       matricula: user.perfil.matricula,
    };
-
+   console.log(user);
    function getCurrentOffice(subject, user) {
       if (!subject || !user || !user.perfil) {
          return "Aluno";
