@@ -21,6 +21,7 @@ const getEndTime = () => {
 
 export default function TimeTable() {
    const { course, subject } = useSubject();
+   console.log("subject: ", subject);
    const { goBack } = useNavigation();
    const { user } = useAuth();
    const showToast = useCustomToast();
