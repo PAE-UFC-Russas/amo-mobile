@@ -28,6 +28,9 @@ Para iniciá-lo, siga os passos abaixo:
 # Instalar as dependências
 $ npm install
 
+#caso de erro no build, apagar a pasta node-modules e instalar o normalize-css-color com o seguinte comando 
+$ npm install normalize-css-color
+
 # Iniciar o projeto
 $ expo start
 ```
