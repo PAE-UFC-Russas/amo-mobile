@@ -76,7 +76,6 @@ export default function ModalMonitoringInfo({
       getData();
    }, [modalInfos.id]);
 
-   console.log("monitors", monitors);
 
    return (
       <Modal isOpen={modalInfos.open} onClose={HandleOnClose}>

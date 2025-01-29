@@ -138,7 +138,9 @@ export default function TimeTable() {
    };
 
    const monitoringsAndTeachers = () =>{
-      console.log("monitor: ", subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
+      console.log("monitor: ", monitorings.some(item => item.id === user.perfil.id) || subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
+      console.log("SUBJECT: ", subject)
+      console.log("MONITORINGS: ", monitorings)
    }
 
    useEffect(() => {
@@ -180,7 +182,7 @@ export default function TimeTable() {
                      />
                   )}
                />
-               {subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id) && (
+               {monitorings.some(item => item.id === user.perfil.id) || subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id) && (
                   <DefaultStagger>
                      <IconButton
                         style={{
