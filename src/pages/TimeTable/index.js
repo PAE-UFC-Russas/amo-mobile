@@ -21,13 +21,13 @@ const getEndTime = () => {
 
 export default function TimeTable() {
    const { course, subject } = useSubject();
-   console.log("subject: ", subject);
    const { goBack } = useNavigation();
    const { user } = useAuth();
    const showToast = useCustomToast();
    const [monitorings, setMonitorings] = useState([]);
    const [showModal, setShowModal] = useState({ open: false, id: null });
    const [loading, setLoading] = useState(false);
+   const [listMonitorings, setListMonitorings] = useState([]);
    const [info, setInfo] = useState({
       hora_inicio: new Date(),
       hora_fim: getEndTime(),
@@ -60,6 +60,15 @@ export default function TimeTable() {
                return 0; // manter a ordem original
             }
          });
+
+         const filteredMonitorings = [];
+         sortedMonitorings.forEach(element => {
+            console.log(`index`, element.disciplina, subject.id)
+            if (element.disciplina == subject.id) {
+               filteredMonitorings.push(element);
+            }
+         });
+         setListMonitorings(filteredMonitorings);
          setMonitorings(sortedMonitorings);
       } catch (error) {
          console.log("error: ", error);
@@ -137,6 +146,8 @@ export default function TimeTable() {
       }
    };
 
+
+
    useEffect(() => {
       getInformations();
    }, []);
@@ -163,53 +174,63 @@ export default function TimeTable() {
          {loading ? (
             <ActivityIndicator size="large" color="#024284" />
          ) : (
-            <>
-               <FlatList
-                  data={monitorings}
-                  renderItem={(monitoring) => (
-                     <MonitoringCardInformation
-                        monitoring={{ ...monitoring.item, course }}
-                        setOpenModal={setShowModal}
-                     />
+            console.log("list", listMonitorings.length),
+            listMonitorings.length != 0 ?
+               <>
+                  <FlatList
+                     data={listMonitorings}
+                     renderItem={(monitoring) => (
+                        //<Text>{monitoring.item.nome_exibicao}</Text>
+                        <MonitoringCardInformation
+                           monitoring={{ ...monitoring.item, course }}
+                           setOpenModal={setShowModal}
+                        />
+                     )}
+                  />
+
+
+
+                  {user?.perfil?.cargos?.includes("monitor") && (
+                     <DefaultStagger>
+                        <IconButton
+                           style={{
+                              shadowColor: "#000",
+                              shadowOffset: {
+                                 width: 10,
+                                 height: 10,
+                              },
+                              shadowOpacity: 4,
+                              shadowRadius: 3.84,
+                              elevation: 5,
+                           }}
+                           variant="solid"
+                           borderRadius="full"
+                           bgColor="#024284"
+                           marginY={12}
+                           icon={
+                              <MaterialIcons
+                                 color="#fff"
+                                 size={33}
+                                 name="add-circle-outline"
+                              />
+                           }
+                           onPress={() => setShowModal({ open: true, id: null })}
+                        />
+                     </DefaultStagger>
                   )}
-               />
-               {user?.perfil?.cargos?.includes("monitor") && (
-                  <DefaultStagger>
-                     <IconButton
-                        style={{
-                           shadowColor: "#000",
-                           shadowOffset: {
-                              width: 10,
-                              height: 10,
-                           },
-                           shadowOpacity: 4,
-                           shadowRadius: 3.84,
-                           elevation: 5,
-                        }}
-                        variant="solid"
-                        borderRadius="full"
-                        bgColor="#024284"
-                        marginY={12}
-                        icon={
-                           <MaterialIcons
-                              color="#fff"
-                              size={33}
-                              name="add-circle-outline"
-                           />
-                        }
-                        onPress={() => setShowModal({ open: true, id: null })}
-                     />
-                  </DefaultStagger>
-               )}
-               <ModalMonitoringInfo
-                  modalInfos={showModal}
-                  setOpenModal={setShowModal}
-                  info={info}
-                  setInfo={setInfo}
-                  handleDelete={handleDelete}
-                  handleSave={handleSave}
-               />
-            </>
+                  <ModalMonitoringInfo
+                     modalInfos={showModal}
+                     setOpenModal={setShowModal}
+                     info={info}
+                     setInfo={setInfo}
+                     handleDelete={handleDelete}
+                     handleSave={handleSave}
+                  />
+               </>
+               :
+               <Text>
+                  Essa disciplina não possui monitoria no momento, se possivel avise ao professor
+               </Text>
          )}
       </View>
    );
