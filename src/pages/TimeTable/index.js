@@ -138,7 +138,7 @@ export default function TimeTable() {
    };
 
    const monitoringsAndTeachers = () =>{
-      console.log("monitor or professor: ", subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
+      console.log("monitor: ", subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
    }
 
    useEffect(() => {
@@ -180,7 +180,7 @@ export default function TimeTable() {
                      />
                   )}
                />
-               {subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id) && (
+               {user?.perfil?.cargos?.includes("monitor") && (
                   <DefaultStagger>
                      <IconButton
                         style={{
