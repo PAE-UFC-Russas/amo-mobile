@@ -63,6 +63,7 @@ export default function TimeTable() {
       } catch (error) {
          console.log("error: ", error);
       }
+      monitoringsAndTeachers(subject, monitorings);
       setLoading(false);
    }
 
@@ -136,6 +137,10 @@ export default function TimeTable() {
       }
    };
 
+   const monitoringsAndTeachers = () =>{
+      console.log("monitor or professor: ", subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
+   }
+
    useEffect(() => {
       getInformations();
    }, []);
@@ -163,10 +168,10 @@ export default function TimeTable() {
             <ActivityIndicator size="large" color="#024284" />
          ) : (
             <>
+               
                <FlatList
-                  data={subject.monitor === user?.perfil?.id ?
-                     monitorings.filter(monitoring => monitoring.monitor === user.perfil.id)
-                     : monitorings
+                  data={
+                     subject.monitor === user?.perfil?.id ? monitorings.filter(monitoring => monitoring.monitor === user.perfil.id) : monitorings 
                   }
                   renderItem={(monitoring) => (
                      <MonitoringCardInformation
@@ -175,7 +180,7 @@ export default function TimeTable() {
                      />
                   )}
                />
-               {user?.perfil?.cargos?.includes("monitor") && (
+               {subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id) && (
                   <DefaultStagger>
                      <IconButton
                         style={{
