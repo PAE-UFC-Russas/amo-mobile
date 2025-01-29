@@ -63,7 +63,6 @@ export default function TimeTable() {
       } catch (error) {
          console.log("error: ", error);
       }
-      monitoringsAndTeachers(subject, monitorings);
       setLoading(false);
    }
 
@@ -138,9 +137,20 @@ export default function TimeTable() {
    };
 
    const monitoringsAndTeachers = () =>{
+      let list = []
+      if(subject.monitores.length != 0 || subject.professores.length != 0){
+         subject.monitores.forEach(monitor => {
+            list.push(monitor.id)
+         });
+         subject.professores.forEach(monitor => {
+            list.push(monitor.id)
+         });
+      }
+      console.log("LIST: ", list)
       console.log("monitor: ", monitorings.some(item => item.id === user.perfil.id) || subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
       console.log("SUBJECT: ", subject)
       console.log("MONITORINGS: ", monitorings)
+      return list
    }
 
    useEffect(() => {
@@ -182,7 +192,7 @@ export default function TimeTable() {
                      />
                   )}
                />
-               {monitorings.some(item => item.id === user.perfil.id) || subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id) && (
+               {monitoringsAndTeachers(subject, monitorings).includes(user.perfil.id) && (
                   <DefaultStagger>
                      <IconButton
                         style={{
