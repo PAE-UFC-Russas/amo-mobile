@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "AMO",
+    "slug": "ambiente-monitoria-online",
+    "version": "7.0.0",
+    "userInterfaceStyle": "light",
+    "icon": "./src/assets/icon.png",
+    "orientation": "portrait",
+    "owner": "amo-ufc",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "backgroundColor": "#52D6FB"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pae.ambientedemonitoriaonline",
+      "buildNumber": "5.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive_icon.png",
+        "backgroundColor": "#024284"
+      },
+      "package": "com.pae.ambientedemonitoriaonline",
+      "versionCode": 7
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir que o aplicativo AMO acesse sua galeria de fotos.",
+          "cameraPermission": "Permitir que o aplicativo AMO acesse sua camera.",
+          "microphonePermission": false
+        }
+      ],
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "44702a12-ffd6-45a3-8125-d09913584395"
+      }
+    }
+  }
+}
