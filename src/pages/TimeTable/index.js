@@ -180,7 +180,7 @@ export default function TimeTable() {
                      />
                   )}
                />
-               {user?.perfil?.cargos?.includes("monitor") && (
+               {subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id) && (
                   <DefaultStagger>
                      <IconButton
                         style={{
