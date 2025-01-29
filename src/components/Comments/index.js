@@ -75,6 +75,15 @@ export default function Comments({
       console.log(error.response);
     }
   };
+  function getIcon() {
+    if (comment.autor.cargos.includes("professor")) {
+       return "🦉";
+    } else if (comment.autor.cargos.includes("monitor") && comment.autor.cargos.includes("monitor") && subject.monitores.some(monitor => monitor.id === comment.autor.id)) {
+       return "👨‍🏫";
+    } else {
+       return "🎓";
+    }
+  }
 
   return (
     <ScrollView
@@ -103,7 +112,8 @@ export default function Comments({
             }}
           />
           <Text marginLeft={3} fontSize={18} fontWeight="bold">
-            {comment.autor.perfil.nome_exibicao}
+            {comment.autor.perfil.nome_exibicao}{" "}
+            {getIcon()}
           </Text>
         </View>
         <DotsMenu

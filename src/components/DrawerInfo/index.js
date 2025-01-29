@@ -22,7 +22,7 @@ export default function DrawerInfo(props) {
    function getCurrentCargo() {
       if (user.perfil.cargos.includes("professor")) {
          return "Professor 🦉";
-      } else if (user.perfil.cargos.includes("monitor")) {
+      } else if (user.perfil.cargos.includes("monitor") && user.perfil.cargos.includes("monitor") && subject.monitores.some(monitor => monitor.id === user.perfil.id)) {
          return "Monitor 👨‍🏫";
       } else {
          return "Aluno 🎓";
@@ -60,7 +60,7 @@ export default function DrawerInfo(props) {
                {course.nome}
             </Text>
             <Text fontSize="sm" fontWeight="semibold">
-               {subject.monitoria}
+               {subject.nome}
             </Text>
          </Center>
          <DrawerItemList {...props} />

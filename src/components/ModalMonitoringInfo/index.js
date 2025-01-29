@@ -179,7 +179,7 @@ export default function ModalMonitoringInfo({
                         borderRadius={10}
                         defaultValue={info.monitor}
                         onValueChange={(itemValue) =>
-                           setInfo({ ...info, monitor: itemValue })
+                           setInfo({ ...info, monitor: parseInt(itemValue, 10)  })
                         }
                      >
                         {monitors.map((monitor) => (

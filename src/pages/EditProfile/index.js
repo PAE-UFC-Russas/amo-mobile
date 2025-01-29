@@ -199,12 +199,12 @@ export default function EditProfile() {
                      <Text marginTop={1} fontSize={18}>
                         Curso:
                      </Text>
-                     <View style={{ padding: 5 }}>
+                     <View>
                         <SelectForProfilePage
                            borderWidth={1}
                            borderColor={"#99B3CD"}
                            items={courses}
-                           placeholder={course.nome}
+                           placeholder={user.perfil.curso}
                            setValue={(itemValue) =>
                               setProfile({
                                  ...profile,

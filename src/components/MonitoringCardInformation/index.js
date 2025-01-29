@@ -20,7 +20,7 @@ export default function MonitoringCardInformation({
   const getUser = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/usuario/${monitoring.monitor}`, {
+      const response = await api.get(`/usuario/${monitoring.monitor}/`, {
         headers: {
           Authorization: "Token " + (await GetLoginToken()),
         },

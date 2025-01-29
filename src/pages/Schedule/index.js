@@ -53,7 +53,7 @@ export default function Schedule() {
 
     try {
       setLoading(true);
-      const response = await api.get("/agendamentos", {
+      const response = await api.get("/agendamentos/", {
         headers: {
           Authorization: "Token " + (await GetLoginToken()),
         },
