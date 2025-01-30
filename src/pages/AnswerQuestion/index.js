@@ -119,6 +119,7 @@ export default function AnswerQuestion({ route }) {
 
   const MarkResponse = async (id) => {
     try {
+      console.log("CORRETA: ", doubt)
       if (id === doubt.resposta_correta) {
         await api.delete(`/duvidas/${doubt.id}/correta/`, {
           headers: {

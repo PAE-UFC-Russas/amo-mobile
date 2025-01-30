@@ -39,15 +39,18 @@ export default function ModalMonitoringInfo({
 
    const changeTime = (event, date) => {
       setShowDate({ ...showDate, active: false });
-      if (showDate.start) {
-         setInfo({ ...info, hora_inicio: date });
-      } else {
-         setInfo({ ...info, hora_fim: date });
+      if (date) {
+         if (showDate.start) {
+            setInfo({ ...info, hora_inicio: date });
+         } else {
+            setInfo({ ...info, hora_fim: date });
+         }
       }
    };
 
    const getTime = (date) => {
-      return ([hours, minutes, seconds] = date.split(":").map(Number));
+      const [hours, minutes] = date.split(":").map(Number);
+      return new Date().setHours(hours, minutes, 0, 0);
    };
 
    const getData = async () => {
@@ -59,39 +62,28 @@ export default function ModalMonitoringInfo({
                Authorization: "Token " + (await GetLoginToken()),
             },
          });
-         const startHour = getTime(response.data.hora_inicio)[0];
-         const startMinute = getTime(response.data.hora_inicio)[1];
-         const endHour = getTime(response.data.hora_fim)[0];
-         const endMinute = getTime(response.data.hora_fim)[1];
          setInfo({
             ...response.data,
-            hora_inicio: new Date().setHours(startHour, startMinute),
-            hora_fim: new Date().setHours(endHour, endMinute),
+            hora_inicio: new Date(getTime(response.data.hora_inicio)),
+            hora_fim: new Date(getTime(response.data.hora_fim)),
          });
+         setLoading(false);
       }
-      setLoading(false);
    };
 
    useEffect(() => {
       getData();
    }, [modalInfos.id]);
 
-
    return (
       <Modal isOpen={modalInfos.open} onClose={HandleOnClose}>
-         <Modal.Content
-            paddingY="8"
-            paddingX="6"
-            bgColor="#fff"
-            width="90%"
-            borderRadius={15}
-         >
+         <Modal.Content paddingY="8" paddingX="6" bgColor="#fff" width="90%" borderRadius={15}>
             {loading ? (
                <ActivityIndicator size="large" color="#024284" />
             ) : (
                <Center>
                   <Text fontSize={17} fontWeight="bold" color="black">
-                     Adicionar novo quadro de hórarios
+                     Adicionar novo quadro de horários
                   </Text>
                   <VStack>
                      <Text marginTop="4">Local</Text>
@@ -102,34 +94,20 @@ export default function ModalMonitoringInfo({
                         placeholderTextColor="grey"
                         placeholder="Digitar o local aqui"
                         value={info.local}
-                        onChangeText={(text) => {
-                           setInfo({ ...info, local: text });
-                        }}
+                        onChangeText={(text) => setInfo({ ...info, local: text })}
                      />
-                     <HStack
-                        justifyContent="space-between"
-                        alignItems="center"
-                        marginTop="2"
-                     >
+                     <HStack justifyContent="space-between" alignItems="center" marginTop="2">
                         <VStack width="45%">
-                           <Text>Hora inicio</Text>
+                           <Text>Hora início</Text>
                            <Button
                               fontSize={10}
                               borderRadius={10}
                               variant="outline"
                               width="100%"
-                              _text={{
-                                 color: "black",
-                              }}
-                              onPress={() =>
-                                 setShowDate({
-                                    type: "time",
-                                    active: true,
-                                    start: true,
-                                 })
-                              }
+                              _text={{ color: "black" }}
+                              onPress={() => setShowDate({ type: "time", active: true, start: true })}
                            >
-                              {FormateTime(info.hora_inicio)}
+                              {info.hora_inicio ? FormateTime(info.hora_inicio) : "Selecionar"}
                            </Button>
                         </VStack>
                         <VStack width="45%">
@@ -139,18 +117,10 @@ export default function ModalMonitoringInfo({
                               borderRadius={10}
                               variant="outline"
                               width="100%"
-                              _text={{
-                                 color: "black",
-                              }}
-                              onPress={() =>
-                                 setShowDate({
-                                    type: "time",
-                                    active: true,
-                                    start: false,
-                                 })
-                              }
+                              _text={{ color: "black" }}
+                              onPress={() => setShowDate({ type: "time", active: true, start: false })}
                            >
-                              {FormateTime(info.hora_fim)}
+                              {info.hora_fim ? FormateTime(info.hora_fim) : "Selecionar"}
                            </Button>
                         </VStack>
                      </HStack>
@@ -160,9 +130,7 @@ export default function ModalMonitoringInfo({
                         width="100%"
                         borderRadius={10}
                         defaultValue={info.dia_semana}
-                        onValueChange={(itemValue) =>
-                           setInfo({ ...info, dia_semana: itemValue })
-                        }
+                        onValueChange={(itemValue) => setInfo({ ...info, dia_semana: itemValue })}
                      >
                         <Select.Item label="Segunda-feira" value="0" />
                         <Select.Item label="Terça-feira" value="1" />
@@ -171,57 +139,19 @@ export default function ModalMonitoringInfo({
                         <Select.Item label="Sexta-feira" value="4" />
                         <Select.Item label="Sábado" value="5" />
                      </Select>
-                     <Text marginTop="2">Monitor/Professor:</Text>
-                     <Select
-                        placeholder="Monitor/Professor"
-                        width="100%"
-                        borderRadius={10}
-                        defaultValue={info.monitor}
-                        onValueChange={(itemValue) =>
-                           setInfo({ ...info, monitor: parseInt(itemValue, 10)  })
-                        }
-                     >
-                        {monitors.map((monitor) => (
-                           <Select.Item
-                              label={monitor.nome_exibicao}
-                              value={monitor.id}
-                              key={monitor.id}
-                           />
-                        ))}
-                     </Select>
-                     <Button
-                        marginTop={8}
-                        bgColor="#307DF1"
-                        onPress={() => {
-                           handleSave(modalInfos?.id);
-                        }}
-                     >
+                     <Button marginTop={8} bgColor="#307DF1" onPress={() => handleSave(modalInfos?.id)}>
                         {modalInfos.id ? "Atualizar" : "Salvar"}
                      </Button>
                      {modalInfos.id && (
-                        <Button
-                           marginTop={2}
-                           bgColor="#FF0000"
-                           onPress={() => {
-                              handleDelete(modalInfos?.id);
-                           }}
-                        >
+                        <Button marginTop={2} bgColor="#FF0000" onPress={() => handleDelete(modalInfos?.id)}>
                            Deletar
                         </Button>
                      )}
                      {showDate.active && (
                         <RNDateTimePicker
                            mode={"time"}
-                           value={
-                              showDate.start ? info.hora_inicio : info.hora_fim
-                           }
-                           minimumDate={new Date()}
-                           onTouchCancel={() =>
-                              setShowDate({ ...showDate, active: false })
-                           }
-                           onChange={(event, date) => {
-                              changeTime(event, date);
-                           }}
+                           value={showDate.start ? info.hora_inicio || new Date() : info.hora_fim || new Date()}
+                           onChange={changeTime}
                         />
                      )}
                   </VStack>
