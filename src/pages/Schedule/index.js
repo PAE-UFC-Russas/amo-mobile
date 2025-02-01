@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Center, Spinner, FlatList, IconButton, View } from "native-base";
+import { Center, Spinner, FlatList, IconButton, View, Modal, Text, Button } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import ModalAddScheduling from "../../components/ModalAddScheduling";
 import ModalDetailScheduling from "../../components/ModalDetailScheduling";
@@ -16,6 +16,7 @@ export default function Schedule() {
   const { subject } = useSubject();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDetailModal, setOpenDetailModal] = useState(false);
+  const [openErrorModal, setOpenErrorModal] = useState({ open: false, message: "" });
   const [loading, setLoading] = useState(true);
   const [schedules, setSchedules] = useState([]);
   const [newSchedule, setNewSchedule] = useState({
@@ -85,7 +86,9 @@ export default function Schedule() {
       GetSchedules();
       return true;
     } catch (error) {
-      console.log(error.response);
+      console.log(error.response.data.mensagem)
+      const errorMessage = (error.response?.data?.mensagem || "Ocorreu um erro inesperado!").trim().replace(/\s+/g, " ");;
+      setOpenErrorModal({ open: true, message: errorMessage });
       return false;
     }
   }
@@ -181,6 +184,21 @@ export default function Schedule() {
               EditSchedule("cancelado");
             }}
           />
+
+          <Modal isOpen={openErrorModal.open} onClose={() => setOpenErrorModal({ open: false, message: "" })}>
+            <Modal.Content maxWidth="400px">
+              <Modal.CloseButton />
+              <Modal.Header>Erro</Modal.Header>
+              <Modal.Body>
+                <Text>{openErrorModal.message}</Text>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button colorScheme="red" onPress={() => setOpenErrorModal({ open: false, message: "" })}>
+                  Fechar
+                </Button>
+              </Modal.Footer>
+            </Modal.Content>
+          </Modal>
         </>
       )}
     </Center>
