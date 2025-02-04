@@ -50,9 +50,15 @@ O app pode ser acessado pelo o aplicativo do expo ao ler o qrcode do terminal.
   ```
   
 -Terceiro passo:</br>
-  .Criar build
+  .Criar build apk
   ```bash
   $ eas build -p android --profile preview
+  ```
+
+-Terceiro passo:</br>
+  .Criar build aab (playStore)
+  ```bash
+  $ eas build -p android
   ```
 
 -Quarto passo:</br>
