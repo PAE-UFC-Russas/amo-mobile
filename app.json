@@ -15,15 +15,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pae.ambientedemonitoriaonline",
-      "buildNumber": "5.0.0"
+      "buildNumber": "10.0.0"
     },
     "android": {
+      "versionCode": 10,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive_icon.png",
         "backgroundColor": "#024284"
       },
-      "package": "com.pae.ambientedemonitoriaonline",
-      "versionCode": 10
+      "package": "com.pae.ambientedemonitoriaonline"
     },
     "plugins": [
       [

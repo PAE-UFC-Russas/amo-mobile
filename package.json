@@ -1,6 +1,6 @@
 {
   "name": "monitoria-online-mobile",
-  "version": "5.0.0",
+  "version": "10.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
