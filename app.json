@@ -2,7 +2,7 @@
   "expo": {
     "name": "AMO",
     "slug": "ambiente-monitoria-online",
-    "version": "10.0.0",
+    "version": "9.0.0",
     "userInterfaceStyle": "light",
     "icon": "./src/assets/icon.png",
     "orientation": "portrait",
@@ -15,10 +15,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pae.ambientedemonitoriaonline",
-      "buildNumber": "10.0.0"
+      "buildNumber": "9.0.0"
     },
     "android": {
-      "versionCode": 10,
+      "versionCode": 9,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive_icon.png",
         "backgroundColor": "#024284"
