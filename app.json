@@ -2,7 +2,7 @@
   "expo": {
     "name": "AMO",
     "slug": "ambiente-monitoria-online",
-    "version": "7.0.0",
+    "version": "10.0.0",
     "userInterfaceStyle": "light",
     "icon": "./src/assets/icon.png",
     "orientation": "portrait",
@@ -23,7 +23,7 @@
         "backgroundColor": "#024284"
       },
       "package": "com.pae.ambientedemonitoriaonline",
-      "versionCode": 7
+      "versionCode": 10
     },
     "plugins": [
       [

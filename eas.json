@@ -30,34 +30,4 @@
     "production": {}
   }
 }
-{
-  "cli": {
-    "version": ">= 0.55.1"
-  },
-  "build": {
-    "production-app1": {
-      "env": {
-        "APP": "app1"
-      }
-    },
-    "development": {
-      "distribution": "internal",
-      "android": {
-        "gradleCommand": ":app:assembleDebug"
-      },
-      "ios": {
-        "buildConfiguration": "Debug"
-      }
-    },
-    "preview": {
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      }
-    },
-    "production": {}
-  },
-  "submit": {
-    "production": {}
-  }
-}
+
