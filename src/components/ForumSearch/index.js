@@ -41,7 +41,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
                 placeholder='Pesquisar perguntas...'
                 value={displayValue}
                 onChangeText={text => {setDisplayValue(text);handler(text)}}
-                width='5/6'
+                width='92%'
                 borderRadius='full'
                 borderColor='#024284'
                 marginBottom='2'

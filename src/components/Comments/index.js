@@ -91,8 +91,8 @@ export default function Comments({
       padding="3%"
       margin={2}
       borderRadius={10}
-      borderWidth={correctResponse === comment.id ? 4 : 0}
-      borderColor={correctResponse === comment.id ? "#C1F1C6" : ""}
+      borderWidth={correctResponse.includes(comment.id) ? 4 : 0}
+      borderColor={correctResponse.includes(comment.id) ? "#C1F1C6" : ""}
     >
       <View
         style={{
@@ -135,11 +135,11 @@ export default function Comments({
             <AntDesign
               name="checkcircle"
               size={24}
-              color={correctResponse === comment.id ? "#2F80ED" : "#C4C4C4"}
+              color={correctResponse.includes(comment.id) ? "#2F80ED" : "#C4C4C4"}
               onPress={() => MarkResponse(comment.id)}
             />
           )}
-          {correctResponse === comment.id && (
+          {correctResponse.includes(comment.id) && (
             <HStack
               alignItems="center"
               justifyContent="center"

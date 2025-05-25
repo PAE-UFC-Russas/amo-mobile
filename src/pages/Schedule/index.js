@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< Updated upstream
 import { Center, Spinner, FlatList, IconButton, View } from "native-base";
+=======
+import { Center, Spinner, FlatList, IconButton, View, Modal, Text, Button, Image } from "native-base";
+>>>>>>> Stashed changes
 import { MaterialIcons } from "@expo/vector-icons";
 import ModalAddScheduling from "../../components/ModalAddScheduling";
 import ModalDetailScheduling from "../../components/ModalDetailScheduling";
@@ -114,14 +118,32 @@ export default function Schedule() {
   useEffect(() => {
     GetSchedules();
   }, [filters]);
-
+  console.log(filters)
   return (
     <Center style={styles.container} bgColor="#fff">
       <SchedulingFilter filters={filters} setFilters={setFilters} />
       {loading ? (
         <Spinner marginTop="auto" marginBottom="auto" size="lg" />
-      ) : (
-        <>
+      ) : schedules.results.length == 0 ?(
+          <Center flex={1} justifyContent="center" alignItems="center" marginBottom={20}>
+            <Image
+              source={require("../../assets/event.png")}
+              alt="event"
+              width={250}
+              height={250}
+            />
+            <Text
+              fontWeight="bold"
+              color="#45BEE6"
+              fontSize="lg"
+              textAlign="center"
+              px={10}
+              mt={2}
+            >
+              Ainda não há horários agendados com o monitor.
+            </Text>
+          </Center>
+         ) : (
           <FlatList
             data={schedules.results}
             contentContainerStyle={{
@@ -137,6 +159,7 @@ export default function Schedule() {
               />
             )}
           />
+<<<<<<< Updated upstream
           <DefaultStagger>
             <IconButton
               style={{
@@ -183,6 +206,73 @@ export default function Schedule() {
           />
         </>
       )}
+=======
+        )}
+
+        {!loading && (
+          <>
+            <DefaultStagger>
+              <IconButton
+                style={{
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 10,
+                    height: 10,
+                  },
+                  shadowOpacity: 4,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                }}
+                variant="solid"
+                borderRadius="full"
+                bgColor="#024284"
+                marginY={10}
+                icon={<MaterialIcons color="#fff" size={33} name="create" />}
+                onPress={() => setOpenAddModal(true)}
+              />
+            </DefaultStagger>
+            {openDetailModal && (
+              <ModalDetailScheduling
+                subject={subject}
+                details={newSchedule}
+                openModal={openDetailModal}
+                setOpenModal={setOpenDetailModal}
+                EditSchedule={EditSchedule}
+                setConfirmCancelQuest={setConfirmCancelQuest}
+              />
+            )}
+            <ModalAddScheduling
+              PostNewSchedule={PostNewSchedule}
+              newSchedule={newSchedule}
+              setNewSchedule={setNewSchedule}
+              openModal={openAddModal}
+              setOpenModal={setOpenAddModal}
+            />
+            <ConfirmCancelModal
+              confirmCancelModal={confirmCancelQuest}
+              setOpen={setConfirmCancelQuest}
+              DeleteQuestion={() => {
+                EditSchedule("cancelado");
+              }}
+            />
+
+            <Modal isOpen={openErrorModal.open} onClose={() => setOpenErrorModal({ open: false, message: "" })}>
+              <Modal.Content maxWidth="400px">
+                <Modal.CloseButton />
+                <Modal.Header>Erro</Modal.Header>
+                <Modal.Body>
+                  <Text>{openErrorModal.message}</Text>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button colorScheme="red" onPress={() => setOpenErrorModal({ open: false, message: "" })}>
+                    Fechar
+                  </Button>
+                </Modal.Footer>
+              </Modal.Content>
+            </Modal>
+          </>
+        )}
+>>>>>>> Stashed changes
     </Center>
   );
 }

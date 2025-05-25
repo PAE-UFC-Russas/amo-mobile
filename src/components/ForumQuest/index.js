@@ -39,7 +39,6 @@ export default function ForumQuest(
          return str;
       }
    }
-
    return (
       <View style={styles.boxWithShadow}>
          <HStack justifyContent="space-between">
@@ -68,7 +67,7 @@ export default function ForumQuest(
                <Text fontWeight="light">{getCurrentCargo()}</Text>
             </HStack>
             <HStack>
-               {quest.resposta_correta && (
+               {quest.resposta_correta.length > 0 && (
                   <View style={styles.statsQuestion}>
                      <Text color="black">Respondida</Text>
                   </View>

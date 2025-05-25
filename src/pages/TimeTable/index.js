@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, HStack, IconButton, FlatList } from "native-base";
+import { View, Text, HStack, IconButton, FlatList, Image, Center } from "native-base";
 import { ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -162,8 +162,31 @@ export default function TimeTable() {
          </HStack>
          {loading ? (
             <ActivityIndicator size="large" color="#024284" />
+<<<<<<< Updated upstream
          ) : (
             <>
+=======
+         ) : monitorings.length == 0 ?(
+          <Center flex={1} justifyContent="center" alignItems="center" marginBottom={20}>
+            <Image
+              source={require("../../assets/timeTable.png")}
+              alt="timeTable"
+              width={250}
+              height={250}
+            />
+            <Text
+              fontWeight="bold"
+              color="#45BEE6"
+              fontSize="lg"
+              textAlign="center"
+              px={10}
+              mt={2}
+            >
+              Ainda não há horários disponíveis no quadro do monitor.
+            </Text>
+          </Center>
+         ) : (               
+>>>>>>> Stashed changes
                <FlatList
                   data={subject.monitor === user?.perfil?.id ?
                      monitorings.filter(monitoring => monitoring.monitor === user.perfil.id)
@@ -176,6 +199,7 @@ export default function TimeTable() {
                      />
                   )}
                />
+<<<<<<< Updated upstream
                {user?.perfil?.cargos?.includes("monitor") && (
                   <DefaultStagger>
                      <IconButton
@@ -204,6 +228,38 @@ export default function TimeTable() {
                      />
                   </DefaultStagger>
                )}
+=======
+            )}
+               
+         {!loading && monitoringsAndTeachers(subject, monitorings).includes(user.perfil.id) && (
+            <>
+               <DefaultStagger>
+                  <IconButton
+                     style={{
+                        shadowColor: "#000",
+                        shadowOffset: {
+                           width: 10,
+                           height: 10,
+                        },
+                        shadowOpacity: 4,
+                        shadowRadius: 3.84,
+                        elevation: 5,
+                     }}
+                     variant="solid"
+                     borderRadius="full"
+                     bgColor="#024284"
+                     marginY={12}
+                     icon={
+                        <MaterialIcons
+                           color="#fff"
+                           size={33}
+                           name="add-circle-outline"
+                        />
+                     }
+                     onPress={() => setShowModal({ open: true, id: null })}
+                  />
+               </DefaultStagger>
+>>>>>>> Stashed changes
                <ModalMonitoringInfo
                   modalInfos={showModal}
                   setOpenModal={setShowModal}
