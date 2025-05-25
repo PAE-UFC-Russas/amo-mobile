@@ -40,153 +40,153 @@ export default function ForumQuest(
       }
    }
 
-   return (
-      <View style={styles.boxWithShadow}>
-         <HStack justifyContent="space-between">
-            <HStack>
-               <Avatar
-                  top={-26}
-                  zIndex={1}
-                  bg="tertiaryBlue"
-                  size="lg"
+    return (
+         <View style={styles.boxWithShadow}>
+            <HStack justifyContent="space-between">
+               <HStack>
+                  <Avatar
+                     top={-26}
+                     zIndex={1}
+                     bg="tertiaryBlue"
+                     size="lg"
+                     source={{
+                        uri: !quest.autor.perfil.foto
+                           ? null
+                           : quest.autor.perfil.foto,
+                     }}
+                  />
+   
+                  <Text
+                     fontSize={16}
+                     fontWeight={400}
+                     color={"#002B57"}
+                     paddingLeft="2%"
+                  >
+                     {quest.autor.perfil.nome_exibicao.split(" ")[0]}{" "}
+                     {quest.autor.perfil.nome_exibicao.split(" ")[1]}
+                  </Text>
+                  <Text fontWeight="light">{getCurrentCargo()}</Text>
+               </HStack>
+               <HStack>
+                  {quest.resposta_correta.length > 0 && (
+                     <View style={styles.statsQuestion}>
+                        <Text color="black">Respondida</Text>
+                     </View>
+                  )}
+                  <DotsMenu
+                     id={quest.id}
+                     author={quest.autor.id}
+                     setConfirmDelete={setConfirmDelete}
+                     setConfirmReport={setReportQuest}
+                  />
+               </HStack>
+            </HStack>
+   
+            <View style={styles.AnswerContainer}>
+               <TouchableOpacity
+                  onPress={() => handleNavigation("AnswerQuestion", quest)}
+               >
+                  <Text
+                     fontWeight="semibold"
+                     numberOfLines={2}
+                     marginBottom={2}
+                     fontSize={14}
+                     color={"#002B57"}
+                  >
+                     {quest.titulo}
+                  </Text>
+   
+                  <View style={styles.line} />
+   
+                  <Text marginTop={2} fontSize={12} color={"#524F4F"}>
+                     {truncateString(quest.descricao)}
+                  </Text>
+               </TouchableOpacity>
+            </View>
+            {!!quest.content && (
+               <ImageModal
+                  resizeMode="contain"
+                  imageBackgroundColor="#fff"
+                  alt="Conteúdo da dúvida"
+                  style={{
+                     width: 340,
+                     height: 340,
+                  }}
                   source={{
-                     uri: !quest.autor.perfil.foto
-                        ? null
-                        : quest.autor.perfil.foto,
+                     uri: quest.content,
                   }}
                />
-
-               <Text
-                  fontSize={16}
-                  fontWeight={400}
-                  color={"#002B57"}
-                  paddingLeft="2%"
-               >
-                  {quest.autor.perfil.nome_exibicao.split(" ")[0]}{" "}
-                  {quest.autor.perfil.nome_exibicao.split(" ")[1]}
-               </Text>
-               <Text fontWeight="light">{getCurrentCargo()}</Text>
-            </HStack>
-            <HStack>
-               {quest.resposta_correta && (
-                  <View style={styles.statsQuestion}>
-                     <Text color="black">Respondida</Text>
-                  </View>
-               )}
-               <DotsMenu
-                  id={quest.id}
-                  author={quest.autor.id}
-                  setConfirmDelete={setConfirmDelete}
-                  setConfirmReport={setReportQuest}
-               />
-            </HStack>
-         </HStack>
-
-         <View style={styles.AnswerContainer}>
-            <TouchableOpacity
-               onPress={() => handleNavigation("AnswerQuestion", quest)}
-            >
-               <Text
-                  fontWeight="semibold"
-                  numberOfLines={2}
-                  marginBottom={2}
-                  fontSize={14}
-                  color={"#002B57"}
-               >
-                  {quest.titulo}
-               </Text>
-
-               <View style={styles.line} />
-
-               <Text marginTop={2} fontSize={12} color={"#524F4F"}>
-                  {truncateString(quest.descricao)}
-               </Text>
-            </TouchableOpacity>
-         </View>
-         {!!quest.content && (
-            <ImageModal
-               resizeMode="contain"
-               imageBackgroundColor="#fff"
-               alt="Conteúdo da dúvida"
-               style={{
-                  width: 340,
-                  height: 340,
-               }}
-               source={{
-                  uri: quest.content,
-               }}
-            />
-         )}
-
-         <View style={styles.buttonContainer}>
-            <View style={{ paddingTop: "5%" }}>
-               <Text fontSize="xs" fontWeight="thin">
-                  {DateISOToFormated(quest.data)}
-               </Text>
+            )}
+   
+            <View style={styles.buttonContainer}>
+               <View style={{ paddingTop: "5%" }}>
+                  <Text fontSize="xs" fontWeight="thin">
+                     {DateISOToFormated(quest.data)}
+                  </Text>
+               </View>
+   
+               <HStack alignItems="center">
+                  <Text>{quest.votos}</Text>
+                  <IconButton
+                     bgColor="#fff"
+                     onPress={() =>
+                        quest.votou ? DeleteLike(quest.id) : PostLike(quest.id)
+                     }
+                     icon={
+                        <AntDesign
+                           color={quest.votou > 0 ? "#024284" : "#808080"}
+                           size={20}
+                           name={quest.votou > 0 ? "like1" : "like2"}
+                        />
+                     }
+                  />
+                  <Text>{quest.quantidade_comentarios}</Text>
+                  <IconButton
+                     onPress={() => handleNavigation("AnswerQuestion", quest)}
+                     icon={<AntDesign color="#808080" size={20} name="message1" />}
+                  />
+               </HStack>
             </View>
-
-            <HStack alignItems="center">
-               <Text>{quest.votos}</Text>
-               <IconButton
-                  bgColor="#fff"
-                  onPress={() =>
-                     quest.votou ? DeleteLike(quest.id) : PostLike(quest.id)
-                  }
-                  icon={
-                     <AntDesign
-                        color={quest.votou > 0 ? "#024284" : "#808080"}
-                        size={20}
-                        name={quest.votou > 0 ? "like1" : "like2"}
-                     />
-                  }
-               />
-               <Text>{quest.quantidade_comentarios}</Text>
-               <IconButton
-                  onPress={() => handleNavigation("AnswerQuestion", quest)}
-                  icon={<AntDesign color="#808080" size={20} name="message1" />}
-               />
-            </HStack>
          </View>
-      </View>
-   );
-}
-
-const styles = StyleSheet.create({
-   boxWithShadow: {
-      width: "90%",
-      alignSelf: "center",
-      borderRadius: 10,
-      backgroundColor: "white",
-      marginTop: "5%",
-      marginBottom: "2%",
-      padding: "2%",
-      shadowColor: "#000",
-      shadowOffset: {
-         width: 10,
-         height: 10,
+      );
+   }
+   
+   const styles = StyleSheet.create({
+      boxWithShadow: {
+         width: "90%",
+         alignSelf: "center",
+         borderRadius: 10,
+         backgroundColor: "white",
+         marginTop: "5%",
+         marginBottom: "2%",
+         padding: "2%",
+         shadowColor: "#000",
+         shadowOffset: {
+            width: 10,
+            height: 10,
+         },
+         shadowOpacity: 0.5,
+         shadowRadius: 5,
+         elevation: 7, // Esta propriedade é necessária para Android
       },
-      shadowOpacity: 0.5,
-      shadowRadius: 5,
-      elevation: 7, // Esta propriedade é necessária para Android
-   },
-   AnswerContainer: {},
-   line: {
-      borderBottomWidth: 1,
-      borderColor: "black", // Cor da linha
-      width: "100%", // Largura da linha
-      color: "#002B57",
-   },
-   buttonContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-   },
-   statsQuestion: {
-      padding: 2,
-      backgroundColor: "#52D6FB",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingHorizontal: 4,
-      maxHeight: 30,
-      borderRadius: 10,
-   },
-});
+      AnswerContainer: {},
+      line: {
+         borderBottomWidth: 1,
+         borderColor: "black", // Cor da linha
+         width: "100%", // Largura da linha
+         color: "#002B57",
+      },
+      buttonContainer: {
+         flexDirection: "row",
+         justifyContent: "space-between",
+      },
+      statsQuestion: {
+         padding: 2,
+         backgroundColor: "#52D6FB",
+         alignItems: "center",
+         justifyContent: "center",
+         paddingHorizontal: 4,
+         maxHeight: 30,
+         borderRadius: 10,
+      },
+   });

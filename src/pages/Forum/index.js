@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
-import { Center, IconButton, Skeleton } from "native-base";
+import { Center, IconButton, Skeleton, Text, Image } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useCustomToast } from "../../hooks/useCustomToast";
 import ForumSearch from "../../components/ForumSearch";
@@ -190,7 +190,7 @@ export default function Forum() {
     }
   }, [filters]);
 
-  return (
+   return (
     <Center style={styles.container}>
       <ForumSearch
         displayValue={displayValue}
@@ -205,6 +205,25 @@ export default function Forum() {
           <Skeleton h="40" m={2} px={2} />
           <Skeleton h="40" m={2} px={2} />
         </Center>
+      ) : data.results.length == 0 ?(
+          <Center flex={1} justifyContent="center" alignItems="center" marginBottom={20}>
+            <Image
+              source={require("../../assets/question.png")}
+              alt="question"
+              width={250}
+              height={250}
+            />
+            <Text
+              fontWeight="bold"
+              color="#45BEE6"
+              fontSize="lg"
+              textAlign="center"
+              px={10}
+              mt={2}
+            >
+              Parece que ninguém perguntou nada ainda. Seja o primeiro a fazer uma pergunta !
+            </Text>
+          </Center>
       ) : (
         <FlatList
           data={data.results}

@@ -135,11 +135,11 @@ export default function Comments({
             <AntDesign
               name="checkcircle"
               size={24}
-              color={correctResponse === comment.id ? "#2F80ED" : "#C4C4C4"}
+              color={correctResponse.includes(comment.id) ? "#2F80ED" : "#C4C4C4"}
               onPress={() => MarkResponse(comment.id)}
             />
           )}
-          {correctResponse === comment.id && (
+          {correctResponse.includes(comment.id) && (
             <HStack
               alignItems="center"
               justifyContent="center"
