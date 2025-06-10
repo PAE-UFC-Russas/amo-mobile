@@ -119,8 +119,7 @@ export default function AnswerQuestion({ route }) {
 
   const MarkResponse = async (id) => {
     try {
-      console.log("CORRETA: ", doubt)
-      if (id === doubt.resposta_correta) {
+      if (Array.isArray(doubt.resposta_correta) && doubt.resposta_correta.includes(id)) {
         await api.delete(`/duvidas/${doubt.id}/correta/`, {
           headers: {
             Authorization: "Token " + (await GetLoginToken()),
@@ -129,7 +128,9 @@ export default function AnswerQuestion({ route }) {
             id: id,
           },
         });
-        setDoubt({ ...doubt, resposta_correta: null });
+        const novasRespostas = doubt.resposta_correta.filter(item => item != id)
+        setDoubt({ ...doubt, resposta_correta: novasRespostas });
+
       } else {
         await api.post(
           `/duvidas/${doubt.id}/correta/`,
@@ -142,7 +143,10 @@ export default function AnswerQuestion({ route }) {
             },
           }
         );
-        setDoubt({ ...doubt, resposta_correta: id });
+        const novasRespostas = Array.isArray(doubt.resposta_correta)
+        ? [...doubt.resposta_correta, id]
+        : [id];
+      setDoubt({ ...doubt, resposta_correta: novasRespostas });
       }
     } catch (error) {
       console.log(error.response);
@@ -281,7 +285,7 @@ export default function AnswerQuestion({ route }) {
               renderItem={(comment) => (
                 <Comments
                   comment={comment.item}
-                  correctResponse={doubt.resposta_correta}
+                  correctResponse={doubt.resposta_correta ?? []}
                   MarkResponse={MarkResponse}
                   enableMark={markEnable}
                   subject={subject}
