@@ -93,11 +93,12 @@ export default function SignIn() {
 
    Keyboard.addListener("keyboardDidShow", () => {
       setKeyboardIsOpen(true);
+
    });
    Keyboard.addListener("keyboardDidHide", () => {
       setKeyboardIsOpen(false);
    });
-
+   
    return (
       <Center
          style={styles.container}
@@ -124,6 +125,10 @@ export default function SignIn() {
                   }
                   color={"white"}
                   error={inputErros.errosEmail}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  autoCorrect={false} 
+                  spellCheck={false}
                />
                <DefaultFormInput
                   type="password"
@@ -134,6 +139,9 @@ export default function SignIn() {
                   }
                   color="white"
                   error={inputErros.errosPassword}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  spellCheck={false}
                />
                <Button
                   alignItems={"center"}

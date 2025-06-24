@@ -48,7 +48,7 @@ export default function TimeTable() {
             hora_fim: getEndTime(),
             local: "",
             dia_semana: "0",
-            monitor: null,
+            monitor: user.perfil.id,
          });
          const sortedMonitorings = response.data.results.sort((a, b) => {
             if (a.professor === a.monitor && b.professor !== b.monitor) {
@@ -87,6 +87,7 @@ export default function TimeTable() {
             }),
             professor: subject.professores[0].id,
          };
+         console.log("DEBUG:"+ toString(data))
          if (id) {
             await api.put(`/monitorias/${id}/`, data, {
                headers: {
@@ -146,10 +147,6 @@ export default function TimeTable() {
             list.push(monitor.id)
          });
       }
-      console.log("LIST: ", list)
-      console.log("monitor: ", monitorings.some(item => item.id === user.perfil.id) || subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
-      console.log("SUBJECT: ", subject)
-      console.log("MONITORINGS: ", monitorings)
       return list
    }
 
