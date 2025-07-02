@@ -15,6 +15,7 @@ import api from "../../services/api";
 import { useSubject } from "../../contexts/subject";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { ActivityIndicator } from "react-native";
+import { useAuth } from "../../contexts/auth";
 
 export default function ModalMonitoringInfo({
    setOpenModal,
@@ -24,6 +25,7 @@ export default function ModalMonitoringInfo({
    handleSave,
    handleDelete,
 }) {
+   const { user } = useAuth();
    const { subject } = useSubject();
    const [showDate, setShowDate] = useState({
       active: false,
@@ -139,6 +141,36 @@ export default function ModalMonitoringInfo({
                         <Select.Item label="Sexta-feira" value="4" />
                         <Select.Item label="Sábado" value="5" />
                      </Select>
+
+                     <Text marginTop="2">Monitores:</Text>
+                     {user.perfil.cargos == "professor" ? (
+                        <Select
+                           placeholder="Monitores"
+                           width="100%"
+                           borderRadius={10}
+                           defaultValue={user.nome_exibicao}
+                           onValueChange={(itemValue) => setInfo({ ...info, monitor: itemValue })}
+                        >
+                           {subject.monitores.map((item) => (
+                              <Select.Item label={item.nome_exibicao} value={item.id} key={item.id}/>
+                           ))
+
+                           }
+                        </Select>
+                     ) : (
+                        <Input
+                           editable={false}
+                           borderRadius={10}
+                           maxLength={64}
+                           width="100%"
+                           placeholderTextColor="grey"
+                           placeholder={user.perfil.nome_exibicao}
+                           value={user.perfil.id}
+                           onChangeText={(text) => setInfo({ ...info, monitor: user.perfil.id})}
+                        />
+                     )}
+                     
+
                      <Button marginTop={8} bgColor="#307DF1" onPress={() => handleSave(modalInfos?.id)}>
                         {modalInfos.id ? "Atualizar" : "Salvar"}
                      </Button>

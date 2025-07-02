@@ -139,7 +139,7 @@ export default function Schedule() {
               px={10}
               mt={2}
             >
-              Ainda não há horários agendados com o monitor.
+              {filters.closed ? "Nenhum agendamento foi encerrado pelo monitor(a)": filters.opens ? "Nenhum agendamento confirmado com monitor(a)":"Ainda não existem agendamentos com o monitor(a)"}.
             </Text>
           </Center>
          ) : (

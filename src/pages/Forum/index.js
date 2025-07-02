@@ -8,6 +8,7 @@ import ForumQuest from "../../components/ForumQuest";
 import ButtonGetNextValues from "../../components/ButtonGetNextValues";
 import DefaultStagger from "../../components/DefaultStagger";
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
+import ModalUpdateQuestion from "../../components/ForumQuestUpdateModal";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import styles from "./styles";
@@ -32,6 +33,13 @@ export default function Forum() {
     id: null,
     reason: "",
     description: "",
+  });
+  const [updateQuestion, setUpdateQuestion] = useState({
+    open: false,
+    id: null,
+    titulo: "",
+    descricao: "",
+    disciplina: null
   });
   const [page, setPage] = useState(1);
   const [displayValue, setDisplayValue] = useState("");
@@ -113,7 +121,6 @@ export default function Forum() {
         descricao: reportQuestion.description,
         disciplina: subject.id,
       };
-
       await api.post(`/duvidas/${reportQuestion.id}/report-duvida/`, report, {
         headers: {
           Authorization: "Token " + (await GetLoginToken()),
@@ -172,6 +179,34 @@ export default function Forum() {
       console.log(error.response);
     }
   };
+
+  const UpdateQuestion = async (id) => {
+    try{
+      
+      const dataQuest = {
+        descricao: updateQuestion.descricao,
+        titulo: updateQuestion.titulo,
+        disciplina: updateQuestion.disciplina
+      };
+
+      await api.patch(`/duvidas/${id}/`,dataQuest,{
+        headers: {
+          Authorization: "Token " + (await GetLoginToken()),
+        },
+      });
+      
+      setUpdateQuestion({ open: false, id: null,titulo: "",descricao:"",disciplina: null});
+      showToast("Sucesso", "Questão atualizada com sucesso", "success");
+      GetQuestions();
+    }
+    catch(erro){
+      // console.log("aqui")
+      // console.log(erro.response.data);
+      setReportQuestion({ open: false, id: null });
+
+      showToast("Error", "Erro ao atualizar questão !", "erro");
+    }
+  }
 
   useEffect(() => {
     if (
@@ -235,6 +270,7 @@ export default function Forum() {
               DeleteLike,
               setConfirmDelete,
               setReportQuestion,
+              setUpdateQuestion,
               subject.monitores
             )
           }
@@ -251,6 +287,11 @@ export default function Forum() {
         confirmDeleteQuest={confirmDeleteQuest}
         setOpen={setConfirmDelete}
         DeleteQuestion={DeleteQuestion}
+      />
+      <ModalUpdateQuestion
+        confirmUpdateQuest={updateQuestion}
+        setUpdateQuest={setUpdateQuestion}
+        UpdateQuestion={UpdateQuestion}
       />
       <ReportQuest
         setReportQuestion={setReportQuestion}

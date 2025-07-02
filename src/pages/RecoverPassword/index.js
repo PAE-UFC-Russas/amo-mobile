@@ -45,7 +45,6 @@ export default function RecoverPassword() {
             },
           }
         );
-
         if (response.data.sucesso.length > 0) {
           showToast("Successo", "Senha alterada com sucesso!", "success");
           goBack();
@@ -53,11 +52,7 @@ export default function RecoverPassword() {
       }
     } catch (error) {
       setStatusSenha(error.response.data.erro);
-      toast.show({
-        title: `${error.response.data.erro}`,
-        placement: "bottom",
-      });
-      setLoading(false);
+      showToast("Erro",error.response.data.erro, "error");
     }
   };
 

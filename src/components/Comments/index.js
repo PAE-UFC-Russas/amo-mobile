@@ -8,6 +8,7 @@ import DotsMenu from "../DotsMenu";
 import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import DateISOToFormated from "../../util/DateISOToFormated";
+import CommentsModalEdit from "../CommentsModalEdit";
 
 export default function Comments({
   comment,
@@ -24,6 +25,12 @@ export default function Comments({
   const [confirmReport, setConfirmReport] = useState({
     id: null,
     open: false,
+  });
+  const [confirmEdit, setConfirmEdit] = useState({
+    id: null,
+    open: false,
+    resposta: "",
+    idDuvida: null,
   });
   const showToast = useCustomToast();
   const isMonitor =
@@ -49,6 +56,29 @@ export default function Comments({
       console.log(error);
     }
   };
+
+
+  const handleEditComment = async (id) => {
+    try{
+      const data = {
+        "duvida": confirmEdit.idDuvida,
+        "resposta": confirmEdit.resposta,
+      }
+      await api.patch(`/respostas/${id}/`,data,{
+        headers: {
+          Authorization: "Token " + (await GetLoginToken()),
+        },
+      });
+      setConfirmEdit({idDuvida: null,resposta:"",id:null})
+      showToast("Sucesso", "Resposta atualizada com sucesso", "success");
+      GetResponses(1, true);
+    }
+    catch(erro){
+      console.log(erro);
+      setReportQuestion({ open: false, id: null });
+      showToast("Error", "Erro ao atualizar resposta !", "erro");
+    }
+  }
 
   const handleReportQuestion = async () => {
     try {
@@ -119,8 +149,10 @@ export default function Comments({
         <DotsMenu
           setConfirmDelete={setConfirmDelete}
           setConfirmReport={setConfirmReport}
+          setUpdate={setConfirmEdit}
           author={comment.autor.id}
           id={comment.id}
+          commennts={comment}
         />
       </View>
       <Text fontSize={15}>{comment.resposta}</Text>
@@ -163,6 +195,11 @@ export default function Comments({
         reportQuestion={confirmReport}
         setReportQuestion={setConfirmReport}
         handleReportQuestion={handleReportQuestion}
+      />
+      <CommentsModalEdit
+        confirmUpdateComment={confirmEdit}
+        setUpdateComment={setConfirmEdit}
+        UpdateComment={handleEditComment}
       />
     </ScrollView>
   );

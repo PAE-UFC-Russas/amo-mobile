@@ -14,6 +14,7 @@ export default function DefaultFormInput({
    maxLength,
    colorFocus,
    bgFocus,
+   autoCapitalize,
 }) {
    const [hiddenPassword, setHiddenPassword] = useState(true);
 
@@ -58,6 +59,7 @@ export default function DefaultFormInput({
                maxLength={maxLength}
                onChangeText={setValue}
                borderWidth={3}
+               autoCapitalize={autoCapitalize}
                _focus={{
                   borderColor: colorFocus ? colorFocus : color,
                   backgroundColor: bgFocus || `${color}20`,
