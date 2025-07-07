@@ -6,8 +6,11 @@ import { useAuth } from "../../contexts/auth";
 export default function DotsMenu({
   setConfirmDelete,
   setConfirmReport,
+  setUpdate,
   author,
   id,
+  quest = "none",
+  commennts = "none",
 }) {
   const { user } = useAuth();
   const { subject } = useSubject();
@@ -24,6 +27,7 @@ export default function DotsMenu({
   const privileges =
     user.perfil.id === author || isMonitor || isProfessor ? true : false;
 
+  const privilegesUpdate = user.perfil.id == author
   return (
     <Menu
       trigger={(triggerProps) => {
@@ -45,6 +49,26 @@ export default function DotsMenu({
       <Menu.Item onPress={() => setConfirmReport({ open: true, id: id })}>
         <Text>Denunciar</Text>
       </Menu.Item>
+      {privilegesUpdate && (
+        <Menu.Item onPress={() => quest != "none" ?
+          setUpdate({open: true, 
+            id: id, 
+            titulo: quest.titulo, 
+            descricao: quest.descricao, 
+            disciplina: quest.disciplina}) : 
+            
+            setUpdate({open: true, 
+              id: id, 
+              resposta: commennts.resposta,
+              idDuvida: commennts.duvida,
+
+            })
+          }
+          
+          >
+          <Text>Editar</Text>
+        </Menu.Item>
+      )}
     </Menu>
   );
 }

@@ -69,6 +69,8 @@ export default function TimeTable() {
    const handleSave = async (id = null) => {
       setLoading(true);
       try {
+         console.log("AQUIII");
+         console.log(subject.monitores);
          const data = {
             ...info,
             disciplina: subject.id,
@@ -86,6 +88,7 @@ export default function TimeTable() {
                hour12: false,
             }),
             professor: subject.professores[0].id,
+            monitor: subject.monitores,
          };
          if (id) {
             await api.put(`/monitorias/${id}/`, data, {
@@ -105,6 +108,7 @@ export default function TimeTable() {
          setShowModal({ open: false, id: null });
          getInformations();
       } catch (error) {
+         console.log(user.perfil);
          showToast(
             "Erro",
             "Não foi possível adicionar, tente novamente mais tarde!",
@@ -146,10 +150,10 @@ export default function TimeTable() {
             list.push(monitor.id)
          });
       }
-      console.log("LIST: ", list)
-      console.log("monitor: ", monitorings.some(item => item.id === user.perfil.id) || subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
-      console.log("SUBJECT: ", subject)
-      console.log("MONITORINGS: ", monitorings)
+      // console.log("LIST: ", list)
+      // console.log("monitor: ", monitorings.some(item => item.id === user.perfil.id) || subject.monitores.some(item => item.id === user.perfil.id) || subject.professores.some(item => item.id === user.perfil.id))
+      // console.log("SUBJECT: ", subject)
+      // console.log("MONITORINGS: ", monitorings)
       return list
    }
 

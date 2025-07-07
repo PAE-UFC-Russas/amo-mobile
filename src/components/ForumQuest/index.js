@@ -12,6 +12,7 @@ export default function ForumQuest(
    DeleteLike,
    setConfirmDelete,
    setReportQuest,
+   setUpdateQuestion,
    monitores
 ) {
    function getCurrentCargo() {
@@ -74,10 +75,12 @@ export default function ForumQuest(
                      </View>
                   )}
                   <DotsMenu
-                     id={quest.id}
-                     author={quest.autor.id}
                      setConfirmDelete={setConfirmDelete}
                      setConfirmReport={setReportQuest}
+                     setUpdate={setUpdateQuestion}
+                     author={quest.autor.id}
+                     id={quest.id}
+                     quest={quest}
                   />
                </HStack>
             </HStack>

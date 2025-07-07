@@ -120,10 +120,11 @@ export default function SignIn() {
                   placeholder="Email"
                   value={userLogin.email}
                   setValue={(text) =>
-                     setUserLogin({ ...userLogin, email: text })
+                     setUserLogin({ ...userLogin, email: text})
                   }
                   color={"white"}
                   error={inputErros.errosEmail}
+                  autoCapitalize={"none"}
                />
                <DefaultFormInput
                   type="password"
