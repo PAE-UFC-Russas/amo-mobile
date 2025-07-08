@@ -53,6 +53,7 @@ export default function RecoverPassword() {
     } catch (error) {
       setStatusSenha(error.response.data.erro);
       showToast("Erro",error.response.data.erro, "error");
+      setLoading(false);
     }
   };
 
