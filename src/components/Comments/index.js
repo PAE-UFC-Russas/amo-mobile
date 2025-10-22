@@ -9,6 +9,7 @@ import { GetLoginToken } from "../../util/StorageLogin";
 import api from "../../services/api";
 import DateISOToFormated from "../../util/DateISOToFormated";
 import CommentsModalEdit from "../CommentsModalEdit";
+import StatusModal from "../StatusModal";
 
 export default function Comments({
   comment,
@@ -18,6 +19,7 @@ export default function Comments({
   subject,
   GetResponses,
 }) {
+  const [modalStatus, setModalStatus] = useState({ visible: false, type: 'success', message: '' });
   const [confirmDelete, setConfirmDelete] = useState({
     id: null,
     open: false,
@@ -53,7 +55,9 @@ export default function Comments({
       showToast("Sucesso", "Resposta apagada com sucesso!", "success");
       GetResponses(1, true);
     } catch (error) {
-      console.log(error);
+      setConfirmDelete({ open: false, id: null });
+      setModalStatus({ visible: true, type: 'error', message: error.response.data.detail ?? 'Não foi possível apagar' })
+      console.log(error.response);
     }
   };
 
@@ -106,9 +110,9 @@ export default function Comments({
     }
   };
   function getIcon() {
-    if (comment.autor.cargos.includes("professor")) {
+    if (subject.professores.some(professor => professor.id === comment.autor.id)) {
        return "🦉";
-    } else if (comment.autor.cargos.includes("monitor") && comment.autor.cargos.includes("monitor") && subject.monitores.some(monitor => monitor.id === comment.autor.id)) {
+    } else if (comment.autor.cargos.includes("monitor") && subject.monitores.some(monitor => monitor.id === comment.autor.id)) {
        return "👨‍🏫";
     } else {
        return "🎓";
@@ -141,7 +145,7 @@ export default function Comments({
                 : comment.autor.perfil.foto,
             }}
           />
-          <Text marginLeft={3} fontSize={18} fontWeight="bold">
+          <Text marginLeft={3} fontSize={14} fontWeight="bold">
             {comment.autor.perfil.nome_exibicao}{" "}
             {getIcon()}
           </Text>
@@ -200,6 +204,12 @@ export default function Comments({
         confirmUpdateComment={confirmEdit}
         setUpdateComment={setConfirmEdit}
         UpdateComment={handleEditComment}
+      />
+      <StatusModal
+        visible={modalStatus.visible}
+        type={modalStatus.type}
+        message={modalStatus.message}
+        onClose={() => setModalStatus({ ...modalStatus, visible: false })}
       />
     </ScrollView>
   );

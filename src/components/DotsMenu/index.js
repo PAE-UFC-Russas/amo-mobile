@@ -23,12 +23,19 @@ export default function DotsMenu({
   )
     ? true
     : false;
-
+ 
   const privileges =
     user.perfil.id === author || isMonitor || isProfessor ? true : false;
 
+
   const privilegesUpdate = user.perfil.id == author
+  // console.log("Aqui")
+  // console.log("Subject: " + subject);
+  // console.log("user: " + user.perfil.id);
+  // console.log("privileges: " + privileges);
+  // console.log("privileges: " + isMonitor + isProfessor + author );
   return (
+    
     <Menu
       trigger={(triggerProps) => {
         return (

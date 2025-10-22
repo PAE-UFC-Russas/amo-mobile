@@ -1,17 +1,17 @@
 import React, { useCallback } from 'react';
-import { ScrollView } from 'react-native';
-import { Button, Center, Input } from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { Center, Input, Button, Menu, Pressable, HStack, Text } from 'native-base';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
 
-export default function ForumSearch({displayValue, setDisplayValue, setFilters, filters}){
+export default function ForumSearch({ displayValue, setDisplayValue, setFilters, filters }) {
+
     const handleChangeFilters = (type) => {
         if(type === 'mostLiked'){
             setFilters({mostLiked: !filters.mostLiked, lessLiked: false, recent: false, late: false, text: filters.text});
-        }else if(type === 'lessLiked'){
+        } else if(type === 'lessLiked'){
             setFilters({mostLiked: false, lessLiked: !filters.lessLiked, recent: false, late: false, text: filters.text});
-        }else if(type === 'recent'){
+        } else if(type === 'recent'){
             setFilters({mostLiked: false, lessLiked: false, recent: !filters.recent, late: false, text: filters.text});
-        }else if(type === 'late'){
+        } else if(type === 'late'){
             setFilters({mostLiked: false, lessLiked: false, recent: false, late: !filters.late, text: filters.text});
         }
     }
@@ -21,11 +21,7 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
         return function(...args){
             const context = this;
             if(timer) clearTimeout(timer);
-                timer = setTimeout(()=>{
-                    timer = null;
-                    func.apply(context, args)
-                }, 2000
-            )
+            timer = setTimeout(()=>{ func.apply(context, args); timer = null; }, 2000);
         }
     }
 
@@ -35,76 +31,52 @@ export default function ForumSearch({displayValue, setDisplayValue, setFilters, 
 
     const handler = useCallback(debounce(handleChange), []);
 
-    return(
-        <Center height='100'>
+    return (
+        <Center mt={2}>
+            {/* Input de pesquisa */}
             <Input
                 placeholder='Pesquisar perguntas...'
                 value={displayValue}
-                onChangeText={text => {setDisplayValue(text);handler(text)}}
+                onChangeText={text => { setDisplayValue(text); handler(text); }}
                 width='5/6'
                 borderRadius='full'
                 borderColor='#024284'
-                marginBottom='2'
+                borderWidth={1}
+                marginBottom='3'
                 InputLeftElement={
                     <MaterialIcons
                         color='#024284'
-                        size={32}
+                        size={28}
                         name='search'
-                        style={{marginLeft: 10}}
+                        style={{ marginLeft: 10 }}
                     />
                 }
+                InputRightElement={
+                    <Menu 
+                        w="190"
+                        trigger={triggerProps => {
+                            return (
+                                <Pressable {...triggerProps} style={{ marginRight: 10 }}>
+                                    <Ionicons name="filter" size={28} color="#024284" />
+                                </Pressable>
+                            );
+                        }}
+                    >
+                        <Menu.Item onPress={() => handleChangeFilters('mostLiked')}>
+                            <Text color={filters.mostLiked ? '#024284' : '#000'}>Mais curtidas</Text>
+                        </Menu.Item>
+                        <Menu.Item onPress={() => handleChangeFilters('lessLiked')}>
+                            <Text color={filters.lessLiked ? '#024284' : '#000'}>Menos curtidas</Text>
+                        </Menu.Item>
+                        <Menu.Item onPress={() => handleChangeFilters('recent')}>
+                            <Text color={filters.recent ? '#024284' : '#000'}>Mais recentes</Text>
+                        </Menu.Item>
+                        <Menu.Item onPress={() => handleChangeFilters('late')}>
+                            <Text color={filters.late ? '#024284' : '#000'}>Mais antigas</Text>
+                        </Menu.Item>
+                    </Menu>
+                }
             />
-            <ScrollView 
-                horizontal={true} 
-                showsHorizontalScrollIndicator={false} 
-
-            >
-                <Button 
-                    borderRadius='full' 
-                    marginRight={3} 
-                    marginLeft={3} 
-                    borderColor='#024284'
-                    _text={{
-                        color: filters.mostLiked?'#fff':'#024284'
-                    }}
-                    variant={filters.mostLiked?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('mostLiked')}>
-                        Mais curtidas
-                </Button>
-                <Button 
-                    borderRadius='full' 
-                    marginRight={3} 
-                    borderColor='#024284' 
-                    _text={{
-                        color: filters.lessLiked?'#fff':'#024284'
-                    }}
-                    variant={filters.lessLiked?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('lessLiked')}>
-                        Menos curtidas
-                </Button>
-                <Button 
-                    borderRadius='full' 
-                    marginRight={3} 
-                    borderColor='#024284' 
-                    _text={{
-                        color: filters.recent?'#fff':'#024284'
-                    }}
-                    variant={filters.recent?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('recent')}>
-                        Mais recentes
-                </Button>
-                <Button 
-                    borderRadius='full' 
-                    marginRight={3} 
-                    borderColor='#024284'
-                    _text={{
-                        color: filters.late?'#fff':'#024284'
-                    }}
-                    variant={filters.late?'solid':'outline'} 
-                    onPress={()=>handleChangeFilters('late')}>
-                        Mais antigas
-                </Button>
-            </ScrollView>
         </Center>
-    )
-};
+    );
+}

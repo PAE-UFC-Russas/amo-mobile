@@ -10,7 +10,6 @@ export const AuthContext = createContext({});
 
 export default function AuthContextProvider({ children }) {
   const [user, setUser] = useState();
-
   async function GetUser(token) {
     try {
       const response = await api.get("/usuario/eu/", {
@@ -46,6 +45,7 @@ export default function AuthContextProvider({ children }) {
       if (
         userData.perfil.curso === null ||
         userData.perfil.entrada === null ||
+        userData.perfil.matricula === null ||
         userData.perfil.nome_completo.length < 1
       ) {
         return { erro: "usuario incompleto!" };
@@ -60,6 +60,21 @@ export default function AuthContextProvider({ children }) {
   async function Register(newUser) {
     try {
       await api.post("/registrar/", {
+        email: newUser.email,
+        password: newUser.password,
+      });
+      setUser({ email: newUser.email, password: newUser.password });
+
+      return null;
+    } catch (error) {
+      console.log(error.response);
+      return error.response.data;
+    }
+  }
+
+  async function RegisterTeacher(newUser) {
+    try {
+      await api.post("/registrar/professor/", {
         email: newUser.email,
         password: newUser.password,
       });
@@ -154,6 +169,7 @@ export default function AuthContextProvider({ children }) {
         Logout,
         Login,
         Register,
+        RegisterTeacher,
         CompleteRegister,
         Active,
         IsConnected,

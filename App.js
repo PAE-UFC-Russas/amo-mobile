@@ -20,8 +20,8 @@ export default function App() {
          <NavigationContainer>
             <AuthContext>
                <SubjectContext>
+                  <StatusBar barStyle="light-content" translucent />
                   <Routes />
-                  <StatusBar barStyle="light-content" style="light" />
                </SubjectContext>
             </AuthContext>
          </NavigationContainer>

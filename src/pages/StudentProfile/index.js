@@ -202,7 +202,7 @@ export default function StudentProfile() {
           error={inputErros.errosRegistration}
         />
         <DefaultSelect
-          borderWidth={3}
+          borderWidth={1}
           items={GetYearsPerSemester()}
           placeholder={"Ano de entrada"}
           color={"#024284"}
@@ -217,7 +217,7 @@ export default function StudentProfile() {
           placeholder={"Selecionar curso"}
           color={"#024284"}
           borderColor={"#024284"}
-          borderWidth={3}
+          borderWidth={1}
           items={courses}
           setValue={(itemValue) =>
             setPersonalData({

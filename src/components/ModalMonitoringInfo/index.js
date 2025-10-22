@@ -75,6 +75,13 @@ export default function ModalMonitoringInfo({
 
    useEffect(() => {
       getData();
+
+      if (
+         !user.perfil.cargos.includes("professor") ||
+         !subject.professores?.some((obj) => obj.id === user.perfil.id)
+      ) {
+         setInfo((prev) => ({ ...prev, monitor: user.perfil.id }));
+      }
    }, [modalInfos.id]);
 
    return (
@@ -142,34 +149,33 @@ export default function ModalMonitoringInfo({
                         <Select.Item label="Sábado" value="5" />
                      </Select>
 
-                     <Text marginTop="2">Monitores:</Text>
-                     {user.perfil.cargos == "professor" ? (
+                     <Text marginTop="2">Monitor:</Text>
+                     {user.perfil.cargos.includes("professor") &&
+                        subject.professores?.some((obj) => obj.id === user.perfil.id) ? (
                         <Select
-                           placeholder="Monitores"
+                           placeholder="Selecione o monitor"
                            width="100%"
                            borderRadius={10}
-                           defaultValue={user.nome_exibicao}
+                           selectedValue={info.monitor}
                            onValueChange={(itemValue) => setInfo({ ...info, monitor: itemValue })}
                         >
                            {subject.monitores.map((item) => (
-                              <Select.Item label={item.nome_exibicao} value={item.id} key={item.id}/>
-                           ))
-
-                           }
+                              <Select.Item
+                                 key={item.id}
+                                 label={item.nome_exibicao}
+                                 value={item.id}
+                              />
+                           ))}
                         </Select>
                      ) : (
                         <Input
-                           editable={false}
+                           isReadOnly
                            borderRadius={10}
-                           maxLength={64}
                            width="100%"
-                           placeholderTextColor="grey"
-                           placeholder={user.perfil.nome_exibicao}
-                           value={user.perfil.id}
-                           onChangeText={(text) => setInfo({ ...info, monitor: user.perfil.id})}
+                           value={user.perfil.nome_exibicao}
                         />
                      )}
-                     
+
 
                      <Button marginTop={8} bgColor="#307DF1" onPress={() => handleSave(modalInfos?.id)}>
                         {modalInfos.id ? "Atualizar" : "Salvar"}

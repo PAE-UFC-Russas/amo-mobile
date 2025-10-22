@@ -101,7 +101,7 @@ export default function SelectSubjects() {
             borderColor="#024284"
             color="#024284"
             marginBottom="2"
-            borderWidth={2}
+            borderWidth={1}
             InputLeftElement={
                <MaterialIcons
                   color="#024284"

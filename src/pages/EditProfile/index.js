@@ -70,7 +70,6 @@ export default function EditProfile() {
          if (response.success) {
             EditUser(response.user);
             showToast("Sucesso", "Dados editados com sucesso!", "success");
-            goBack();
          } else {
             showToast("Erro", "Erro, verifique sua internet!", "error");
          }

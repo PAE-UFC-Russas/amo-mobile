@@ -1,188 +1,262 @@
 import React, { useState } from "react";
-import { Center, VStack, Text, View, Image } from "native-base";
+import {
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+  ScrollView,
+  StatusBar,
+} from "react-native";
+import {
+  Center,
+  VStack,
+  Text,
+  Image,
+  View,
+  HStack,
+  Pressable,
+} from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import validator from "validator";
-import { useAuth } from "../../contexts/auth";
-import AuthHeader from "../../components/AuthHeader";
-import DefaultBlueButton from "../../components/DefaultBlueButton";
-import DefaultFormInput from "../../components/DefaultFormInput";
-import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../contexts/auth";
 
-import {
-   ActivityIndicator,
-   TouchableOpacity,
-   KeyboardAvoidingView,
-   Platform,
-} from "react-native";
+import DefaultFormInput from "../../components/DefaultFormInput";
+import DefaultBlueButton from "../../components/DefaultBlueButton";
+import styles from "./styles";
 
-export default function Register() {
-   const { goBack, navigate } = useNavigation();
-   const [loading, setLoading] = useState(false);
-   const [newUser, setNewUser] = useState({
-      email: "",
-      password: "",
-      confirmPassword: "",
-   });
-   const [inputErros, setInputErros] = useState({
-      errosEmail: null,
-      errosPassword: null,
-      errosConfirmPassword: null,
-   });
-   const { Register } = useAuth();
+export default function RegisterTabs() {
+  const { goBack, navigate } = useNavigation();
+  const { Register, RegisterTeacher } = useAuth();
+  const [activeTab, setActiveTab] = useState("aluno");
 
-   async function InputValidation() {
-      setLoading(true);
-      setInputErros({
-         errosEmail: null,
-         errosPassword: null,
-         errosConfirmPassword: null,
-      });
-      let erros = {
-         errosEmail: null,
-         errosPassword: null,
-         errosConfirmPassword: null,
-      };
-      try {
-         if (newUser.email.length < 10 && !validator.isEmail(newUser.email))
-            erros.errosEmail = "E-mail inválido!";
-         if (newUser.password.length < 8)
-            erros.errosPassword =
-               "A senha precisa conter no minimo 8 caracteres!";
-         else if (!newUser.password.match(/[a-zA-Z]/g))
-            erros.errosPassword =
-               "A senha precisa conter pelo menos uma letra!";
-         else if (!newUser.password.match(/\d/g))
-            erros.errosPassword =
-               "A senha precisa conter pelo menos um número!";
-         if (newUser.password !== newUser.confirmPassword)
-            erros.errosConfirmPassword = "As senhas devem ser iguais!";
-         setInputErros(erros);
-         if (
-            !erros.errosEmail &&
-            !erros.errosPassword &&
-            !erros.errosConfirmPassword
-         ) {
-            setLoading(true);
-            const response = await Register(newUser);
+  const [student, setStudent] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [teacher, setTeacher] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-            if (response === null) {
-               navigate("CheckCode", { register: true });
-            } else {
-               setInputErros({
-                  ...inputErros,
-                  errosEmail: "Endereço de email já está em uso!",
-               });
-            }
-            setLoading(false);
-         }
-         setLoading(false);
-      } catch (error) {
-         console.log(error);
-      } finally {
-         setLoading(false);
+  const [loading, setLoading] = useState(false);
+  const [inputErros, setInputErros] = useState({});
+
+  async function handleSubmit() {
+    setLoading(true);
+    let erros = {};
+    const user = activeTab === "aluno" ? student : teacher;
+    
+    if (!validator.isEmail(user.email)) {
+      erros.errosEmail = "E-mail inválido!";
+    }
+    console.log(user.email.split("@")[1] !== "ufc.br", activeTab)
+    if (activeTab === "professor" && user.email.split("@")[1] !== "ufc.br".trim()) {
+      erros.errosEmail = "E-mail institucional precisa conter o domínio '@ufc.br'!";
+    }
+
+
+    if (user.password.length < 8)
+      erros.errosPassword = "A senha precisa conter no mínimo 8 caracteres!";
+    else if (!user.password.match(/[a-zA-Z]/))
+      erros.errosPassword = "A senha precisa conter pelo menos uma letra!";
+    else if (!user.password.match(/\d/))
+      erros.errosPassword = "A senha precisa conter pelo menos um número!";
+    if (user.password !== user.confirmPassword)
+      erros.errosConfirmPassword = "As senhas devem ser iguais!";
+
+    setInputErros(erros);
+
+    if (Object.keys(erros).length === 0) {
+      const response = activeTab === "aluno" ? await Register(user) : await RegisterTeacher(user);
+      console.log(response)
+      if (response === null) {
+        navigate("CheckCode", { register: true });
+      } else {
+        setInputErros({ errosEmail: "Endereço de email já está em uso!" });
       }
-   }
+    }
 
-   return (
+    setLoading(false);
+  }
+
+  const AlunoForm = (
+    <VStack space={2}>
+      <DefaultFormInput
+        placeholder="E-mail"
+        value={student.email}
+        setValue={(text) => setStudent({ ...student, email: text })}
+        color="#024284"
+        error={inputErros.errosEmail}
+      />
+      <DefaultFormInput
+        type="password"
+        placeholder="Senha"
+        value={student.password}
+        setValue={(text) => setStudent({ ...student, password: text })}
+        color="#024284"
+        error={inputErros.errosPassword}
+      />
+      <DefaultFormInput
+        type="password"
+        placeholder="Confirmar senha"
+        value={student.confirmPassword}
+        setValue={(text) =>
+          setStudent({ ...student, confirmPassword: text })
+        }
+        color="#024284"
+        error={inputErros.errosConfirmPassword}
+      />
+      <Text style={styles.textInfo}>* A senha precisa ter no mínimo 8 caracteres.</Text>
+      <Text style={styles.textInfo}>* A senha precisa ter letras e números.</Text>
+      <Text style={styles.textInfo}>* A senha não pode ter espaçamento.</Text>
+    </VStack>
+  );
+
+  const ProfessorForm = (
+    <VStack space={2}>
+      <DefaultFormInput
+        placeholder="E-mail institucional"
+        // placeholder="Digite seu e-mail institucional"
+        value={teacher.email}
+        setValue={(text) => setTeacher({ ...teacher, email: text })}
+        color="#024284"
+        error={inputErros.errosEmail}
+      />
+      <DefaultFormInput
+        placeholder="Senha"
+        type="password"
+        // placeholder="Escolha uma senha"
+        value={teacher.password}
+        setValue={(text) => setTeacher({ ...teacher, password: text })}
+        color="#024284"
+        error={inputErros.errosPassword}
+      />
+      <DefaultFormInput
+        placeholder="Confirmar senha"
+        type="password"
+        // placeholder="Digite a senha novamente"
+        value={teacher.confirmPassword}
+        setValue={(text) =>
+          setTeacher({ ...teacher, confirmPassword: text })
+        }
+        color="#024284"
+        error={inputErros.errosConfirmPassword}
+      />
+      <Text style={styles.textInfo}>* A senha precisa ter no mínimo 8 caracteres.</Text>
+      <Text style={styles.textInfo}>* A senha precisa ter letras e números.</Text>
+      <Text style={styles.textInfo}>* A senha não pode ter espaçamento.</Text>
+    </VStack>
+  );
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <KeyboardAvoidingView
-         style={{ flex: 1 }}
-         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : StatusBar.currentHeight || 20}
       >
-         <View style={styles.container} bgColor="#fff" safeArea>
-            <View
-               style={{
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-               }}
-            >
-               <MaterialIcons
-                  onPress={() => goBack()}
-                  color="#024284"
-                  size={24}
-                  style={styles.backButton}
-                  name="arrow-back-ios"
-               />
-               <Center>
-                  <Image
-                     alt="Logo AMO"
-                     source={require("../../assets/logo_lightblue.png")}
-                     style={{ width: 60, height: 60 }}
-                  />
-               </Center>
-            </View>
-            <Center width="5/6">
-               <Text
-                  marginBottom={5}
-                  fontWeight="bold"
-                  color="#024284"
-                  fontSize="md"
-               >
-                  Cadastre-se
-               </Text>
-               <VStack width="full" space={3}>
-                  <DefaultFormInput
-                     placeholder="Email"
-                     value={newUser.email}
-                     setValue={(text) =>
-                        setNewUser({ ...newUser, email: text })
-                     }
-                     color="#024284"
-                     error={inputErros.errosEmail}
-                  />
-                  <DefaultFormInput
-                     type="password"
-                     placeholder="Senha"
-                     value={newUser.password}
-                     setValue={(text) =>
-                        setNewUser({ ...newUser, password: text })
-                     }
-                     color="#024284"
-                     error={inputErros.errosPassword}
-                  />
-                  <DefaultFormInput
-                     type="password"
-                     placeholder="Cofirmar senha"
-                     color="#024284"
-                     value={newUser.confirmPassword}
-                     setValue={(text) =>
-                        setNewUser({ ...newUser, confirmPassword: text })
-                     }
-                     error={inputErros.errosConfirmPassword}
-                  />
-                  <Text style={styles.textInfo}>
-                     A senha precisa ter no mínimo 8 caracteres, contendo letras
-                     e números sem espaçamento. Ex: 12cay78d
-                  </Text>
-               </VStack>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: "flex-start",
+            paddingHorizontal: 20,
+            paddingBottom: 60, // 🔹 Espaço extra pro botão não sumir
+          }}
+        >
+          {/* HEADER */}
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: StatusBar.currentHeight || 10,
+              marginBottom: 20,
+            }}
+          >
+            <MaterialIcons
+              onPress={() => goBack()}
+              color="#024284"
+              size={24}
+              name="arrow-back-ios"
+            />
+            <Center flex={1}>
+              <Image
+                alt="Logo AMO"
+                source={require("../../assets/logo_lightblue.png")}
+                style={{ width: 60, height: 60 }}
+                resizeMode="contain"
+              />
             </Center>
-            <VStack alignItems={"center"}>
-               <DefaultBlueButton
-                  color={"#024284"}
-                  bgColor={"#2599BA"}
-                  loading={loading}
-                  onPress={InputValidation}
-               >
-                  {loading ? <ActivityIndicator /> : "Avançar"}
-               </DefaultBlueButton>
-               <TouchableOpacity
-                  style={{ marginBottom: 16 }}
-                  onPress={() => navigate("SignUpTeacher")}
-               >
-                  <Text
-                     style={{
-                        textDecorationLine: "underline",
-                        marginTop: 30,
-                        color: "#024284",
-                     }}
-                  >
-                     CADASTRE-SE COMO PROFESSOR
-                  </Text>
-               </TouchableOpacity>
-            </VStack>
-         </View>
+          </View>
+
+          {/* TÍTULO */}
+          <Center mb={4}>
+            <Text fontWeight="bold" color="#024284" fontSize="md">
+              Cadastro 
+            </Text>
+          </Center>
+
+          {/* ABAS */}
+          <HStack
+            mb={5}
+            justifyContent="center"
+            borderBottomWidth={1}
+            borderColor="#ccc"
+          >
+            {["aluno", "professor"].map((tab) => (
+              <Pressable
+                key={tab}
+                onPress={() => {
+                  setActiveTab(tab); 
+                  setInputErros({});
+                }}
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  paddingVertical: 10,
+                  borderBottomWidth: 3,
+                  borderBottomColor:
+                    activeTab === tab ? "#024284" : "transparent",
+                }}
+              >
+                <Text
+                  fontWeight="bold"
+                  fontSize={18}
+                  color={activeTab === tab ? "#024284" : "#999"}
+                >
+                  {tab === "aluno" ? "Sou Aluno" : "Sou Professor"}
+                </Text>
+              </Pressable>
+            ))}
+          </HStack>
+
+          {/* FORMULÁRIO FIXO */}
+          <View style={{ flex: 1 }}>{activeTab === "aluno" ? AlunoForm : ProfessorForm}</View>
+
+          {/* BOTÃO */}
+
+          <DefaultBlueButton
+            color="#024284"
+            bgColor="#2599BA"
+            loading={loading}
+            onPress={handleSubmit}
+            height={50}
+            _text={{
+              fontWeight: 700,
+              color: "#fff",
+              fontSize: "md",
+            }}
+          >
+            {loading ? <ActivityIndicator color="#024284" /> : "Avançar"}
+          </DefaultBlueButton>
+
+        </ScrollView>
       </KeyboardAvoidingView>
-   );
+    </SafeAreaView>
+  );
 }

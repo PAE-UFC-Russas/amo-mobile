@@ -18,7 +18,11 @@ export default function ModalKeepConnected({navigation, open, setOpen, setUser, 
                 setErros({errosPassword: 'Senha inválida'});
             return;
         }
-        navigation.navigate('SelectCourses');
+        
+        navigation.reset({
+            index: 0,
+            routes: [{ name: "SelectCourses" }],
+        });
     }
     
     return (

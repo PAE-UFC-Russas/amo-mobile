@@ -18,63 +18,38 @@ export default function Profile() {
       foto: user.perfil.foto,
       matricula: user.perfil.matricula,
    };
-   console.log(user);
-   function getCurrentOffice(subject, user) {
-      if (!subject || !user || !user.perfil) {
-         return "Aluno";
-      }
 
-      const isMonitor =
-         subject.monitores?.some((obj) => obj.id === user.perfil.id) || false;
-      const isProfessor =
-         subject.professores?.some((obj) => obj.id === user.perfil.id) || false;
+   function getCurrentOffice(subject, user) {
+      if (!subject || !user || !user.perfil) return "Aluno";
+
+      const isMonitor = subject.monitores?.some((obj) => obj.id === user.perfil.id) || false;
+      const isProfessor = subject.professores?.some((obj) => obj.id === user.perfil.id) || false;
 
       if (isMonitor) return "Monitor";
       if (isProfessor) return "Professor";
       return "Aluno";
    }
 
+   const office = getCurrentOffice(subject, user);
+   console.log(user)
    return (
       <View style={styles.container}>
-         <View
-            style={{
-               width: "100%",
-               flexDirection: "row",
-               justifyContent: "space-around",
-               marginBottom: 30,
-            }}
-         >
-            <MaterialIcons
-               onPress={() => goBack()}
-               color="#024284"
-               size={24}
-               style={styles.backButton}
-               name="arrow-back-ios"
+         {/* Avatar */}
+         <Center mt={5}>
+            <Avatar
+               bg="tertiaryBlue"
+               size="xl"
+               source={
+                  profile.foto
+                     ? { uri: profile.foto }
+                     : { uri: "https://i.ibb.co/4f1jsPx/Splash-1.png" }
+               }
             />
-            <Center>
-               <Text fontWeight="bold" color="#024284" fontSize="lg">
-                  Perfil
-               </Text>
-            </Center>
-         </View>
+         </Center>
 
-         <Avatar
-            alignSelf="center"
-            bg="tertiaryBlue"
-            margin={5}
-            size="xl"
-            source={
-               !profile.foto
-                  ? {
-                       uri: "https://i.ibb.co/4f1jsPx/Splash-1.png",
-                    }
-                  : {
-                       uri: user.perfil.foto,
-                    }
-            }
-         />
-
-         <View style={styles.edgeProfile}>
+         {/* Info Card */}
+         <View style={styles.infoCard}>
+            {/* Cargo Badge */}
             <View
                style={{
                   width: 120,
@@ -82,7 +57,9 @@ export default function Profile() {
                   height: 30,
                   borderTopRightRadius: 10,
                   borderBottomRightRadius: 10,
-                  marginTop: 15,
+                  marginTop: 6,
+                  marginBottom: 6,
+                  marginLeft: 0,
                   alignItems: "center",
                   justifyContent: "center",
                }}
@@ -94,84 +71,51 @@ export default function Profile() {
                      fontSize: 16,
                   }}
                >
-                  {/* {getCurrentOffice()} */}
-                  {user.perfil.cargos[0]}
+                  {office}
+                  
                </Text>
             </View>
+            
 
-            <View style={{ padding: 10 }}>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Monitoria:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>{subject.nome}</Text>
-                  </View>
-               </View>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Nome de exibição:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>
-                        {profile.nome_exibicao}
-                     </Text>
-                  </View>
-               </View>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Curso:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>{profile.curso}</Text>
-                  </View>
-               </View>
-               <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Entrada:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>{profile.entrada}</Text>
-                  </View>
-               </View>
-               {/* <View>
-                  <Text marginTop={1} fontSize={18}>
-                     Matricula:
-                  </Text>
-                  <View style={{ padding: 5 }}>
-                     <Text style={{ fontSize: 15 }}>{profile.matricula}</Text>
-                  </View>
-               </View> */}
+            {/* Informações */}
+            <View style={styles.infoRow}>
+               <Text style={styles.infoLabel}>Monitoria</Text>
+               <Text style={styles.infoValue}>{subject?.nome ?? "Nenhuma"}</Text>
             </View>
+            <View style={styles.infoRow}>
+               <Text style={styles.infoLabel}>Nome de exibição</Text>
+               <Text style={styles.infoValue}>{profile.nome_exibicao}</Text>
+            </View>
+            <View style={styles.infoRow}>
+               <Text style={styles.infoLabel}>Curso</Text>
+               <Text style={styles.infoValue}>{profile.curso}</Text>
+            </View>
+            <View style={styles.infoRow}>
+               <Text style={styles.infoLabel}>Entrada</Text>
+               <Text style={styles.infoValue}>{profile.entrada}</Text>
+            </View>
+            {/* <View style={styles.infoRow}>
+               <Text style={styles.infoLabel}>Matrícula</Text>
+               <Text style={styles.infoValue}>{profile.matricula}</Text>
+            </View> */}
          </View>
 
-         <Button
-            marginTop={10}
-            justifyContent={"center"}
-            alignItems={"center"}
-            bgColor="#2599BA"
-            borderRadius={10}
-            width="50%"
-            _text={{
-               fontWeight: "bold",
-            }}
-            onPress={() => navigate("EditProfile")}
-         >
-            Editar dados
-         </Button>
-         <Button
-            variant="unstyled"
-            onPress={() => navigate("RecoverPassword")}
-            _text={{
-               color: "#000",
-               fontWeight: 300,
-               textDecorationLine: "underline",
-               textDecorationStyle: "solid",
-               textDecorationColor: "#fff",
-            }}
-         >
-            Alterar senha
-         </Button>
+         {/* Buttons */}
+         <Center style={styles.buttonsContainer}>
+            <Button
+               style={styles.primaryButton}
+               onPress={() => navigate("EditProfile")}
+            >
+               Editar dados
+            </Button>
+            <Button
+               variant="unstyled"
+               mt={2}
+               onPress={() => navigate("RecoverPassword")}
+            >
+               <Text style={styles.linkButton}>Alterar senha</Text>
+            </Button>
+         </Center>
       </View>
    );
 }

@@ -69,27 +69,34 @@ export default function TimeTable() {
    const handleSave = async (id = null) => {
       setLoading(true);
       try {
-         console.log("AQUIII");
-         console.log(subject.monitores);
+         const isProfessor = user.perfil.cargos.includes("professor");
+         const isProfessorDaDisciplina = subject.professores?.some(
+            (obj) => obj.id === user.perfil.id
+         );
+
          const data = {
             ...info,
             disciplina: subject.id,
-            hora_inicio: new Date(info.hora_inicio).toLocaleTimeString(
-               "en-US",
-               {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-               }
-            ),
+            hora_inicio: new Date(info.hora_inicio).toLocaleTimeString("en-US", {
+               hour: "2-digit",
+               minute: "2-digit",
+               hour12: false,
+            }),
             hora_fim: new Date(info.hora_fim).toLocaleTimeString("en-US", {
                hour: "2-digit",
                minute: "2-digit",
                hour12: false,
             }),
-            professor: subject.professores[0].id,
-            monitor: subject.monitores,
          };
+
+         if (isProfessor && isProfessorDaDisciplina) {
+            data.monitor = info.monitor;
+            data.professor = user.perfil.id;
+         } else {
+            data.monitor = user.perfil.id;
+            data.professor = subject.professores[0].id;
+         }
+
          if (id) {
             await api.put(`/monitorias/${id}/`, data, {
                headers: {
@@ -104,17 +111,12 @@ export default function TimeTable() {
             });
          }
 
-         showToast("Sucesso", "Quadro adicionado com sucesso!", "success");
+         showToast("Sucesso", "Quadro salvo com sucesso!", "success");
          setShowModal({ open: false, id: null });
          getInformations();
       } catch (error) {
-         console.log(user.perfil);
-         showToast(
-            "Erro",
-            "Não foi possível adicionar, tente novamente mais tarde!",
-            "error"
-         );
-         console.log("error: ", error, error?.response?.data);
+         showToast("Erro", "Não foi possível salvar, tente novamente!", "error");
+         console.log("error: ", error?.response?.data || error);
       }
       setLoading(false);
    };
@@ -140,9 +142,9 @@ export default function TimeTable() {
       }
    };
 
-   const monitoringsAndTeachers = () =>{
+   const monitoringsAndTeachers = () => {
       let list = []
-      if(subject.monitores.length != 0 || subject.professores.length != 0){
+      if (subject.monitores.length != 0 || subject.professores.length != 0) {
          subject.monitores.forEach(monitor => {
             list.push(monitor.id)
          });
@@ -182,40 +184,40 @@ export default function TimeTable() {
          </HStack>
          {loading ? (
             <ActivityIndicator size="large" color="#024284" />
-         ) : monitorings.length == 0 ?(
-          <Center flex={1} justifyContent="center" alignItems="center" marginBottom={20}>
-            <Image
-              source={require("../../assets/timeTable.png")}
-              alt="timeTable"
-              width={250}
-              height={250}
-            />
-            <Text
-              fontWeight="bold"
-              color="#45BEE6"
-              fontSize="lg"
-              textAlign="center"
-              px={10}
-              mt={2}
-            >
-              Ainda não há horários disponíveis no quadro do monitor.
-            </Text>
-          </Center>
-         ) : (               
-               <FlatList
-                  data={subject.monitor === user?.perfil?.id ?
-                     monitorings.filter(monitoring => monitoring.monitor === user.perfil.id)
-                     : monitorings
-                  }
-                  renderItem={(monitoring) => (
-                     <MonitoringCardInformation
-                        monitoring={{ ...monitoring.item, course }}
-                        setOpenModal={setShowModal}
-                     />
-                  )}
+         ) : monitorings.length == 0 ? (
+            <Center flex={1} justifyContent="center" alignItems="center" marginBottom={20}>
+               <Image
+                  source={require("../../assets/timeTable.png")}
+                  alt="timeTable"
+                  width={250}
+                  height={250}
                />
-            )}
-               
+               <Text
+                  fontWeight="bold"
+                  color="#45BEE6"
+                  fontSize="lg"
+                  textAlign="center"
+                  px={10}
+                  mt={2}
+               >
+                  Ainda não há horários disponíveis no quadro do monitor.
+               </Text>
+            </Center>
+         ) : (
+            <FlatList
+               data={subject.monitor === user?.perfil?.id ?
+                  monitorings.filter(monitoring => monitoring.monitor === user.perfil.id)
+                  : monitorings
+               }
+               renderItem={(monitoring) => (
+                  <MonitoringCardInformation
+                     monitoring={{ ...monitoring.item, course }}
+                     setOpenModal={setShowModal}
+                  />
+               )}
+            />
+         )}
+
          {!loading && monitoringsAndTeachers(subject, monitorings).includes(user.perfil.id) && (
             <>
                <DefaultStagger>

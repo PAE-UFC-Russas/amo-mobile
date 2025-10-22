@@ -15,8 +15,10 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import ReportQuest from "../../components/ReportQuest";
 import { useSubject } from "../../contexts/subject";
+import StatusModal from "../../components/StatusModal";
 
 export default function Forum() {
+  const [modalStatus, setModalStatus] = useState({ visible: false, type: 'success', message: '' });
   const [filters, setFilters] = useState({
     recent: false,
     late: false,
@@ -97,15 +99,19 @@ export default function Forum() {
 
   const DeleteQuestion = async () => {
     try {
-      await api.delete(`/duvidas/${confirmDeleteQuest.id}/`, {
+      response = await api.delete(`/duvidas/${confirmDeleteQuest.id}/`, {
         headers: {
           Authorization: "Token " + (await GetLoginToken()),
         },
       });
+      setOpen({ ...confirmDeleteQuest, open: false })
       setConfirmDelete({ open: false, id: null });
+      showToast("Sucesso", "Reportado com sucesso!", "success");
       GetQuestions();
+      
     } catch (error) {
-      console.log(error.response);
+      setModalStatus({ visible: true, type: 'error', message: error.response.data.detail ?? 'Não foi possível apagar' })
+      console.error(error.response);
     }
   };
 
@@ -227,6 +233,16 @@ export default function Forum() {
 
    return (
     <Center style={styles.container}>
+      <Text 
+        fontWeight="bold"
+        color="#055069ff"
+        fontSize="lg"
+        textAlign="center"
+        px={12}
+        m={2}
+      >
+        {subject.nome}
+      </Text>
       <ForumSearch
         displayValue={displayValue}
         setDisplayValue={setDisplayValue}
@@ -271,7 +287,8 @@ export default function Forum() {
               setConfirmDelete,
               setReportQuestion,
               setUpdateQuestion,
-              subject.monitores
+              subject.monitores,
+              subject.professores
             )
           }
           keyExtractor={(quest) => quest.id}
@@ -320,6 +337,12 @@ export default function Forum() {
           onPress={() => navigate("RegisterDoubt")}
         />
       </DefaultStagger>
+      <StatusModal
+        visible={modalStatus.visible}
+        type={modalStatus.type}
+        message={modalStatus.message}
+        onClose={() => setModalStatus({ ...modalStatus, visible: false })}
+      />
     </Center>
   );
 }

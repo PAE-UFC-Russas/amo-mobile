@@ -15,6 +15,7 @@ export default function DefaultFormInput({
    colorFocus,
    bgFocus,
    autoCapitalize,
+   keyboardType,
 }) {
    const [hiddenPassword, setHiddenPassword] = useState(true);
 
@@ -54,16 +55,20 @@ export default function DefaultFormInput({
                placeholderTextColor={color}
                color={color}
                borderColor={color}
-               borderRadius={15}
+               borderRadius={12}
                value={value}
                maxLength={maxLength}
                onChangeText={setValue}
-               borderWidth={3}
+               borderWidth={1}
                autoCapitalize={autoCapitalize}
+               autoCorrect={false}
+               textContentType="none"
                _focus={{
                   borderColor: colorFocus ? colorFocus : color,
                   backgroundColor: bgFocus || `${color}20`,
                }}
+               fontSize={14}
+               keyboardType={keyboardType}
             />
             {error && (
                <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>
@@ -93,7 +98,10 @@ export default function DefaultFormInput({
                placeholderTextColor={color}
                color={color}
                borderColor={color}
-               borderRadius={15}
+               borderRadius={12}
+               autoCapitalize={autoCapitalize}
+               autoCorrect={false}
+               textContentType="none"
                value={value}
                _focus={{
                   borderColor: colorFocus ? colorFocus : color,
@@ -101,7 +109,9 @@ export default function DefaultFormInput({
                }}
                maxLength={maxLength}
                onChangeText={HandleChangePassword}
-               borderWidth={3}
+               borderWidth={1}
+               fontSize={14}
+               keyboardType={keyboardType}
             />
             {error && (
                <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>

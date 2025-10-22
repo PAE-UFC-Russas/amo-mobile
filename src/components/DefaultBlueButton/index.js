@@ -9,18 +9,18 @@ export default function DefaultBlueButton({
 }) {
    return (
       <Button
+         mt={4}
          disabled={loading}
-         alignItems={"center"}
+         borderRadius={12}
          bgColor={bgColor ? bgColor : "defaultBlue"}
-         borderRadius="2xl"
-         width={80}
-         height={60}
+         height={50}
+         _text={{
+            fontWeight: 700,
+            color: "#fff",
+            fontSize: "md",
+         }}
          onPress={onPress}
          isDisabled={disabled}
-         _text={{
-            fontWeight: 800,
-            color: "#fff",
-         }}
       >
          {children}
       </Button>

@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+} from "react-native";
 import {
   Avatar,
   Text,
   Input,
   HStack,
-  View,
-  Spinner,
   Button,
-  Skeleton,
+  Spinner,
   VStack,
 } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import DateISOToFormated from "../../util/DateISOToFormated";
-import { HasBadWords } from "../../util/HasBadWords";
 import Comments from "../../components/Comments";
 import ButtonGetNextValues from "../../components/ButtonGetNextValues";
+import { HasBadWords } from "../../util/HasBadWords";
 import { GetLoginToken } from "../../util/StorageLogin";
 import { useAuth } from "../../contexts/auth";
 import { useSubject } from "../../contexts/subject";
@@ -179,8 +182,13 @@ export default function AnswerQuestion({ route }) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <HStack safeArea alignItems="center">
+<KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: "#fff" }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+    >
+      {/* Cabeçalho */}
+      <HStack safeArea alignItems="center" paddingX={3} paddingY={2}>
         <MaterialIcons
           onPress={() => goBack()}
           color="#024284"
@@ -189,121 +197,152 @@ export default function AnswerQuestion({ route }) {
         />
         <Text style={styles.title}>Responder dúvida</Text>
       </HStack>
-      <View marginTop={60} flex={1}>
-        <>
-          <View
-            flexDirection={"row"}
-            width={"100%"}
-            justifyContent={"space-between"}
-          >
-            <View
-              flexDirection={"row"}
-              alignItems={"center"}
-              justifyContent={"center"}
-            >
-              <View
-                style={{
-                  borderBottomWidth: 2,
-                  borderBottomColor: "#34689C",
-                  width: 200,
-                  position: "absolute",
-                  bottom: 15,
-                }}
-              />
-              <Avatar
-                bg="tertiaryBlue"
-                size="lg"
-                source={{
-                  uri: !doubt.autor.perfil.foto
-                    ? "https://i.ibb.co/4f1jsPx/Splash-1.png"
-                    : doubt.autor.perfil.foto,
-                }}
-              />
-              <View flexDirection={"row"} alignItems={"center"}>
-                <Text
+
+      {/* Conteúdo da tela */}
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={responses.results}
+          keyExtractor={(comment) => comment.id.toString()}
+          ListHeaderComponent={
+            <>
+              <View paddingX={4} paddingBottom={4}>
+                <View
                   style={{
-                    fontSize: 16,
-                    marginLeft: 5,
-                    color: "#024284",
-                    fontWeight: "600",
+                    borderRadius: 10,
+                    paddingHorizontal: 12, // espaço lateral extra
+                    paddingVertical: 10,
+                    backgroundColor: "#fdfdfdff",
                   }}
                 >
-                  {doubt.autor.perfil.nome_exibicao.split(" ")[0]}{" "}
-                  {doubt.autor.perfil.nome_exibicao.split(" ")[1]}
-                </Text>
-                <MaterialIcons
-                  color="#024284"
-                  size={14}
-                  name="school"
-                  marginLeft={3}
-                />
-              </View>
-            </View>
-            <View alignItems={"center"} justifyContent={"center"}>
-              <Text style={styles.textDate}>
-                {DateISOToFormated(doubt.data)}
-              </Text>
-            </View>
-          </View>
+                  {/* Autor e Data */}
+                  <HStack
+                    justifyContent="space-between"
+                    alignItems="center"
+                    marginBottom={3}
+                  >
+                    <HStack alignItems="center">
+                      <Avatar
+                        bg="tertiaryBlue"
+                        size="lg"
+                        source={{
+                          uri:
+                            doubt.autor.perfil.foto ||
+                            "https://i.ibb.co/4f1jsPx/Splash-1.png",
+                        }}
+                      />
+                      <View style={{ marginLeft: 10 }}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: "#024284",
+                            fontWeight: "600",
+                          }}
+                        >
+                          {doubt.autor.perfil.nome_exibicao}
+                        </Text>
+                        <HStack alignItems="center">
+                          <MaterialIcons
+                            color="#024284"
+                            size={14}
+                            name="school"
+                          />
+                          <Text fontSize={12} color="#024284" marginLeft={1}>
+                            {DateISOToFormated(doubt.data)}
+                          </Text>
+                        </HStack>
+                      </View>
+                    </HStack>
+                  </HStack>
 
-          <View padding={2} marginTop={2}>
-            <Text fontSize={19} fontWeight="bold" marginBottom={4}>
-              {doubt.titulo}
-            </Text>
-            <View>
-              <Text style={styles.textDoubt}>{doubt.descricao}</Text>
-            </View>
-          </View>
-          <Input
-            variant="outline"
-            width={"100%"}
-            color={"#524F4F"}
-            placeholder="Comentar"
-            value={myResponse}
-            onChangeText={(text) => setMyResponse(text)}
-          />
-          <Button
-            marginTop={2}
-            bgColor="#307DF1"
-            onPress={PostResponse}
-            flexDirection="row"
-            disabled={loading}
-          >
-            {loading ? <Spinner size="sm" color="#fff" /> : "Enviar"}
-          </Button>
-          {loading ? (
-            <VStack space={4} marginTop={4}>
-              <Skeleton.Text px="4" />
-              <Skeleton.Text px="4" />
-              <Skeleton.Text px="4" />
-            </VStack>
-          ) : (
-            <FlatList
-              style={{ height: "68%" }}
-              data={responses.results}
-              keyExtractor={(comment) => comment.id}
-              renderItem={(comment) => (
-                <Comments
-                  comment={comment.item}
-                  correctResponse={doubt.resposta_correta ?? []}
-                  MarkResponse={MarkResponse}
-                  enableMark={markEnable}
-                  subject={subject}
-                  GetResponses={GetResponses}
+                  {/* Título e descrição da dúvida */}
+                  <Text fontSize={19} fontWeight="bold" marginBottom={2}>
+                    {doubt.titulo}
+                  </Text>
+                  <Text fontSize={15} color="#333">
+                    {doubt.descricao}
+                  </Text>
+                </View>
+
+                {/* Divisor visual */}
+                <View
+                  style={{
+                    height: 1,
+                    backgroundColor: "#ccc",
+                    width: "100%",
+                    marginVertical: 8,
+                  }}
                 />
-              )}
-              ListFooterComponent={
-                responses.next && (
-                  <ButtonGetNextValues
-                    label="respostas"
-                    onPress={GetResponses}
-                  />
-                )
-              }
+
+                <Text
+                  paddingX={4}
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    color: "#024284",
+                    marginBottom: 4,
+                  }}
+                >
+                  Respostas:
+                </Text>
+              </View>
+            </>
+          }
+          renderItem={({ item }) => (
+            <Comments
+              comment={item}
+              correctResponse={doubt.resposta_correta ?? []}
+              MarkResponse={MarkResponse}
+              enableMark={markEnable}
+              subject={subject}
+              GetResponses={GetResponses}
             />
           )}
-        </>
+          ListFooterComponent={
+            loading ? (
+              <VStack space={4} marginTop={4}>
+                <Spinner color="#024284" />
+              </VStack>
+            ) : (
+              responses.next && (
+                <ButtonGetNextValues
+                  label="respostas"
+                  onPress={GetResponses}
+                />
+              )
+            )
+          }
+        />
       </View>
-    </View>
+
+      {/* === Campo de comentário fixo tipo Instagram === */}
+      <HStack
+        alignItems="center"
+        padding={2}
+        borderTopWidth={1}
+        borderColor="#ccc"
+        bg="white"
+      >
+        <Avatar
+          size="sm"
+          bg="tertiaryBlue"
+          source={{
+            uri: user.perfil.foto || "https://i.ibb.co/4f1jsPx/Splash-1.png",
+          }}
+        />
+        <Input
+          flex={1}
+          ml={2}
+          placeholder="Responda algo..."
+          value={myResponse}
+          onChangeText={setMyResponse}
+          autoFocus
+          onSubmitEditing={PostResponse}
+          returnKeyType="send"
+        />
+        <Button ml={2} bg="#307DF1" onPress={PostResponse} disabled={loading}>
+          {loading ? <Spinner size="sm" color="#fff" /> : "Enviar"}
+        </Button>
+      </HStack>
+    </KeyboardAvoidingView>
   );
 }

@@ -19,15 +19,30 @@ export default function DrawerInfo(props) {
       props.navigation.navigate("SignIn");
    };
 
-   function getCurrentCargo() {
-      if (user.perfil.cargos.includes("professor")) {
-         return "Professor 🦉";
-      } else if (user.perfil.cargos.includes("monitor") && user.perfil.cargos.includes("monitor") && subject.monitores.some(monitor => monitor.id === user.perfil.id)) {
-         return "Monitor 👨‍🏫";
-      } else {
-         return "Aluno 🎓";
+   function getCurrentOffice(subject, user) {
+      if (!subject || !user || !user.perfil) {
+         return "Aluno";
       }
+
+      const isMonitor =
+         subject.monitores?.some((obj) => obj.id === user.perfil.id) || false;
+      const isProfessor =
+         subject.professores?.some((obj) => obj.id === user.perfil.id) || false;
+
+      if (isMonitor) return "Monitor 👨‍🏫";
+      if (isProfessor) return "Professor 🦉";
+      return "Aluno 🎓";
    }
+
+   // function getCurrentCargo() {
+   //    if (user.perfil.cargos.includes("professor")) {
+   //       return "Professor 🦉";
+   //    } else if (user.perfil.cargos.includes("monitor") && user.perfil.cargos.includes("monitor") && subject.monitores.some(monitor => monitor.id === user.perfil.id)) {
+   //       return "Monitor 👨‍🏫";
+   //    } else {
+   //       return "Aluno 🎓";
+   //    }
+   // }
 
    return (
       <DrawerContentScrollView contentContainerStyle={{ flex: 1 }}>
@@ -54,7 +69,7 @@ export default function DrawerInfo(props) {
                <Text fontSize="sm" fontWeight="light">
                   {}
                </Text>
-               <Text style={{ marginLeft: 4 }}>{getCurrentCargo()}</Text>
+               <Text style={{ marginLeft: 4 }}>{getCurrentOffice(subject, user)}</Text>
             </View>
             <Text fontSize="13" marginTop={10} fontWeight="semibold">
                {course.nome}
